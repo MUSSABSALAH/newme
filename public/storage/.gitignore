@@ -1,2 +1,6 @@
 *
 !.gitignore
+!meals/
+!meals/**
+!subscription/
+!subscription/**
