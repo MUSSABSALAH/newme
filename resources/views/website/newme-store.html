@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#122B4A">
+<title>المتجر — نيو مي</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#10263F; --navy-2:#1B3A61;
+  --bg:#F8F6F1; --tile:#EFEBE2; --line:#E2DCCE; --line-2:#D2CBBA;
+  --ink:#10263F; --body:#4A5568; --muted:#8A93A3;
+  --orange:#E8762A; --orange-deep:#C95F14; --orange-hi:#FFA05C;
+  --green:#2E9E6B;
+  --font:'Cairo',-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--body);line-height:1.8;font-size:15.5px;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+h1,h2,h3{color:var(--ink);font-weight:900;line-height:1.15;letter-spacing:-.02em}
+button{font-family:var(--font);cursor:pointer}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.aiimg{transition:opacity 1s ease}
+.js .aiimg{opacity:0}
+.js .aiimg.loaded{opacity:1}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.kick{font-size:10.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--orange-deep);font-family:var(--mono)}
+
+.announce{background:var(--navy);color:#EAF1FA;text-align:center;padding:calc(9px + var(--sat)) 14px 9px;font-size:12px;font-weight:700;letter-spacing:.02em}
+.announce b{color:var(--orange-hi)}
+nav.main{position:sticky;top:0;z-index:90;background:rgba(248,246,241,.92);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border-bottom:1px solid var(--line)}
+nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 24px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,#24487A,var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
+.logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(255,255,255,.2) 36%, transparent 60%)}
+.logo b{font-size:18px;color:var(--ink);font-weight:900}
+.nav-links{display:none;gap:24px;font-weight:800;font-size:13px;color:var(--ink)}
+.nav-links a{padding:6px 0;border-bottom:2px solid transparent;white-space:nowrap;letter-spacing:.01em}
+.nav-links a:hover,.nav-links a.on{border-color:var(--orange)}
+@media(min-width:960px){.nav-links{display:flex}}
+.nav-cta{font-size:12.5px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:10px 22px;transition:.2s}
+.nav-cta:hover{background:var(--ink);color:#fff}
+
+/* ===== editorial hero ===== */
+.phead{padding:64px 0 44px;position:relative}
+.phead .wrap{display:grid;gap:20px}
+@media(min-width:920px){.phead .wrap{grid-template-columns:1.4fr 1fr;align-items:end}}
+.phead .rule{height:1px;background:var(--line-2);margin-bottom:26px}
+.phead h1{font-size:clamp(52px,11vw,110px);line-height:.95}
+.phead h1 em{font-style:normal;color:var(--orange-deep)}
+.phead .lead{font-size:15px;font-weight:600;max-width:400px;margin-top:14px}
+.phead aside{border-inline-start:1px solid var(--line-2);padding-inline-start:26px;display:grid;gap:14px}
+@media(max-width:919px){.phead aside{border-inline-start:none;padding-inline-start:0;border-top:1px solid var(--line-2);padding-top:18px;grid-template-columns:repeat(3,1fr)}}
+.phead aside div b{display:block;font-family:var(--mono);font-size:20px;color:var(--ink);font-weight:700}
+.phead aside div span{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.04em}
+
+/* ===== premium tabs ===== */
+.filters{position:sticky;top:calc(66px + var(--sat));z-index:80;background:rgba(248,246,241,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-block:1px solid var(--line)}
+.tabs{display:flex;gap:30px;overflow-x:auto;padding:0 24px;max-width:1280px;margin:0 auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;background:none;border:none;padding:16px 2px 14px;font-weight:900;font-size:14px;color:var(--muted);transition:color .2s;position:relative;display:inline-flex;align-items:baseline;gap:7px;letter-spacing:.01em}
+.tab sup{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--muted)}
+.tab::after{content:"";position:absolute;bottom:-1px;inset-inline:0;height:2.5px;background:var(--orange);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.tab.on{color:var(--ink)}
+.tab.on::after{transform:scaleX(1)}
+.tab.on sup{color:var(--orange-deep)}
+.subs-row{display:none;gap:8px;overflow-x:auto;padding:12px 24px;max-width:1280px;margin:0 auto;scrollbar-width:none;border-top:1px solid var(--line)}
+.subs-row::-webkit-scrollbar{display:none}
+.subs-row.show{display:flex}
+.sub{flex-shrink:0;background:none;border:1.5px solid var(--line-2);border-radius:999px;padding:6px 18px;font-weight:800;font-size:11.5px;color:var(--body);transition:.2s;letter-spacing:.02em}
+.sub:hover{border-color:var(--ink)}
+.sub.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ===== grid ===== */
+.shop-wrap{max-width:1280px;margin:0 auto;padding:34px 24px 80px}
+.count{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:24px;letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono);border-bottom:1px solid var(--line);padding-bottom:14px}
+.count b{color:var(--ink)}
+.grid{display:grid;gap:38px 20px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1040px){.grid{grid-template-columns:repeat(4,1fr);gap:44px 24px}}
+.card{display:flex;flex-direction:column;position:relative}
+.card.hide{display:none}
+@media(min-width:700px){.card.feat:not(.hide){grid-column:span 2}}
+.tilelink{display:block;position:relative;overflow:hidden;background:var(--tile);aspect-ratio:1/1.04;border-radius:4px}
+.card.feat .tilelink{aspect-ratio:auto;height:100%;min-height:300px}
+@supports not (aspect-ratio:1){.tilelink{height:0;padding-bottom:104%}}
+.tilelink img{position:absolute;inset:0;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.card:hover .tilelink img{transform:scale(1.05)}
+.tilelink .quick{position:absolute;bottom:14px;inset-inline:14px;z-index:2;background:rgba(16,38,63,.92);color:#fff;text-align:center;font-size:12px;font-weight:900;letter-spacing:.06em;border-radius:999px;padding:12px;opacity:0;transform:translateY(10px);transition:.3s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.card:hover .quick{opacity:1;transform:none}
+@media(hover:none){.tilelink .quick{display:none}}
+.flag{position:absolute;top:12px;inset-inline-start:12px;z-index:2;background:#fff;border-radius:2px;padding:5px 12px;font-size:9px;font-weight:900;color:var(--ink);letter-spacing:.16em;text-transform:uppercase;box-shadow:0 4px 14px rgba(16,38,63,.12)}
+.flag.sale{background:var(--green);color:#fff}
+.kchip{position:absolute;top:12px;inset-inline-end:12px;z-index:2;border:1.5px solid rgba(16,38,63,.75);color:var(--ink);background:rgba(248,246,241,.85);border-radius:2px;padding:3px 9px;font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:.08em;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.meta{padding-top:14px;display:flex;flex-direction:column;flex:1}
+.meta .cat{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-family:var(--mono);margin-bottom:5px}
+.meta h3{font-size:16px;font-weight:900;line-height:1.4}
+.meta .pline{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.meta .pr{font-family:var(--mono);font-size:14.5px;font-weight:700;color:var(--ink)}
+.meta .pr small{font-size:10px;color:var(--muted);font-family:var(--font);font-weight:800}
+.meta .arrow{font-size:15px;font-weight:900;color:var(--orange-deep);transition:transform .25s}
+.card:hover .meta .arrow{transform:translateX(-5px)}
+
+/* ===== transparent nutrition rollover ===== */
+.nutov{position:absolute;inset:0;z-index:3;background:rgba(248,246,241,.82);backdrop-filter:blur(12px) saturate(1.1);-webkit-backdrop-filter:blur(12px) saturate(1.1);display:flex;flex-direction:column;justify-content:center;padding:20px 18px 62px;opacity:0;transition:opacity .35s ease;pointer-events:none}
+.card:hover .nutov,.card.showN .nutov{opacity:1}
+.nutov .nv-h{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-family:var(--mono);margin-bottom:10px;text-align:center}
+.nutov .nv-h em{font-style:normal;color:var(--orange-deep)}
+.nutov .nv-r{display:flex;justify-content:space-between;align-items:baseline;padding:7px 2px;border-top:1px solid rgba(16,38,63,.14);font-size:12px;font-weight:800;color:var(--ink)}
+.nutov .nv-r:last-of-type{border-bottom:1px solid rgba(16,38,63,.14)}
+.nutov .nv-r b{font-family:var(--mono);font-weight:700;font-size:13px}
+.nutov .nv-r b small{font-size:9px;color:var(--muted);font-weight:700}
+.nutov .nv-note{margin-top:9px;font-size:8.5px;font-weight:800;color:var(--muted);text-align:center;letter-spacing:.06em;font-family:var(--mono)}
+.nutov .nv-note.real{color:var(--green)}
+.card:hover .quick{z-index:4}
+.nut-toggle{display:none;position:absolute;top:12px;inset-inline-end:12px;z-index:5;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(16,38,63,.5);background:rgba(248,246,241,.85);color:var(--ink);font-weight:900;font-size:13px;font-family:var(--mono);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.card.showN .nut-toggle{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media(hover:none){
+  .nut-toggle{display:grid;place-items:center}
+  .kchip{inset-inline-end:50px}
+  .card.showN .quick{opacity:1;transform:none;display:block;z-index:4}
+}
+
+.empty{text-align:center;padding:70px 20px;font-weight:800;color:var(--muted);display:none;letter-spacing:.04em}
+
+footer{background:var(--navy);color:#9FB4D2;padding:44px 24px calc(48px + var(--sab));text-align:center}
+footer .flinks{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-size:12.5px;font-weight:800;margin-bottom:16px;letter-spacing:.02em}
+footer .flinks a:hover{color:var(--orange-hi)}
+footer .legal{font-size:10.5px;font-weight:600;color:#6E84A5;line-height:2;letter-spacing:.03em}
+
+/* ===== iPhone menu (design unchanged on desktop) ===== */
+.burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line,var(--gray-2,#E2DCCE));background:transparent;color:var(--ink,var(--navy,#122B4A));flex-shrink:0}
+.burger svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+@media(min-width:960px){.burger{display:none}}
+.mmenu{position:fixed;inset:0;z-index:300;background:linear-gradient(160deg,#122B4A,#0A1B31 70%);display:flex;flex-direction:column;justify-content:center;padding:80px 34px 50px;transform:translateY(-102%);transition:transform .5s cubic-bezier(.77,0,.18,1);overflow-y:auto}
+.mmenu.open{transform:translateY(0)}
+.mmenu::before{content:"";position:absolute;top:-120px;inset-inline-end:-100px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.25),transparent 65%);pointer-events:none}
+.mmenu .mkick{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.34em;color:#FFA05C;text-transform:uppercase;margin-bottom:20px}
+.mmenu a.mlink{display:block;color:#EAF1FA;font-size:27px;font-weight:900;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);letter-spacing:-.01em}
+.mmenu a.mlink:active{color:#FFA05C}
+.mmenu a.mcta{display:inline-flex;align-items:center;justify-content:center;margin-top:26px;background:linear-gradient(105deg,#FFA05C,#F07F2D 55%,#DD6516);color:#fff;font-weight:900;font-size:15px;border-radius:999px;padding:16px 34px;box-shadow:0 14px 34px rgba(240,127,45,.4)}
+.mmenu .mfoot{margin-top:auto;padding-top:28px;font-size:11px;font-weight:700;color:#8FA6C6}
+.mclose{position:absolute;top:calc(20px + env(safe-area-inset-top,0px));inset-inline-end:22px;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:none;color:#fff;font-size:20px;font-weight:900;display:grid;place-items:center}
+body.menu-open{overflow:hidden}
+</style>
+</head>
+<body>
+
+<div class="announce">دفعة اليوم <b>NM-26</b> — خُبزت 05:00 فجراً · توصيل مجاني فوق <b>150 ر.س</b></div>
+
+<nav class="main">
+  <div class="bar">
+    <a class="logo" href="newme-main.html"><span class="mark"></span><b>نيو مي</b></a>
+    <div class="nav-links">
+      <a href="newme-main.html#about">عن نيومي</a><a href="newme-main.html#journey">الرحلة</a><a class="on" href="newme-store.html">المتجر</a><a href="newme-subscribe.html">الاشتراكات</a><a href="newme-main.html#articles">مقالات</a><a href="newme-consult.html">الاستشارات</a><a href="newme-terms.html">الشروط</a><a href="newme-main.html#recipes">وصفات</a>
+    </div>
+    <button class="burger" id="mBurger" aria-label="القائمة"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a href="newme-subscribe.html" class="nav-cta">اشترك ووفّر</a>
+  </div>
+</nav>
+
+<header class="phead">
+  <div class="wrap" style="display:block"><div class="rule"></div></div>
+  <div class="wrap">
+    <div>
+      <span class="kick">NEWME STORE — BATCH NM-26</span>
+      <h1>متجر <em>نيومي</em></h1>
+      <p class="lead">مخبوزات وحلويات تُحضّر طازجة فجر كل يوم، بمكونات مختارة بعناية وبدون مواد حافظة.</p>
+    </div>
+    <aside>
+      <div><b>48</b><span>منتجاً طازجاً</span></div>
+      <div><b>05:00</b><span>ساعة الخبز</span></div>
+      <div><b>≤48h</b><span>نافذة التوصيل</span></div>
+    </aside>
+  </div>
+</header>
+
+<div class="filters">
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-cat="all">الكل <sup>48</sup></button>
+    <button class="tab" data-cat="bakery">المخبوزات <sup>29</sup></button>
+    <button class="tab" data-cat="sweets">الحلويات <sup>16</sup></button>
+    <button class="tab" data-cat="others">أخرى <sup>03</sup></button>
+  </div>
+  <div class="subs-row" id="subsRow">
+    <button class="sub on" data-sub="all">الكل</button>
+    <button class="sub" data-sub="bread">الخبز</button>
+    <button class="sub" data-sub="croissant">الكرواسون</button>
+    <button class="sub" data-sub="crackers">المقرمشات</button>
+    <button class="sub" data-sub="rusk">البقصم</button>
+    <button class="sub" data-sub="pies">الفطائر</button>
+    <button class="sub" data-sub="crumbs">البقسماط المطحون</button>
+  </div>
+</div>
+
+<div class="shop-wrap">
+  <div class="count"><span>COLLECTION — <b id="shownCat">ALL</b></span><span>عرض <b id="shown">48</b> / 48 · مرّر على المنتج للقيم الغذائية</span></div>
+  <div class="grid" id="grid">
+    <article class="card" data-cat="bakery" data-sub="crumbs">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/breadcrumbs-583"><span class="kchip">105 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20bowl%20of%20plain%20golden%20breadcrumbs%20with%20wooden%20spoon%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=121&model=flux" alt="بقسماط مطحون سادة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 30غ</em></span><span class="nv-r"><span>السعرات</span><b>105 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>1 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>20 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — البقسماط</span><h3>بقسماط مطحون سادة</h3>
+      <div class="pline"><span class="pr">15 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/breadcrumbs-583">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crumbs">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/italian-seasoning-breadcrumbs-498"><span class="kchip">45 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20breadcrumbs%20with%20dried%20basil%20oregano%20rosemary%20herbs%20in%20bowl%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=122&model=flux" alt="بقسماط بالأعشاب الإيطالية" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة</em></span><span class="nv-r"><span>السعرات</span><b>45 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>1.5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>0.5 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>8 <small>غ</small></b></span><span class="nv-note real">✓ من صفحة المنتج الرسمية</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — البقسماط</span><h3>بقسماط بالأعشاب الإيطالية</h3>
+      <div class="pline"><span class="pr">15 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/italian-seasoning-breadcrumbs-498">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crumbs">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/garlic-breadcrumbs-497"><span class="kchip">48 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20golden%20garlic%20breadcrumbs%20with%20garlic%20cloves%20in%20ceramic%20bowl%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=123&model=flux" alt="بقسماط بالثوم" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 30غ</em></span><span class="nv-r"><span>السعرات</span><b>48 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>1.5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>0.6 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>8 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — البقسماط</span><h3>بقسماط بالثوم</h3>
+      <div class="pline"><span class="pr">15 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/garlic-breadcrumbs-497">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="rusk">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/za-atar-rusk-495"><span class="kchip">90 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20crunchy%20rusk%20bread%20slices%20topped%20with%20zaatar%20herbs%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=124&model=flux" alt="بقصم الزعتر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>لقطعتين</em></span><span class="nv-r"><span>السعرات</span><b>90 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>13 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — البقصم</span><h3>بقصم الزعتر</h3>
+      <div class="pline"><span class="pr">9 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/za-atar-rusk-495">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="rusk">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/sweet-rusk-494"><span class="kchip">100 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20sweet%20golden%20rusk%20toast%20slices%20with%20sesame%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=125&model=flux" alt="بقصم حلو" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>لقطعتين</em></span><span class="nv-r"><span>السعرات</span><b>100 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>2.5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>16 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — البقصم</span><h3>بقصم حلو</h3>
+      <div class="pline"><span class="pr">9 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/sweet-rusk-494">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="rusk">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/salted-rusk-493"><span class="kchip">88 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20salted%20crunchy%20rusk%20bread%20slices%20stacked%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=126&model=flux" alt="بقصم مالح" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>لقطعتين</em></span><span class="nv-r"><span>السعرات</span><b>88 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>13 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — البقصم</span><h3>بقصم مالح</h3>
+      <div class="pline"><span class="pr">9 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/salted-rusk-493">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crackers">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/cheddar-cheese-crackers-492"><span class="kchip">140 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20thin%20cheddar%20cheese%20crackers%20stacked%20on%20plate%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=127&model=flux" alt="مقرمشات جبن الشيدر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 30غ</em></span><span class="nv-r"><span>السعرات</span><b>140 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>15 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — المقرمشات</span><h3>مقرمشات جبن الشيدر</h3>
+      <div class="pline"><span class="pr">22 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/cheddar-cheese-crackers-492">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crackers">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/za-atar-crackers-491"><span class="kchip">130 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20thin%20crackers%20topped%20with%20zaatar%20herbs%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=128&model=flux" alt="مقرمشات الزعتر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 30غ</em></span><span class="nv-r"><span>السعرات</span><b>130 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>16 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — المقرمشات</span><h3>مقرمشات الزعتر</h3>
+      <div class="pline"><span class="pr">22 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/za-atar-crackers-491">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crackers">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/rosemary-crackers-490"><span class="kchip">130 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20thin%20crackers%20with%20rosemary%20sprigs%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=129&model=flux" alt="مقرمشات إكليل الجبل" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 30غ</em></span><span class="nv-r"><span>السعرات</span><b>130 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>16 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — المقرمشات</span><h3>مقرمشات إكليل الجبل</h3>
+      <div class="pline"><span class="pr">22 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/rosemary-crackers-490">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crackers">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/sea-salt-crackers-489"><span class="kchip">128 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20thin%20crackers%20with%20sea%20salt%20flakes%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=130&model=flux" alt="مقرمشات ملح البحر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 30غ</em></span><span class="nv-r"><span>السعرات</span><b>128 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>16 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — المقرمشات</span><h3>مقرمشات ملح البحر</h3>
+      <div class="pline"><span class="pr">22 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/sea-salt-crackers-489">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crackers">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/star-anise-crackers-488"><span class="kchip">132 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20thin%20golden%20crackers%20with%20star%20anise%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=131&model=flux" alt="مقرمشات اليانسون النجمي" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 30غ</em></span><span class="nv-r"><span>السعرات</span><b>132 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>17 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — المقرمشات</span><h3>مقرمشات اليانسون النجمي</h3>
+      <div class="pline"><span class="pr">22 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/star-anise-crackers-488">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="crackers">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/granola-seeds-487"><span class="kchip">190 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20granola%20clusters%20with%20mixed%20seeds%20in%20bowl%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=132&model=flux" alt="جرانولا البذور" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للحصة 45غ</em></span><span class="nv-r"><span>السعرات</span><b>190 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>9 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>20 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — المقرمشات</span><h3>جرانولا البذور</h3>
+      <div class="pline"><span class="pr">22 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/granola-seeds-487">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="croissant">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/cheese-croissant-582"><span class="kchip">250 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20golden%20croissant%20filled%20with%20melted%20cheese%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=133&model=flux" alt="كرواسون الجبن" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>250 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>8 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>13 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>25 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الكرواسون</span><h3>كرواسون الجبن</h3>
+      <div class="pline"><span class="pr">11 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/cheese-croissant-582">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="croissant">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/chocolate-croissant-486"><span class="kchip">280 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20croissant%20with%20chocolate%20filling%20drizzle%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=134&model=flux" alt="كرواسون الشوكولاتة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>280 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>15 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>32 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الكرواسون</span><h3>كرواسون الشوكولاتة</h3>
+      <div class="pline"><span class="pr">16 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/chocolate-croissant-486">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="croissant">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/almond-croissant-485"><span class="kchip">300 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20almond%20croissant%20with%20flaked%20almonds%20powdered%20sugar%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=135&model=flux" alt="كرواسون اللوز" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>300 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>17 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>30 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الكرواسون</span><h3>كرواسون اللوز</h3>
+      <div class="pline"><span class="pr">19 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/almond-croissant-485">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="croissant">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/plain-croissant-482"><span class="kchip">230 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20classic%20plain%20golden%20butter%20croissant%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=136&model=flux" alt="كرواسون سادة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>230 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>12 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>26 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الكرواسون</span><h3>كرواسون سادة</h3>
+      <div class="pline"><span class="pr">10 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/plain-croissant-482">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="pies">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/za-atar-pie-484"><span class="kchip">180 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20zaatar%20flatbread%20pie%20on%20wooden%20board%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=137&model=flux" alt="فطيرة الزعتر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>180 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>8 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>23 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الفطائر</span><h3>فطيرة الزعتر</h3>
+      <div class="pline"><span class="pr">10 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/za-atar-pie-484">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="pies">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/pizza-481"><span class="flag sale">تخفيض</span><span class="kchip">220 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20small%20healthy%20pizza%20with%20vegetables%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=138&model=flux" alt="بيتزا" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>220 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>9 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>8 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>27 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الفطائر</span><h3>بيتزا</h3>
+      <div class="pline"><span class="pr">10 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/pizza-481">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="pies">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/spinach-pie-480"><span class="kchip">170 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20triangle%20spinach%20pie%20pastry%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=139&model=flux" alt="فطيرة السبانخ" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>170 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>21 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الفطائر</span><h3>فطيرة السبانخ</h3>
+      <div class="pline"><span class="pr">10 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/spinach-pie-480">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="pies">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/cheese-pie-478"><span class="kchip">200 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20cheese%20pie%20pastry%20golden%20baked%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=140&model=flux" alt="فطيرة الجبن" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>200 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>8 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>9 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>22 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الفطائر</span><h3>فطيرة الجبن</h3>
+      <div class="pline"><span class="pr">10 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/cheese-pie-478">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/eid-bread-477"><span class="kchip">210 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20festive%20decorated%20round%20eid%20bread%20loaf%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=141&model=flux" alt="خبز العيد" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>210 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>38 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>خبز العيد</h3>
+      <div class="pline"><span class="pr">23 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/eid-bread-477">←</a></div></div>
+    </article>
+    <article class="card feat" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="newme-product.html"><span class="flag">الأكثر مبيعاً</span><span class="kchip">119 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20soft%20bread%20rolls%20coated%20with%20mixed%20seeds%20flax%20sesame%20sunflower%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=142&model=flux" alt="خبز البذور المتعدد" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>119 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>12.1 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>5 <small>غ</small></b></span><span class="nv-note real">✓ من صفحة المنتج الرسمية</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>خبز البذور المتعدد</h3>
+      <div class="pline"><span class="pr">23 <small>ر.س</small></span><a class="arrow" href="newme-product.html">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/simit-bread-475"><span class="kchip">230 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20turkish%20simit%20bread%20rings%20with%20sesame%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=143&model=flux" alt="خبز السميط" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>230 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>8 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>42 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>خبز السميط</h3>
+      <div class="pline"><span class="pr">23 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/simit-bread-475">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/filo-sheets-474"><span class="kchip">60 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20thin%20filo%20pastry%20sheets%20stacked%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=144&model=flux" alt="شرائح عجينة الفيلو" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>60 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>2 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>0.5 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>12 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>شرائح عجينة الفيلو</h3>
+      <div class="pline"><span class="pr">22 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/filo-sheets-474">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/baguette-473"><span class="kchip">180 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20french%20baguette%20loaves%20on%20linen%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=145&model=flux" alt="الباغيت" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للنصف</em></span><span class="nv-r"><span>السعرات</span><b>180 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>1 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>36 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>الباغيت</h3>
+      <div class="pline"><span class="pr">11.99 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/baguette-473">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/burger-bun-472"><span class="kchip">170 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20soft%20burger%20buns%20with%20sesame%20seeds%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=146&model=flux" alt="خبز البرغر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>170 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>30 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>خبز البرغر</h3>
+      <div class="pline"><span class="pr">11.99 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/burger-bun-472">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/toast-471"><span class="kchip">85 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20sliced%20toast%20bread%20loaf%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=147&model=flux" alt="التوست" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>85 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3.5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>1 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>15 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>التوست</h3>
+      <div class="pline"><span class="pr">11.99 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/toast-471">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/samoli-bread-470"><span class="kchip">160 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20soft%20samoli%20bread%20rolls%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=148&model=flux" alt="خبز الصامولي" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>160 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>2 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>30 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>خبز الصامولي</h3>
+      <div class="pline"><span class="pr">11.99 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/samoli-bread-470">←</a></div></div>
+    </article>
+    <article class="card" data-cat="bakery" data-sub="bread">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/arabic-bread-469"><span class="kchip">140 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20round%20arabic%20pita%20bread%20stack%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=149&model=flux" alt="الخبز العربي" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للرغيف</em></span><span class="nv-r"><span>السعرات</span><b>140 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>1 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>28 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">BAKERY — الخبز</span><h3>الخبز العربي</h3>
+      <div class="pline"><span class="pr">11.99 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/arabic-bread-469">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/happy-times-cake-514"><span class="flag">للمناسبات</span><span class="kchip">320 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20celebration%20layered%20cake%20with%20elegant%20decoration%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=150&model=flux" alt="كيكة الأوقات السعيدة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>320 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>14 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>45 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كيكة الأوقات السعيدة</h3>
+      <div class="pline"><span class="pr">200 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/happy-times-cake-514">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/marble-cake-513"><span class="kchip">310 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20marble%20swirl%20cake%20sliced%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=151&model=flux" alt="كيكة الرخام" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>310 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>14 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>42 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كيكة الرخام</h3>
+      <div class="pline"><span class="pr">49 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/marble-cake-513">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/cinnamon-donuts-512"><span class="kchip">240 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20cinnamon%20sugar%20donuts%20stacked%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=152&model=flux" alt="دونات القرفة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>240 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>11 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>32 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>دونات القرفة</h3>
+      <div class="pline"><span class="pr">30 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/cinnamon-donuts-512">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/waffle-511"><span class="kchip">290 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20golden%20waffles%20with%20honey%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=153&model=flux" alt="وافل" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>290 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>12 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>40 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>وافل</h3>
+      <div class="pline"><span class="pr">30 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/waffle-511">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/pancake-510"><span class="kchip">250 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20stack%20of%20fluffy%20pancakes%20with%20syrup%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=154&model=flux" alt="بان كيك" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>250 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>6 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>8 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>38 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>بان كيك</h3>
+      <div class="pline"><span class="pr">30 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/pancake-510">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/lemon-cake-509"><span class="kchip">300 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20lemon%20loaf%20cake%20with%20glaze%20and%20lemon%20slices%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=155&model=flux" alt="كيكة الليمون" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>300 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>13 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>42 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كيكة الليمون</h3>
+      <div class="pline"><span class="pr">33 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/lemon-cake-509">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/saffron-cake-508"><span class="kchip">295 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20golden%20saffron%20cake%20slices%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=156&model=flux" alt="كيكة الزعفران" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>295 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>12 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>42 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كيكة الزعفران</h3>
+      <div class="pline"><span class="pr">33 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/saffron-cake-508">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/coconut-cake-507"><span class="kchip">315 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20coconut%20cake%20with%20shredded%20coconut%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=157&model=flux" alt="كيكة جوز الهند" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>315 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>16 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>40 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كيكة جوز الهند</h3>
+      <div class="pline"><span class="pr">33 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/coconut-cake-507">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/coffee-cake-506"><span class="kchip">305 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20coffee%20cake%20with%20coffee%20beans%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=158&model=flux" alt="كيكة القهوة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>305 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>4 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>13 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>42 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كيكة القهوة</h3>
+      <div class="pline"><span class="pr">33 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/coffee-cake-506">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/chocolate-cake-505"><span class="kchip">330 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20rich%20chocolate%20cake%20slice%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=159&model=flux" alt="كيكة الشوكولاتة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للشريحة</em></span><span class="nv-r"><span>السعرات</span><b>330 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>16 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>43 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كيكة الشوكولاتة</h3>
+      <div class="pline"><span class="pr">33 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/chocolate-cake-505">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/walnut-mamoul-504"><span class="kchip">150 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20maamoul%20cookies%20filled%20with%20walnuts%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=160&model=flux" alt="معمول الجوز" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>150 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>20 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>معمول الجوز</h3>
+      <div class="pline"><span class="pr">20 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/walnut-mamoul-504">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/pistachio-mamoul-503"><span class="kchip">155 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20maamoul%20cookies%20with%20pistachio%20filling%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=161&model=flux" alt="معمول الفستق" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>155 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>3 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>20 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>معمول الفستق</h3>
+      <div class="pline"><span class="pr">20 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/pistachio-mamoul-503">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/date-mamoul-502"><span class="kchip">140 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20date%20filled%20maamoul%20cookies%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=162&model=flux" alt="معمول التمر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>140 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>2 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>24 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>معمول التمر</h3>
+      <div class="pline"><span class="pr">16 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/date-mamoul-502">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/ghoraibah-501"><span class="kchip">120 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20ghraybeh%20shortbread%20cookies%20with%20pistachio%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=163&model=flux" alt="غريبة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>120 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>1.5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>7 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>14 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>غريبة</h3>
+      <div class="pline"><span class="pr">16 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/ghoraibah-501">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/mocha-cookies-500"><span class="kchip">110 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20mocha%20chocolate%20cookies%20stacked%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=164&model=flux" alt="كوكيز الموكا" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>110 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>1.5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>15 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>كوكيز الموكا</h3>
+      <div class="pline"><span class="pr">15 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/mocha-cookies-500">←</a></div></div>
+    </article>
+    <article class="card" data-cat="sweets" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/chocolate-petitfour-499"><span class="kchip">95 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20chocolate%20petit%20four%20cookies%20assorted%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=165&model=flux" alt="بيتيفور الشوكولاتة" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>للقطعة</em></span><span class="nv-r"><span>السعرات</span><b>95 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>1 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>5 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>12 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">SWEETS — الحلويات</span><h3>بيتيفور الشوكولاتة</h3>
+      <div class="pline"><span class="pr">16 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/chocolate-petitfour-499">←</a></div></div>
+    </article>
+    <article class="card" data-cat="others" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/pickled-white-cabbage-520"><span class="kchip">25 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20pickled%20white%20cabbage%20in%20glass%20jar%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=166&model=flux" alt="مخلل الملفوف الأبيض" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>لكل 100غ</em></span><span class="nv-r"><span>السعرات</span><b>25 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>1 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>0.2 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>4 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">PANTRY — أخرى</span><h3>مخلل الملفوف الأبيض</h3>
+      <div class="pline"><span class="pr">15 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/pickled-white-cabbage-520">←</a></div></div>
+    </article>
+    <article class="card" data-cat="others" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/pickled-red-cabbage-519"><span class="kchip">27 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20pickled%20red%20cabbage%20in%20glass%20jar%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=167&model=flux" alt="مخلل الملفوف الأحمر" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>لكل 100غ</em></span><span class="nv-r"><span>السعرات</span><b>27 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>1 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>0.2 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>5 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">PANTRY — أخرى</span><h3>مخلل الملفوف الأحمر</h3>
+      <div class="pline"><span class="pr">15 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/pickled-red-cabbage-519">←</a></div></div>
+    </article>
+    <article class="card" data-cat="others" data-sub="">
+      <a class="tilelink" href="https://newmeforever.com/en/shop/pickled-lemons-518"><span class="kchip">30 kcal</span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20editorial%20food%20photography%2C%20pickled%20preserved%20lemons%20in%20glass%20jar%2C%20soft%20natural%20window%20light%20on%20warm%20neutral%20beige%20background%2C%20premium%20minimal%20styling%2C%20appetizing%2C%208k%20photorealistic?width=560&height=580&nologo=true&seed=168&model=flux" alt="ليمون مخلل" onerror="this.remove()"><span class="nutov" aria-hidden="true"><span class="nv-h">القيمة الغذائية · <em>لكل 100غ</em></span><span class="nv-r"><span>السعرات</span><b>30 <small>kcal</small></b></span><span class="nv-r"><span>البروتين</span><b>0.5 <small>غ</small></b></span><span class="nv-r"><span>الدهون</span><b>0.2 <small>غ</small></b></span><span class="nv-r"><span>الكربوهيدرات</span><b>7 <small>غ</small></b></span><span class="nv-note">* قيم تقديرية — تُعتمد من ملصق المنتج</span></span><span class="quick">عرض المنتج</span></a>
+      <button class="nut-toggle" aria-label="القيمة الغذائية">i</button>
+      <div class="meta"><span class="cat">PANTRY — أخرى</span><h3>ليمون مخلل</h3>
+      <div class="pline"><span class="pr">15 <small>ر.س</small></span><a class="arrow" href="https://newmeforever.com/en/shop/pickled-lemons-518">←</a></div></div>
+    </article>
+  </div>
+  <div class="empty" id="empty">لا توجد منتجات في هذا التصنيف حالياً.</div>
+</div>
+
+<footer>
+  <div class="flinks"><a href="newme-main.html#about">عن نيومي</a><a href="newme-subscribe.html">الاشتراكات</a><a href="newme-main.html#faq">الأسئلة الشائعة</a><a href="https://wa.me/966533360317">واتساب</a></div>
+  <div class="legal">© 2026 نيو مي — جميع الحقوق محفوظة · الرقم الضريبي 312782087600003<br>طاقتك اليومية · جدّد حياتك · Renew your life</div>
+</footer>
+
+<script>
+function failOpen(){
+  try{document.querySelectorAll('img.aiimg').forEach(function(i){i.classList.add('loaded');});}catch(_){}
+}
+window.addEventListener('error',failOpen);
+try{
+'use strict';
+var cat='all', sub='all';
+var CATEN={all:'ALL',bakery:'BAKERY',sweets:'SWEETS',others:'PANTRY'};
+var cards=Array.prototype.slice.call(document.querySelectorAll('.card'));
+
+function apply(){
+  var n=0;
+  cards.forEach(function(c){
+    var okCat=(cat==='all')||c.getAttribute('data-cat')===cat;
+    var okSub=(cat!=='bakery')||sub==='all'||c.getAttribute('data-sub')===sub;
+    var show=okCat&&okSub;
+    c.classList.toggle('hide',!show);
+    if(show)n++;
+  });
+  document.getElementById('shown').textContent=n;
+  document.getElementById('shownCat').textContent=CATEN[cat]||'ALL';
+  document.getElementById('empty').style.display=n?'none':'block';
+  document.getElementById('subsRow').classList.toggle('show',cat==='bakery');
+  if(window.gsap){
+    var vis=cards.filter(function(c){return !c.classList.contains('hide');});
+    gsap.fromTo(vis,{y:20,opacity:0},{y:0,opacity:1,duration:.5,stagger:.02,ease:'power2.out',clearProps:'all',overwrite:true});
+  }
+}
+document.querySelectorAll('#tabs .tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('#tabs .tab').forEach(function(x){x.classList.remove('on');});
+    t.classList.add('on');
+    cat=t.getAttribute('data-cat'); sub='all';
+    document.querySelectorAll('#subsRow .sub').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-sub')==='all');});
+    apply();
+  });
+});
+document.querySelectorAll('#subsRow .sub').forEach(function(s){
+  s.addEventListener('click',function(){
+    document.querySelectorAll('#subsRow .sub').forEach(function(x){x.classList.remove('on');});
+    s.classList.add('on');
+    sub=s.getAttribute('data-sub');
+    apply();
+  });
+});
+document.querySelectorAll('.nut-toggle').forEach(function(b){
+  b.addEventListener('click',function(e){
+    e.preventDefault();
+    var card=b.closest('.card');
+    var was=card.classList.contains('showN');
+    document.querySelectorAll('.card.showN').forEach(function(c){c.classList.remove('showN');});
+    if(!was)card.classList.add('showN');
+  });
+});
+document.querySelectorAll('img.aiimg').forEach(function(img){
+  img.loading='lazy'; img.decoding='async';
+  if(img.complete&&img.naturalWidth>0)img.classList.add('loaded');
+  else img.addEventListener('load',function(){img.classList.add('loaded');});
+});
+}catch(err){ failOpen(); }
+</script>
+
+
+<div class="mmenu" id="mmenu"><button class="mclose" aria-label="إغلاق">×</button><div class="mkick">NEWME — MENU</div><a class="mlink" href="newme-main.html#about">عن نيومي</a><a class="mlink" href="newme-main.html#journey">الرحلة</a><a class="mlink" href="newme-store.html">المتجر</a><a class="mlink" href="newme-subscribe.html">الاشتراكات</a><a class="mlink" href="newme-main.html#articles">مقالات</a><a class="mlink" href="newme-main.html#recipes">وصفات</a><a class="mlink" href="newme-consult.html">الاستشارات</a><a class="mlink" href="newme-terms.html">الشروط والأحكام</a><a class="mcta" href="newme-subscribe.html">اشترك ووفّر ←</a><div class="mfoot">جدّد حياتك · Renew your life · واتساب <a href="https://wa.me/966533360317" style="color:#FFA05C">+966 53 336 0317</a></div></div>
+<script>
+try{(function(){
+var b=document.getElementById('mBurger'),m=document.getElementById('mmenu');
+if(!b||!m)return;
+function open(){m.classList.add('open');document.body.classList.add('menu-open');}
+function close(){m.classList.remove('open');document.body.classList.remove('menu-open');}
+b.addEventListener('click',open);
+m.querySelector('.mclose').addEventListener('click',close);
+m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();}catch(_){}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+try{
+if(window.gsap&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){
+  gsap.from('.phead .rule',{scaleX:0,transformOrigin:'right center',duration:1,ease:'power3.inOut',clearProps:'all'});
+  gsap.from('.phead .kick,.phead h1,.phead .lead',{y:34,opacity:0,duration:.8,stagger:.12,delay:.2,ease:'power3.out',clearProps:'all'});
+  gsap.from('.phead aside div',{y:20,opacity:0,duration:.6,stagger:.1,delay:.55,ease:'power2.out',clearProps:'all'});
+  gsap.from('#tabs .tab',{y:12,opacity:0,duration:.45,stagger:.06,delay:.4,ease:'power2.out',clearProps:'all'});
+  gsap.from('.card',{y:30,opacity:0,duration:.6,stagger:.03,delay:.5,ease:'power3.out',clearProps:'all'});
+}
+}catch(_){}
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#122B4A">
+<title>مقالات ووصفات — نيو مي</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#10263F; --bg:#F8F6F1; --tile:#EFEBE2; --line:#E2DCCE; --line-2:#D2CBBA;
+  --ink:#10263F; --body:#4A5568; --muted:#8A93A3;
+  --orange:#E8762A; --orange-deep:#C95F14; --orange-hi:#FFA05C; --green:#2E9E6B;
+  --font:'Cairo',-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--body);line-height:1.9;font-size:15.5px;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+h1,h2,h3{color:var(--ink);font-weight:900;line-height:1.25;letter-spacing:-.015em}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.aiimg{transition:opacity 1s ease}
+.js .aiimg{opacity:0}
+.js .aiimg.loaded{opacity:1}
+.wrap{max-width:780px;margin:0 auto;padding:0 24px}
+.kick{font-size:10.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--orange-deep);font-family:var(--mono)}
+.i{width:1em;height:1em;fill:currentColor;vertical-align:-0.12em;display:inline-block}
+.announce{background:var(--navy);color:#EAF1FA;text-align:center;padding:calc(9px + var(--sat)) 14px 9px;font-size:12px;font-weight:700}
+.announce b{color:var(--orange-hi)}
+nav.main{position:sticky;top:0;z-index:90;background:rgba(248,246,241,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 24px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,#24487A,var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
+.logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.9),rgba(255,255,255,.2) 36%,transparent 60%)}
+.logo b{font-size:18px;color:var(--ink);font-weight:900}
+.nav-links{display:none;gap:24px;font-weight:800;font-size:13px;color:var(--ink)}
+.nav-links a{padding:6px 0;border-bottom:2px solid transparent;white-space:nowrap}
+.nav-links a:hover,.nav-links a.on{border-color:var(--orange)}
+@media(min-width:960px){.nav-links{display:flex}}
+.nav-cta{font-size:12.5px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:10px 22px;transition:.2s}
+.nav-cta:hover{background:var(--ink);color:#fff}
+.phead{padding:56px 24px 30px;text-align:center}
+.phead h1{font-size:clamp(34px,8vw,64px);margin:8px 0 10px}
+.phead h1 em{font-style:normal;color:var(--orange-deep)}
+.phead p{font-size:14.5px;font-weight:600;max-width:520px;margin:0 auto}
+.toc{display:flex;justify-content:center;gap:10px;margin-top:20px;flex-wrap:wrap}
+.toc a{border:1.5px solid var(--line-2);border-radius:999px;padding:8px 20px;font-size:12.5px;font-weight:900;color:var(--ink);transition:.2s}
+.toc a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sec-rule{max-width:1280px;margin:40px auto 0;padding:0 24px}
+.sec-rule .line{height:1px;background:var(--line-2)}
+.sec-rule h2{font-size:clamp(26px,5.5vw,42px);padding-top:24px}
+.sec-rule .kick{display:block;padding-top:22px;margin-bottom:-16px}
+.post{max-width:780px;margin:44px auto 0;padding:0 24px 44px;border-bottom:1px solid var(--line)}
+.post:last-of-type{border-bottom:none}
+.post .pimg{aspect-ratio:16/8.5;border-radius:6px;overflow:hidden;position:relative;background:var(--tile);margin-bottom:20px}
+@supports not (aspect-ratio:1){.post .pimg{height:0;padding-bottom:53%}}
+.post .pimg img{position:absolute;inset:0}
+.post .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:10.5px;font-weight:800;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-family:var(--mono);margin-bottom:10px}
+.post .meta b{color:var(--orange-deep)}
+.post h3{font-size:clamp(21px,4.8vw,30px);margin-bottom:12px}
+.post p{margin-bottom:14px;font-weight:600;font-size:15px}
+.post .hl{background:#fff;border:1px solid var(--line);border-inline-start:3px solid var(--orange);border-radius:4px;padding:14px 18px;font-size:13.5px;font-weight:700;color:var(--ink);margin:18px 0}
+.post .back{font-size:12.5px;font-weight:900;color:var(--orange-deep);border-bottom:1.5px solid var(--orange);padding-bottom:2px}
+.rmeta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.rmeta span{border:1.5px solid var(--line-2);border-radius:999px;padding:5px 14px;font-size:11px;font-weight:800;color:var(--ink);font-family:var(--mono)}
+.rcols{display:grid;gap:22px;margin:18px 0}
+@media(min-width:700px){.rcols{grid-template-columns:1fr 1.4fr}}
+.rbox{background:#fff;border:1px solid var(--line);border-radius:6px;padding:18px 20px}
+.rbox h4{font-size:13px;color:var(--ink);letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono);font-weight:700;margin-bottom:10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.rbox ul{list-style:none}
+.rbox ul li{padding:5px 0;font-size:13.5px;font-weight:700;color:var(--ink);border-bottom:1px dashed var(--line)}
+.rbox ul li:last-child{border-bottom:none}
+.rbox ol{padding-inline-start:18px}
+.rbox ol li{padding:5px 0;font-size:13.5px;font-weight:600}
+footer{background:var(--navy);color:#9FB4D2;padding:44px 24px calc(48px + var(--sab));text-align:center;margin-top:56px}
+footer .flinks{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-size:12.5px;font-weight:800;margin-bottom:16px}
+footer .flinks a:hover{color:var(--orange-hi)}
+footer .legal{font-size:10.5px;font-weight:600;color:#6E84A5;line-height:2}
+
+/* ===== iPhone menu (design unchanged on desktop) ===== */
+.burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line,var(--gray-2,#E2DCCE));background:transparent;color:var(--ink,var(--navy,#122B4A));flex-shrink:0}
+.burger svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+@media(min-width:960px){.burger{display:none}}
+.mmenu{position:fixed;inset:0;z-index:300;background:linear-gradient(160deg,#122B4A,#0A1B31 70%);display:flex;flex-direction:column;justify-content:center;padding:80px 34px 50px;transform:translateY(-102%);transition:transform .5s cubic-bezier(.77,0,.18,1);overflow-y:auto}
+.mmenu.open{transform:translateY(0)}
+.mmenu::before{content:"";position:absolute;top:-120px;inset-inline-end:-100px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.25),transparent 65%);pointer-events:none}
+.mmenu .mkick{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.34em;color:#FFA05C;text-transform:uppercase;margin-bottom:20px}
+.mmenu a.mlink{display:block;color:#EAF1FA;font-size:27px;font-weight:900;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);letter-spacing:-.01em}
+.mmenu a.mlink:active{color:#FFA05C}
+.mmenu a.mcta{display:inline-flex;align-items:center;justify-content:center;margin-top:26px;background:linear-gradient(105deg,#FFA05C,#F07F2D 55%,#DD6516);color:#fff;font-weight:900;font-size:15px;border-radius:999px;padding:16px 34px;box-shadow:0 14px 34px rgba(240,127,45,.4)}
+.mmenu .mfoot{margin-top:auto;padding-top:28px;font-size:11px;font-weight:700;color:#8FA6C6}
+.mclose{position:absolute;top:calc(20px + env(safe-area-inset-top,0px));inset-inline-end:22px;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:none;color:#fff;font-size:20px;font-weight:900;display:grid;place-items:center}
+body.menu-open{overflow:hidden}
+</style>
+</head>
+<body>
+
+<div class="announce">مقالات ووصفات يكتبها فريق تغذية <b>نيومي</b> — علم بلا تعقيد</div>
+
+<nav class="main">
+  <div class="bar">
+    <a class="logo" href="newme-main.html"><span class="mark"></span><b>نيو مي</b></a>
+    <div class="nav-links">
+      <a href="newme-main.html#about">عن نيومي</a><a href="newme-main.html#journey">الرحلة</a><a href="newme-store.html">المتجر</a><a href="newme-subscribe.html">الاشتراكات</a><a class="on" href="#articles">مقالات</a><a href="newme-consult.html">الاستشارات</a><a href="newme-terms.html">الشروط</a><a class="on" href="#recipes">وصفات</a>
+    </div>
+    <button class="burger" id="mBurger" aria-label="القائمة"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a href="newme-subscribe.html" class="nav-cta">اشترك ووفّر</a>
+  </div>
+</nav>
+
+<header class="phead">
+  <span class="kick">NEWME JOURNAL</span>
+  <h1>اعرف أكثر، <em>كُل أفضل</em></h1>
+  <p>مقالات قصيرة ووصفات عملية من فريق التغذية لدينا — كل شيء بسعرات محسوبة.</p>
+  <div class="toc"><a href="#articles">المقالات الصحية</a><a href="#recipes">الوصفات</a></div>
+</header>
+
+<!-- ================= ARTICLES ================= -->
+<div class="sec-rule" id="articles"><div class="line"></div><span class="kick">HEALTH — مقالات صحية</span><h2>المقالات</h2></div>
+
+<article class="post" id="a1">
+  <div class="pimg"><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20white%20lupin%20beans%20in%20wooden%20scoop%20with%20green%20lupin%20plant%20leaves%2C%20bright%20natural%20daylight%20on%20light%20stone%20surface%2C%20clean%20editorial%2C%208k?width=1200&height=640&nologo=true&seed=92&model=flux" alt="" onerror="this.remove()"></div>
+  <div class="meta"><span><b>تغذية</b></span><span>4 دقائق قراءة</span><span>د. لمى الشمري</span></div>
+  <h3>لماذا يُعد الترمس أقوى بروتين نباتي لم تسمع عنه؟</h3>
+  <p>حين نفكر في البروتين النباتي يقفز فول الصويا والعدس إلى الذهن، بينما تغيب حبة صغيرة عرفتها موائدنا منذ قرون: الترمس. تصل نسبة البروتين في الترمس الأبيض المقشور إلى نحو 40% من وزنه الجاف — رقم يضعه في صدارة البقوليات، ويجعله منافساً حقيقياً لمساحيق البروتين الصناعية.</p>
+  <p>وما يميز الترمس ليس البروتين وحده؛ فهو منخفض الكربوهيدرات بطبيعته وغني بالألياف، ما يمنحه مؤشراً جلايسيمياً منخفضاً ويجعله خياراً ذكياً لمن يراقبون سكر الدم أو يتبعون أنظمة قليلة الكربوهيدرات. كما أن قوامه بعد الطحن يمنح المخبوزات ليونة وشبعاً أعلى دون دقيق أبيض مكرر.</p>
+  <div class="hl">في مخبز نيومي، يدخل دقيق الترمس في خبزنا اليومي — لهذا تجد قطعة خبز البذور المتعدد تحمل 12.1غ بروتين مقابل 5غ كربوهيدرات صافية فقط.</div>
+  <p>القاعدة العملية: إن كنت تبحث عن شبعٍ أطول وطاقةٍ أثبت في نصف يومك الأول، فاستبدل خبز الإفطار الأبيض بخيار قائم على الترمس، وراقب الفرق في جوعك قبل الغداء.</p>
+  <a class="back" href="newme-store.html">تسوّق منتجات الترمس ←</a>
+</article>
+
+<article class="post" id="a2">
+  <div class="pimg"><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20healthy%20post%20workout%20meal%20with%20protein%20bread%20toast%20eggs%20and%20avocado%20beside%20gym%20towel%20and%20water%20bottle%2C%20bright%20natural%20light%2C%20clean%20lifestyle%20editorial%2C%208k?width=1200&height=640&nologo=true&seed=93&model=flux" alt="" onerror="this.remove()"></div>
+  <div class="meta"><span><b>لياقة</b></span><span>5 دقائق قراءة</span><span>أ. عبدالله الحربي</span></div>
+  <h3>كم غرام بروتين تحتاج فعلاً بعد التمرين؟</h3>
+  <p>الإجابة المختصرة التي يتفق عليها معظم مختصي تغذية الرياضيين: ما بين 0.3 و0.4 غرام لكل كيلوغرام من وزن جسمك في الوجبة الواحدة بعد التمرين. لشخص وزنه 80 كجم، هذا يعني نحو 25 إلى 32 غراماً — لا أكثر بكثير، فالجسم لا يخزّن فائض البروتين للعضلات.</p>
+  <p>الأهم من رقم الوجبة الواحدة هو مجموع يومك: الهدف الشائع لبناء العضلات يتراوح بين 1.6 و2.2 غرام لكل كيلوغرام يومياً، موزّعة على 3 إلى 5 وجبات متقاربة الحصص. التوزيع المنتظم يتفوق على وجبة واحدة ضخمة في نهاية اليوم.</p>
+  <div class="hl">مثال عملي من منتجاتنا: شريحتا توست + بيضتان بعد التمرين ≈ 19غ بروتين. أضف قطعة خبز البذور المتعدد (12.1غ) لتصل إلى نطاقك المستهدف.</div>
+  <p>وأخيراً: نافذة «الساعة الذهبية» بعد التمرين أقل صرامة مما يُشاع — المهم أن تصل وجبتك البروتينية خلال ساعتين تقريباً، وأن يكون يومك كله مضبوطاً. هذا بالضبط ما تفعله خطة البروتين+ في اشتراكات نيومي.</p>
+  <a class="back" href="newme-subscribe.html#plan=muscle">اطلع على خطة بناء العضلات ←</a>
+</article>
+
+<article class="post" id="a3">
+  <div class="pimg"><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20golden%20flax%20seeds%20in%20glass%20jar%20with%20wooden%20spoon%20and%20omega%20rich%20breakfast%20bowl%2C%20soft%20morning%20window%20light%2C%20clean%20editorial%2C%208k?width=1200&height=640&nologo=true&seed=94&model=flux" alt="" onerror="this.remove()"></div>
+  <div class="meta"><span><b>نمط حياة</b></span><span>3 دقائق قراءة</span><span>د. ريم الغامدي</span></div>
+  <h3>أوميغا-3 النباتي: ماذا تفعل ملعقة كتان يومياً لقلبك؟</h3>
+  <p>بذور الكتان من أغنى المصادر النباتية بحمض الألفا-لينولينيك (ALA)، وهو الشكل النباتي من أوميغا-3. ملعقة كبيرة واحدة من الكتان المطحون تمنحك ما يقارب 1.8 غرام منه — وهو ما يغطي الاحتياج اليومي المُوصى به لمعظم البالغين.</p>
+  <p>تشير مراجعات علمية عديدة إلى ارتباط الاستهلاك المنتظم للكتان بتحسّن مؤشرات صحة القلب، مثل ضغط الدم ومستويات الدهون. ولأن القشرة الصلبة تمنع الامتصاص، القاعدة الأهم: استهلكه مطحوناً — أو مخبوزاً داخل الخبز والمقرمشات.</p>
+  <div class="hl">لهذا نطحن بذور الكتان طازجة فجر كل يوم وندخلها في مقرمشاتنا وجرانولا البذور — أوميغا-3 تُؤكل، لا تُبتلع كحبوب.</div>
+  <p>أسهل ثلاث طرق لإدخاله في يومك: رشّة على اللبن أو الشوفان صباحاً، مقرمشات الكتان كسناك للعصر، أو شريحة خبز بذور مع العشاء. الانتظام أهم من الكمية.</p>
+  <a class="back" href="newme-store.html">تسوّق منتجات بذور الكتان ←</a>
+</article>
+
+<!-- ================= RECIPES ================= -->
+<div class="sec-rule" id="recipes"><div class="line"></div><span class="kick">KITCHEN — وصفات</span><h2>الوصفات</h2></div>
+
+<article class="post" id="r1">
+  <div class="pimg"><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20avocado%20toast%20on%20thick%20slice%20of%20seeded%20protein%20bread%20topped%20with%20poached%20egg%20and%20flax%20seeds%2C%20bright%20natural%20daylight%2C%20appetizing%20closeup%2C%208k?width=1200&height=640&nologo=true&seed=95&model=flux" alt="" onerror="this.remove()"></div>
+  <div class="meta"><span><b>إفطار</b></span><span>توست الترمس بالأفوكادو والبيض</span></div>
+  <h3>توست الترمس بالأفوكادو والبيض</h3>
+  <div class="rmeta"><span>15 دقيقة</span><span>320 kcal</span><span>21غ بروتين</span><span>حصة واحدة</span></div>
+  <div class="rcols">
+    <div class="rbox"><h4>المكونات</h4><ul>
+      <li>شريحة توست نيومي (أو خبز البذور المتعدد)</li>
+      <li>نصف حبة أفوكادو ناضجة</li>
+      <li>بيضة واحدة</li>
+      <li>ملعقة صغيرة بذور كتان</li>
+      <li>عصرة ليمون · ملح · فلفل أسود</li>
+    </ul></div>
+    <div class="rbox"><h4>الطريقة</h4><ol>
+      <li>حمّص شريحة التوست حتى تتحمّر أطرافها.</li>
+      <li>اهرس الأفوكادو مع الليمون والملح وافرده على التوست.</li>
+      <li>اسلق البيضة مسلوقاً خفيفاً (6 دقائق) أو اقلها على عين.</li>
+      <li>ضع البيضة فوق الأفوكادو ورشّ بذور الكتان والفلفل.</li>
+      <li>قدّمه فوراً — إفطار متكامل في أقل من ربع ساعة.</li>
+    </ol></div>
+  </div>
+  <a class="back" href="newme-product.html">اطلب خبز البذور المتعدد ←</a>
+</article>
+
+<article class="post" id="r2">
+  <div class="pimg"><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20yogurt%20parfait%20glass%20layered%20with%20granola%20honey%20and%20fresh%20berries%2C%20bright%20natural%20daylight%2C%20appetizing%20closeup%2C%208k?width=1200&height=640&nologo=true&seed=96&model=flux" alt="" onerror="this.remove()"></div>
+  <div class="meta"><span><b>سناك</b></span><span>بارفيه الجرانولا واللبن بالتوت</span></div>
+  <h3>بارفيه الجرانولا واللبن بالتوت</h3>
+  <div class="rmeta"><span>10 دقائق</span><span>280 kcal</span><span>14غ بروتين</span><span>حصة واحدة</span></div>
+  <div class="rcols">
+    <div class="rbox"><h4>المكونات</h4><ul>
+      <li>نصف كوب جرانولا البذور من نيومي</li>
+      <li>كوب لبن يوناني</li>
+      <li>حفنة توت طازج (أو فراولة)</li>
+      <li>ملعقة صغيرة عسل</li>
+    </ul></div>
+    <div class="rbox"><h4>الطريقة</h4><ol>
+      <li>في كوب زجاجي، ضع طبقة لبن ثم طبقة جرانولا.</li>
+      <li>أضف طبقة توت، وكرر الطبقات حتى يمتلئ الكوب.</li>
+      <li>اختم بحبات التوت ورشّة الجرانولا وخيط العسل.</li>
+      <li>قدّمه بارداً — سناك عصر مثالي قبل التمرين.</li>
+    </ol></div>
+  </div>
+  <a class="back" href="newme-store.html">اطلب جرانولا البذور ←</a>
+</article>
+
+<article class="post" id="r3">
+  <div class="pimg"><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20colorful%20salad%20bowl%20with%20white%20lupin%20beans%20quinoa%20cherry%20tomatoes%20cucumber%20and%20lemon%20dressing%2C%20bright%20natural%20daylight%2C%20appetizing%20overhead%2C%208k?width=1200&height=640&nologo=true&seed=97&model=flux" alt="" onerror="this.remove()"></div>
+  <div class="meta"><span><b>غداء</b></span><span>سلطة الترمس والكينوا بالليمون</span></div>
+  <h3>سلطة الترمس والكينوا بالليمون</h3>
+  <div class="rmeta"><span>20 دقيقة</span><span>410 kcal</span><span>24غ بروتين</span><span>حصتان</span></div>
+  <div class="rcols">
+    <div class="rbox"><h4>المكونات</h4><ul>
+      <li>كوب ترمس مقشّر جاهز</li>
+      <li>نصف كوب كينوا مطبوخة</li>
+      <li>خيار · طماطم كرزية · بقدونس</li>
+      <li>عصير ليمونة + ملعقتان زيت زيتون</li>
+      <li>ملح · كمون</li>
+    </ul></div>
+    <div class="rbox"><h4>الطريقة</h4><ol>
+      <li>اطبخ الكينوا واتركها تبرد قليلاً.</li>
+      <li>قطّع الخضار وأضفها للترمس والكينوا في وعاء واسع.</li>
+      <li>اخفق الليمون مع الزيت والملح والكمون وأسكبه فوقها.</li>
+      <li>قلّب وقدّمها مع مقرمشات الزعتر — غداء خفيف مشبع.</li>
+    </ol></div>
+  </div>
+  <a class="back" href="newme-store.html">تسوّق المكونات من نيومي ←</a>
+</article>
+
+<footer>
+  <div class="flinks"><a href="newme-main.html">الرئيسية</a><a href="newme-store.html">المتجر</a><a href="newme-subscribe.html">الاشتراكات</a><a href="https://wa.me/966533360317">واتساب</a></div>
+  <div class="legal">© 2026 نيو مي — جميع الحقوق محفوظة · الرقم الضريبي 312782087600003<br>المحتوى الصحي استرشادي ولا يغني عن استشارة مختص</div>
+</footer>
+
+<script>
+try{
+document.querySelectorAll('img.aiimg').forEach(function(img){
+  img.loading='lazy'; img.decoding='async';
+  if(img.complete&&img.naturalWidth>0)img.classList.add('loaded');
+  else img.addEventListener('load',function(){img.classList.add('loaded');});
+});
+}catch(_){document.querySelectorAll('img.aiimg').forEach(function(i){i.classList.add('loaded');});}
+</script>
+
+<div class="mmenu" id="mmenu"><button class="mclose" aria-label="إغلاق">×</button><div class="mkick">NEWME — MENU</div><a class="mlink" href="newme-main.html#about">عن نيومي</a><a class="mlink" href="newme-main.html#journey">الرحلة</a><a class="mlink" href="newme-store.html">المتجر</a><a class="mlink" href="newme-subscribe.html">الاشتراكات</a><a class="mlink" href="#articles">مقالات</a><a class="mlink" href="#recipes">وصفات</a><a class="mlink" href="newme-consult.html">الاستشارات</a><a class="mlink" href="newme-terms.html">الشروط والأحكام</a><a class="mcta" href="newme-subscribe.html">اشترك ووفّر ←</a><div class="mfoot">جدّد حياتك · Renew your life · واتساب <a href="https://wa.me/966533360317" style="color:#FFA05C">+966 53 336 0317</a></div></div>
+<script>
+try{(function(){
+var b=document.getElementById('mBurger'),m=document.getElementById('mmenu');
+if(!b||!m)return;
+function open(){m.classList.add('open');document.body.classList.add('menu-open');}
+function close(){m.classList.remove('open');document.body.classList.remove('menu-open');}
+b.addEventListener('click',open);
+m.querySelector('.mclose').addEventListener('click',close);
+m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();}catch(_){}
+</script>
+</body>
+</html>

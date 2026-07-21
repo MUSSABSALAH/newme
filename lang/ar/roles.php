@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'title' => 'الأدوار',
+    'subtitle' => 'إدارة الأدوار والأذونات الخاصة بها',
+    'add' => 'إضافة دور',
+    'create_title' => 'إنشاء دور',
+    'edit_title' => 'تعديل دور',
+    'name' => 'اسم الدور',
+    'name_ar' => 'اسم الدور (بالعربية)',
+    'name_en' => 'اسم الدور (بالإنجليزية)',
+    'identifier' => 'المعرّف',
+    'permissions' => 'الأذونات',
+    'permissions_count' => 'الأذونات',
+    'users_count' => 'المستخدمون',
+    'system' => 'مضاف بواسطة النظام',
+    'super_admin_note' => 'دور المدير العام يمتلك دائماً كل الأذونات.',
+    'no_roles' => 'لا توجد أدوار بعد.',
+    'select_all' => 'تحديد الكل',
+    'confirm_delete' => 'حذف هذا الدور؟ لا يمكن التراجع عن هذا الإجراء.',
+    'messages' => [
+        'created' => 'تم إنشاء الدور بنجاح.',
+        'updated' => 'تم تحديث الدور بنجاح.',
+        'deleted' => 'تم حذف الدور بنجاح.',
+    ],
+    'errors' => [
+        'system_role' => 'لا يمكن حذف الأدوار النظامية.',
+        'in_use' => 'هذا الدور مُسنَد إلى مستخدمين ولا يمكن حذفه.',
+    ],
+    'names' => [
+        'super_admin' => 'المدير العام',
+        'operations_manager' => 'مدير العمليات',
+        'store_manager' => 'مدير المتجر',
+        'inventory_officer' => 'مسؤول المخزون',
+        'order_officer' => 'مسؤول الطلبات',
+        'subscription_officer' => 'مسؤول الاشتراكات',
+        'nutritionist' => 'أخصائي التغذية',
+        'kitchen_staff' => 'طاقم المطبخ',
+        'delivery_coordinator' => 'منسّق التوصيل',
+        'driver' => 'سائق',
+        'accountant' => 'محاسب',
+        'customer_support' => 'دعم العملاء',
+        'appointment_officer' => 'مسؤول المواعيد',
+        'content_editor' => 'محرّر المحتوى',
+        'report_viewer' => 'عارض التقارير',
+    ],
+];
