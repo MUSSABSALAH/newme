@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Exceptions\RoleInUseException.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Exceptions\RoleInUseException
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-b2ca09c2b4bdf2977aa909285a887190f4729eccfd7de101b2947b8df5950246',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-f4743600a5018b89052aef92f83dac8ca56c208b21d573aac14394e17d779183',
    'data' => 
   array (
     'locatedSource' => 

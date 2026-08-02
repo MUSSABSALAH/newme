@@ -250,7 +250,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Settings\\Services\\SettingsService.php' => 'f36f0790ce2c8354d39916dfea7714c39eea96b135ec2fd9f55cef25763a42ec',
+      'C:\\newme\\app\\Modules\\Settings\\Services\\SettingsService.php' => '96c01c9dc59b71591f67bed9ef3414e73ed7724886b68da3c5b8ce7a7fde7a4d',
     ),
   ),
 ));

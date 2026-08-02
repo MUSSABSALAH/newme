@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Requests\Api\V1\Plans\PlanQuoteRequest.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Requests\Api\V1\Plans\PlanQuoteRequest
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-6f99136a0f10064bdc3515544162c1255d44634d8f9a4944aa10abe125553403',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-5d678fa40785708750c5dfbd0afd2fe4af0e0231991da1bdaf079c789cd180e6',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 12,
-    'endLine' => 33,
+    'endLine' => 34,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Foundation\\Http\\FormRequest',
@@ -103,7 +103,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @return array<string, mixed>
  */',
         'startLine' => 22,
-        'endLine' => 32,
+        'endLine' => 33,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Plans\DTOs\PricingRuleData.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Plans\DTOs\PricingRuleData
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-406975c61915ea74970f05044bf3107a41458f6da556ac499fb27373be017ce9',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-c66caa774852412cd502a5d6b2519c8e089575f915743485520a2bc2bcf6fc28',
    'data' => 
   array (
     'locatedSource' => 

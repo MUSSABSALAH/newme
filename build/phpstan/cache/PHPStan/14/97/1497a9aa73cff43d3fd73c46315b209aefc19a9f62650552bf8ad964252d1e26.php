@@ -830,7 +830,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Notifications\\PasswordResetNotification.php' => '97188bd96e848bd2b44cdd09cc34f893c218a58d91b7e18e807d34e9b15b00ae',
+      'C:\\newme\\app\\Modules\\Identity\\Notifications\\PasswordResetNotification.php' => 'ec7d3c0a2d79a904a67b64fe26fc72d3fbec783ca13cfaff54ad76b9c8ddfacd',
       'C:\\newme\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Bus\\Queueable.php' => '7df8b51aab8bd3196229be1a8e398c2c2ec636ae1767ce499a64bfdbf5675c47',
     ),
   ),

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Plans\Enums\DurationUnit.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Plans\Enums\DurationUnit
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-71aa22f28377679404733a4fad28634834d6404a9e60efbb2440ad4260a2e7b2',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-9fb02048ad6373a531ce70df9aeac4c7603999d39d69e2f42fee2aa383fb8c5d',
    'data' => 
   array (
     'locatedSource' => 
@@ -531,9 +531,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 12,
             'endLine' => 12,
             'startTokenPos' => 32,
-            'startFilePos' => 173,
+            'startFilePos' => 184,
             'endTokenPos' => 32,
-            'endFilePos' => 177,
+            'endFilePos' => 188,
           ),
         ),
         'attributes' => 
@@ -556,9 +556,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 13,
             'endLine' => 13,
             'startTokenPos' => 41,
-            'startFilePos' => 196,
+            'startFilePos' => 208,
             'endTokenPos' => 41,
-            'endFilePos' => 201,
+            'endFilePos' => 213,
           ),
         ),
         'attributes' => 
@@ -581,9 +581,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 14,
             'endLine' => 14,
             'startTokenPos' => 50,
-            'startFilePos' => 221,
+            'startFilePos' => 234,
             'endTokenPos' => 50,
-            'endFilePos' => 227,
+            'endFilePos' => 240,
           ),
         ),
         'attributes' => 

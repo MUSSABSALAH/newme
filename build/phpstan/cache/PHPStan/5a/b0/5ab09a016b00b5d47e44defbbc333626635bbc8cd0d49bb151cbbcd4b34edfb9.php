@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\DTOs\InvitationData.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\DTOs\InvitationData
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-78a1b57328941b122b454895b81b7812656b471f64deb0b3cb3541bae19f1570',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-eb78758ffedcb8d0c2f5ba94edee3d62c97c9ac01b199179002136792a19f2f6',
    'data' => 
   array (
     'locatedSource' => 

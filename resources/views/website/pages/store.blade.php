@@ -41,7 +41,7 @@ nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;jus
 .nav-links a{padding:6px 0;border-bottom:2px solid transparent;white-space:nowrap;letter-spacing:.01em}
 .nav-links a:hover,.nav-links a.on{border-color:var(--orange)}
 @media(min-width:960px){.nav-links{display:flex}}
-.nav-cta{font-size:12.5px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:10px 22px;transition:.2s}
+.nav-cta{font-size:12px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
 .nav-cta:hover{background:var(--ink);color:#fff}
 
 /* ===== editorial hero ===== */
@@ -150,12 +150,6 @@ body.menu-open{overflow:hidden}
 @endpush
 
 @section('content')
-@php
-  $catalog = config('website_store');
-  $products = $catalog['products'];
-  $counts = $catalog['counts'];
-  $total = $catalog['total'];
-@endphp
 <div class="announce">{!! __('website.store.announce') !!}</div>
 
 @include('website.partials.nav', ['active' => 'store', 'showCart' => true])
@@ -178,19 +172,19 @@ body.menu-open{overflow:hidden}
 
 <div class="filters">
   <div class="tabs" id="tabs">
-    <button class="tab on" data-cat="all">{{ __('website.store.tabs.all') }} <sup>{{ str_pad((string) $counts['all'], 2, '0', STR_PAD_LEFT) }}</sup></button>
-    <button class="tab" data-cat="bakery">{{ __('website.store.tabs.bakery') }} <sup>{{ $counts['bakery'] }}</sup></button>
-    <button class="tab" data-cat="sweets">{{ __('website.store.tabs.sweets') }} <sup>{{ $counts['sweets'] }}</sup></button>
-    <button class="tab" data-cat="others">{{ __('website.store.tabs.others') }} <sup>{{ str_pad((string) $counts['others'], 2, '0', STR_PAD_LEFT) }}</sup></button>
+    @foreach ($tabs as $i => $tab)
+      <button
+        class="tab{{ $i === 0 ? ' on' : '' }}"
+        data-cat="{{ $tab['slug'] }}"
+        data-subs="{{ $tab['has_subs'] ? '1' : '0' }}"
+        data-label="{{ $tab['label'] }}"
+      >{{ $tab['label'] }} <sup>{{ str_pad((string) $tab['count'], 2, '0', STR_PAD_LEFT) }}</sup></button>
+    @endforeach
   </div>
   <div class="subs-row" id="subsRow">
-    <button class="sub on" data-sub="all">{{ __('website.store.subs.all') }}</button>
-    <button class="sub" data-sub="bread">{{ __('website.store.subs.bread') }}</button>
-    <button class="sub" data-sub="croissant">{{ __('website.store.subs.croissant') }}</button>
-    <button class="sub" data-sub="crackers">{{ __('website.store.subs.crackers') }}</button>
-    <button class="sub" data-sub="rusk">{{ __('website.store.subs.rusk') }}</button>
-    <button class="sub" data-sub="pies">{{ __('website.store.subs.pies') }}</button>
-    <button class="sub" data-sub="crumbs">{{ __('website.store.subs.crumbs') }}</button>
+    @foreach ($subs as $i => $sub)
+      <button class="sub{{ $i === 0 ? ' on' : '' }}" data-sub="{{ $sub['slug'] }}">{{ $sub['label'] }}</button>
+    @endforeach
   </div>
 </div>
 
@@ -199,10 +193,6 @@ body.menu-open{overflow:hidden}
   <div class="grid" id="grid">
     @foreach ($products as $p)
       @php
-        $name = __('website.store.products.'.$p['id']);
-        $labelKey = $p['cat'] === 'sweets' ? 'sweets' : ($p['cat'] === 'others' ? 'others' : $p['sub']);
-        $catLabel = __('website.store.sub_labels.'.$labelKey);
-        $serving = __('website.store.servings.'.$p['serving']);
         $flagText = match ($p['flag'] ?? null) {
           'sale' => __('website.store.flag_sale'),
           'bestseller' => __('website.store.flag_bestseller'),
@@ -215,9 +205,9 @@ body.menu-open{overflow:hidden}
         <a class="tilelink" href="{{ $p['href'] }}">
           @if ($flagText)<span class="{{ $flagClass }}">{{ $flagText }}</span>@endif
           <span class="kchip">{{ $p['kcal'] }} kcal</span>
-          <img class="aiimg" src="{{ asset('assets/images/'.$p['img']) }}" alt="{{ $name }}" onerror="this.remove()">
+          @if ($p['image_url'])<img class="aiimg" src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif
           <span class="nutov" aria-hidden="true">
-            <span class="nv-h">{!! __('website.store.nutrition_heading', ['serving' => $serving]) !!}</span>
+            <span class="nv-h">{!! __('website.store.nutrition_heading', ['serving' => $p['serving']]) !!}</span>
             <span class="nv-r"><span>{{ __('website.store.calories') }}</span><b>{{ $p['kcal'] }} <small>kcal</small></b></span>
             <span class="nv-r"><span>{{ __('website.store.protein') }}</span><b>{{ $p['protein'] }} <small>{{ __('website.store.gram') }}</small></b></span>
             <span class="nv-r"><span>{{ __('website.store.fat') }}</span><b>{{ $p['fat'] }} <small>{{ __('website.store.gram') }}</small></b></span>
@@ -228,10 +218,10 @@ body.menu-open{overflow:hidden}
         </a>
         <button class="nut-toggle" aria-label="{{ __('website.store.nutrition_aria') }}">i</button>
         <div class="meta">
-          <span class="cat">{{ $catLabel }}</span>
-          <h3>{{ $name }}</h3>
+          <span class="cat">{{ $p['cat_label'] }}</span>
+          <h3>{{ $p['name'] }}</h3>
           <div class="pline">
-            <span class="pr">{{ $p['price'] }} <small>{{ __('website.store.currency') }}</small></span>
+            <span class="pr">{{ $p['price'] }} <x-ui.sar /></span>
             <a class="arrow" href="{{ $p['href'] }}">←</a>
           </div>
         </div>
@@ -261,22 +251,24 @@ window.addEventListener('error',failOpen);
 try{
 'use strict';
 var cat='all', sub='all';
-var CATEN={all:'ALL',bakery:'BAKERY',sweets:'SWEETS',others:'PANTRY'};
 var cards=Array.prototype.slice.call(document.querySelectorAll('.card'));
 
 function apply(){
+  var activeTab=document.querySelector('#tabs .tab.on');
+  var hasSubs=!!(activeTab&&activeTab.getAttribute('data-subs')==='1');
+  var label=activeTab?activeTab.getAttribute('data-label'):'';
   var n=0;
   cards.forEach(function(c){
     var okCat=(cat==='all')||c.getAttribute('data-cat')===cat;
-    var okSub=(cat!=='bakery')||sub==='all'||c.getAttribute('data-sub')===sub;
+    var okSub=!hasSubs||sub==='all'||c.getAttribute('data-sub')===sub;
     var show=okCat&&okSub;
     c.classList.toggle('hide',!show);
     if(show)n++;
   });
   document.getElementById('shown').textContent=n;
-  document.getElementById('shownCat').textContent=CATEN[cat]||'ALL';
+  document.getElementById('shownCat').textContent=(label||'ALL').toUpperCase();
   document.getElementById('empty').style.display=n?'none':'block';
-  document.getElementById('subsRow').classList.toggle('show',cat==='bakery');
+  document.getElementById('subsRow').classList.toggle('show',hasSubs);
   if(window.gsap){
     var vis=cards.filter(function(c){return !c.classList.contains('hide');});
     gsap.fromTo(vis,{y:20,opacity:0},{y:0,opacity:1,duration:.5,stagger:.02,ease:'power2.out',clearProps:'all',overwrite:true});

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Models\UserInvitation.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Models\UserInvitation
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-745b2f02cc59af4311bc8381e7dfcce4c7750a8740b5abdf54b653b78ebfdd04',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-02e7ac5f0fe2ae2f4a27f1ffc8f95b0bdaf628df6a0b54ec72b511e3eeac2edd',
    'data' => 
   array (
     'locatedSource' => 
@@ -64,9 +64,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 25,
             'endLine' => 31,
             'startTokenPos' => 55,
-            'startFilePos' => 515,
+            'startFilePos' => 539,
             'endTokenPos' => 72,
-            'endFilePos' => 629,
+            'endFilePos' => 659,
           ),
         ),
         'docComment' => '/**

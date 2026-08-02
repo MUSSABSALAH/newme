@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Plans\Enums\PlanGoal.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Plans\Enums\PlanGoal
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-47defb22d85fede14d3767b17f1ee91bb15f26bfba80adcc7352a9b54f05b59f',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-e64ed0efcd98762263ccda674222cbe06ebe76d1cc27e54327e5169fa445fe35',
    'data' => 
   array (
     'locatedSource' => 
@@ -29,7 +29,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 10,
-    'endLine' => 38,
+    'endLine' => 73,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -170,6 +170,80 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  */',
         'startLine' => 34,
         'endLine' => 37,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'App\\Modules\\Plans\\Enums',
+        'declaringClassName' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+        'implementingClassName' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+        'currentClassName' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+        'aliasName' => NULL,
+      ),
+      'websiteSlug' => 
+      array (
+        'name' => 'websiteSlug',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'string',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Short slug used by the public website wizard/menu (hash, links, icons).
+ */',
+        'startLine' => 42,
+        'endLine' => 56,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'App\\Modules\\Plans\\Enums',
+        'declaringClassName' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+        'implementingClassName' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+        'currentClassName' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+        'aliasName' => NULL,
+      ),
+      'dailyCalorieTarget' => 
+      array (
+        'name' => 'dailyCalorieTarget',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'int',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Approximate daily calorie target shown on the public menu page.
+ */',
+        'startLine' => 61,
+        'endLine' => 72,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -431,9 +505,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 12,
             'endLine' => 12,
             'startTokenPos' => 32,
-            'startFilePos' => 198,
+            'startFilePos' => 209,
             'endTokenPos' => 32,
-            'endFilePos' => 210,
+            'endFilePos' => 221,
           ),
         ),
         'attributes' => 
@@ -456,9 +530,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 13,
             'endLine' => 13,
             'startTokenPos' => 41,
-            'startFilePos' => 239,
+            'startFilePos' => 251,
             'endTokenPos' => 41,
-            'endFilePos' => 255,
+            'endFilePos' => 267,
           ),
         ),
         'attributes' => 
@@ -481,9 +555,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 14,
             'endLine' => 14,
             'startTokenPos' => 50,
-            'startFilePos' => 278,
+            'startFilePos' => 291,
             'endTokenPos' => 50,
-            'endFilePos' => 287,
+            'endFilePos' => 300,
           ),
         ),
         'attributes' => 
@@ -506,9 +580,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 15,
             'endLine' => 15,
             'startTokenPos' => 59,
-            'startFilePos' => 315,
+            'startFilePos' => 329,
             'endTokenPos' => 59,
-            'endFilePos' => 329,
+            'endFilePos' => 343,
           ),
         ),
         'attributes' => 
@@ -531,9 +605,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 16,
             'endLine' => 16,
             'startTokenPos' => 68,
-            'startFilePos' => 352,
+            'startFilePos' => 367,
             'endTokenPos' => 68,
-            'endFilePos' => 361,
+            'endFilePos' => 376,
           ),
         ),
         'attributes' => 
@@ -556,9 +630,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 17,
             'endLine' => 17,
             'startTokenPos' => 77,
-            'startFilePos' => 391,
+            'startFilePos' => 407,
             'endTokenPos' => 77,
-            'endFilePos' => 408,
+            'endFilePos' => 424,
           ),
         ),
         'attributes' => 
@@ -581,9 +655,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 18,
             'endLine' => 18,
             'startTokenPos' => 86,
-            'startFilePos' => 432,
+            'startFilePos' => 449,
             'endTokenPos' => 86,
-            'endFilePos' => 442,
+            'endFilePos' => 459,
           ),
         ),
         'attributes' => 
@@ -606,9 +680,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 19,
             'endLine' => 19,
             'startTokenPos' => 95,
-            'startFilePos' => 464,
+            'startFilePos' => 482,
             'endTokenPos' => 95,
-            'endFilePos' => 473,
+            'endFilePos' => 491,
           ),
         ),
         'attributes' => 
@@ -631,9 +705,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 20,
             'endLine' => 20,
             'startTokenPos' => 104,
-            'startFilePos' => 493,
+            'startFilePos' => 512,
             'endTokenPos' => 104,
-            'endFilePos' => 499,
+            'endFilePos' => 518,
           ),
         ),
         'attributes' => 
@@ -656,9 +730,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 21,
             'endLine' => 21,
             'startTokenPos' => 113,
-            'startFilePos' => 518,
+            'startFilePos' => 538,
             'endTokenPos' => 113,
-            'endFilePos' => 523,
+            'endFilePos' => 543,
           ),
         ),
         'attributes' => 

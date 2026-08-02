@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Enums\PermissionName.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Enums\PermissionName
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-c722622162be800db616b5eacf51dfbd08d005bc9d5d0504f849e221dec6ae76',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-ea4af47b12312f5db68df09c2c78efacb8de6f0f050a797c2c31ce9bdb252f37',
    'data' => 
   array (
     'locatedSource' => 
@@ -34,7 +34,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 15,
-    'endLine' => 110,
+    'endLine' => 120,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -136,8 +136,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return list<string>
  */',
-        'startLine' => 89,
-        'endLine' => 92,
+        'startLine' => 99,
+        'endLine' => 102,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -175,8 +175,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @return array<string, list<string>>
  */',
-        'startLine' => 99,
-        'endLine' => 109,
+        'startLine' => 109,
+        'endLine' => 119,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -727,20 +727,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startColumn' => 5,
         'endColumn' => 42,
       ),
-      'InventoryView' => 
+      'CouponsView' => 
       array (
-        'name' => 'InventoryView',
+        'name' => 'CouponsView',
         'value' => 
         array (
-          'code' => '\'inventory.view\'',
+          'code' => '\'coupons.view\'',
           'attributes' => 
           array (
             'startLine' => 34,
             'endLine' => 34,
             'startTokenPos' => 146,
-            'startFilePos' => 1024,
+            'startFilePos' => 1020,
             'endTokenPos' => 146,
-            'endFilePos' => 1039,
+            'endFilePos' => 1033,
           ),
         ),
         'attributes' => 
@@ -749,6 +749,106 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => NULL,
         'startLine' => 34,
         'endLine' => 34,
+        'startColumn' => 5,
+        'endColumn' => 38,
+      ),
+      'CouponsCreate' => 
+      array (
+        'name' => 'CouponsCreate',
+        'value' => 
+        array (
+          'code' => '\'coupons.create\'',
+          'attributes' => 
+          array (
+            'startLine' => 35,
+            'endLine' => 35,
+            'startTokenPos' => 155,
+            'startFilePos' => 1061,
+            'endTokenPos' => 155,
+            'endFilePos' => 1076,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 35,
+        'endLine' => 35,
+        'startColumn' => 5,
+        'endColumn' => 42,
+      ),
+      'CouponsUpdate' => 
+      array (
+        'name' => 'CouponsUpdate',
+        'value' => 
+        array (
+          'code' => '\'coupons.update\'',
+          'attributes' => 
+          array (
+            'startLine' => 36,
+            'endLine' => 36,
+            'startTokenPos' => 164,
+            'startFilePos' => 1104,
+            'endTokenPos' => 164,
+            'endFilePos' => 1119,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 36,
+        'endLine' => 36,
+        'startColumn' => 5,
+        'endColumn' => 42,
+      ),
+      'CouponsDelete' => 
+      array (
+        'name' => 'CouponsDelete',
+        'value' => 
+        array (
+          'code' => '\'coupons.delete\'',
+          'attributes' => 
+          array (
+            'startLine' => 37,
+            'endLine' => 37,
+            'startTokenPos' => 173,
+            'startFilePos' => 1147,
+            'endTokenPos' => 173,
+            'endFilePos' => 1162,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 37,
+        'endLine' => 37,
+        'startColumn' => 5,
+        'endColumn' => 42,
+      ),
+      'InventoryView' => 
+      array (
+        'name' => 'InventoryView',
+        'value' => 
+        array (
+          'code' => '\'inventory.view\'',
+          'attributes' => 
+          array (
+            'startLine' => 40,
+            'endLine' => 40,
+            'startTokenPos' => 184,
+            'startFilePos' => 1208,
+            'endTokenPos' => 184,
+            'endFilePos' => 1223,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 40,
+        'endLine' => 40,
         'startColumn' => 5,
         'endColumn' => 42,
       ),
@@ -760,20 +860,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'inventory.adjust\'',
           'attributes' => 
           array (
-            'startLine' => 35,
-            'endLine' => 35,
-            'startTokenPos' => 155,
-            'startFilePos' => 1069,
-            'endTokenPos' => 155,
-            'endFilePos' => 1086,
+            'startLine' => 41,
+            'endLine' => 41,
+            'startTokenPos' => 193,
+            'startFilePos' => 1253,
+            'endTokenPos' => 193,
+            'endFilePos' => 1270,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 35,
-        'endLine' => 35,
+        'startLine' => 41,
+        'endLine' => 41,
         'startColumn' => 5,
         'endColumn' => 46,
       ),
@@ -785,20 +885,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'customers.view\'',
           'attributes' => 
           array (
-            'startLine' => 38,
-            'endLine' => 38,
-            'startTokenPos' => 166,
-            'startFilePos' => 1132,
-            'endTokenPos' => 166,
-            'endFilePos' => 1147,
+            'startLine' => 44,
+            'endLine' => 44,
+            'startTokenPos' => 204,
+            'startFilePos' => 1316,
+            'endTokenPos' => 204,
+            'endFilePos' => 1331,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 38,
-        'endLine' => 38,
+        'startLine' => 44,
+        'endLine' => 44,
         'startColumn' => 5,
         'endColumn' => 42,
       ),
@@ -810,20 +910,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'customers.create\'',
           'attributes' => 
           array (
-            'startLine' => 39,
-            'endLine' => 39,
-            'startTokenPos' => 175,
-            'startFilePos' => 1177,
-            'endTokenPos' => 175,
-            'endFilePos' => 1194,
+            'startLine' => 45,
+            'endLine' => 45,
+            'startTokenPos' => 213,
+            'startFilePos' => 1361,
+            'endTokenPos' => 213,
+            'endFilePos' => 1378,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 39,
-        'endLine' => 39,
+        'startLine' => 45,
+        'endLine' => 45,
         'startColumn' => 5,
         'endColumn' => 46,
       ),
@@ -835,20 +935,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'customers.update\'',
           'attributes' => 
           array (
-            'startLine' => 40,
-            'endLine' => 40,
-            'startTokenPos' => 184,
-            'startFilePos' => 1224,
-            'endTokenPos' => 184,
-            'endFilePos' => 1241,
+            'startLine' => 46,
+            'endLine' => 46,
+            'startTokenPos' => 222,
+            'startFilePos' => 1408,
+            'endTokenPos' => 222,
+            'endFilePos' => 1425,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 40,
-        'endLine' => 40,
+        'startLine' => 46,
+        'endLine' => 46,
         'startColumn' => 5,
         'endColumn' => 46,
       ),
@@ -860,20 +960,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'orders.view\'',
           'attributes' => 
           array (
-            'startLine' => 43,
-            'endLine' => 43,
-            'startTokenPos' => 195,
-            'startFilePos' => 1281,
-            'endTokenPos' => 195,
-            'endFilePos' => 1293,
+            'startLine' => 49,
+            'endLine' => 49,
+            'startTokenPos' => 233,
+            'startFilePos' => 1465,
+            'endTokenPos' => 233,
+            'endFilePos' => 1477,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 43,
-        'endLine' => 43,
+        'startLine' => 49,
+        'endLine' => 49,
         'startColumn' => 5,
         'endColumn' => 36,
       ),
@@ -885,112 +985,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'orders.create\'',
           'attributes' => 
           array (
-            'startLine' => 44,
-            'endLine' => 44,
-            'startTokenPos' => 204,
-            'startFilePos' => 1320,
-            'endTokenPos' => 204,
-            'endFilePos' => 1334,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => NULL,
-        'startLine' => 44,
-        'endLine' => 44,
-        'startColumn' => 5,
-        'endColumn' => 40,
-      ),
-      'OrdersUpdate' => 
-      array (
-        'name' => 'OrdersUpdate',
-        'value' => 
-        array (
-          'code' => '\'orders.update\'',
-          'attributes' => 
-          array (
-            'startLine' => 45,
-            'endLine' => 45,
-            'startTokenPos' => 213,
-            'startFilePos' => 1361,
-            'endTokenPos' => 213,
-            'endFilePos' => 1375,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => NULL,
-        'startLine' => 45,
-        'endLine' => 45,
-        'startColumn' => 5,
-        'endColumn' => 40,
-      ),
-      'OrdersCancel' => 
-      array (
-        'name' => 'OrdersCancel',
-        'value' => 
-        array (
-          'code' => '\'orders.cancel\'',
-          'attributes' => 
-          array (
-            'startLine' => 46,
-            'endLine' => 46,
-            'startTokenPos' => 222,
-            'startFilePos' => 1402,
-            'endTokenPos' => 222,
-            'endFilePos' => 1416,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => NULL,
-        'startLine' => 46,
-        'endLine' => 46,
-        'startColumn' => 5,
-        'endColumn' => 40,
-      ),
-      'OrdersRefund' => 
-      array (
-        'name' => 'OrdersRefund',
-        'value' => 
-        array (
-          'code' => '\'orders.refund\'',
-          'attributes' => 
-          array (
-            'startLine' => 47,
-            'endLine' => 47,
-            'startTokenPos' => 231,
-            'startFilePos' => 1443,
-            'endTokenPos' => 231,
-            'endFilePos' => 1457,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => NULL,
-        'startLine' => 47,
-        'endLine' => 47,
-        'startColumn' => 5,
-        'endColumn' => 40,
-      ),
-      'PaymentsView' => 
-      array (
-        'name' => 'PaymentsView',
-        'value' => 
-        array (
-          'code' => '\'payments.view\'',
-          'attributes' => 
-          array (
             'startLine' => 50,
             'endLine' => 50,
             'startTokenPos' => 242,
-            'startFilePos' => 1501,
+            'startFilePos' => 1504,
             'endTokenPos' => 242,
-            'endFilePos' => 1515,
+            'endFilePos' => 1518,
           ),
         ),
         'attributes' => 
@@ -1002,20 +1002,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startColumn' => 5,
         'endColumn' => 40,
       ),
-      'PaymentsRefund' => 
+      'OrdersUpdate' => 
       array (
-        'name' => 'PaymentsRefund',
+        'name' => 'OrdersUpdate',
         'value' => 
         array (
-          'code' => '\'payments.refund\'',
+          'code' => '\'orders.update\'',
           'attributes' => 
           array (
             'startLine' => 51,
             'endLine' => 51,
             'startTokenPos' => 251,
-            'startFilePos' => 1544,
+            'startFilePos' => 1545,
             'endTokenPos' => 251,
-            'endFilePos' => 1560,
+            'endFilePos' => 1559,
           ),
         ),
         'attributes' => 
@@ -1025,7 +1025,157 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startLine' => 51,
         'endLine' => 51,
         'startColumn' => 5,
+        'endColumn' => 40,
+      ),
+      'OrdersCancel' => 
+      array (
+        'name' => 'OrdersCancel',
+        'value' => 
+        array (
+          'code' => '\'orders.cancel\'',
+          'attributes' => 
+          array (
+            'startLine' => 52,
+            'endLine' => 52,
+            'startTokenPos' => 260,
+            'startFilePos' => 1586,
+            'endTokenPos' => 260,
+            'endFilePos' => 1600,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 52,
+        'endLine' => 52,
+        'startColumn' => 5,
+        'endColumn' => 40,
+      ),
+      'OrdersRefund' => 
+      array (
+        'name' => 'OrdersRefund',
+        'value' => 
+        array (
+          'code' => '\'orders.refund\'',
+          'attributes' => 
+          array (
+            'startLine' => 53,
+            'endLine' => 53,
+            'startTokenPos' => 269,
+            'startFilePos' => 1627,
+            'endTokenPos' => 269,
+            'endFilePos' => 1641,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 53,
+        'endLine' => 53,
+        'startColumn' => 5,
+        'endColumn' => 40,
+      ),
+      'PaymentsView' => 
+      array (
+        'name' => 'PaymentsView',
+        'value' => 
+        array (
+          'code' => '\'payments.view\'',
+          'attributes' => 
+          array (
+            'startLine' => 56,
+            'endLine' => 56,
+            'startTokenPos' => 280,
+            'startFilePos' => 1685,
+            'endTokenPos' => 280,
+            'endFilePos' => 1699,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 56,
+        'endLine' => 56,
+        'startColumn' => 5,
+        'endColumn' => 40,
+      ),
+      'PaymentsConfirm' => 
+      array (
+        'name' => 'PaymentsConfirm',
+        'value' => 
+        array (
+          'code' => '\'payments.confirm\'',
+          'attributes' => 
+          array (
+            'startLine' => 57,
+            'endLine' => 57,
+            'startTokenPos' => 289,
+            'startFilePos' => 1729,
+            'endTokenPos' => 289,
+            'endFilePos' => 1746,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 57,
+        'endLine' => 57,
+        'startColumn' => 5,
+        'endColumn' => 46,
+      ),
+      'PaymentsRefund' => 
+      array (
+        'name' => 'PaymentsRefund',
+        'value' => 
+        array (
+          'code' => '\'payments.refund\'',
+          'attributes' => 
+          array (
+            'startLine' => 58,
+            'endLine' => 58,
+            'startTokenPos' => 298,
+            'startFilePos' => 1775,
+            'endTokenPos' => 298,
+            'endFilePos' => 1791,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 58,
+        'endLine' => 58,
+        'startColumn' => 5,
         'endColumn' => 44,
+      ),
+      'InvoicesView' => 
+      array (
+        'name' => 'InvoicesView',
+        'value' => 
+        array (
+          'code' => '\'invoices.view\'',
+          'attributes' => 
+          array (
+            'startLine' => 61,
+            'endLine' => 61,
+            'startTokenPos' => 309,
+            'startFilePos' => 1835,
+            'endTokenPos' => 309,
+            'endFilePos' => 1849,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 61,
+        'endLine' => 61,
+        'startColumn' => 5,
+        'endColumn' => 40,
       ),
       'PlansView' => 
       array (
@@ -1035,20 +1185,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'plans.view\'',
           'attributes' => 
           array (
-            'startLine' => 54,
-            'endLine' => 54,
-            'startTokenPos' => 262,
-            'startFilePos' => 1598,
-            'endTokenPos' => 262,
-            'endFilePos' => 1609,
+            'startLine' => 64,
+            'endLine' => 64,
+            'startTokenPos' => 320,
+            'startFilePos' => 1887,
+            'endTokenPos' => 320,
+            'endFilePos' => 1898,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 54,
-        'endLine' => 54,
+        'startLine' => 64,
+        'endLine' => 64,
         'startColumn' => 5,
         'endColumn' => 34,
       ),
@@ -1060,20 +1210,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'plans.manage\'',
           'attributes' => 
           array (
-            'startLine' => 55,
-            'endLine' => 55,
-            'startTokenPos' => 271,
-            'startFilePos' => 1635,
-            'endTokenPos' => 271,
-            'endFilePos' => 1648,
+            'startLine' => 65,
+            'endLine' => 65,
+            'startTokenPos' => 329,
+            'startFilePos' => 1924,
+            'endTokenPos' => 329,
+            'endFilePos' => 1937,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 55,
-        'endLine' => 55,
+        'startLine' => 65,
+        'endLine' => 65,
         'startColumn' => 5,
         'endColumn' => 38,
       ),
@@ -1085,20 +1235,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'subscriptions.view\'',
           'attributes' => 
           array (
-            'startLine' => 58,
-            'endLine' => 58,
-            'startTokenPos' => 282,
-            'startFilePos' => 1702,
-            'endTokenPos' => 282,
-            'endFilePos' => 1721,
+            'startLine' => 68,
+            'endLine' => 68,
+            'startTokenPos' => 340,
+            'startFilePos' => 1991,
+            'endTokenPos' => 340,
+            'endFilePos' => 2010,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 58,
-        'endLine' => 58,
+        'startLine' => 68,
+        'endLine' => 68,
         'startColumn' => 5,
         'endColumn' => 50,
       ),
@@ -1110,20 +1260,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'subscriptions.manage\'',
           'attributes' => 
           array (
-            'startLine' => 59,
-            'endLine' => 59,
-            'startTokenPos' => 291,
-            'startFilePos' => 1755,
-            'endTokenPos' => 291,
-            'endFilePos' => 1776,
+            'startLine' => 69,
+            'endLine' => 69,
+            'startTokenPos' => 349,
+            'startFilePos' => 2044,
+            'endTokenPos' => 349,
+            'endFilePos' => 2065,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 59,
-        'endLine' => 59,
+        'startLine' => 69,
+        'endLine' => 69,
         'startColumn' => 5,
         'endColumn' => 54,
       ),
@@ -1135,20 +1285,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'subscriptions.pause\'',
           'attributes' => 
           array (
-            'startLine' => 60,
-            'endLine' => 60,
-            'startTokenPos' => 300,
-            'startFilePos' => 1809,
-            'endTokenPos' => 300,
-            'endFilePos' => 1829,
+            'startLine' => 70,
+            'endLine' => 70,
+            'startTokenPos' => 358,
+            'startFilePos' => 2098,
+            'endTokenPos' => 358,
+            'endFilePos' => 2118,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 60,
-        'endLine' => 60,
+        'startLine' => 70,
+        'endLine' => 70,
         'startColumn' => 5,
         'endColumn' => 52,
       ),
@@ -1160,20 +1310,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'subscriptions.cancel\'',
           'attributes' => 
           array (
-            'startLine' => 61,
-            'endLine' => 61,
-            'startTokenPos' => 309,
-            'startFilePos' => 1863,
-            'endTokenPos' => 309,
-            'endFilePos' => 1884,
+            'startLine' => 71,
+            'endLine' => 71,
+            'startTokenPos' => 367,
+            'startFilePos' => 2152,
+            'endTokenPos' => 367,
+            'endFilePos' => 2173,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 61,
-        'endLine' => 61,
+        'startLine' => 71,
+        'endLine' => 71,
         'startColumn' => 5,
         'endColumn' => 54,
       ),
@@ -1185,20 +1335,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'appointments.view\'',
           'attributes' => 
           array (
-            'startLine' => 64,
-            'endLine' => 64,
-            'startTokenPos' => 320,
-            'startFilePos' => 1936,
-            'endTokenPos' => 320,
-            'endFilePos' => 1954,
+            'startLine' => 74,
+            'endLine' => 74,
+            'startTokenPos' => 378,
+            'startFilePos' => 2225,
+            'endTokenPos' => 378,
+            'endFilePos' => 2243,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 64,
-        'endLine' => 64,
+        'startLine' => 74,
+        'endLine' => 74,
         'startColumn' => 5,
         'endColumn' => 48,
       ),
@@ -1210,20 +1360,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'appointments.manage\'',
           'attributes' => 
           array (
-            'startLine' => 65,
-            'endLine' => 65,
-            'startTokenPos' => 329,
-            'startFilePos' => 1987,
-            'endTokenPos' => 329,
-            'endFilePos' => 2007,
+            'startLine' => 75,
+            'endLine' => 75,
+            'startTokenPos' => 387,
+            'startFilePos' => 2276,
+            'endTokenPos' => 387,
+            'endFilePos' => 2296,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 65,
-        'endLine' => 65,
+        'startLine' => 75,
+        'endLine' => 75,
         'startColumn' => 5,
         'endColumn' => 52,
       ),
@@ -1235,20 +1385,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'delivery.view\'',
           'attributes' => 
           array (
-            'startLine' => 68,
-            'endLine' => 68,
-            'startTokenPos' => 340,
-            'startFilePos' => 2051,
-            'endTokenPos' => 340,
-            'endFilePos' => 2065,
+            'startLine' => 78,
+            'endLine' => 78,
+            'startTokenPos' => 398,
+            'startFilePos' => 2340,
+            'endTokenPos' => 398,
+            'endFilePos' => 2354,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 68,
-        'endLine' => 68,
+        'startLine' => 78,
+        'endLine' => 78,
         'startColumn' => 5,
         'endColumn' => 40,
       ),
@@ -1260,20 +1410,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'delivery.assign\'',
           'attributes' => 
           array (
-            'startLine' => 69,
-            'endLine' => 69,
-            'startTokenPos' => 349,
-            'startFilePos' => 2094,
-            'endTokenPos' => 349,
-            'endFilePos' => 2110,
+            'startLine' => 79,
+            'endLine' => 79,
+            'startTokenPos' => 407,
+            'startFilePos' => 2383,
+            'endTokenPos' => 407,
+            'endFilePos' => 2399,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 69,
-        'endLine' => 69,
+        'startLine' => 79,
+        'endLine' => 79,
         'startColumn' => 5,
         'endColumn' => 44,
       ),
@@ -1285,20 +1435,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'cms.view\'',
           'attributes' => 
           array (
-            'startLine' => 72,
-            'endLine' => 72,
-            'startTokenPos' => 360,
-            'startFilePos' => 2144,
-            'endTokenPos' => 360,
-            'endFilePos' => 2153,
+            'startLine' => 82,
+            'endLine' => 82,
+            'startTokenPos' => 418,
+            'startFilePos' => 2433,
+            'endTokenPos' => 418,
+            'endFilePos' => 2442,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 72,
-        'endLine' => 72,
+        'startLine' => 82,
+        'endLine' => 82,
         'startColumn' => 5,
         'endColumn' => 30,
       ),
@@ -1310,20 +1460,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'cms.manage\'',
           'attributes' => 
           array (
-            'startLine' => 73,
-            'endLine' => 73,
-            'startTokenPos' => 369,
-            'startFilePos' => 2177,
-            'endTokenPos' => 369,
-            'endFilePos' => 2188,
+            'startLine' => 83,
+            'endLine' => 83,
+            'startTokenPos' => 427,
+            'startFilePos' => 2466,
+            'endTokenPos' => 427,
+            'endFilePos' => 2477,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 73,
-        'endLine' => 73,
+        'startLine' => 83,
+        'endLine' => 83,
         'startColumn' => 5,
         'endColumn' => 34,
       ),
@@ -1335,20 +1485,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'notifications.send\'',
           'attributes' => 
           array (
-            'startLine' => 76,
-            'endLine' => 76,
-            'startTokenPos' => 380,
-            'startFilePos' => 2242,
-            'endTokenPos' => 380,
-            'endFilePos' => 2261,
+            'startLine' => 86,
+            'endLine' => 86,
+            'startTokenPos' => 438,
+            'startFilePos' => 2531,
+            'endTokenPos' => 438,
+            'endFilePos' => 2550,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 76,
-        'endLine' => 76,
+        'startLine' => 86,
+        'endLine' => 86,
         'startColumn' => 5,
         'endColumn' => 50,
       ),
@@ -1360,20 +1510,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'notifications.manage\'',
           'attributes' => 
           array (
-            'startLine' => 77,
-            'endLine' => 77,
-            'startTokenPos' => 389,
-            'startFilePos' => 2295,
-            'endTokenPos' => 389,
-            'endFilePos' => 2316,
+            'startLine' => 87,
+            'endLine' => 87,
+            'startTokenPos' => 447,
+            'startFilePos' => 2584,
+            'endTokenPos' => 447,
+            'endFilePos' => 2605,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 77,
-        'endLine' => 77,
+        'startLine' => 87,
+        'endLine' => 87,
         'startColumn' => 5,
         'endColumn' => 54,
       ),
@@ -1385,20 +1535,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'reports.view\'',
           'attributes' => 
           array (
-            'startLine' => 80,
-            'endLine' => 80,
-            'startTokenPos' => 400,
-            'startFilePos' => 2358,
-            'endTokenPos' => 400,
-            'endFilePos' => 2371,
+            'startLine' => 90,
+            'endLine' => 90,
+            'startTokenPos' => 458,
+            'startFilePos' => 2647,
+            'endTokenPos' => 458,
+            'endFilePos' => 2660,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 80,
-        'endLine' => 80,
+        'startLine' => 90,
+        'endLine' => 90,
         'startColumn' => 5,
         'endColumn' => 38,
       ),
@@ -1410,20 +1560,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'reports.export\'',
           'attributes' => 
           array (
-            'startLine' => 81,
-            'endLine' => 81,
-            'startTokenPos' => 409,
-            'startFilePos' => 2399,
-            'endTokenPos' => 409,
-            'endFilePos' => 2414,
+            'startLine' => 91,
+            'endLine' => 91,
+            'startTokenPos' => 467,
+            'startFilePos' => 2688,
+            'endTokenPos' => 467,
+            'endFilePos' => 2703,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 81,
-        'endLine' => 81,
+        'startLine' => 91,
+        'endLine' => 91,
         'startColumn' => 5,
         'endColumn' => 42,
       ),
@@ -1435,20 +1585,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'settings.manage\'',
           'attributes' => 
           array (
-            'startLine' => 84,
-            'endLine' => 84,
-            'startTokenPos' => 420,
-            'startFilePos' => 2460,
-            'endTokenPos' => 420,
-            'endFilePos' => 2476,
+            'startLine' => 94,
+            'endLine' => 94,
+            'startTokenPos' => 478,
+            'startFilePos' => 2749,
+            'endTokenPos' => 478,
+            'endFilePos' => 2765,
           ),
         ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 84,
-        'endLine' => 84,
+        'startLine' => 94,
+        'endLine' => 94,
         'startColumn' => 5,
         'endColumn' => 44,
       ),

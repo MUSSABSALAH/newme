@@ -7,6 +7,7 @@ namespace App\Modules\Identity\Services;
 use App\Models\User;
 use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Audit\Services\AuditService;
+use App\Modules\Identity\Enums\UserType;
 use App\Modules\Identity\Exceptions\PasswordResetInvalidException;
 use App\Modules\Identity\Notifications\PasswordResetNotification;
 use Illuminate\Support\Carbon;
@@ -23,10 +24,17 @@ final class PasswordResetService
      * To avoid leaking which emails exist, callers always report the same
      * generic outcome; this method silently no-ops when the account is
      * missing, inactive, still awaiting an invitation, or recently throttled.
+     *
+     * The channel ($type) decides both which accounts are eligible and which
+     * reset screen the emailed link points to, so staff and customers can
+     * never reset each other's passwords.
      */
-    public function sendResetLink(string $email): void
+    public function sendResetLink(string $email, UserType $type = UserType::Staff): void
     {
-        $user = User::query()->where('email', $email)->first();
+        $user = User::query()
+            ->where('email', $email)
+            ->where('type', $type->value)
+            ->first();
 
         if (! $user instanceof User || ! $user->isActive() || $user->password === null) {
             return;
@@ -44,7 +52,7 @@ final class PasswordResetService
         );
 
         $user->notify(new PasswordResetNotification(
-            $this->resetUrl($token, $email),
+            $this->resetUrl($token, $email, $type),
             $this->expireMinutes(),
         ));
     }
@@ -54,9 +62,13 @@ final class PasswordResetService
      *
      * @throws PasswordResetInvalidException
      */
-    public function reset(string $email, string $token, string $password): User
-    {
-        return DB::transaction(function () use ($email, $token, $password): User {
+    public function reset(
+        string $email,
+        string $token,
+        string $password,
+        ?UserType $expectedType = null,
+    ): User {
+        return DB::transaction(function () use ($email, $token, $password, $expectedType): User {
             $record = DB::table($this->table())->where('email', $email)->first();
 
             if ($record === null || ! hash_equals((string) $record->token, hash('sha256', $token))) {
@@ -72,6 +84,10 @@ final class PasswordResetService
             $user = User::query()->where('email', $email)->first();
 
             if (! $user instanceof User) {
+                throw new PasswordResetInvalidException;
+            }
+
+            if ($expectedType !== null && $user->type !== $expectedType) {
                 throw new PasswordResetInvalidException;
             }
 
@@ -107,9 +123,13 @@ final class PasswordResetService
             ->isPast();
     }
 
-    private function resetUrl(string $token, string $email): string
+    private function resetUrl(string $token, string $email, UserType $type): string
     {
-        return route('admin.password.reset', ['token' => $token]).'?email='.urlencode($email);
+        $route = $type === UserType::Customer
+            ? 'website.password.reset'
+            : 'admin.password.reset';
+
+        return route($route, ['token' => $token]).'?email='.urlencode($email);
     }
 
     private function table(): string

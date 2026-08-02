@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Plans\DTOs\PlanQuoteRequestData.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Plans\DTOs\PlanQuoteRequestData
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-56002b93d5f49e756a6a5045449ca54b30da02c3dc8066b9afc557da80eb1b90',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-36bf58dae2fcbd948f05510294fd92998ca3badec4b956fb33784774f81fb7b3',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 11,
-    'endLine' => 53,
+    'endLine' => 56,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Support\\Dto\\Data',
@@ -166,6 +166,68 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
       ),
+      'couponCode' => 
+      array (
+        'declaringClassName' => 'App\\Modules\\Plans\\DTOs\\PlanQuoteRequestData',
+        'implementingClassName' => 'App\\Modules\\Plans\\DTOs\\PlanQuoteRequestData',
+        'name' => 'couponCode',
+        'modifiers' => 2177,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionUnionType',
+          'data' => 
+          array (
+            'types' => 
+            array (
+              0 => 
+              array (
+                'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                'data' => 
+                array (
+                  'name' => 'string',
+                  'isIdentifier' => true,
+                ),
+              ),
+              1 => 
+              array (
+                'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                'data' => 
+                array (
+                  'name' => 'null',
+                  'isIdentifier' => true,
+                ),
+              ),
+            ),
+          ),
+        ),
+        'default' => 
+        array (
+          'code' => 'null',
+          'attributes' => 
+          array (
+            'startLine' => 22,
+            'endLine' => 22,
+            'startTokenPos' => 98,
+            'startFilePos' => 673,
+            'endTokenPos' => 98,
+            'endFilePos' => 676,
+          ),
+        ),
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 22,
+        'endLine' => 22,
+        'startColumn' => 9,
+        'endColumn' => 50,
+        'isPromoted' => true,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
     ),
     'immediateMethods' => 
     array (
@@ -278,6 +340,63 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'parameterIndex' => 3,
             'isOptional' => false,
           ),
+          'couponCode' => 
+          array (
+            'name' => 'couponCode',
+            'default' => 
+            array (
+              'code' => 'null',
+              'attributes' => 
+              array (
+                'startLine' => 22,
+                'endLine' => 22,
+                'startTokenPos' => 98,
+                'startFilePos' => 673,
+                'endTokenPos' => 98,
+                'endFilePos' => 676,
+              ),
+            ),
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionUnionType',
+              'data' => 
+              array (
+                'types' => 
+                array (
+                  0 => 
+                  array (
+                    'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                    'data' => 
+                    array (
+                      'name' => 'string',
+                      'isIdentifier' => true,
+                    ),
+                  ),
+                  1 => 
+                  array (
+                    'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                    'data' => 
+                    array (
+                      'name' => 'null',
+                      'isIdentifier' => true,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => true,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 22,
+            'endLine' => 22,
+            'startColumn' => 9,
+            'endColumn' => 50,
+            'parameterIndex' => 4,
+            'isOptional' => true,
+          ),
         ),
         'returnsReference' => false,
         'returnType' => NULL,
@@ -289,7 +408,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @param  list<int>  $selectedDays  Chosen delivery weekdays (0=Sunday..6=Saturday).
  */',
         'startLine' => 17,
-        'endLine' => 22,
+        'endLine' => 23,
         'startColumn' => 5,
         'endColumn' => 8,
         'couldThrow' => false,
@@ -327,8 +446,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 27,
-            'endLine' => 27,
+            'startLine' => 28,
+            'endLine' => 28,
             'startColumn' => 38,
             'endColumn' => 54,
             'parameterIndex' => 0,
@@ -351,8 +470,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @param  array<string, mixed>  $attributes
  */',
-        'startLine' => 27,
-        'endLine' => 47,
+        'startLine' => 28,
+        'endLine' => 50,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -386,8 +505,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 49,
-        'endLine' => 52,
+        'startLine' => 52,
+        'endLine' => 55,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

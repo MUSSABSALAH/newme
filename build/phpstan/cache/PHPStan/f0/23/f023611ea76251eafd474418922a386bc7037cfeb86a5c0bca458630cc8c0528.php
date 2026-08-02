@@ -222,7 +222,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Settings\\Support\\SettingDefinition.php' => '6d6a629a3f9c2f3abaa78e228ec72e3e3d81dd8b3e07faeab32a399341cde9b3',
+      'C:\\newme\\app\\Modules\\Settings\\Support\\SettingDefinition.php' => 'c1f62b6dd9f5f59ea983d8d209a3d9de5cceca01e22afc53adbed58a90a827a7',
     ),
   ),
 ));

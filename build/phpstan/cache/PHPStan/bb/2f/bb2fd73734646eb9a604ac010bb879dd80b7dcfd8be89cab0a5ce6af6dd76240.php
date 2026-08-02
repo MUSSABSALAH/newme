@@ -2,7 +2,7 @@
 
 // osfsl-C:/newme/database/factories/MealFactory.php-PHPStan\BetterReflection\Reflection\ReflectionClass-Database\Factories\MealFactory
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-f11ecdf322567172b39be0a26ef3cf4573f1efc5edb5b7bbc25cbb184eca8eb0-8.2.12-6.70.0.3',
+   'variableKey' => 'v2-150b02860ae21acedf3c251a2b329eb90f963d8840b63260d296053050cb6c9e-8.2.12-6.70.0.3',
    'data' => 
   array (
     'locatedSource' => 
@@ -59,9 +59,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 20,
             'endLine' => 20,
             'startTokenPos' => 55,
-            'startFilePos' => 377,
+            'startFilePos' => 358,
             'endTokenPos' => 57,
-            'endFilePos' => 387,
+            'endFilePos' => 368,
           ),
         ),
         'docComment' => '/**

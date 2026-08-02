@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Support\Http\Responses\MoneyPresenter.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Support\Http\Responses\MoneyPresenter
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-d012162113990a400aa49175af1c8a8f5bebacf232be346ed1ea2321eaf829c6',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-d9488780a22c8bd82edcf70a2cb895e8cb013d9b896b6057a75921487e3f6e69',
    'data' => 
   array (
     'locatedSource' => 

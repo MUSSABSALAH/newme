@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Notifications\PasswordResetNotification.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Notifications\PasswordResetNotification
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-97188bd96e848bd2b44cdd09cc34f893c218a58d91b7e18e807d34e9b15b00ae',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-ec7d3c0a2d79a904a67b64fe26fc72d3fbec783ca13cfaff54ad76b9c8ddfacd',
    'data' => 
   array (
     'locatedSource' => 

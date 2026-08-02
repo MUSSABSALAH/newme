@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Api;
 
-use App\Support\Enums\ApiErrorCode;
 use App\Modules\Plans\Enums\MealType;
 use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Models\PlanPricingRule;
 use App\Modules\Plans\Models\PlanVersion;
+use App\Modules\Promotions\Models\Coupon;
+use App\Support\Enums\ApiErrorCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -93,6 +94,41 @@ final class PlanApiTest extends TestCase
             ->assertJsonPath('data.breakdown.subtotal.minor', 40000)
             ->assertJsonPath('data.breakdown.total.minor', 41400)
             ->assertJsonPath('data.selection.total_days', 28);
+    }
+
+    public function test_quote_applies_a_coupon_code(): void
+    {
+        $plan = $this->publishedPlan();
+        Coupon::factory()->code('SAVE10')->percentage(10)->create();
+
+        $this->postJson('/api/v1/plans/'.$plan->public_id.'/quote', [
+            'meal_types' => [MealType::Breakfast->value, MealType::Lunch->value],
+            'duration_unit' => 'week',
+            'duration_length' => 4,
+            'coupon_code' => 'save10',
+        ])
+            ->assertOk()
+            ->assertJsonPath('data.breakdown.coupon_code', 'SAVE10')
+            ->assertJsonPath('data.breakdown.coupon_discount.minor', 3600)
+            ->assertJsonPath('data.breakdown.after_coupon.minor', 32400)
+            ->assertJsonPath('data.breakdown.total.minor', 37260);
+    }
+
+    public function test_quote_reports_no_coupon_for_an_unusable_code(): void
+    {
+        $plan = $this->publishedPlan();
+        Coupon::factory()->code('GONE')->expired()->create();
+
+        $this->postJson('/api/v1/plans/'.$plan->public_id.'/quote', [
+            'meal_types' => [MealType::Breakfast->value, MealType::Lunch->value],
+            'duration_unit' => 'week',
+            'duration_length' => 4,
+            'coupon_code' => 'GONE',
+        ])
+            ->assertOk()
+            ->assertJsonPath('data.breakdown.coupon_code', null)
+            ->assertJsonPath('data.breakdown.coupon_discount.minor', 0)
+            ->assertJsonPath('data.breakdown.total.minor', 41400);
     }
 
     public function test_quote_validation_error_returns_envelope(): void

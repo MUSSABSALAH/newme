@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Providers\AppServiceProvider.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Providers\AppServiceProvider
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-07382c229e8a8235410bf0d23b64a98e6c22ea7d71bcfea123d0c3b8175cf8b0',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-086fee46ebf8a7a72e29dfca29c27f0aaae59a30031df9ae92b6279c4ac066ce',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 22,
-    'endLine' => 44,
+    'startLine' => 39,
+    'endLine' => 97,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Support\\ServiceProvider',
@@ -67,11 +67,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Register any application services.
  */',
-        'startLine' => 27,
-        'endLine' => 30,
+        'startLine' => 44,
+        'endLine' => 56,
         'startColumn' => 5,
         'endColumn' => 5,
-        'couldThrow' => false,
+        'couldThrow' => true,
         'isClosure' => false,
         'isGenerator' => false,
         'isVariadic' => false,
@@ -104,8 +104,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Bootstrap any application services.
  */',
-        'startLine' => 35,
-        'endLine' => 43,
+        'startLine' => 61,
+        'endLine' => 96,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

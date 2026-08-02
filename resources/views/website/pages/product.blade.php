@@ -507,20 +507,21 @@ var I18N=window.NM_I18N||{};
 function tpl(s,vars){return String(s||'').replace(/:([a-z_]+)/g,function(_,k){return vars[k]!=null?vars[k]:'';});}
 var state={name:I18N.default_name||'',price:23,qty:1,mode:'flex'};
 function fmt2(n){return (Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function money(n){return fmt2(n)+(I18N.sar||'');}
+var SAR=' <span class="icon-saudi-riyal" aria-hidden="true"></span>';
+function money(n){return fmt2(n)+SAR;}
 
 function render(){
   var oneTot=state.price*state.qty;
   var flexTot=oneTot*0.9;
-  document.getElementById('vPrice').textContent=money(state.price);
-  document.getElementById('flexPrice').textContent=money(flexTot)+' | '+fmt2(flexTot/(5*state.qty))+(I18N.per_piece||'');
-  document.getElementById('flexWas').textContent=money(oneTot);
-  document.getElementById('oncePrice').textContent=money(oneTot)+' | '+fmt2(oneTot/(5*state.qty))+(I18N.per_piece||'');
+  document.getElementById('vPrice').innerHTML=money(state.price);
+  document.getElementById('flexPrice').innerHTML=money(flexTot)+' | '+fmt2(flexTot/(5*state.qty))+SAR+' / piece';
+  document.getElementById('flexWas').innerHTML=money(oneTot);
+  document.getElementById('oncePrice').innerHTML=money(oneTot)+' | '+fmt2(oneTot/(5*state.qty))+SAR+' / piece';
   document.getElementById('pk1').textContent=tpl(I18N.pack_x,{n:state.qty});
   document.getElementById('pk2').textContent=tpl(I18N.pack_x,{n:state.qty});
   var total=state.mode==='flex'?flexTot:oneTot;
-  document.getElementById('buyCta').textContent=(state.mode==='flex'?(I18N.add_sub||''):(I18N.add_cart||''))+money(total);
-  document.getElementById('stickyPrice').textContent=money(total);
+  document.getElementById('buyCta').innerHTML=(state.mode==='flex'?(I18N.add_sub||''):(I18N.add_cart||''))+money(total);
+  document.getElementById('stickyPrice').innerHTML=money(total);
   document.getElementById('stickyName').textContent=tpl(I18N.sticky_pack,{name:state.name});
   document.getElementById('pName').textContent=state.name;
   document.getElementById('crumbName').textContent=state.name;

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Notifications\UserInvitationNotification.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Notifications\UserInvitationNotification
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-48ab2488087f373d6d58a14106fc5e892cf53fe1cd04541c3cd1731cc3e62d2e',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-314a20d48d9f7d90a7a94ae0507cfc7d84a39af73765d954fa3accd4ff910789',
    'data' => 
   array (
     'locatedSource' => 

@@ -78,7 +78,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Support\\Http\\Responses\\MoneyPresenter.php' => 'd012162113990a400aa49175af1c8a8f5bebacf232be346ed1ea2321eaf829c6',
+      'C:\\newme\\app\\Support\\Http\\Responses\\MoneyPresenter.php' => 'd9488780a22c8bd82edcf70a2cb895e8cb013d9b896b6057a75921487e3f6e69',
     ),
   ),
 ));

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Plans\DTOs\PlanData.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Plans\DTOs\PlanData
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-84b7a049146e5d28e3ba5ea476b211cbb9c24e6cf8945fd134e9c4a309adb772',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-683750d51399b0497dc3af2252c36165dfa739136b94228f4049cb6ecbc852a0',
    'data' => 
   array (
     'locatedSource' => 

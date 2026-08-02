@@ -130,7 +130,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest.php' => 'bd944ea2f50f0f6a66e1ac746f4cbb2419cb3934e753935c4f06eb7280562968',
+      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest.php' => '34142492f9b8dad37a58d04caee564c0bb5fd81da7384d0af7af948ca52dedb7',
     ),
   ),
 ));

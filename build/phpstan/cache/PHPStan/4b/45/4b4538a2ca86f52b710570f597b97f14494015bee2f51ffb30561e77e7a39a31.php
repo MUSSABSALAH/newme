@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Exceptions\PasswordResetInvalidException.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Exceptions\PasswordResetInvalidException
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-0e518b8618d8e160c9775de168f5f7028b6eb45d7e04fc302b4c5f3a4e572461',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-bf9bb33ed87061fa6e3342d57b91aecb18693f7e97612d4876b92d1ab4aff5be',
    'data' => 
   array (
     'locatedSource' => 

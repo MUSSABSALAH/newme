@@ -26,6 +26,27 @@ enum AuditAction: string
     case MealCreated = 'meal.created';
     case MealUpdated = 'meal.updated';
     case MealArchived = 'meal.archived';
+    case CategoryCreated = 'category.created';
+    case CategoryUpdated = 'category.updated';
+    case CategoryArchived = 'category.archived';
+    case ProductCreated = 'product.created';
+    case ProductUpdated = 'product.updated';
+    case ProductArchived = 'product.archived';
+    case CustomerRegistered = 'customer.registered';
+    case CustomerUpdated = 'customer.updated';
+    case OrderPlaced = 'order.placed';
+    case OrderStatusUpdated = 'order.status_updated';
+    case SubscriptionCreated = 'subscription.created';
+    case SubscriptionHandlingUpdated = 'subscription.handling_updated';
+    case CouponCreated = 'coupon.created';
+    case CouponUpdated = 'coupon.updated';
+    case CouponArchived = 'coupon.archived';
+    case CouponRedeemed = 'coupon.redeemed';
+    case PaymentCaptured = 'payment.captured';
+    case PaymentPending = 'payment.pending';
+    case PaymentDeclined = 'payment.declined';
+    case PaymentConfirmed = 'payment.confirmed';
+    case InvoiceIssued = 'invoice.issued';
 
     /**
      * @return list<string>

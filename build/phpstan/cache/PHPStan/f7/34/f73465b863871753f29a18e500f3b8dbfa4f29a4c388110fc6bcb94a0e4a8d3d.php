@@ -342,7 +342,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Models\\UserInvitation.php' => '745b2f02cc59af4311bc8381e7dfcce4c7750a8740b5abdf54b653b78ebfdd04',
+      'C:\\newme\\app\\Modules\\Identity\\Models\\UserInvitation.php' => '02e7ac5f0fe2ae2f4a27f1ffc8f95b0bdaf628df6a0b54ec72b511e3eeac2edd',
     ),
   ),
 ));

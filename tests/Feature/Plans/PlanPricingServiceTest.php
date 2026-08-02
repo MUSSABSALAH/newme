@@ -13,6 +13,8 @@ use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Models\PlanPricingRule;
 use App\Modules\Plans\Models\PlanVersion;
 use App\Modules\Plans\Services\PlanPricingService;
+use App\Modules\Promotions\Enums\CouponScope;
+use App\Modules\Promotions\Models\Coupon;
 use App\Modules\Settings\Services\SettingsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -74,6 +76,77 @@ final class PlanPricingServiceTest extends TestCase
         $this->assertSame(41400, $quote->total->toMinor());
         $this->assertSame(28, $quote->totalDays);
         $this->assertSame(1286, $quote->perDay->toMinor());
+    }
+
+    public function test_quote_applies_a_percentage_coupon_before_tax(): void
+    {
+        $plan = $this->publishedPlan();
+        Coupon::factory()->code('SAVE10')->percentage(10)->create();
+
+        $quote = $this->service()->quote($plan, $this->request(['coupon_code' => 'save10']));
+
+        // 36000 after the duration discount, less 10% = 32400, then +15% tax.
+        $this->assertSame('SAVE10', $quote->couponCode);
+        $this->assertSame(3600, $quote->couponDiscount->toMinor());
+        $this->assertSame(32400, $quote->afterCoupon->toMinor());
+        $this->assertSame(4860, $quote->tax->toMinor());
+        $this->assertSame(37260, $quote->total->toMinor());
+        $this->assertSame(1157, $quote->perDay->toMinor());
+    }
+
+    public function test_quote_applies_a_fixed_coupon(): void
+    {
+        $plan = $this->publishedPlan();
+        Coupon::factory()->code('FLAT50')->fixed(5000)->create();
+
+        $quote = $this->service()->quote($plan, $this->request(['coupon_code' => 'FLAT50']));
+
+        $this->assertSame(5000, $quote->couponDiscount->toMinor());
+        $this->assertSame(31000, $quote->afterCoupon->toMinor());
+    }
+
+    public function test_quote_honours_the_maximum_discount_cap(): void
+    {
+        $plan = $this->publishedPlan();
+        Coupon::factory()->code('CAPPED')->percentage(50)->create(['max_discount_minor' => 2000]);
+
+        $quote = $this->service()->quote($plan, $this->request(['coupon_code' => 'CAPPED']));
+
+        $this->assertSame(2000, $quote->couponDiscount->toMinor());
+    }
+
+    public function test_a_coupon_never_pushes_the_subtotal_below_zero(): void
+    {
+        $plan = $this->publishedPlan();
+        Coupon::factory()->code('HUGE')->fixed(999999)->create();
+
+        $quote = $this->service()->quote($plan, $this->request(['coupon_code' => 'HUGE']));
+
+        $this->assertSame(36000, $quote->couponDiscount->toMinor());
+        $this->assertSame(0, $quote->afterCoupon->toMinor());
+        $this->assertSame(0, $quote->total->toMinor());
+    }
+
+    public function test_a_store_only_coupon_is_ignored_when_pricing_a_plan(): void
+    {
+        $plan = $this->publishedPlan();
+        Coupon::factory()->code('STOREONLY')->scope(CouponScope::Store)->create();
+
+        $quote = $this->service()->quote($plan, $this->request(['coupon_code' => 'STOREONLY']));
+
+        $this->assertNull($quote->couponCode);
+        $this->assertSame(0, $quote->couponDiscount->toMinor());
+        $this->assertSame(41400, $quote->total->toMinor());
+    }
+
+    public function test_an_unknown_coupon_is_ignored_rather_than_failing_the_quote(): void
+    {
+        $plan = $this->publishedPlan();
+
+        $quote = $this->service()->quote($plan, $this->request(['coupon_code' => 'NOPE']));
+
+        $this->assertNull($quote->couponCode);
+        $this->assertSame(41400, $quote->total->toMinor());
     }
 
     public function test_quote_includes_delivery_fee(): void

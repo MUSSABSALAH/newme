@@ -27,7 +27,7 @@
 <body>
     {{ $slot }}
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ asset('js/vendor/lucide.min.js') }}"></script>
     <script>
         window.lucide && window.lucide.createIcons();
     </script>

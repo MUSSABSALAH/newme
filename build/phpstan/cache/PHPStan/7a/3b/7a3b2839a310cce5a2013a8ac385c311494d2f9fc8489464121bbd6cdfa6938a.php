@@ -79,7 +79,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\DTOs\\RoleData.php' => '66f7c08282c7cf15a1eaaf6bcdbfd2b2fbd46c4b73f65f2a466394e1b336fe1a',
+      'C:\\newme\\app\\Modules\\Identity\\DTOs\\RoleData.php' => '324e9e313d237fc3890e8b82f20f6b964a0744c6d689e79e61168d4b631cc879',
     ),
   ),
 ));

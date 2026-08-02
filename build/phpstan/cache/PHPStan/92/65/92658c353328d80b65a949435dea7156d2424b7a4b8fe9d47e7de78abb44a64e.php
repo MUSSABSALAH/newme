@@ -15,6 +15,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'controller' => 'App\\Http\\Controllers\\Controller',
           'loginrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\LoginRequest',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'authservice' => 'App\\Modules\\Identity\\Services\\AuthService',
@@ -48,6 +49,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'controller' => 'App\\Http\\Controllers\\Controller',
           'loginrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\LoginRequest',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'authservice' => 'App\\Modules\\Identity\\Services\\AuthService',
@@ -81,6 +83,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'controller' => 'App\\Http\\Controllers\\Controller',
           'loginrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\LoginRequest',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'authservice' => 'App\\Modules\\Identity\\Services\\AuthService',
@@ -114,6 +117,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'controller' => 'App\\Http\\Controllers\\Controller',
           'loginrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\LoginRequest',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'authservice' => 'App\\Modules\\Identity\\Services\\AuthService',
@@ -147,6 +151,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'controller' => 'App\\Http\\Controllers\\Controller',
           'loginrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\LoginRequest',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'authservice' => 'App\\Modules\\Identity\\Services\\AuthService',
@@ -175,7 +180,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\Auth\\LoginController.php' => 'a0c8852b6cbec44d20c72b203e18603464360969184e6e8c442ff0bfa74590c2',
+      'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\Auth\\LoginController.php' => '05659d64e7701cff979324948b0c543ef368702ecb9d8f0365d8e9ca231e0006',
     ),
   ),
 ));

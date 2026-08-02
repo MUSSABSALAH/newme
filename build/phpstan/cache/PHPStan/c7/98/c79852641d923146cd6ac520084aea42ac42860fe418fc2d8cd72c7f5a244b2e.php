@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Middleware\SetWebLocale.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\SetWebLocale
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-843d63c9ba18888818847d88a976208126f087ec003bb535cfc233a869bf16ba',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-3b0c86e623cc1f74583e99717c621b6351cf7c2dcbd1142092682caf4e102213',
    'data' => 
   array (
     'locatedSource' => 
@@ -60,9 +60,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 20,
             'endLine' => 20,
             'startTokenPos' => 48,
-            'startFilePos' => 506,
+            'startFilePos' => 525,
             'endTokenPos' => 53,
-            'endFilePos' => 517,
+            'endFilePos' => 536,
           ),
         ),
         'docComment' => NULL,
@@ -89,9 +89,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 22,
             'endLine' => 22,
             'startTokenPos' => 64,
-            'startFilePos' => 547,
+            'startFilePos' => 568,
             'endTokenPos' => 64,
-            'endFilePos' => 554,
+            'endFilePos' => 575,
           ),
         ),
         'docComment' => NULL,
@@ -118,9 +118,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 24,
             'endLine' => 24,
             'startTokenPos' => 75,
-            'startFilePos' => 593,
+            'startFilePos' => 616,
             'endTokenPos' => 75,
-            'endFilePos' => 596,
+            'endFilePos' => 619,
           ),
         ),
         'docComment' => NULL,

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Controllers\Web\Admin\Auth\ResetPasswordController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\Web\Admin\Auth\ResetPasswordController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ad8a4e57b4b074a4ff473087303b543474f3f3a7742fd4d6458b661e99c3a4d3',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-bf46aa5e6fbc9d9e2c5469f5363efe64e19c84405553baeb0924d7c886ac59fd',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 17,
-    'endLine' => 53,
+    'startLine' => 18,
+    'endLine' => 55,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -62,8 +62,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 19,
-        'endLine' => 19,
+        'startLine' => 20,
+        'endLine' => 20,
         'startColumn' => 33,
         'endColumn' => 91,
         'isPromoted' => true,
@@ -100,8 +100,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 19,
-            'endLine' => 19,
+            'startLine' => 20,
+            'endLine' => 20,
             'startColumn' => 33,
             'endColumn' => 91,
             'parameterIndex' => 0,
@@ -114,8 +114,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 19,
-        'endLine' => 19,
+        'startLine' => 20,
+        'endLine' => 20,
         'startColumn' => 5,
         'endColumn' => 95,
         'couldThrow' => false,
@@ -153,8 +153,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 21,
-            'endLine' => 21,
+            'startLine' => 22,
+            'endLine' => 22,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -179,8 +179,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 21,
-            'endLine' => 21,
+            'startLine' => 22,
+            'endLine' => 22,
             'startColumn' => 46,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -201,8 +201,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 21,
-        'endLine' => 27,
+        'startLine' => 22,
+        'endLine' => 28,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -240,8 +240,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 32,
-            'endLine' => 32,
+            'startLine' => 33,
+            'endLine' => 33,
             'startColumn' => 27,
             'endColumn' => 55,
             'parameterIndex' => 0,
@@ -264,8 +264,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @throws ValidationException
  */',
-        'startLine' => 32,
-        'endLine' => 52,
+        'startLine' => 33,
+        'endLine' => 54,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => true,

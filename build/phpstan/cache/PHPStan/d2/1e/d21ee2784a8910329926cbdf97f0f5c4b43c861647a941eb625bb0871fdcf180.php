@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Settings\Models\Setting.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Settings\Models\Setting
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-62817af9545a04e711f7e68f8383e64d919ebdcf986b2db6a873bae85959f585',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-8fcd73de1519265199d3bb6e1d140f99864c4a1a1147c5833b80c547951c8a76',
    'data' => 
   array (
     'locatedSource' => 
@@ -62,9 +62,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 20,
             'endLine' => 24,
             'startTokenPos' => 40,
-            'startFilePos' => 329,
+            'startFilePos' => 348,
             'endTokenPos' => 51,
-            'endFilePos' => 391,
+            'endFilePos' => 414,
           ),
         ),
         'docComment' => '/**

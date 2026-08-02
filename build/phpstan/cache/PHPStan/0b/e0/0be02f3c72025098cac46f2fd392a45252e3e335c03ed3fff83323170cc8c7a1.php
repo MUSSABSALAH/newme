@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Audit\Enums\AuditAction.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Audit\Enums\AuditAction
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-10ce8284add0915834281413f9d7edc35f89f04d589fc0c222665ef8366f18d7',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-d8b45a6b0d032cc980d784b86c9dcd14ccd015268b2a799f75160d0dbdc8441c',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 7,
-    'endLine' => 45,
+    'endLine' => 63,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -129,8 +129,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return list<string>
  */',
-        'startLine' => 33,
-        'endLine' => 36,
+        'startLine' => 51,
+        'endLine' => 54,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -166,8 +166,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Localized, human-readable label for this action.
  */',
-        'startLine' => 41,
-        'endLine' => 44,
+        'startLine' => 59,
+        'endLine' => 62,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -917,6 +917,456 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'endLine' => 28,
         'startColumn' => 5,
         'endColumn' => 40,
+      ),
+      'CategoryCreated' => 
+      array (
+        'name' => 'CategoryCreated',
+        'value' => 
+        array (
+          'code' => '\'category.created\'',
+          'attributes' => 
+          array (
+            'startLine' => 29,
+            'endLine' => 29,
+            'startTokenPos' => 210,
+            'startFilePos' => 1005,
+            'endTokenPos' => 210,
+            'endFilePos' => 1022,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 29,
+        'endLine' => 29,
+        'startColumn' => 5,
+        'endColumn' => 46,
+      ),
+      'CategoryUpdated' => 
+      array (
+        'name' => 'CategoryUpdated',
+        'value' => 
+        array (
+          'code' => '\'category.updated\'',
+          'attributes' => 
+          array (
+            'startLine' => 30,
+            'endLine' => 30,
+            'startTokenPos' => 219,
+            'startFilePos' => 1052,
+            'endTokenPos' => 219,
+            'endFilePos' => 1069,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 30,
+        'endLine' => 30,
+        'startColumn' => 5,
+        'endColumn' => 46,
+      ),
+      'CategoryArchived' => 
+      array (
+        'name' => 'CategoryArchived',
+        'value' => 
+        array (
+          'code' => '\'category.archived\'',
+          'attributes' => 
+          array (
+            'startLine' => 31,
+            'endLine' => 31,
+            'startTokenPos' => 228,
+            'startFilePos' => 1100,
+            'endTokenPos' => 228,
+            'endFilePos' => 1118,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 31,
+        'endLine' => 31,
+        'startColumn' => 5,
+        'endColumn' => 48,
+      ),
+      'ProductCreated' => 
+      array (
+        'name' => 'ProductCreated',
+        'value' => 
+        array (
+          'code' => '\'product.created\'',
+          'attributes' => 
+          array (
+            'startLine' => 32,
+            'endLine' => 32,
+            'startTokenPos' => 237,
+            'startFilePos' => 1147,
+            'endTokenPos' => 237,
+            'endFilePos' => 1163,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 32,
+        'endLine' => 32,
+        'startColumn' => 5,
+        'endColumn' => 44,
+      ),
+      'ProductUpdated' => 
+      array (
+        'name' => 'ProductUpdated',
+        'value' => 
+        array (
+          'code' => '\'product.updated\'',
+          'attributes' => 
+          array (
+            'startLine' => 33,
+            'endLine' => 33,
+            'startTokenPos' => 246,
+            'startFilePos' => 1192,
+            'endTokenPos' => 246,
+            'endFilePos' => 1208,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 33,
+        'endLine' => 33,
+        'startColumn' => 5,
+        'endColumn' => 44,
+      ),
+      'ProductArchived' => 
+      array (
+        'name' => 'ProductArchived',
+        'value' => 
+        array (
+          'code' => '\'product.archived\'',
+          'attributes' => 
+          array (
+            'startLine' => 34,
+            'endLine' => 34,
+            'startTokenPos' => 255,
+            'startFilePos' => 1238,
+            'endTokenPos' => 255,
+            'endFilePos' => 1255,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 34,
+        'endLine' => 34,
+        'startColumn' => 5,
+        'endColumn' => 46,
+      ),
+      'CustomerRegistered' => 
+      array (
+        'name' => 'CustomerRegistered',
+        'value' => 
+        array (
+          'code' => '\'customer.registered\'',
+          'attributes' => 
+          array (
+            'startLine' => 35,
+            'endLine' => 35,
+            'startTokenPos' => 264,
+            'startFilePos' => 1288,
+            'endTokenPos' => 264,
+            'endFilePos' => 1308,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 35,
+        'endLine' => 35,
+        'startColumn' => 5,
+        'endColumn' => 52,
+      ),
+      'CustomerUpdated' => 
+      array (
+        'name' => 'CustomerUpdated',
+        'value' => 
+        array (
+          'code' => '\'customer.updated\'',
+          'attributes' => 
+          array (
+            'startLine' => 36,
+            'endLine' => 36,
+            'startTokenPos' => 273,
+            'startFilePos' => 1338,
+            'endTokenPos' => 273,
+            'endFilePos' => 1355,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 36,
+        'endLine' => 36,
+        'startColumn' => 5,
+        'endColumn' => 46,
+      ),
+      'OrderPlaced' => 
+      array (
+        'name' => 'OrderPlaced',
+        'value' => 
+        array (
+          'code' => '\'order.placed\'',
+          'attributes' => 
+          array (
+            'startLine' => 37,
+            'endLine' => 37,
+            'startTokenPos' => 282,
+            'startFilePos' => 1381,
+            'endTokenPos' => 282,
+            'endFilePos' => 1394,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 37,
+        'endLine' => 37,
+        'startColumn' => 5,
+        'endColumn' => 38,
+      ),
+      'SubscriptionCreated' => 
+      array (
+        'name' => 'SubscriptionCreated',
+        'value' => 
+        array (
+          'code' => '\'subscription.created\'',
+          'attributes' => 
+          array (
+            'startLine' => 38,
+            'endLine' => 38,
+            'startTokenPos' => 291,
+            'startFilePos' => 1428,
+            'endTokenPos' => 291,
+            'endFilePos' => 1449,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 38,
+        'endLine' => 38,
+        'startColumn' => 5,
+        'endColumn' => 54,
+      ),
+      'SubscriptionHandlingUpdated' => 
+      array (
+        'name' => 'SubscriptionHandlingUpdated',
+        'value' => 
+        array (
+          'code' => '\'subscription.handling_updated\'',
+          'attributes' => 
+          array (
+            'startLine' => 39,
+            'endLine' => 39,
+            'startTokenPos' => 300,
+            'startFilePos' => 1491,
+            'endTokenPos' => 300,
+            'endFilePos' => 1521,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 39,
+        'endLine' => 39,
+        'startColumn' => 5,
+        'endColumn' => 71,
+      ),
+      'CouponCreated' => 
+      array (
+        'name' => 'CouponCreated',
+        'value' => 
+        array (
+          'code' => '\'coupon.created\'',
+          'attributes' => 
+          array (
+            'startLine' => 40,
+            'endLine' => 40,
+            'startTokenPos' => 309,
+            'startFilePos' => 1549,
+            'endTokenPos' => 309,
+            'endFilePos' => 1564,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 40,
+        'endLine' => 40,
+        'startColumn' => 5,
+        'endColumn' => 42,
+      ),
+      'CouponUpdated' => 
+      array (
+        'name' => 'CouponUpdated',
+        'value' => 
+        array (
+          'code' => '\'coupon.updated\'',
+          'attributes' => 
+          array (
+            'startLine' => 41,
+            'endLine' => 41,
+            'startTokenPos' => 318,
+            'startFilePos' => 1592,
+            'endTokenPos' => 318,
+            'endFilePos' => 1607,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 41,
+        'endLine' => 41,
+        'startColumn' => 5,
+        'endColumn' => 42,
+      ),
+      'CouponArchived' => 
+      array (
+        'name' => 'CouponArchived',
+        'value' => 
+        array (
+          'code' => '\'coupon.archived\'',
+          'attributes' => 
+          array (
+            'startLine' => 42,
+            'endLine' => 42,
+            'startTokenPos' => 327,
+            'startFilePos' => 1636,
+            'endTokenPos' => 327,
+            'endFilePos' => 1652,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 42,
+        'endLine' => 42,
+        'startColumn' => 5,
+        'endColumn' => 44,
+      ),
+      'CouponRedeemed' => 
+      array (
+        'name' => 'CouponRedeemed',
+        'value' => 
+        array (
+          'code' => '\'coupon.redeemed\'',
+          'attributes' => 
+          array (
+            'startLine' => 43,
+            'endLine' => 43,
+            'startTokenPos' => 336,
+            'startFilePos' => 1681,
+            'endTokenPos' => 336,
+            'endFilePos' => 1697,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 43,
+        'endLine' => 43,
+        'startColumn' => 5,
+        'endColumn' => 44,
+      ),
+      'PaymentCaptured' => 
+      array (
+        'name' => 'PaymentCaptured',
+        'value' => 
+        array (
+          'code' => '\'payment.captured\'',
+          'attributes' => 
+          array (
+            'startLine' => 44,
+            'endLine' => 44,
+            'startTokenPos' => 345,
+            'startFilePos' => 1727,
+            'endTokenPos' => 345,
+            'endFilePos' => 1744,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 44,
+        'endLine' => 44,
+        'startColumn' => 5,
+        'endColumn' => 46,
+      ),
+      'PaymentPending' => 
+      array (
+        'name' => 'PaymentPending',
+        'value' => 
+        array (
+          'code' => '\'payment.pending\'',
+          'attributes' => 
+          array (
+            'startLine' => 45,
+            'endLine' => 45,
+            'startTokenPos' => 354,
+            'startFilePos' => 1773,
+            'endTokenPos' => 354,
+            'endFilePos' => 1789,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 45,
+        'endLine' => 45,
+        'startColumn' => 5,
+        'endColumn' => 44,
+      ),
+      'PaymentDeclined' => 
+      array (
+        'name' => 'PaymentDeclined',
+        'value' => 
+        array (
+          'code' => '\'payment.declined\'',
+          'attributes' => 
+          array (
+            'startLine' => 46,
+            'endLine' => 46,
+            'startTokenPos' => 363,
+            'startFilePos' => 1819,
+            'endTokenPos' => 363,
+            'endFilePos' => 1836,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 46,
+        'endLine' => 46,
+        'startColumn' => 5,
+        'endColumn' => 46,
       ),
     ),
   ),

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Controllers\Api\V1\PlanQuoteController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\Api\V1\PlanQuoteController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-fbe1bbcbcf3c1c4ad618f36de5e75b9ff318e29da9266c6468702e0744ea410a',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-9e5ce25ad4957c8e9faf414c9250c28bf20ac5b7b9e7f3f1aa312c415962150e',
    'data' => 
   array (
     'locatedSource' => 

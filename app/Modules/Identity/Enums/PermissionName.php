@@ -30,6 +30,12 @@ enum PermissionName: string
     case CatalogUpdate = 'catalog.update';
     case CatalogDelete = 'catalog.delete';
 
+    // Coupons
+    case CouponsView = 'coupons.view';
+    case CouponsCreate = 'coupons.create';
+    case CouponsUpdate = 'coupons.update';
+    case CouponsDelete = 'coupons.delete';
+
     // Inventory
     case InventoryView = 'inventory.view';
     case InventoryAdjust = 'inventory.adjust';
@@ -48,7 +54,11 @@ enum PermissionName: string
 
     // Payments
     case PaymentsView = 'payments.view';
+    case PaymentsConfirm = 'payments.confirm';
     case PaymentsRefund = 'payments.refund';
+
+    // Invoices
+    case InvoicesView = 'invoices.view';
 
     // Plans
     case PlansView = 'plans.view';

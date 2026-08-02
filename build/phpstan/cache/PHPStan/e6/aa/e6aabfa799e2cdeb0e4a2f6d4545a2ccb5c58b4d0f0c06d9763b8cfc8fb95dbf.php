@@ -1105,5 +1105,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
+    'C:/newme/vendor/composer/../mpdf/mpdf/src/functions.php' => 
+    array (
+      0 => '2e02c2536d4eb78032ee3ec9acf0e12363a6d6fb216b3777e06acf1033a693e4',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'str_starts_with',
+        1 => 'str_ends_with',
+      ),
+      3 => 
+      array (
+      ),
+    ),
   ),
 ));

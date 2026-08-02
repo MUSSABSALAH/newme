@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Admin\Auth\ResetPasswordRequest;
+use App\Modules\Identity\Enums\UserType;
 use App\Modules\Identity\Exceptions\PasswordResetInvalidException;
 use App\Modules\Identity\Services\PasswordResetService;
 use Illuminate\Contracts\View\View;
@@ -36,6 +37,7 @@ final class ResetPasswordController extends Controller
                 $request->validated('email'),
                 $request->validated('token'),
                 $request->validated('password'),
+                UserType::Staff,
             );
         } catch (PasswordResetInvalidException $e) {
             throw ValidationException::withMessages([

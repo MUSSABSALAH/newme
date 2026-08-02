@@ -35,7 +35,7 @@ return [
     'pay_mada' => 'mada',
     'pay_tabby' => 'Tabby',
     'trust_refund' => '30-day money-back guarantee',
-    'trust_ship' => 'Shipping: 2–3 business days · free over 150 SAR',
+    'trust_ship' => 'Shipping: 2–3 business days · free over 150 <span class="icon-saudi-riyal" aria-hidden="true"></span>',
     'trust_pay' => '100% secure encrypted payment',
     'benefits_h2' => 'Daily bread, <em>athlete specs</em>',
     'ben1_t' => '12.1g protein',
@@ -121,7 +121,7 @@ return [
     ],
     'rel_kick' => 'You may also like',
     'rel_h2' => 'From the <em>New Me</em> bakery',
-    'sar' => 'SAR',
+    'sar' => '<span class="icon-saudi-riyal" aria-hidden="true"></span>',
     'related' => [
         ['Seed granola', '22'],
         ['Sea salt crackers', '22'],
@@ -140,8 +140,8 @@ return [
     ],
     'js' => [
         'default_name' => 'Multi-seed bread',
-        'sar' => ' SAR',
-        'per_piece' => ' SAR / piece',
+        'sar' => ' <span class="icon-saudi-riyal" aria-hidden="true"></span>',
+        'per_piece' => ' <span class="icon-saudi-riyal" aria-hidden="true"></span> / piece',
         'pack_x' => 'Pack × :n',
         'add_sub' => 'Add to subscription | ',
         'add_cart' => 'Add to cart | ',

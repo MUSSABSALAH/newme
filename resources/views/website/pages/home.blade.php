@@ -52,7 +52,7 @@ body::after{content:"";position:fixed;inset:-50%;z-index:120;pointer-events:none
 /* ===== top bar ===== */
 .tbar{position:fixed;top:0;inset-inline:0;z-index:110;display:flex;justify-content:space-between;align-items:center;padding:calc(18px + var(--sat)) 26px 14px;mix-blend-mode:normal}
 .logo{display:inline-flex;align-items:center;gap:10px;line-height:0}
-.logo__img{display:block;height:34px;width:auto;max-width:140px;object-fit:contain;filter:brightness(0) invert(1)}
+.logo__img{display:block;height:34px;width:auto;max-width:160px;object-fit:contain}
 .logo b{font-size:18px;color:var(--ink);font-weight:900}
 .skip{font-size:12px;font-weight:800;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:9px 20px;transition:.25s;letter-spacing:.04em}
 .skip:hover{color:var(--ink);border-color:var(--orange);background:rgba(240,127,45,.08)}
@@ -158,7 +158,7 @@ body::after{content:"";position:fixed;inset:-50%;z-index:120;pointer-events:none
 
 <!-- TOP BAR -->
 <div class="tbar">
-  @include('website.partials.logo', ['href' => route('website.home')])
+  @include('website.partials.logo', ['href' => route('website.home'), 'tone' => 'light'])
   <div class="row" style="display:flex;align-items:center;gap:10px">
     @include('website.partials.lang-toggle', ['class' => 'on-dark'])
     <a class="skip" href="/main">{{ __('website.home.skip') }}</a>

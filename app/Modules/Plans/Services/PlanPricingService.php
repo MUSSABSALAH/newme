@@ -4,28 +4,36 @@ declare(strict_types=1);
 
 namespace App\Modules\Plans\Services;
 
+use App\Models\User;
 use App\Modules\Plans\DTOs\PlanQuote;
 use App\Modules\Plans\DTOs\PlanQuoteRequestData;
-use App\Modules\Plans\Enums\PlanVersionStatus;
 use App\Modules\Plans\Exceptions\InvalidDeliveryDaysException;
 use App\Modules\Plans\Exceptions\PlanNotAvailableException;
 use App\Modules\Plans\Exceptions\PricingRuleNotFoundException;
 use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Models\PlanPricingRule;
 use App\Modules\Plans\Models\PlanVersion;
+use App\Modules\Promotions\DTOs\AppliedCoupon;
+use App\Modules\Promotions\Enums\CouponScope;
+use App\Modules\Promotions\Services\CouponRedemptionService;
 use App\Modules\Settings\Services\SettingsService;
 use App\Support\Money\Money;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * The single source of truth for plan pricing.
  *
- * Clients submit only their choices (meal types + duration); every monetary
- * figure is computed here from the plan's published pricing version and the
- * platform finance settings, using integer minor units throughout.
+ * Clients submit only their choices (meal types + duration + an optional coupon
+ * code); every monetary figure is computed here from the plan's published
+ * pricing version and the platform finance settings, using integer minor units
+ * throughout.
  */
 final class PlanPricingService
 {
-    public function __construct(private readonly SettingsService $settings) {}
+    public function __construct(
+        private readonly SettingsService $settings,
+        private readonly CouponRedemptionService $coupons,
+    ) {}
 
     /**
      * @throws PlanNotAvailableException
@@ -48,7 +56,7 @@ final class PlanPricingService
 
         $selectedDays = $this->validatedDays($plan, $data);
 
-        return $this->build($plan, $version, $rule, $selectedDays);
+        return $this->build($plan, $version, $rule, $selectedDays, $data->couponCode);
     }
 
     /**
@@ -127,17 +135,25 @@ final class PlanPricingService
         PlanVersion $version,
         PlanPricingRule $rule,
         array $selectedDays,
+        ?string $couponCode = null,
     ): PlanQuote {
         $subtotal = $rule->priceMoney();
         $discount = $subtotal->percentage($rule->discountBasisPoints());
         $afterDiscount = $subtotal->subtract($discount);
+
+        // A coupon reduces the taxable base, so it lands before delivery and tax
+        // on the same line as the duration discount.
+        $applied = $this->resolveCoupon($couponCode, $afterDiscount);
+        $couponDiscount = $applied instanceof AppliedCoupon ? $applied->discount : Money::zero();
+        $afterCoupon = $afterDiscount->subtract($couponDiscount);
+
         $deliveryFee = Money::fromMinor($plan->delivery_fee);
 
         $taxRate = $this->taxRate();
         $taxBasisPoints = (int) round($taxRate * 100);
         $pricesIncludeTax = (bool) $this->settings->get('finance.prices_include_tax');
 
-        $gross = $afterDiscount->add($deliveryFee);
+        $gross = $afterCoupon->add($deliveryFee);
 
         if ($pricesIncludeTax) {
             $taxable = $gross->multiply(10000, 10000 + $taxBasisPoints);
@@ -150,7 +166,7 @@ final class PlanPricingService
         }
 
         $totalDays = max(1, $rule->totalDays());
-        $perDay = $afterDiscount->multiply(1, $totalDays);
+        $perDay = $afterCoupon->multiply(1, $totalDays);
 
         return new PlanQuote(
             planId: $plan->id,
@@ -164,6 +180,9 @@ final class PlanPricingService
             discountPercent: (string) $rule->discount_percent,
             discount: $discount,
             afterDiscount: $afterDiscount,
+            couponCode: $applied?->code(),
+            couponDiscount: $couponDiscount,
+            afterCoupon: $afterCoupon,
             deliveryFee: $deliveryFee,
             taxRate: number_format($taxRate, 2, '.', ''),
             pricesIncludeTax: $pricesIncludeTax,
@@ -174,6 +193,26 @@ final class PlanPricingService
             requiresDaySelection: $plan->requires_day_selection,
             minDeliveryDaysPerWeek: $plan->min_delivery_days_per_week,
             selectedDays: $selectedDays,
+        );
+    }
+
+    /**
+     * A code that no longer qualifies is dropped rather than failing the quote,
+     * so the wizard keeps working while the customer changes their selection.
+     */
+    private function resolveCoupon(?string $code, Money $base): ?AppliedCoupon
+    {
+        if ($code === null) {
+            return null;
+        }
+
+        $user = Auth::user();
+
+        return $this->coupons->resolveQuietly(
+            $code,
+            CouponScope::Subscriptions,
+            $base,
+            $user instanceof User && $user->isCustomer() ? $user : null,
         );
     }
 

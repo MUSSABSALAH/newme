@@ -56,7 +56,95 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'templatePhpDocNodes' => 
         array (
         ),
-         'parent' => NULL,
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Modules\\Plans\\Seeders',
+           'uses' => 
+          array (
+            'durationunit' => 'App\\Modules\\Plans\\Enums\\DurationUnit',
+            'mealtype' => 'App\\Modules\\Plans\\Enums\\MealType',
+            'plangoal' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+            'planversionstatus' => 'App\\Modules\\Plans\\Enums\\PlanVersionStatus',
+            'meal' => 'App\\Modules\\Plans\\Models\\Meal',
+            'plan' => 'App\\Modules\\Plans\\Models\\Plan',
+            'planversion' => 'App\\Modules\\Plans\\Models\\PlanVersion',
+            'seeder' => 'Illuminate\\Database\\Seeder',
+          ),
+           'className' => 'App\\Modules\\Plans\\Seeders\\PlanSeeder',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      'd402b15aba82501c5d467d6b396056eb' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Modules\\Plans\\Seeders',
+         'uses' => 
+        array (
+          'durationunit' => 'App\\Modules\\Plans\\Enums\\DurationUnit',
+          'mealtype' => 'App\\Modules\\Plans\\Enums\\MealType',
+          'plangoal' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+          'planversionstatus' => 'App\\Modules\\Plans\\Enums\\PlanVersionStatus',
+          'meal' => 'App\\Modules\\Plans\\Models\\Meal',
+          'plan' => 'App\\Modules\\Plans\\Models\\Plan',
+          'planversion' => 'App\\Modules\\Plans\\Models\\PlanVersion',
+          'seeder' => 'Illuminate\\Database\\Seeder',
+        ),
+         'className' => 'App\\Modules\\Plans\\Seeders\\PlanSeeder',
+         'functionName' => 'plans',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Modules\\Plans\\Seeders',
+           'uses' => 
+          array (
+            'durationunit' => 'App\\Modules\\Plans\\Enums\\DurationUnit',
+            'mealtype' => 'App\\Modules\\Plans\\Enums\\MealType',
+            'plangoal' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+            'planversionstatus' => 'App\\Modules\\Plans\\Enums\\PlanVersionStatus',
+            'meal' => 'App\\Modules\\Plans\\Models\\Meal',
+            'plan' => 'App\\Modules\\Plans\\Models\\Plan',
+            'planversion' => 'App\\Modules\\Plans\\Models\\PlanVersion',
+            'seeder' => 'Illuminate\\Database\\Seeder',
+          ),
+           'className' => 'App\\Modules\\Plans\\Seeders\\PlanSeeder',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
          'typeAliasesMap' => 
         array (
         ),
@@ -86,7 +174,36 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'templatePhpDocNodes' => 
         array (
         ),
-         'parent' => NULL,
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Modules\\Plans\\Seeders',
+           'uses' => 
+          array (
+            'durationunit' => 'App\\Modules\\Plans\\Enums\\DurationUnit',
+            'mealtype' => 'App\\Modules\\Plans\\Enums\\MealType',
+            'plangoal' => 'App\\Modules\\Plans\\Enums\\PlanGoal',
+            'planversionstatus' => 'App\\Modules\\Plans\\Enums\\PlanVersionStatus',
+            'meal' => 'App\\Modules\\Plans\\Models\\Meal',
+            'plan' => 'App\\Modules\\Plans\\Models\\Plan',
+            'planversion' => 'App\\Modules\\Plans\\Models\\PlanVersion',
+            'seeder' => 'Illuminate\\Database\\Seeder',
+          ),
+           'className' => 'App\\Modules\\Plans\\Seeders\\PlanSeeder',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
          'typeAliasesMap' => 
         array (
         ),
@@ -100,7 +217,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Plans\\Seeders\\PlanSeeder.php' => '6d563eafc28cca3515c7cdcb1214590879c4150a5fedc5ef770cdb44596b4672',
+      'C:\\newme\\app\\Modules\\Plans\\Seeders\\PlanSeeder.php' => '810d2f3f0a400059dc62e1a41c18f5f0d51243a22bf96cda571a331943cba0fe',
     ),
   ),
 ));

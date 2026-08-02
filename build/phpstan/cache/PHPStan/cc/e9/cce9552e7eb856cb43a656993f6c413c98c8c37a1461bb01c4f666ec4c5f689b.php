@@ -15,6 +15,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'user' => 'App\\Models\\User',
           'authresult' => 'App\\Modules\\Identity\\DTOs\\AuthResult',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -43,6 +44,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'user' => 'App\\Models\\User',
           'authresult' => 'App\\Modules\\Identity\\DTOs\\AuthResult',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -71,6 +73,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'user' => 'App\\Models\\User',
           'authresult' => 'App\\Modules\\Identity\\DTOs\\AuthResult',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -99,6 +102,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'user' => 'App\\Models\\User',
           'authresult' => 'App\\Modules\\Identity\\DTOs\\AuthResult',
           'logindata' => 'App\\Modules\\Identity\\DTOs\\LoginData',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'inactiveuserexception' => 'App\\Modules\\Identity\\Exceptions\\InactiveUserException',
           'invalidcredentialsexception' => 'App\\Modules\\Identity\\Exceptions\\InvalidCredentialsException',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -122,7 +126,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Services\\AuthService.php' => 'ba85c783268d4e1082dd4d53d6083065d64689499b31644af9d9f954c97efb6d',
+      'C:\\newme\\app\\Modules\\Identity\\Services\\AuthService.php' => '6bf735edad3fb252a2f8cb6e9ec820344df624b8de6953321251deaac16217c6',
     ),
   ),
 ));

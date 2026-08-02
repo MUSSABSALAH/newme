@@ -74,10 +74,10 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .nav-links a{padding:6px 0;border-bottom:2.5px solid transparent;white-space:nowrap}
 .nav-links a:hover{border-color:var(--orange)}
 @media(min-width:1060px){.nav-links{display:flex}}
-.nav-right{display:flex;align-items:center;gap:10px}
-.cart{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;position:relative}
-.cart .i{width:19px;height:19px;color:var(--navy)}
-.cart i{position:absolute;top:-3px;inset-inline-start:-3px;background:var(--orange);color:#fff;font-style:normal;font-size:10px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.nav-right{display:flex;align-items:center;gap:8px}
+.cart{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;position:relative}
+.cart .i{width:16px;height:16px;color:var(--navy)}
+.cart i{position:absolute;top:-3px;inset-inline-start:-3px;background:var(--orange);color:#fff;font-style:normal;font-size:9px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-weight:800}
 
 /* ===== hero ===== */
 .hero{border-bottom:1px solid var(--gray-2);position:relative;overflow:hidden}
@@ -175,6 +175,26 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .p-view:hover{background:var(--orange-deep)}
 .p-view:active{transform:scale(.97)}
 .shop-cta{text-align:center;margin-top:38px}
+
+/* ===== DELIVERY APPS ===== */
+.apps{background:#fff;border-top:1px solid var(--gray-2)}
+.apps-grid{max-width:1160px;margin:0 auto;padding:0 20px;display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.apps-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.apps-grid{grid-template-columns:repeat(3,1fr);gap:18px}}
+@media(min-width:1180px){.apps-grid{grid-template-columns:repeat(5,1fr);gap:16px}}
+.app-card{--app:#122B4A;display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:18px 18px 16px;position:relative;overflow:hidden;box-shadow:0 10px 28px rgba(18,43,74,.05);transition:transform .2s,box-shadow .2s;min-height:100%}
+.app-card::before{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:var(--app)}
+.app-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(18,43,74,.1)}
+.app-card__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.app-card__logo{width:52px;height:52px;border-radius:14px;overflow:hidden;background:#fff;border:1.5px solid var(--gray-2);flex-shrink:0;display:grid;place-items:center;padding:4px}
+.app-card__logo img{width:100%;height:100%;object-fit:contain;display:block}
+.app-card__name{text-align:start;min-width:0}
+.app-card__name b{display:block;font-size:17px;color:var(--navy);font-weight:900;line-height:1.25}
+.app-card__name span{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--app);font-family:var(--mono);margin-top:3px}
+.app-card__desc{flex:1;font-size:13.5px;font-weight:700;color:var(--body);line-height:1.7;margin-bottom:16px}
+.app-card__cta{display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:12px;background:var(--app);color:#fff;font-weight:900;font-size:14px;transition:.18s}
+.app-card__cta:hover{filter:brightness(1.08)}
+.app-card__cta:active{transform:scale(.98)}
 
 /* ===== NUTRITION SPEC ===== */
 .spec-grid{max-width:1160px;margin:0 auto;padding:0 20px;display:grid;gap:22px}
@@ -525,13 +545,7 @@ body.menu-open{overflow:hidden}
 
 <!-- SHOP -->
 @php
-  $shopProducts = __('website.main.shop.products');
-  $shopMeta = [
-    ['flag_icon' => '#i-flame', 'flag_style' => '', 'ph' => '#i-cookie', 'img' => 'p72_800x800.jpg'],
-    ['flag_icon' => '#i-leaf', 'flag_style' => 'color:var(--green)', 'ph' => '#i-bread', 'img' => 'p73_800x800.jpg'],
-    ['flag_icon' => null, 'flag_style' => '', 'ph' => '#i-bowl', 'img' => 'p74_800x800.jpg'],
-    ['flag_icon' => '#i-hat', 'flag_style' => '', 'ph' => '#i-box', 'img' => 'p75_800x800.jpg'],
-  ];
+  $shopProducts = $shopProducts ?? [];
 @endphp
 <section class="section shop" id="shop">
   <div class="sec-head">
@@ -539,29 +553,106 @@ body.menu-open{overflow:hidden}
     <h2>{!! __('website.main.shop.title') !!}</h2>
     <p>{{ __('website.main.shop.sub') }}</p>
   </div>
+  @if (count($shopProducts) > 0)
   <div class="prod-grid">
-    @foreach ($shopProducts as $i => $p)
-    @php $m = $shopMeta[$i]; @endphp
+    @foreach ($shopProducts as $p)
     <article class="prod rv">
       <div class="prod-tile">
         @if (!empty($p['flag']))
-        <span class="p-flag"><svg class="i" @if($m['flag_style']) style="{{ $m['flag_style'] }}" @endif><use href="{{ $m['flag_icon'] }}"/></svg> {{ $p['flag'] }}</span>
+        <span class="p-flag">
+          @if (!empty($p['flag_icon']))
+          <svg class="i" @if($p['flag_style']) style="{{ $p['flag_style'] }}" @endif><use href="{{ $p['flag_icon'] }}"/></svg>
+          @endif
+          {{ $p['flag'] }}
+        </span>
         @endif
-        <div class="ph"><svg><use href="{{ $m['ph'] }}"/></svg></div>
-        <img class="aiimg" src="{{ asset('assets/images/'.$m['img']) }}" alt="{{ $p['alt'] }}" onerror="this.remove()">
+        <div class="ph"><svg><use href="#i-bread"/></svg></div>
+        @if (!empty($p['image_url']))
+        <img class="aiimg" src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">
+        @endif
       </div>
       <h3>{{ $p['name'] }}</h3>
+      @if (!empty($p['sub']))
       <p class="p-sub">{{ $p['sub'] }}</p>
+      @endif
+      @if (!empty($p['protein']) || !empty($p['kcal']))
       <div class="p-specs">
+        @if (!empty($p['protein']))
         <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> {{ $p['protein'] }}</div>
+        @endif
+        @if (!empty($p['kcal']))
         <div class="p-spec"><span class="kcal-box">kcal</span> {{ $p['kcal'] }}</div>
+        @endif
       </div>
-      <div class="p-price">{{ $p['price'] }} <small>{{ $p['unit'] }}</small></div>
-      <a href="/product" class="p-view">{{ __('website.main.shop.view') }}</a>
+      @endif
+      <div class="p-price">{{ $p['price'] }} <x-ui.sar /></div>
+      <a href="{{ $p['url'] }}" class="p-view">{{ __('website.main.shop.view') }}</a>
     </article>
     @endforeach
   </div>
-  <div class="shop-cta"><a href="/store" class="btn navy">{{ __('website.main.shop.all') }}</a></div>
+  @endif
+  <div class="shop-cta"><a href="{{ route('website.store') }}" class="btn navy">{{ __('website.main.shop.all') }}</a></div>
+</section>
+
+<!-- DELIVERY APPS -->
+@php
+  $deliveryApps = [
+      [
+          'key' => 'jahez',
+          'url' => 'https://jahez.go.link/acZgN',
+          'color' => '#E31C23',
+          'logo' => 'assets/images/apps/jahez.svg',
+      ],
+      [
+          'key' => 'hungerstation',
+          'url' => 'https://hungerstation.com/sa-ar/qc/95478/%D9%86%D9%8A%D9%88-%D9%85%D9%8A/branch/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6~%D8%A7%D9%84%D9%85%D8%B9%D8%B0%D8%B1~169721',
+          'color' => '#3D2314',
+          'logo' => 'assets/images/apps/hungerstation.png',
+      ],
+      [
+          'key' => 'chefz',
+          'url' => 'https://thechefzco.app.link/XMWn5xDtf5b',
+          'color' => '#522A48',
+          'logo' => 'assets/images/apps/chefz.svg',
+      ],
+      [
+          'key' => 'keeta',
+          'url' => 'https://url.mykeeta.com/i80cL48z',
+          'color' => '#111111',
+          'logo' => 'assets/images/apps/keeta.png',
+      ],
+      [
+          'key' => 'ninja',
+          'url' => 'https://ninja.go.link/restaurants?branchId=49004',
+          'color' => '#0B0B0B',
+          'logo' => 'assets/images/apps/ninja.png',
+      ],
+  ];
+@endphp
+<section class="section apps" id="apps">
+  <div class="sec-head">
+    <span class="kick">{{ __('website.main.apps.kick') }}</span>
+    <h2>{!! __('website.main.apps.title') !!}</h2>
+    <p>{{ __('website.main.apps.sub') }}</p>
+  </div>
+  <div class="apps-grid">
+    @foreach ($deliveryApps as $app)
+      @php $copy = __('website.main.apps.items.'.$app['key']); @endphp
+      <a class="app-card rv" href="{{ $app['url'] }}" target="_blank" rel="noopener noreferrer" style="--app: {{ $app['color'] }}">
+        <div class="app-card__top">
+          <div class="app-card__name">
+            <b>{{ $copy['name_ar'] }}</b>
+            <span>{{ $copy['name_en'] }}</span>
+          </div>
+          <span class="app-card__logo">
+            <img src="{{ asset($app['logo']) }}" alt="{{ $copy['name_en'] }}" width="44" height="44" loading="lazy">
+          </span>
+        </div>
+        <p class="app-card__desc">{{ $copy['desc'] }}</p>
+        <span class="app-card__cta">{{ __('website.main.apps.cta') }}</span>
+      </a>
+    @endforeach
+  </div>
 </section>
 
 <!-- NUTRITION SPEC -->
@@ -761,7 +852,7 @@ body.menu-open{overflow:hidden}
         <h3>{{ $plans[0]['name'] }}</h3>
         <div class="goal"><svg class="i"><use href="#i-target"/></svg> {{ $plans[0]['goal'] }}</div>
         <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="332" data-was-q="299">332{{ __('website.main.js.sar') }}</s></div>
-        <div class="pline"><b data-m="299" data-q="239">299</b><small>{{ __('website.main.subs.per_month') }}</small></div>
+        <div class="pline"><b data-m="299" data-q="239">299</b><small>{!! __('website.main.subs.per_month') !!}</small></div>
         <span class="per">≈ <span data-pm-m="10" data-pm-q="8">10</span> {{ __('website.main.subs.per_meal') }}</span>
         <div class="plan-fuel">
           <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.main.subs.day_energy') }}</span><b>630 KCAL</b></div>
@@ -784,7 +875,7 @@ body.menu-open{overflow:hidden}
         <h3>{{ $plans[1]['name'] }}</h3>
         <div class="goal"><svg class="i"><use href="#i-target"/></svg> {{ $plans[1]['goal'] }}</div>
         <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="610" data-was-q="549">610{{ __('website.main.js.sar') }}</s></div>
-        <div class="pline"><b data-m="549" data-q="439">549</b><small>{{ __('website.main.subs.per_month') }}</small></div>
+        <div class="pline"><b data-m="549" data-q="439">549</b><small>{!! __('website.main.subs.per_month') !!}</small></div>
         <span class="per">≈ <span data-pm-m="9" data-pm-q="7">9</span> {{ __('website.main.subs.per_meal') }}</span>
         <div class="plan-fuel">
           <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.main.subs.day_energy') }}</span><b>1,150 KCAL</b></div>
@@ -802,7 +893,7 @@ body.menu-open{overflow:hidden}
         <h3>{{ $plans[2]['name'] }}</h3>
         <div class="goal"><svg class="i"><use href="#i-target"/></svg> {{ $plans[2]['goal'] }}</div>
         <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="832" data-was-q="749">832{{ __('website.main.js.sar') }}</s></div>
-        <div class="pline"><b data-m="749" data-q="599">749</b><small>{{ __('website.main.subs.per_month') }}</small></div>
+        <div class="pline"><b data-m="749" data-q="599">749</b><small>{!! __('website.main.subs.per_month') !!}</small></div>
         <span class="per">≈ <span data-pm-m="8" data-pm-q="6.5">8</span> {{ __('website.main.subs.per_meal') }}</span>
         <div class="plan-fuel">
           <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.main.subs.day_energy') }}</span><b>1,850 KCAL</b></div>
@@ -1041,7 +1132,7 @@ function setBill(mode){
     el.textContent=el.getAttribute(mode==='m'?'data-pm-m':'data-pm-q');
   });
   document.querySelectorAll('s[data-was-m]').forEach(function(el){
-    el.textContent=el.getAttribute(mode==='m'?'data-was-m':'data-was-q')+(I18N.sar||'');
+    el.innerHTML=el.getAttribute(mode==='m'?'data-was-m':'data-was-q')+(I18N.sar||'');
   });
   var sp=document.getElementById('stickyPrice');
   if(sp)sp.textContent=mode==='m'?'549':'439';

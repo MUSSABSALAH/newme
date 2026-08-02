@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="@yield('theme', '#122B4A')">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="cart-url" content="{{ route('website.cart.store') }}">
 <title>@yield('title', __('website.home.title'))</title>
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">

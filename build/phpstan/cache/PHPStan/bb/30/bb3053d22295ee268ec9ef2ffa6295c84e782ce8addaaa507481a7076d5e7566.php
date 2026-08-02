@@ -82,7 +82,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\DTOs\\UserData.php' => 'fadf59dba0e8045c3516b5d19483ee18e757448eca59200400328906077ff419',
+      'C:\\newme\\app\\Modules\\Identity\\DTOs\\UserData.php' => '17b504efa45a15077220a1f8cebbfb6f2448f98c8b88f3dfefebd9767ab0e96e',
     ),
   ),
 ));

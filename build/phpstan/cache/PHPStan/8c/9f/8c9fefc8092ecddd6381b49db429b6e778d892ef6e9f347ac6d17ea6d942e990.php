@@ -76,7 +76,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Settings\\Enums\\SettingGroup.php' => '6ea91ea29079f2c65685aeabfb7d29a7530132bfd3f60ae1b4ef70bc9399cfc7',
+      'C:\\newme\\app\\Modules\\Settings\\Enums\\SettingGroup.php' => 'f09128c0a614e59af169ace91fc9951d9bc52c5730bde80c11ebd243ff185526',
     ),
   ),
 ));

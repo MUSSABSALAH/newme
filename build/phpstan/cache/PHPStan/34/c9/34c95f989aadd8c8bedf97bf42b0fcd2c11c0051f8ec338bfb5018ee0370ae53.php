@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Controllers\Web\InvitationController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\Web\InvitationController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-78f7b291205a979fd520310df2ce85e9800b4626ed3710ea8702498cd9d302ae',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-c32b303b29c07c34888b6f84d951c2f736aad422966992cd747e8cb7694752d0',
    'data' => 
   array (
     'locatedSource' => 

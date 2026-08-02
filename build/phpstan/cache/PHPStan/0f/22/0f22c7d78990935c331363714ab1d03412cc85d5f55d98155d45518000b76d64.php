@@ -91,7 +91,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Audit\\Services\\AuditService.php' => '719797d1d2fe60b62a33893aede7e493447e36d047200294848eddc7521d8c62',
+      'C:\\newme\\app\\Modules\\Audit\\Services\\AuditService.php' => '0e50e4287709249b850ddefcedc2c3f44cc435ec4517a12dd594a8981cb6a710',
     ),
   ),
 ));

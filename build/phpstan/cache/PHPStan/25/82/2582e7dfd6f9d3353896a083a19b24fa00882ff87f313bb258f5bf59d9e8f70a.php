@@ -140,7 +140,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Plans\\DTOs\\PricingRuleData.php' => '406975c61915ea74970f05044bf3107a41458f6da556ac499fb27373be017ce9',
+      'C:\\newme\\app\\Modules\\Plans\\DTOs\\PricingRuleData.php' => 'c66caa774852412cd502a5d6b2519c8e089575f915743485520a2bc2bcf6fc28',
     ),
   ),
 ));

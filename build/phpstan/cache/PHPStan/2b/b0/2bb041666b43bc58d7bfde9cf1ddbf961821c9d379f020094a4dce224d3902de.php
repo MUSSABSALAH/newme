@@ -133,7 +133,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Middleware\\SetWebLocale.php' => '843d63c9ba18888818847d88a976208126f087ec003bb535cfc233a869bf16ba',
+      'C:\\newme\\app\\Http\\Middleware\\SetWebLocale.php' => '3b0c86e623cc1f74583e99717c621b6351cf7c2dcbd1142092682caf4e102213',
     ),
   ),
 ));

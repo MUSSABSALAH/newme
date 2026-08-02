@@ -2,7 +2,7 @@
 
 @php
     $locale = app()->getLocale();
-    $file = $locale === 'ar' ? 'ar-logo.png' : 'en-logo.png';
+    $file = $locale === 'ar' ? 'logo_ar.png' : 'logo_en.png';
     $alt = $alt ?? __('messages.app.name');
 @endphp
 

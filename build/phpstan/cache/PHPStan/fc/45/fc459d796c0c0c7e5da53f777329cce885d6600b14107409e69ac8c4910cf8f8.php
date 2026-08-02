@@ -118,7 +118,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Enums\\PermissionName.php' => 'c722622162be800db616b5eacf51dfbd08d005bc9d5d0504f849e221dec6ae76',
+      'C:\\newme\\app\\Modules\\Identity\\Enums\\PermissionName.php' => 'ea4af47b12312f5db68df09c2c78efacb8de6f0f050a797c2c31ce9bdb252f37',
     ),
   ),
 ));

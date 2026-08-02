@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Policies\RolePolicy.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Policies\RolePolicy
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ee6cda847fedf3f41d3444707181f2f1108d793d8da2090c369a850b6866d3f8',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-e6db95ee3ee217987ad20784f4be133c6e73ad0104117ebf8b895b48ebf001f4',
    'data' => 
   array (
     'locatedSource' => 

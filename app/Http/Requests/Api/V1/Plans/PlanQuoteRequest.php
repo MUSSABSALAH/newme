@@ -28,6 +28,7 @@ final class PlanQuoteRequest extends FormRequest
             'duration_length' => ['required', 'integer', 'min:1', 'max:365'],
             'selected_days' => ['nullable', 'array', 'max:7'],
             'selected_days.*' => ['integer', 'between:0,6'],
+            'coupon_code' => ['nullable', 'string', 'max:64'],
         ];
     }
 }

@@ -22,11 +22,27 @@ enum RoleName: string
     case ContentEditor = 'content_editor';
     case ReportViewer = 'report_viewer';
 
+    // Public store customer (not a staff role; never shown in staff pickers).
+    case Customer = 'customer';
+
     /**
      * @return list<string>
      */
     public static function values(): array
     {
         return array_map(static fn (self $role): string => $role->value, self::cases());
+    }
+
+    /**
+     * Staff-assignable role identifiers (everything except the customer role).
+     *
+     * @return list<string>
+     */
+    public static function staffValues(): array
+    {
+        return array_values(array_filter(
+            self::values(),
+            static fn (string $role): bool => $role !== self::Customer->value,
+        ));
     }
 }

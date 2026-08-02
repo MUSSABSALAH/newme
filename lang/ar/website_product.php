@@ -35,7 +35,7 @@ return [
     'pay_mada' => 'مدى',
     'pay_tabby' => 'تابي',
     'trust_refund' => 'ضمان استرجاع المبلغ خلال 30 يوماً',
-    'trust_ship' => 'الشحن: 2–3 أيام عمل · مجاني فوق 150 ر.س',
+    'trust_ship' => 'الشحن: 2–3 أيام عمل · مجاني فوق 150 <span class="icon-saudi-riyal" aria-hidden="true"></span>',
     'trust_pay' => 'دفع آمن ومشفّر 100%',
     'benefits_h2' => 'خبز يومي، <em>بمواصفات رياضية</em>',
     'ben1_t' => '12.1غ بروتين',
@@ -121,7 +121,7 @@ return [
     ],
     'rel_kick' => 'قد يعجبك أيضاً',
     'rel_h2' => 'من مخبز <em>نيومي</em>',
-    'sar' => 'ر.س',
+    'sar' => '<span class="icon-saudi-riyal" aria-hidden="true"></span>',
     'related' => [
         ['جرانولا البذور', '22'],
         ['مقرمشات ملح البحر', '22'],
@@ -140,8 +140,8 @@ return [
     ],
     'js' => [
         'default_name' => 'خبز البذور المتعدد',
-        'sar' => ' ر.س',
-        'per_piece' => ' ر.س للقطعة',
+        'sar' => ' <span class="icon-saudi-riyal" aria-hidden="true"></span>',
+        'per_piece' => ' <span class="icon-saudi-riyal" aria-hidden="true"></span> للقطعة',
         'pack_x' => 'عبوة × :n',
         'add_sub' => 'أضف للاشتراك | ',
         'add_cart' => 'أضف للسلة | ',

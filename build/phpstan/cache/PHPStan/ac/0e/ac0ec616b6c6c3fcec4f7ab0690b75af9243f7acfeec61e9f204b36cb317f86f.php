@@ -3194,7 +3194,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Plans\\Models\\Plan.php' => '692395034e37b989165a01a341d2c145ab1b48fd5b6420606ff23db80148a4cf',
+      'C:\\newme\\app\\Modules\\Plans\\Models\\Plan.php' => '1cfa4ae0d8f64dc3f563985c3fc4496ef27617e8359e429618987577d45e8f1e',
       'C:\\newme\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\newme\\vendor\\composer\\..\\spatie\\laravel-translatable\\src\\HasTranslations.php' => 'c60550d2c6ba63a47c49ff4c56ce3039beae5246c895b010f1d8b78a194a502a',
       'C:\\newme\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\SoftDeletes.php' => 'da1b0c13d78ba2f62e97e5627c3149f4e81b9cf9b6092d4ca7f02ca5e5bbcfec',

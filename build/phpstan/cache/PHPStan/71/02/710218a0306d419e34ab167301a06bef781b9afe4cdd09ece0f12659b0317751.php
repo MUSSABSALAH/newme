@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Audit\Policies\AuditLogPolicy.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Audit\Policies\AuditLogPolicy
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-f66b078eb481a62e6a51d7d4b189c26d6fb9952cc777d6a590396db31840daaa',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-57efe91dde7eff88ac3cb8b9751e43919a000a918306fa65f6ac2ad90478f3af',
    'data' => 
   array (
     'locatedSource' => 
