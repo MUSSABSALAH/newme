@@ -76,7 +76,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Audit\\Enums\\AuditAction.php' => '10ce8284add0915834281413f9d7edc35f89f04d589fc0c222665ef8366f18d7',
+      'C:\\newme\\app\\Modules\\Audit\\Enums\\AuditAction.php' => 'd8b45a6b0d032cc980d784b86c9dcd14ccd015268b2a799f75160d0dbdc8441c',
     ),
   ),
 ));

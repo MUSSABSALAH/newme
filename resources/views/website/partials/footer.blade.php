@@ -3,7 +3,7 @@
 <footer class="w-foot-full">
   <div class="f-grid">
     <div class="f-news">
-      <div style="margin-bottom:14px">@include('website.partials.logo')</div>
+      <div style="margin-bottom:14px">@include('website.partials.logo', ['tone' => 'light'])</div>
       <h3>{{ __('website.footer.newsletter_title') }}</h3>
       <p>{{ __('website.footer.newsletter_text') }}</p>
       <div class="f-form">

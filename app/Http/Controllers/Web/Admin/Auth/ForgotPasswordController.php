@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Admin\Auth\ForgotPasswordRequest;
+use App\Modules\Identity\Enums\UserType;
 use App\Modules\Identity\Services\PasswordResetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +22,7 @@ final class ForgotPasswordController extends Controller
 
     public function store(ForgotPasswordRequest $request): RedirectResponse
     {
-        $this->passwordResetService->sendResetLink($request->validated('email'));
+        $this->passwordResetService->sendResetLink($request->validated('email'), UserType::Staff);
 
         // Always report the same outcome to avoid leaking which emails exist.
         return back()->with('status', __('auth.passwords.sent'));

@@ -330,7 +330,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Services\\RoleService.php' => '02833e414eff3d8ddd6ae997abafe40856831140633b0f8066ed6730ded573d0',
+      'C:\\newme\\app\\Modules\\Identity\\Services\\RoleService.php' => '8e3b5b776a732e3e4e85e09a451455d6fd79b2be82de386c40194a5595f71af3',
     ),
   ),
 ));

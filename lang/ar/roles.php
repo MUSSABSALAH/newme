@@ -45,5 +45,6 @@ return [
         'appointment_officer' => 'مسؤول المواعيد',
         'content_editor' => 'محرّر المحتوى',
         'report_viewer' => 'عارض التقارير',
+        'customer' => 'عميل',
     ],
 ];

@@ -19,6 +19,7 @@ final class PlanQuoteRequestData extends Data
         public readonly DurationUnit $durationUnit,
         public readonly int $durationLength,
         public readonly array $selectedDays,
+        public readonly ?string $couponCode = null,
     ) {}
 
     /**
@@ -29,6 +30,7 @@ final class PlanQuoteRequestData extends Data
         $unit = $attributes['duration_unit'] ?? DurationUnit::Day->value;
         $days = $attributes['selected_days'] ?? [];
         $mealTypes = $attributes['meal_types'] ?? [];
+        $coupon = $attributes['coupon_code'] ?? null;
 
         $mealTypesKey = MealType::key(array_map(
             static fn ($value): string => (string) $value,
@@ -43,6 +45,7 @@ final class PlanQuoteRequestData extends Data
                 static fn ($day): int => (int) $day,
                 is_array($days) ? $days : [],
             ))),
+            couponCode: is_string($coupon) && trim($coupon) !== '' ? trim($coupon) : null,
         );
     }
 

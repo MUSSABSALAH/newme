@@ -45,5 +45,6 @@ return [
         'appointment_officer' => 'Appointment Officer',
         'content_editor' => 'Content Editor',
         'report_viewer' => 'Report Viewer',
+        'customer' => 'Customer',
     ],
 ];

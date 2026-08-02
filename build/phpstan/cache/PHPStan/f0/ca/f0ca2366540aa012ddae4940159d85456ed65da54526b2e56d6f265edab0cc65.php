@@ -204,7 +204,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Plans\\Enums\\DurationUnit.php' => '71aa22f28377679404733a4fad28634834d6404a9e60efbb2440ad4260a2e7b2',
+      'C:\\newme\\app\\Modules\\Plans\\Enums\\DurationUnit.php' => '9fb02048ad6373a531ce70df9aeac4c7603999d39d69e2f42fee2aa383fb8c5d',
     ),
   ),
 ));

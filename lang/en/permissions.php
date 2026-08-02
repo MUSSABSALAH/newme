@@ -8,10 +8,12 @@ return [
         'roles' => 'Roles',
         'audit' => 'Audit',
         'catalog' => 'Catalog',
+        'coupons' => 'Discount codes',
         'inventory' => 'Inventory',
         'customers' => 'Customers',
         'orders' => 'Orders',
         'payments' => 'Payments',
+        'invoices' => 'Invoices',
         'plans' => 'Plans',
         'subscriptions' => 'Subscriptions',
         'appointments' => 'Appointments',
@@ -42,6 +44,12 @@ return [
             'update' => 'Update products',
             'delete' => 'Delete products',
         ],
+        'coupons' => [
+            'view' => 'View discount codes',
+            'create' => 'Create discount codes',
+            'update' => 'Update discount codes',
+            'delete' => 'Delete discount codes',
+        ],
         'inventory' => [
             'view' => 'View inventory',
             'adjust' => 'Adjust stock',
@@ -60,7 +68,11 @@ return [
         ],
         'payments' => [
             'view' => 'View payments',
+            'confirm' => 'Confirm cash-on-delivery payments',
             'refund' => 'Refund payments',
+        ],
+        'invoices' => [
+            'view' => 'View invoices',
         ],
         'plans' => [
             'view' => 'View plans',
@@ -117,6 +129,12 @@ return [
             'update' => 'Edit products, prices, and categories.',
             'delete' => 'Remove products and categories.',
         ],
+        'coupons' => [
+            'view' => 'Browse discount codes and their usage.',
+            'create' => 'Add new discount codes.',
+            'update' => 'Edit discount codes, values, and limits.',
+            'delete' => 'Archive discount codes.',
+        ],
         'inventory' => [
             'view' => 'View stock levels and movements.',
             'adjust' => 'Increase or decrease stock quantities.',
@@ -135,7 +153,11 @@ return [
         ],
         'payments' => [
             'view' => 'See payment transactions.',
+            'confirm' => 'Mark cash-on-delivery payments as collected.',
             'refund' => 'Process payment refunds.',
+        ],
+        'invoices' => [
+            'view' => 'Browse tax invoices and download their PDFs.',
         ],
         'plans' => [
             'view' => 'See subscription plans.',

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Services\RoleService.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Services\RoleService
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-02833e414eff3d8ddd6ae997abafe40856831140633b0f8066ed6730ded573d0',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-8e3b5b776a732e3e4e85e09a451455d6fd79b2be82de386c40194a5595f71af3',
    'data' => 
   array (
     'locatedSource' => 
@@ -54,9 +54,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 20,
             'endLine' => 20,
             'startTokenPos' => 81,
-            'startFilePos' => 552,
+            'startFilePos' => 571,
             'endTokenPos' => 81,
-            'endFilePos' => 556,
+            'endFilePos' => 575,
           ),
         ),
         'docComment' => NULL,

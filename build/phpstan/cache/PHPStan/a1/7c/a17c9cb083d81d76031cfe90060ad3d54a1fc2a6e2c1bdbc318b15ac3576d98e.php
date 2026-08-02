@@ -51,10 +51,32 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
+      '0a3839c56186b4a0c3d3b39b54ac8918' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Modules\\Identity\\Enums',
+         'uses' => 
+        array (
+        ),
+         'className' => 'App\\Modules\\Identity\\Enums\\RoleName',
+         'functionName' => 'staffValues',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Enums\\RoleName.php' => 'f65ba6effcee36f01628dceb982b91a5b7fa858d22a231c7f9fc34512dd49d42',
+      'C:\\newme\\app\\Modules\\Identity\\Enums\\RoleName.php' => 'ba7a0727505c2413698b689157df955793d1ef2deb5e95373f4c9f0e0c93cc2d',
     ),
   ),
 ));

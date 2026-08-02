@@ -46,7 +46,31 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'templatePhpDocNodes' => 
         array (
         ),
-         'parent' => NULL,
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Modules\\Plans\\Seeders',
+           'uses' => 
+          array (
+            'mealtype' => 'App\\Modules\\Plans\\Enums\\MealType',
+            'meal' => 'App\\Modules\\Plans\\Models\\Meal',
+            'seeder' => 'Illuminate\\Database\\Seeder',
+          ),
+           'className' => 'App\\Modules\\Plans\\Seeders\\MealSeeder',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
          'typeAliasesMap' => 
         array (
         ),
@@ -71,7 +95,31 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'templatePhpDocNodes' => 
         array (
         ),
-         'parent' => NULL,
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Modules\\Plans\\Seeders',
+           'uses' => 
+          array (
+            'mealtype' => 'App\\Modules\\Plans\\Enums\\MealType',
+            'meal' => 'App\\Modules\\Plans\\Models\\Meal',
+            'seeder' => 'Illuminate\\Database\\Seeder',
+          ),
+           'className' => 'App\\Modules\\Plans\\Seeders\\MealSeeder',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
          'typeAliasesMap' => 
         array (
         ),
@@ -85,7 +133,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Plans\\Seeders\\MealSeeder.php' => 'f8eeebf924e8acedcd9269ab9976b6049bf990d915153a2a46842d3fd23f4f8b',
+      'C:\\newme\\app\\Modules\\Plans\\Seeders\\MealSeeder.php' => '527ea4c16dfbba1685a442cac9d6d7adebb03decdffa3b48f1f21390701426fa',
     ),
   ),
 ));

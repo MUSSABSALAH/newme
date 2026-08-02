@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Services\InvitationService.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Services\InvitationService
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-67fce3243557ccdd2024a5b8bb41514755525a6fb1ad97f5dcb3d0ee7456c0cc',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-cbabbde5bf8e8a071912b8db50759bf6caaee6d7f49c7d0eaa6ee8ff047c80c3',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 19,
-    'endLine' => 145,
+    'startLine' => 20,
+    'endLine' => 147,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -51,20 +51,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '48',
           'attributes' => 
           array (
-            'startLine' => 21,
-            'endLine' => 21,
-            'startTokenPos' => 86,
-            'startFilePos' => 651,
-            'endTokenPos' => 86,
-            'endFilePos' => 652,
+            'startLine' => 22,
+            'endLine' => 22,
+            'startTokenPos' => 91,
+            'startFilePos' => 692,
+            'endTokenPos' => 91,
+            'endFilePos' => 693,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 21,
-        'endLine' => 21,
+        'startLine' => 22,
+        'endLine' => 22,
         'startColumn' => 5,
         'endColumn' => 36,
       ),
@@ -91,8 +91,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 23,
-        'endLine' => 23,
+        'startLine' => 24,
+        'endLine' => 24,
         'startColumn' => 33,
         'endColumn' => 68,
         'isPromoted' => true,
@@ -129,8 +129,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 23,
-            'endLine' => 23,
+            'startLine' => 24,
+            'endLine' => 24,
             'startColumn' => 33,
             'endColumn' => 68,
             'parameterIndex' => 0,
@@ -143,8 +143,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 23,
-        'endLine' => 23,
+        'startLine' => 24,
+        'endLine' => 24,
         'startColumn' => 5,
         'endColumn' => 72,
         'couldThrow' => false,
@@ -182,8 +182,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 28,
-            'endLine' => 28,
+            'startLine' => 29,
+            'endLine' => 29,
             'startColumn' => 28,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -208,8 +208,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 28,
-            'endLine' => 28,
+            'startLine' => 29,
+            'endLine' => 29,
             'startColumn' => 50,
             'endColumn' => 62,
             'parameterIndex' => 1,
@@ -232,8 +232,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Create an invited (password-less) user and email them an acceptance link.
  */',
-        'startLine' => 28,
-        'endLine' => 50,
+        'startLine' => 29,
+        'endLine' => 52,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -271,8 +271,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 55,
-            'endLine' => 55,
+            'startLine' => 57,
+            'endLine' => 57,
             'startColumn' => 28,
             'endColumn' => 53,
             'parameterIndex' => 0,
@@ -297,8 +297,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 55,
-            'endLine' => 55,
+            'startLine' => 57,
+            'endLine' => 57,
             'startColumn' => 56,
             'endColumn' => 68,
             'parameterIndex' => 1,
@@ -321,8 +321,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Regenerate the token/expiry for a pending invitation and resend the email.
  */',
-        'startLine' => 55,
-        'endLine' => 72,
+        'startLine' => 57,
+        'endLine' => 74,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => true,
@@ -360,8 +360,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 80,
-            'endLine' => 80,
+            'startLine' => 82,
+            'endLine' => 82,
             'startColumn' => 29,
             'endColumn' => 41,
             'parameterIndex' => 0,
@@ -387,8 +387,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @throws InvitationInvalidException
  * @throws InvitationAlreadyAcceptedException
  */',
-        'startLine' => 80,
-        'endLine' => 95,
+        'startLine' => 82,
+        'endLine' => 97,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => true,
@@ -426,8 +426,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 103,
-            'endLine' => 103,
+            'startLine' => 105,
+            'endLine' => 105,
             'startColumn' => 28,
             'endColumn' => 40,
             'parameterIndex' => 0,
@@ -452,8 +452,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 103,
-            'endLine' => 103,
+            'startLine' => 105,
+            'endLine' => 105,
             'startColumn' => 43,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -479,8 +479,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @throws InvitationInvalidException
  * @throws InvitationAlreadyAcceptedException
  */',
-        'startLine' => 103,
-        'endLine' => 120,
+        'startLine' => 105,
+        'endLine' => 122,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -518,8 +518,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 122,
-            'endLine' => 122,
+            'startLine' => 124,
+            'endLine' => 124,
             'startColumn' => 28,
             'endColumn' => 37,
             'parameterIndex' => 0,
@@ -544,8 +544,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 122,
-            'endLine' => 122,
+            'startLine' => 124,
+            'endLine' => 124,
             'startColumn' => 40,
             'endColumn' => 52,
             'parameterIndex' => 1,
@@ -566,8 +566,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 122,
-        'endLine' => 139,
+        'startLine' => 124,
+        'endLine' => 141,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -605,8 +605,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 141,
-            'endLine' => 141,
+            'startLine' => 143,
+            'endLine' => 143,
             'startColumn' => 27,
             'endColumn' => 39,
             'parameterIndex' => 0,
@@ -627,8 +627,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 141,
-        'endLine' => 144,
+        'startLine' => 143,
+        'endLine' => 146,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

@@ -187,6 +187,20 @@ nav.main .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;jus
 .deliver{margin:4px 0 14px}
 .deliver label{display:block;font-size:13px;font-weight:900;color:var(--navy);margin-bottom:7px}
 .deliver select{width:100%;font-family:var(--font);font-weight:800;font-size:14px;color:var(--ink);padding:13px 14px;border:2px solid var(--gray-2);border-radius:14px;background:#fff;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2312233B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center}
+.cpn{margin:12px 0 2px}
+.cpn-form{display:flex;gap:7px;align-items:stretch}
+.cpn-form input{flex:1;min-width:0;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--navy);background:var(--tile);border:1.5px solid var(--gray-2);border-radius:10px;padding:9px 12px;letter-spacing:.06em;text-transform:uppercase}
+.cpn-form input:focus{outline:none;border-color:var(--orange);background:#fff}
+.cpn-form input::placeholder{color:var(--muted);font-weight:700;letter-spacing:0;text-transform:none;font-family:var(--font)}
+.cpn-form button{flex-shrink:0;border:1.5px solid var(--gray-3);background:#fff;color:var(--navy);font-weight:800;font-size:12.5px;border-radius:10px;padding:9px 15px}
+.cpn-form button:hover{border-color:var(--navy)}
+.cpn-on{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--green-soft);border:1.5px solid rgba(57,180,120,.35);border-radius:10px;padding:8px 12px}
+.cpn-tag b{font-family:var(--mono);letter-spacing:.06em;color:var(--green-ink);font-size:12.5px}
+.cpn-on button{border:none;background:none;color:var(--muted);font-size:11.5px;font-weight:800;padding:2px}
+.cpn-on button:hover{color:#C0392B}
+.cpn-err{margin-top:7px;color:#C0392B;font-size:12px;font-weight:700}
+.cpn-form[hidden],.cpn-on[hidden],.cpn-err[hidden],.sumrows .r[hidden]{display:none}
+
 .sumrows{border-top:1.5px solid var(--gray-2);padding-top:12px;display:grid;gap:7px;font-size:13px;font-weight:700;color:var(--ink)}
 .sumrows .r{display:flex;justify-content:space-between;gap:10px}
 .sumrows .r span:last-child{font-family:var(--mono);font-weight:600}
@@ -450,11 +464,25 @@ body.menu-open{overflow:hidden}
               <span class="meals-n" id="mealsN2">—</span>
             </div>
           </div>
+          <div class="cpn" id="couponBox">
+            <div class="cpn-form" id="couponForm">
+              <input type="text" id="couponInput" dir="ltr" autocomplete="off"
+                     placeholder="{{ __('website.subscribe.coupon_placeholder') }}"
+                     aria-label="{{ __('website.subscribe.coupon_label') }}">
+              <button type="button" id="couponApply">{{ __('website.subscribe.coupon_apply') }}</button>
+            </div>
+            <div class="cpn-on" id="couponOn" hidden>
+              <span class="cpn-tag"><b id="couponCode"></b></span>
+              <button type="button" id="couponClear">{{ __('website.subscribe.coupon_remove') }}</button>
+            </div>
+            <p class="cpn-err" id="couponError" hidden></p>
+          </div>
           <div class="sumrows">
             <div class="r"><span>{{ __('website.subscribe.sum_meals') }}</span><span id="sumMeals">—</span></div>
             <div class="r"><span>{{ __('website.subscribe.sum_base') }}</span><span id="sumGross">—</span></div>
             <div class="r save"><span>{{ __('website.subscribe.sum_duration') }}</span><span id="sumDur">—</span></div>
             <div class="r save" id="rowFlexDisc"><span>{{ __('website.subscribe.sum_flex') }}</span><span id="sumFlex">—</span></div>
+            <div class="r save" id="rowCoupon" hidden><span>{{ __('website.subscribe.sum_coupon') }}</span><span id="sumCoupon">—</span></div>
             <div class="r save"><span>{{ __('website.subscribe.sum_save') }}</span><span id="sumSave">—</span></div>
             <div class="r"><span>{{ __('website.subscribe.sum_tax') }}</span><span id="sumTax">—</span></div>
             <div class="r total"><span>{{ __('website.subscribe.sum_total') }}</span><span id="sumTotal">—</span></div>
@@ -507,7 +535,12 @@ window.NM_PLAN_SLUGS = @json($planSlugs);
 window.NM_DEFAULT_PLAN = @json($defaultPlan['key'] ?? 'balance');
 window.NM_PLANS = @json($plansData);
 window.NM_FINANCE = @json($finance);
+window.NM_OPS = @json($operations);
 window.NM_DAY_NAMES = @json(array_values(__('website.subscribe.days')));
+window.NM_PLAN_IDS = @json($planIds);
+window.NM_CHECKOUT_URL = @json(route('website.checkout.subscription'));
+window.NM_QUOTE_URL = @json(url('api/v1/plans/__PLAN__/quote'));
+window.NM_CSRF = @json(csrf_token());
 </script>
 <script>
 @verbatim
@@ -552,7 +585,10 @@ var state={
   days:[0,1,2,3,4],
   startDate:null,
   dishSel:{},
-  mode:'flex'
+  mode:'flex',
+  // Coupon rules live on the server; we only cache the amount it quoted back.
+  coupon:null,
+  couponDiscount:0
 };
 var cur=1, maxVisited=1, TOTAL=6;
 
@@ -569,47 +605,64 @@ function daysOk(){return state.days.length>=minDays();}
 
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function fmt1(n){return (Math.round(n*10)/10).toLocaleString('en-US');}
-function money(n){return fmt(n)+' '+(FIN.currency||t('currency'));}
+var SAR=' <span class="icon-saudi-riyal" aria-hidden="true"></span>';
+function money(n){return fmt(n)+SAR;}
 function pad(n){return (n<10?'0':'')+n;}
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function escAttr(s){return escHtml(s).replace(/"/g,'&quot;');}
 function setTxt(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+function setHtml(id,v){var e=document.getElementById(id);if(e)e.innerHTML=v;}
 
-function tomorrow(){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+1);return d;}
+function earliestStart(){
+  // Server-computed floor from operations.subscription_min_start_days.
+  var iso=(window.NM_OPS&&window.NM_OPS.min_start_date)||'';
+  if(iso){
+    var p=iso.split('-');
+    var fromOps=new Date(+p[0],+p[1]-1,+p[2]);
+    fromOps.setHours(0,0,0,0);
+    return fromOps;
+  }
+  var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+1);return d;
+}
 function toISO(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
 function startDateObj(){
-  var d;
+  var min=earliestStart(), d;
   if(state.startDate){var p=state.startDate.split('-');d=new Date(+p[0],+p[1]-1,+p[2]);}
-  else d=tomorrow();
+  else d=new Date(min.getTime());
   d.setHours(0,0,0,0);
-  if(d.getTime()<tomorrow().getTime())d=tomorrow();
+  if(d.getTime()<min.getTime())d=new Date(min.getTime());
   return d;
 }
 function deliveryDates(){
   var rule=selectedRule(); if(!rule)return [];
-  var total=rule.total_days||0, out=[];
-  var d=startDateObj();
-  for(var i=0;i<total;i++){
+  var total=rule.total_days||0, out=[], d=startDateObj(), guard=0;
+  // Keep walking the calendar until we have every delivery day in the cycle.
+  while(out.length<total && guard<800){
+    guard++;
     if(state.days.indexOf(d.getDay())>-1)out.push(new Date(d.getTime()));
     d.setDate(d.getDate()+1);
   }
   return out;
 }
 
-function calcRule(rule){
+function calcRule(rule,withCoupon){
   if(!rule)return null;
   var subtotal=rule.price;
   var discBp=Math.round(parseFloat(rule.discount||'0')*100);
   var discount=Math.round(subtotal*discBp/10000);
   var afterDiscount=subtotal-discount;
+  // Mirrors the server: the coupon reduces the taxable base.
+  var coupon=withCoupon===false?0:Math.min(state.couponDiscount||0,afterDiscount);
+  var afterCoupon=afterDiscount-coupon;
   var delivery=planData().delivery_fee||0;
-  var gross=afterDiscount+delivery;
+  var gross=afterCoupon+delivery;
   var taxBp=Math.round((FIN.tax_rate||0)*100);
   var tax,total,taxable;
   if(FIN.include_tax){total=gross;taxable=Math.round(gross*10000/(10000+taxBp));tax=gross-taxable;}
   else{taxable=gross;tax=Math.round(gross*taxBp/10000);total=gross+tax;}
   return {
     subtotal:subtotal/100, discount:discount/100, afterDiscount:afterDiscount/100,
+    coupon:coupon/100, afterCoupon:afterCoupon/100,
     delivery:delivery/100, tax:tax/100, total:total/100,
     totalDays:rule.total_days||1
   };
@@ -620,7 +673,7 @@ function calc(){
   var dates=deliveryDates();
   c.deliveries=dates.length;
   c.meals=dates.length*state.mtypes.length;
-  c.perDay=dates.length?(c.afterDiscount/dates.length):(c.afterDiscount/c.totalDays);
+  c.perDay=dates.length?(c.afterCoupon/dates.length):(c.afterCoupon/c.totalDays);
   return c;
 }
 
@@ -635,9 +688,10 @@ function renderDurations(){
     btn.type='button';
     btn.className='dur-opt'+(i===state.durIndex?' on':'');
     var disc=parseFloat(o.discount||'0');
-    var cr=calcRule(o);
+    // Durations advertise their list price; a coupon applies to the chosen one.
+    var cr=calcRule(o,false);
     btn.innerHTML='<span class="dl">'+escHtml(o.label)+(disc>0?'<span class="dd">'+t('disc_off',{n:Math.round(disc)})+'</span>':'')+'</span><span class="dp">'+money(cr.total)+'</span>';
-    btn.addEventListener('click',function(){state.durIndex=i;renderDurations();render();autoNext();});
+    btn.addEventListener('click',function(){state.durIndex=i;renderDurations();render();refreshCoupon();autoNext();});
     wrap.appendChild(btn);
   });
 }
@@ -697,30 +751,111 @@ function render(){
     setTxt('mealsN1',fmt(c.meals)+' '+mealWord);
     setTxt('mealsN2',fmt(c.meals)+' '+mealWord);
     var perMeal=c.meals?fmt1(c.total/c.meals):'0';
-    setTxt('flexPrice',money(c.total)+' | '+perMeal+' '+t('per_meal'));
-    setTxt('flexWas',money(c.total));
-    setTxt('oncePrice',money(c.total)+' | '+perMeal+' '+t('per_meal'));
+    setHtml('flexPrice',money(c.total)+' | '+perMeal+SAR+' '+t('per_meal'));
+    setHtml('flexWas',money(c.total));
+    setHtml('oncePrice',money(c.total)+' | '+perMeal+SAR+' '+t('per_meal'));
     setTxt('sumMeals',fmt(c.meals)+' '+mealWord);
-    setTxt('sumGross',money(c.subtotal));
+    setHtml('sumGross',money(c.subtotal));
     var discPct=rule?Math.round(parseFloat(rule.discount||'0')):0;
-    setTxt('sumDur','− '+money(c.discount)+(discPct>0?' ('+discPct+'%)':''));
+    setHtml('sumDur','− '+money(c.discount)+(discPct>0?' ('+discPct+'%)':''));
     var rf=document.getElementById('rowFlexDisc'); if(rf)rf.style.display='none';
-    setTxt('sumSave','− '+money(c.discount));
-    setTxt('sumTax','+ '+money(c.tax));
-    setTxt('sumTotal',money(c.total));
+    var rc=document.getElementById('rowCoupon');
+    if(rc)rc.hidden=!(c.coupon>0);
+    setHtml('sumCoupon','− '+money(c.coupon));
+    setHtml('sumSave','− '+money(c.discount+c.coupon));
+    setHtml('sumTax','+ '+money(c.tax));
+    setHtml('sumTotal',money(c.total));
     setTxt('perDay',fmt1(c.perDay));
-    setTxt('wTotal',money(c.total));
+    setHtml('wTotal',money(c.total));
     setTxt('wSub',t('wsub',{meals:fmt(c.meals),plan:planName(state.plan)}));
   }else{
-    setTxt('wTotal','—');
+    setHtml('wTotal','—');
     setTxt('wSub',t('wbar_sub'));
   }
 
   var next=document.getElementById('wNext');
-  next.textContent=(cur===TOTAL&&c)?((state.mode==='flex'?t('add_sub'):t('add_cart'))+money(c.total)):t('next');
+  if(next){
+    if(cur===TOTAL&&c){next.innerHTML=(state.mode==='flex'?t('add_sub'):t('add_cart'))+money(c.total);}
+    else{next.textContent=t('next');}
+  }
   next.disabled=(cur===2&&!mealsOk())||(cur===3&&!durOk())||(cur===4&&!daysOk())||(cur===5&&!c)||(cur===TOTAL&&!c);
   document.getElementById('wBack').disabled=(cur===1);
 }
+
+/* ---- Coupon: the server owns the rules, the wizard just asks for a quote ---- */
+function couponError(message){
+  var el=document.getElementById('couponError');
+  if(!el)return;
+  el.textContent=message||'';
+  el.hidden=!message;
+}
+function renderCoupon(){
+  var form=document.getElementById('couponForm'),on=document.getElementById('couponOn');
+  var active=!!state.coupon;
+  if(form)form.hidden=active;
+  if(on)on.hidden=!active;
+  if(active)setTxt('couponCode',state.coupon);
+}
+function dropCoupon(message){
+  state.coupon=null;
+  state.couponDiscount=0;
+  renderCoupon();
+  couponError(message);
+  render();
+}
+function requestQuote(code){
+  var rule=selectedRule();
+  var planId=(window.NM_PLAN_IDS&&window.NM_PLAN_IDS[state.plan])||'';
+  if(!rule||!planId)return Promise.reject(null);
+
+  return fetch(String(window.NM_QUOTE_URL).replace('__PLAN__',encodeURIComponent(planId)),{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json','X-Requested-With':'XMLHttpRequest'},
+    body:JSON.stringify({
+      meal_types:mealsKey().split(','),
+      duration_unit:rule.unit,
+      duration_length:rule.length,
+      selected_days:state.days,
+      coupon_code:code
+    })
+  }).then(function(r){return r.ok?r.json():Promise.reject(r);})
+    .then(function(body){
+      var b=body&&body.data&&body.data.breakdown;
+      return b?b:Promise.reject(null);
+    });
+}
+function applyCoupon(code){
+  couponError('');
+  requestQuote(code).then(function(b){
+    if(!b.coupon_code){dropCoupon(t('coupon_invalid'));return;}
+    state.coupon=b.coupon_code;
+    state.couponDiscount=(b.coupon_discount&&b.coupon_discount.minor)||0;
+    renderCoupon();
+    render();
+  }).catch(function(){dropCoupon(t('coupon_invalid'));});
+}
+/* A coupon quoted for one selection may not hold for another, so re-ask. */
+var couponTimer=null;
+function refreshCoupon(){
+  if(!state.coupon)return;
+  var code=state.coupon;
+  clearTimeout(couponTimer);
+  couponTimer=setTimeout(function(){applyCoupon(code);},350);
+}
+(function bindCoupon(){
+  var input=document.getElementById('couponInput'),apply=document.getElementById('couponApply');
+  if(!input||!apply)return;
+  function submit(){
+    var code=(input.value||'').trim();
+    if(!code)return;
+    input.value='';
+    applyCoupon(code);
+  }
+  apply.addEventListener('click',submit);
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submit();}});
+  var clear=document.getElementById('couponClear');
+  if(clear)clear.addEventListener('click',function(){dropCoupon('');});
+})();
 
 function goStep(n){
   if(n<1||n>TOTAL)return;
@@ -753,7 +888,7 @@ document.querySelectorAll('#plans9 .p9').forEach(function(b){
     b.classList.add('on');
     state.plan=b.getAttribute('data-plan');
     state.durIndex=null;
-    render(); autoNext();
+    render(); refreshCoupon(); autoNext();
   });
 });
 document.querySelectorAll('#mealGrid .mt').forEach(function(b){
@@ -761,7 +896,7 @@ document.querySelectorAll('#mealGrid .mt').forEach(function(b){
     b.classList.toggle('on');
     state.mtypes=Array.prototype.map.call(document.querySelectorAll('#mealGrid .mt.on'),function(x){return x.getAttribute('data-meal');});
     state.durIndex=null;
-    render();
+    render(); refreshCoupon();
   });
 });
 document.querySelectorAll('#daysWrap .day').forEach(function(b){
@@ -774,9 +909,9 @@ document.querySelectorAll('#daysWrap .day').forEach(function(b){
 });
 var startInput=document.getElementById('startDate');
 if(startInput){
-  var minISO=toISO(tomorrow());
+  var minISO=toISO(earliestStart());
   startInput.min=minISO;
-  if(!state.startDate)state.startDate=minISO;
+  if(!state.startDate||state.startDate<minISO)state.startDate=minISO;
   startInput.value=state.startDate;
   startInput.addEventListener('change',function(){
     state.startDate=startInput.value||minISO;
@@ -804,11 +939,43 @@ var elOnce=document.getElementById('modeOnce'); if(elOnce)elOnce.addEventListene
 var elCyc=document.getElementById('cycleSel'); if(elCyc)elCyc.addEventListener('click',function(e){e.stopPropagation();});
 
 document.getElementById('wBack').addEventListener('click',function(){goStep(cur-1);});
+function mealSchedulePayload(){
+  var dates=deliveryDates(), out=[];
+  dates.forEach(function(dt,idx){
+    var meals={};
+    state.mtypes.forEach(function(mt){
+      var name=(state.dishSel[idx]&&state.dishSel[idx][mt])||'';
+      meals[mt]=name;
+    });
+    out.push({date:toISO(dt),meals:meals});
+  });
+  return out;
+}
+
 document.getElementById('wNext').addEventListener('click',function(){
   if(cur<TOTAL){goStep(cur+1);return;}
-  var next=this;
-  next.textContent=t('added');
-  setTimeout(function(){render();},2200);
+  var rule=selectedRule(); if(!rule)return;
+  var next=this; if(next.disabled)return; next.disabled=true;
+  var payload={
+    plan_public_id:(window.NM_PLAN_IDS&&window.NM_PLAN_IDS[state.plan])||'',
+    meal_types:mealsKey().split(','),
+    duration_unit:rule.unit,
+    duration_length:rule.length,
+    selected_days:state.days,
+    mode:state.mode,
+    start_date:state.startDate,
+    coupon_code:state.coupon,
+    meal_schedule:mealSchedulePayload()
+  };
+  // Park the selection and continue to checkout; guests are sent to sign in
+  // first and land back on the checkout with the draft intact.
+  fetch(window.NM_CHECKOUT_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-CSRF-TOKEN':window.NM_CSRF,'Accept':'application/json','X-Requested-With':'XMLHttpRequest'},
+    body:JSON.stringify(payload)
+  }).then(function(r){return r.ok?r.json():Promise.reject(r);})
+    .then(function(res){window.location.href=res.redirect;})
+    .catch(function(){next.disabled=false;});
 });
 document.querySelectorAll('#stepper .snode').forEach(function(nd){
   nd.addEventListener('click',function(){

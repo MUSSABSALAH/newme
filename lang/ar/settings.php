@@ -40,7 +40,8 @@ return [
         'operations' => [
             'stock_reservation_minutes' => 'مهلة حجز المخزون (دقائق)',
             'payment_timeout_minutes' => 'مهلة الدفع (دقائق)',
-            'subscription_cutoff_hours' => 'مهلة إغلاق تعديل الاشتراك (ساعات)',
+            'subscription_min_start_days' => 'أقل مدة قبل بدء الاشتراك (أيام)',
+            'meal_change_lead_days' => 'مهلة تغيير الوجبات (أيام)',
         ],
         'policies' => [
             'cancellation_ar' => 'سياسة الإلغاء (بالعربية)',
@@ -58,7 +59,8 @@ return [
         'operations' => [
             'stock_reservation_minutes' => 'مدة بقاء المخزون محجوزًا لطلب غير مدفوع.',
             'payment_timeout_minutes' => 'مدة صلاحية عملية الدفع المعلّقة.',
-            'subscription_cutoff_hours' => 'عدد الساعات قبل التوصيل التي يُمنع بعدها تعديل نفس اليوم.',
+            'subscription_min_start_days' => 'أقل عدد أيام من اليوم يقدر العميل يختار بعده تاريخ البداية (مثلاً 1 = بكرة).',
+            'meal_change_lead_days' => 'عدد الأيام قبل يوم التوصيل اللي يُسمح فيه بتغيير الوجبة.',
         ],
     ],
 

@@ -9,6 +9,7 @@ use App\Http\Requests\Web\Admin\Roles\StoreRoleRequest;
 use App\Http\Requests\Web\Admin\Roles\UpdateRoleRequest;
 use App\Modules\Identity\DTOs\RoleData;
 use App\Modules\Identity\Enums\PermissionName;
+use App\Modules\Identity\Enums\RoleName;
 use App\Modules\Identity\Models\Role;
 use App\Modules\Identity\Services\RoleService;
 use App\Support\Exceptions\DomainException;
@@ -24,6 +25,7 @@ final class RoleController extends Controller
         $this->authorize('viewAny', Role::class);
 
         $roles = Role::query()
+            ->where('name', '!=', RoleName::Customer->value)
             ->withCount(['permissions', 'users'])
             ->orderBy('name')
             ->get();

@@ -68,7 +68,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Models\\User.php' => 
     array (
-      0 => '5602cd5dce0d2d502e654c7202f2fd50719a856e55acc48bef37636512c5c255',
+      0 => 'fb2bb6503fcbf6954a445fed29fe49cd41b2ec218e871d8048aad0a387c77e49',
       1 => 
       array (
         0 => 'app\\models\\user',
@@ -76,10 +76,17 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\models\\casts',
-        1 => 'app\\models\\isactive',
-        2 => 'app\\models\\isinvited',
-        3 => 'app\\models\\invitations',
-        4 => 'app\\models\\pendinginvitation',
+        1 => 'app\\models\\scopestaff',
+        2 => 'app\\models\\scopecustomers',
+        3 => 'app\\models\\isactive',
+        4 => 'app\\models\\isinvited',
+        5 => 'app\\models\\isstaff',
+        6 => 'app\\models\\iscustomer',
+        7 => 'app\\models\\invitations',
+        8 => 'app\\models\\addresses',
+        9 => 'app\\models\\orders',
+        10 => 'app\\models\\subscriptions',
+        11 => 'app\\models\\pendinginvitation',
       ),
       3 => 
       array (
@@ -87,7 +94,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Providers\\AppServiceProvider.php' => 
     array (
-      0 => '07382c229e8a8235410bf0d23b64a98e6c22ea7d71bcfea123d0c3b8175cf8b0',
+      0 => 'c7dc3d123760745908f1408651e6e808012c4868dfabef9ddad1fa4d76bb028f',
       1 => 
       array (
         0 => 'app\\providers\\appserviceprovider',
@@ -340,7 +347,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Enums\\PermissionName.php' => 
     array (
-      0 => 'c722622162be800db616b5eacf51dfbd08d005bc9d5d0504f849e221dec6ae76',
+      0 => 'ea4af47b12312f5db68df09c2c78efacb8de6f0f050a797c2c31ce9bdb252f37',
       1 => 
       array (
         0 => 'app\\modules\\identity\\enums\\permissionname',
@@ -356,7 +363,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Enums\\RoleName.php' => 
     array (
-      0 => 'f65ba6effcee36f01628dceb982b91a5b7fa858d22a231c7f9fc34512dd49d42',
+      0 => 'ba7a0727505c2413698b689157df955793d1ef2deb5e95373f4c9f0e0c93cc2d',
       1 => 
       array (
         0 => 'app\\modules\\identity\\enums\\rolename',
@@ -364,6 +371,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\modules\\identity\\enums\\values',
+        1 => 'app\\modules\\identity\\enums\\staffvalues',
       ),
       3 => 
       array (
@@ -430,7 +438,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Services\\AuthService.php' => 
     array (
-      0 => 'ba85c783268d4e1082dd4d53d6083065d64689499b31644af9d9f954c97efb6d',
+      0 => '6bf735edad3fb252a2f8cb6e9ec820344df624b8de6953321251deaac16217c6',
       1 => 
       array (
         0 => 'app\\modules\\identity\\services\\authservice',
@@ -447,7 +455,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\Auth\\LoginController.php' => 
     array (
-      0 => 'a0c8852b6cbec44d20c72b203e18603464360969184e6e8c442ff0bfa74590c2',
+      0 => '05659d64e7701cff979324948b0c543ef368702ecb9d8f0365d8e9ca231e0006',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\auth\\logincontroller',
@@ -465,14 +473,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\DashboardController.php' => 
     array (
-      0 => '12794908ebcc9c7b610a3a02e8c3e2ffd5acffb9075796ec08570e02d08f2721',
+      0 => 'eee8d1a555612a1b0a31f75c672b8be7847f3fdc66aba015bd01e1391541918b',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\dashboardcontroller',
       ),
       2 => 
       array (
-        0 => 'app\\http\\controllers\\web\\admin\\index',
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\index',
       ),
       3 => 
       array (
@@ -496,7 +505,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\LocaleController.php' => 
     array (
-      0 => 'c400c960eeed41d45fe141e60eab0e8b5fa0a4de4b9da32ff615a6d82c39bce7',
+      0 => '64b21a13bbffd6afc2968c0b3657b4e08c8490d5c0b795894933b77b8911c546',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\localecontroller',
@@ -511,7 +520,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Middleware\\SetWebLocale.php' => 
     array (
-      0 => '843d63c9ba18888818847d88a976208126f087ec003bb535cfc233a869bf16ba',
+      0 => '3b0c86e623cc1f74583e99717c621b6351cf7c2dcbd1142092682caf4e102213',
       1 => 
       array (
         0 => 'app\\http\\middleware\\setweblocale',
@@ -542,7 +551,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\RoleController.php' => 
     array (
-      0 => '3f150eaf69a072fca5c78fd7f383dec679eb9b1e2ff04433a9a9b966a0da420e',
+      0 => '71f01ff6a9de75883b17775d11a3c755712225ef170e68df1109d85685101ab1',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\rolecontroller',
@@ -563,7 +572,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Roles\\StoreRoleRequest.php' => 
     array (
-      0 => '47431664ad0e0edf4016d5f3ad00fab6cb25aef2dfdb3848b61f06c08870f585',
+      0 => 'c9e646cd7a13067916aca3a6c7f701a6998c88f539efb45e7b585faaa35bee40',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\roles\\storerolerequest',
@@ -580,7 +589,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Roles\\UpdateRoleRequest.php' => 
     array (
-      0 => 'd0fc4f91f5eabfa17c569aa471fad0f94eef932503e624a14d7e6368396613bf',
+      0 => 'd3f0161013108778acd308f03d9561332db86331d4850a1e3d18b4196721d907',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\roles\\updaterolerequest',
@@ -597,7 +606,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\DTOs\\RoleData.php' => 
     array (
-      0 => '66f7c08282c7cf15a1eaaf6bcdbfd2b2fbd46c4b73f65f2a466394e1b336fe1a',
+      0 => '324e9e313d237fc3890e8b82f20f6b964a0744c6d689e79e61168d4b631cc879',
       1 => 
       array (
         0 => 'app\\modules\\identity\\dtos\\roledata',
@@ -613,7 +622,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Exceptions\\RoleInUseException.php' => 
     array (
-      0 => 'b2ca09c2b4bdf2977aa909285a887190f4729eccfd7de101b2947b8df5950246',
+      0 => 'f4743600a5018b89052aef92f83dac8ca56c208b21d573aac14394e17d779183',
       1 => 
       array (
         0 => 'app\\modules\\identity\\exceptions\\roleinuseexception',
@@ -628,7 +637,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Exceptions\\SystemRoleException.php' => 
     array (
-      0 => '3543043b371483f31aab0e8957200650601848859d81cedf5acc5182c92e53bc',
+      0 => 'f0ffdd0a9ee2eee36b89b4365c96c81b983a9cf9e59fcbd095464bf18fa55057',
       1 => 
       array (
         0 => 'app\\modules\\identity\\exceptions\\systemroleexception',
@@ -643,7 +652,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Policies\\RolePolicy.php' => 
     array (
-      0 => 'ee6cda847fedf3f41d3444707181f2f1108d793d8da2090c369a850b6866d3f8',
+      0 => 'e6db95ee3ee217987ad20784f4be133c6e73ad0104117ebf8b895b48ebf001f4',
       1 => 
       array (
         0 => 'app\\modules\\identity\\policies\\rolepolicy',
@@ -662,7 +671,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Services\\RoleService.php' => 
     array (
-      0 => '02833e414eff3d8ddd6ae997abafe40856831140633b0f8066ed6730ded573d0',
+      0 => '8e3b5b776a732e3e4e85e09a451455d6fd79b2be82de386c40194a5595f71af3',
       1 => 
       array (
         0 => 'app\\modules\\identity\\services\\roleservice',
@@ -685,7 +694,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Models\\Role.php' => 
     array (
-      0 => '34ee0e14f65c55d92289ccb7dfb1f3d3ee2e9bde7a011427392476a5c42a3b0c',
+      0 => 'b8872020935c7b7a25b92cdf699cd49c3c38e4f3eada100ae38e8d8fb153703b',
       1 => 
       array (
         0 => 'app\\modules\\identity\\models\\role',
@@ -701,7 +710,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\UserController.php' => 
     array (
-      0 => 'a3d582299ac03de96f4cb9712089190d55570b36441f8e44d5d0a249fa963b07',
+      0 => 'b945b3c3879173c42421d0a2c81721ee29dfd915d9ef8fc7e07ad39ede34ae88',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\usercontroller',
@@ -722,7 +731,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Users\\UpdateUserRequest.php' => 
     array (
-      0 => 'd3076321d56cff71b86e9b848007f017ee84780e606bea2c20e439c6267c7b09',
+      0 => '86f632b233d4db6f71b9dcc16589378205f35cf052b2695cfa15254075f74213',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\users\\updateuserrequest',
@@ -740,7 +749,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\DTOs\\UserData.php' => 
     array (
-      0 => 'fadf59dba0e8045c3516b5d19483ee18e757448eca59200400328906077ff419',
+      0 => '17b504efa45a15077220a1f8cebbfb6f2448f98c8b88f3dfefebd9767ab0e96e',
       1 => 
       array (
         0 => 'app\\modules\\identity\\dtos\\userdata',
@@ -756,7 +765,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Exceptions\\CannotDeactivateSelfException.php' => 
     array (
-      0 => '17632bb1aff7d129dea8521b6a137918b221822b926e53d93335c5d0fb11a5a6',
+      0 => '2e3d8ce9e6e83b35015fbeeba1ab4ed8e21b73f5b489391085f2315c632b9f48',
       1 => 
       array (
         0 => 'app\\modules\\identity\\exceptions\\cannotdeactivateselfexception',
@@ -771,7 +780,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Exceptions\\LastSuperAdminException.php' => 
     array (
-      0 => '490130c2b31456b05176130dca899c060fb42ca8fd8fa1bfcf8595d0e3a48356',
+      0 => '537f2bbb9210135ac22f3f4e121666d40234ac6cda0ebc0d81935f3a8242c329',
       1 => 
       array (
         0 => 'app\\modules\\identity\\exceptions\\lastsuperadminexception',
@@ -786,7 +795,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Policies\\UserPolicy.php' => 
     array (
-      0 => '7fd48f7b97f3067447b6375e4d1f8b66aeb488153a0a4da5ffafc55325f0114f',
+      0 => 'f51be3b83a6d91a5017fda5360c980e8dc887797feeeef2ce9d6d75115331aa4',
       1 => 
       array (
         0 => 'app\\modules\\identity\\policies\\userpolicy',
@@ -806,7 +815,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Services\\UserService.php' => 
     array (
-      0 => 'a3dd4ee448f46f450a66196cb24f4f793cafef9aade40aba70e0ac2052d065e0',
+      0 => 'b122ef5617f6e4092ecd6defa9ff9af7cbab1044dc792ee87dc64417e44f01a3',
       1 => 
       array (
         0 => 'app\\modules\\identity\\services\\userservice',
@@ -828,7 +837,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\InvitationController.php' => 
     array (
-      0 => '4cd700fc08c3fafb40056657930a5521f966bab4e21272b45fe683b813b32c02',
+      0 => '36e8a9d2750c67412d95c8434dab581c5bf9ce76e022e8d620200efadc758f9b',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\invitationcontroller',
@@ -846,7 +855,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\InvitationController.php' => 
     array (
-      0 => '78f7b291205a979fd520310df2ce85e9800b4626ed3710ea8702498cd9d302ae',
+      0 => 'c32b303b29c07c34888b6f84d951c2f736aad422966992cd747e8cb7694752d0',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\invitationcontroller',
@@ -863,7 +872,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest.php' => 
     array (
-      0 => 'bd944ea2f50f0f6a66e1ac746f4cbb2419cb3934e753935c4f06eb7280562968',
+      0 => '34142492f9b8dad37a58d04caee564c0bb5fd81da7384d0af7af948ca52dedb7',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\users\\sendinvitationrequest',
@@ -881,7 +890,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Invitations\\AcceptInvitationRequest.php' => 
     array (
-      0 => 'f55e5f412e611a0f422be4d9a4ef86ee708c9ec9e8cc07f4321d7990085efdc1',
+      0 => '1ed390ed492c34451856263e88e019cea44942538b5b5ba8033df93278c3b411',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\invitations\\acceptinvitationrequest',
@@ -898,7 +907,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\DTOs\\InvitationData.php' => 
     array (
-      0 => '78a1b57328941b122b454895b81b7812656b471f64deb0b3cb3541bae19f1570',
+      0 => 'eb78758ffedcb8d0c2f5ba94edee3d62c97c9ac01b199179002136792a19f2f6',
       1 => 
       array (
         0 => 'app\\modules\\identity\\dtos\\invitationdata',
@@ -914,7 +923,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Exceptions\\InvitationAlreadyAcceptedException.php' => 
     array (
-      0 => '383672ab02789fffa776c3f3ed85c5300b1311ad56b5fad9cb0c06967f592d38',
+      0 => 'c278f81155083d05cc7d27f4ccfac52ba474af236f76eba2420bc71d0b4496a2',
       1 => 
       array (
         0 => 'app\\modules\\identity\\exceptions\\invitationalreadyacceptedexception',
@@ -929,7 +938,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Exceptions\\InvitationInvalidException.php' => 
     array (
-      0 => '85ac6a1bbe3e1d4e6298589817433dc60e807d0a5f59f48e83b51769bf6c5c9d',
+      0 => '98d2a12ce3fa42c65c884c2e43479766ed99e5ee7c5e1c5af9d5b6805e14d8e0',
       1 => 
       array (
         0 => 'app\\modules\\identity\\exceptions\\invitationinvalidexception',
@@ -944,7 +953,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Models\\UserInvitation.php' => 
     array (
-      0 => '745b2f02cc59af4311bc8381e7dfcce4c7750a8740b5abdf54b653b78ebfdd04',
+      0 => '02e7ac5f0fe2ae2f4a27f1ffc8f95b0bdaf628df6a0b54ec72b511e3eeac2edd',
       1 => 
       array (
         0 => 'app\\modules\\identity\\models\\userinvitation',
@@ -964,7 +973,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Notifications\\UserInvitationNotification.php' => 
     array (
-      0 => '48ab2488087f373d6d58a14106fc5e892cf53fe1cd04541c3cd1731cc3e62d2e',
+      0 => '314a20d48d9f7d90a7a94ae0507cfc7d84a39af73765d954fa3accd4ff910789',
       1 => 
       array (
         0 => 'app\\modules\\identity\\notifications\\userinvitationnotification',
@@ -981,7 +990,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Services\\InvitationService.php' => 
     array (
-      0 => '67fce3243557ccdd2024a5b8bb41514755525a6fb1ad97f5dcb3d0ee7456c0cc',
+      0 => 'cbabbde5bf8e8a071912b8db50759bf6caaee6d7f49c7d0eaa6ee8ff047c80c3',
       1 => 
       array (
         0 => 'app\\modules\\identity\\services\\invitationservice',
@@ -1002,7 +1011,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\AuditController.php' => 
     array (
-      0 => '8cc8878d5706edec39d3a2b728127f2373934f4b7a9c3d5e0e8a80f71800f002',
+      0 => '15dae1c2993e8508044002ba4477ef484f14bcec33eb7feb27bc6799c7618c6c',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\auditcontroller',
@@ -1017,7 +1026,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Audit\\Enums\\AuditAction.php' => 
     array (
-      0 => '10ce8284add0915834281413f9d7edc35f89f04d589fc0c222665ef8366f18d7',
+      0 => '839fff2a433d5332ffb81f66c3f9e9839e1ddae021b6de5f00e20acd63e8bb8a',
       1 => 
       array (
         0 => 'app\\modules\\audit\\enums\\auditaction',
@@ -1033,7 +1042,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Audit\\Models\\AuditLog.php' => 
     array (
-      0 => 'a45837dc72b59e761a256b6d74ab07b5d43adcd56bf10be91dd7010e41cb2c15',
+      0 => '2bde148de266c6aa14e31b3f426cf891377f265d46d1386764f3e1be8463f674',
       1 => 
       array (
         0 => 'app\\modules\\audit\\models\\auditlog',
@@ -1050,7 +1059,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Audit\\Policies\\AuditLogPolicy.php' => 
     array (
-      0 => 'f66b078eb481a62e6a51d7d4b189c26d6fb9952cc777d6a590396db31840daaa',
+      0 => '57efe91dde7eff88ac3cb8b9751e43919a000a918306fa65f6ac2ad90478f3af',
       1 => 
       array (
         0 => 'app\\modules\\audit\\policies\\auditlogpolicy',
@@ -1065,7 +1074,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Audit\\Services\\AuditService.php' => 
     array (
-      0 => '719797d1d2fe60b62a33893aede7e493447e36d047200294848eddc7521d8c62',
+      0 => '0e50e4287709249b850ddefcedc2c3f44cc435ec4517a12dd594a8981cb6a710',
       1 => 
       array (
         0 => 'app\\modules\\audit\\services\\auditservice',
@@ -1081,7 +1090,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Support\\Ui\\AuditActionPresenter.php' => 
     array (
-      0 => '02151ac67d2b8fa8e5b29bab6e9164eb7fcb28d62773589c4718f0d2280d6619',
+      0 => '6aa8ce2d6ab2ed0244ed9cd4d901a672330023ca944ca31520794f432e67acb8',
       1 => 
       array (
         0 => 'app\\support\\ui\\auditactionpresenter',
@@ -1097,7 +1106,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\Auth\\ForgotPasswordController.php' => 
     array (
-      0 => '835c3bb1a77b07079986a1154fa357f77e6d1e6e7a454779ecf4ef5ca1ba169d',
+      0 => '4bb8442159eb8d914e983b792cdb138499d4fe841763dd23c929a4921e249a72',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\auth\\forgotpasswordcontroller',
@@ -1114,7 +1123,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\Auth\\ResetPasswordController.php' => 
     array (
-      0 => 'ad8a4e57b4b074a4ff473087303b543474f3f3a7742fd4d6458b661e99c3a4d3',
+      0 => 'f99928393efd27298a05539fa2c28dd542a193c6b2c12dd18115c0add292cf22',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\auth\\resetpasswordcontroller',
@@ -1131,7 +1140,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Auth\\ForgotPasswordRequest.php' => 
     array (
-      0 => 'b8bd3a0e2a18e12da654d8456ec7ac17c579ec1765bebb4dfbb63c54bdff513e',
+      0 => '0c1163799238b560f5e3f089c93db726785f7943fd41045e2746795420c1684f',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\auth\\forgotpasswordrequest',
@@ -1148,7 +1157,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Auth\\ResetPasswordRequest.php' => 
     array (
-      0 => '12698d7168b55e34dee5faeb55215ea0139ebc52730cf5736db6b414172aaaa8',
+      0 => '75686db1cca57f23ceda384fdcc1f6c9151da979f5e1e0cc6e0c36ec0cc72a3e',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\auth\\resetpasswordrequest',
@@ -1165,7 +1174,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Exceptions\\PasswordResetInvalidException.php' => 
     array (
-      0 => '0e518b8618d8e160c9775de168f5f7028b6eb45d7e04fc302b4c5f3a4e572461',
+      0 => 'bf9bb33ed87061fa6e3342d57b91aecb18693f7e97612d4876b92d1ab4aff5be',
       1 => 
       array (
         0 => 'app\\modules\\identity\\exceptions\\passwordresetinvalidexception',
@@ -1180,7 +1189,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Notifications\\PasswordResetNotification.php' => 
     array (
-      0 => '97188bd96e848bd2b44cdd09cc34f893c218a58d91b7e18e807d34e9b15b00ae',
+      0 => 'ec7d3c0a2d79a904a67b64fe26fc72d3fbec783ca13cfaff54ad76b9c8ddfacd',
       1 => 
       array (
         0 => 'app\\modules\\identity\\notifications\\passwordresetnotification',
@@ -1197,7 +1206,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Identity\\Services\\PasswordResetService.php' => 
     array (
-      0 => '7e5f4d1aaf9a7a3dc52529a7a62c970197f9ceeea74e743495679984a6184599',
+      0 => '3c696e1e336ee7d8acd8245d8f28ef53482cd58dfae9f3fc05048f16b0b57f8b',
       1 => 
       array (
         0 => 'app\\modules\\identity\\services\\passwordresetservice',
@@ -1220,7 +1229,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\SettingController.php' => 
     array (
-      0 => '75cc42b3716eaafa496bf80c951e5c9c40d58707493fbff5eb1f6f7b01a92888',
+      0 => 'dc704958e178cabd5df3a5dd9bd69814234f937f2c3f8dc872f1b1eff17cd943',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\settingcontroller',
@@ -1237,7 +1246,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Settings\\UpdateSettingsRequest.php' => 
     array (
-      0 => '75810bdcb423ca85b6aeb4c0d59f3ed1dfa28794b75fedafa627a2349742045d',
+      0 => '0ab7d6178740d46bde98d518b8b20732579140986a4419b241e72ac81b2b5b67',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\settings\\updatesettingsrequest',
@@ -1255,7 +1264,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Settings\\Enums\\SettingGroup.php' => 
     array (
-      0 => '6ea91ea29079f2c65685aeabfb7d29a7530132bfd3f60ae1b4ef70bc9399cfc7',
+      0 => 'f09128c0a614e59af169ace91fc9951d9bc52c5730bde80c11ebd243ff185526',
       1 => 
       array (
         0 => 'app\\modules\\settings\\enums\\settinggroup',
@@ -1271,7 +1280,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Settings\\Enums\\SettingType.php' => 
     array (
-      0 => 'f885bf168292173b45d21cff4dc7249ca05e6474b70db06bbd1563c41707b835',
+      0 => '727c1f6b2a1892d176fecedca672d47f4deebf8245616c9a8cde4936c22ae09f',
       1 => 
       array (
         0 => 'app\\modules\\settings\\enums\\settingtype',
@@ -1287,7 +1296,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Settings\\Models\\Setting.php' => 
     array (
-      0 => '62817af9545a04e711f7e68f8383e64d919ebdcf986b2db6a873bae85959f585',
+      0 => '8fcd73de1519265199d3bb6e1d140f99864c4a1a1147c5833b80c547951c8a76',
       1 => 
       array (
         0 => 'app\\modules\\settings\\models\\setting',
@@ -1302,7 +1311,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Settings\\Policies\\SettingsPolicy.php' => 
     array (
-      0 => '9f78a17c991a08d7c014234e6e3a4822f83d9260f868851be0cdb22ad200257b',
+      0 => '6c768cd82bbe94824d6365823cf7428881f371a9ca3eeb1aa61a81917e646b7c',
       1 => 
       array (
         0 => 'app\\modules\\settings\\policies\\settingspolicy',
@@ -1317,7 +1326,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Settings\\Services\\SettingsService.php' => 
     array (
-      0 => 'f36f0790ce2c8354d39916dfea7714c39eea96b135ec2fd9f55cef25763a42ec',
+      0 => '96c01c9dc59b71591f67bed9ef3414e73ed7724886b68da3c5b8ce7a7fde7a4d',
       1 => 
       array (
         0 => 'app\\modules\\settings\\services\\settingsservice',
@@ -1338,7 +1347,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Settings\\Support\\SettingDefinition.php' => 
     array (
-      0 => '6d6a629a3f9c2f3abaa78e228ec72e3e3d81dd8b3e07faeab32a399341cde9b3',
+      0 => 'c1f62b6dd9f5f59ea983d8d209a3d9de5cceca01e22afc53adbed58a90a827a7',
       1 => 
       array (
         0 => 'app\\modules\\settings\\support\\settingdefinition',
@@ -1356,7 +1365,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Settings\\Support\\SettingsRegistry.php' => 
     array (
-      0 => '3c5b4550bb8622dfd1b0017b3922aa2f8a2cd396d55eba10a8545550443849fa',
+      0 => '62007a2ad8c9db3832cf7325da3858990de8fd54aec14d9d1cd560c90e43a39f',
       1 => 
       array (
         0 => 'app\\modules\\settings\\support\\settingsregistry',
@@ -1374,7 +1383,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Api\\V1\\PlanController.php' => 
     array (
-      0 => '22d71c6c5182355076cf039342efb7798fc70c40795b6d604c6f66337e1fe267',
+      0 => 'a72fe316e5167b146546d8383588559de636732664ab113ce18cb857a568c9bc',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\v1\\plancontroller',
@@ -1390,7 +1399,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Api\\V1\\PlanQuoteController.php' => 
     array (
-      0 => 'fbe1bbcbcf3c1c4ad618f36de5e75b9ff318e29da9266c6468702e0744ea410a',
+      0 => '9e5ce25ad4957c8e9faf414c9250c28bf20ac5b7b9e7f3f1aa312c415962150e',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\v1\\planquotecontroller',
@@ -1406,7 +1415,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\PlanController.php' => 
     array (
-      0 => '725d11f869976aa4e71aee0d08a529dbebe29c2c1b0cb96689f26ab8d7a6501b',
+      0 => '2299054eb947c668b67610263a4288493360c64fd7662e78fcd6b8a9060860e7',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\plancontroller',
@@ -1430,7 +1439,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\PlanPricingController.php' => 
     array (
-      0 => '23683fe16526b8b0279dbda217226b1a1d83930260f960a046f180a4e871525c',
+      0 => '7b31502e477f80180ee556221b6cd8703f5ea78eeefffae9da412408eb1b8958',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\planpricingcontroller',
@@ -1446,7 +1455,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\PlanVersionController.php' => 
     array (
-      0 => '7e4b85dbd53b5fd67e8cb8c42f3dc71c49bdaf3dd08542c508e5f1c8a0fc7d07',
+      0 => '52554c8b15f70d763899c13f94acd66de37fc2d4b96cccd4b736e9140d1ee52f',
       1 => 
       array (
         0 => 'app\\http\\controllers\\web\\admin\\planversioncontroller',
@@ -1463,7 +1472,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Api\\V1\\Plans\\PlanQuoteRequest.php' => 
     array (
-      0 => '6f99136a0f10064bdc3515544162c1255d44634d8f9a4944aa10abe125553403',
+      0 => '5d678fa40785708750c5dfbd0afd2fe4af0e0231991da1bdaf079c789cd180e6',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\plans\\planquoterequest',
@@ -1479,7 +1488,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Plans\\PlanRequest.php' => 
     array (
-      0 => '065e33385143337b53ee7b30eaabd6bfba481e60a1fedac822c00965f3bf1a42',
+      0 => '83bd5224034e9901b46d456ade6a52507b7253feee66a817199bdcf2fa54cb8d',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\plans\\planrequest',
@@ -1498,7 +1507,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Plans\\StorePlanRequest.php' => 
     array (
-      0 => '122848b3ffc3d9c84ab4de2b7a13b914ce5406cb5042dc03a394cd0c3735e79a',
+      0 => 'ca6b1d964855b44348189cb540b93268d18af40ba48b716036bd43041fdc8e17',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\plans\\storeplanrequest',
@@ -1512,7 +1521,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Plans\\UpdatePlanRequest.php' => 
     array (
-      0 => '6abba606cd023f49f71830580f0fd445d0ff9f7e70b638ed87f5f4c3a993a118',
+      0 => 'b386f89f16df27806ffe913225a9c3e3149beab45f4910340043bd2c070740e4',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\plans\\updateplanrequest',
@@ -1526,7 +1535,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Plans\\UpdatePricingMatrixRequest.php' => 
     array (
-      0 => '53d29024a0e7f71d1d7d16ec77197322e1e2eee867cb7184c5f7e963503ef9d9',
+      0 => 'd99d608f56c6411a33ca3b11eaec3b9da8de2af5d9d0b17e3b3659a1d8730fec',
       1 => 
       array (
         0 => 'app\\http\\requests\\web\\admin\\plans\\updatepricingmatrixrequest',
@@ -1544,7 +1553,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Resources\\V1\\PlanQuoteResource.php' => 
     array (
-      0 => '1c23361b1469bd46a5e203632fb4955167b3b19d5bd2832e3014292110dc75a5',
+      0 => '4ef1e06426530d8a951034a8e3e9fb40022f1803692d617345b36c58bb3fda63',
       1 => 
       array (
         0 => 'app\\http\\resources\\v1\\planquoteresource',
@@ -1559,7 +1568,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Resources\\V1\\PlanResource.php' => 
     array (
-      0 => 'b08c8ab8f342f9fb49b2cf61121d196887be2b7a3ff2a4d3640943e88dd4a34c',
+      0 => 'a7e85e283c706d2fe10e995965feb68ace8b5f1b9111b99bf7509355b3a8feb5',
       1 => 
       array (
         0 => 'app\\http\\resources\\v1\\planresource',
@@ -1576,7 +1585,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Http\\Resources\\V1\\PlanVersionResource.php' => 
     array (
-      0 => 'c96599ac3595e69f1dc938c4d3665a4efcc2c9d1c6ffcf2887b8c675a30678fa',
+      0 => '7938faad9ad519ccf17082ded044635371e658cb51a468f3a7741a6cdfff665b',
       1 => 
       array (
         0 => 'app\\http\\resources\\v1\\planversionresource',
@@ -1591,7 +1600,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\DTOs\\PlanData.php' => 
     array (
-      0 => '84b7a049146e5d28e3ba5ea476b211cbb9c24e6cf8945fd134e9c4a309adb772',
+      0 => '683750d51399b0497dc3af2252c36165dfa739136b94228f4049cb6ecbc852a0',
       1 => 
       array (
         0 => 'app\\modules\\plans\\dtos\\plandata',
@@ -1610,7 +1619,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\DTOs\\PlanQuote.php' => 
     array (
-      0 => '1cb9d64e9c3ccaff4772c1924ad295ff3c3088b0389ffb13bab03e05f8eb7b38',
+      0 => '8ee27a736d956523a13532f272f00664f5df1857af88ba7a86d1ffd615d87433',
       1 => 
       array (
         0 => 'app\\modules\\plans\\dtos\\planquote',
@@ -1625,7 +1634,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\DTOs\\PlanQuoteRequestData.php' => 
     array (
-      0 => '56002b93d5f49e756a6a5045449ca54b30da02c3dc8066b9afc557da80eb1b90',
+      0 => '36bf58dae2fcbd948f05510294fd92998ca3badec4b956fb33784774f81fb7b3',
       1 => 
       array (
         0 => 'app\\modules\\plans\\dtos\\planquoterequestdata',
@@ -1642,7 +1651,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\DTOs\\PricingRuleData.php' => 
     array (
-      0 => '406975c61915ea74970f05044bf3107a41458f6da556ac499fb27373be017ce9',
+      0 => 'c66caa774852412cd502a5d6b2519c8e089575f915743485520a2bc2bcf6fc28',
       1 => 
       array (
         0 => 'app\\modules\\plans\\dtos\\pricingruledata',
@@ -1660,7 +1669,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Enums\\DurationUnit.php' => 
     array (
-      0 => '71aa22f28377679404733a4fad28634834d6404a9e60efbb2440ad4260a2e7b2',
+      0 => '9fb02048ad6373a531ce70df9aeac4c7603999d39d69e2f42fee2aa383fb8c5d',
       1 => 
       array (
         0 => 'app\\modules\\plans\\enums\\durationunit',
@@ -1678,7 +1687,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Enums\\PlanGoal.php' => 
     array (
-      0 => '47defb22d85fede14d3767b17f1ee91bb15f26bfba80adcc7352a9b54f05b59f',
+      0 => 'e64ed0efcd98762263ccda674222cbe06ebe76d1cc27e54327e5169fa445fe35',
       1 => 
       array (
         0 => 'app\\modules\\plans\\enums\\plangoal',
@@ -1687,6 +1696,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
         0 => 'app\\modules\\plans\\enums\\values',
         1 => 'app\\modules\\plans\\enums\\label',
+        2 => 'app\\modules\\plans\\enums\\websiteslug',
+        3 => 'app\\modules\\plans\\enums\\dailycalorietarget',
       ),
       3 => 
       array (
@@ -1694,7 +1705,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Enums\\PlanVersionStatus.php' => 
     array (
-      0 => '7cd0ce0172e4096f56d5e0c0b04c4bee3ecc9ffa212c612060088f3a2a534182',
+      0 => 'dcede3b5bc0097436c5ca0f270716f9079a497e6212627651b5a2f361c1d424d',
       1 => 
       array (
         0 => 'app\\modules\\plans\\enums\\planversionstatus',
@@ -1711,7 +1722,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Exceptions\\InvalidDeliveryDaysException.php' => 
     array (
-      0 => '9ff22e34ff919c0f13db9930d62adeaca628ecae73ff4cde390a0e674a2d0c0d',
+      0 => '2ebf99264911af9cb63aa80da7f6540a1da0da3416c077d420fa64e6cac75eb0',
       1 => 
       array (
         0 => 'app\\modules\\plans\\exceptions\\invaliddeliverydaysexception',
@@ -1726,7 +1737,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Exceptions\\PlanNotAvailableException.php' => 
     array (
-      0 => '89cdafa8f91a7fdd6f7ac9fbfd2579b9a406c0c351a81e51a956e74277916034',
+      0 => '68518c66a6eace9e6f4797a52cd22598131d0765ca228cf1bd9c9703b89d70e8',
       1 => 
       array (
         0 => 'app\\modules\\plans\\exceptions\\plannotavailableexception',
@@ -1741,7 +1752,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Exceptions\\PricingRuleNotFoundException.php' => 
     array (
-      0 => 'c1d4f1ea63e4edcd010a77c91d8c4424e90706aafbd2ecb373fe1c9c501e120e',
+      0 => 'ce15d5cc8ff1ac04a078563b9b30956aaa7bcc0162202a4c3b580565f7221519',
       1 => 
       array (
         0 => 'app\\modules\\plans\\exceptions\\pricingrulenotfoundexception',
@@ -1756,7 +1767,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Exceptions\\PublishedVersionImmutableException.php' => 
     array (
-      0 => '3031c9ab41f675f8eae1cf6eed667b9aab2bfd205579a443001be83308fce831',
+      0 => 'b09f4b4d83cff02a59d303aa02572ca823f50245ddea8caac2adbd60ecfe9721',
       1 => 
       array (
         0 => 'app\\modules\\plans\\exceptions\\publishedversionimmutableexception',
@@ -1771,7 +1782,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Models\\Plan.php' => 
     array (
-      0 => '692395034e37b989165a01a341d2c145ab1b48fd5b6420606ff23db80148a4cf',
+      0 => '1cfa4ae0d8f64dc3f563985c3fc4496ef27617e8359e429618987577d45e8f1e',
       1 => 
       array (
         0 => 'app\\modules\\plans\\models\\plan',
@@ -1794,7 +1805,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Models\\PlanPricingRule.php' => 
     array (
-      0 => 'b10ee0d950f8e45ec57bf8482bb8844fac158628ee57f06fb60931e9661fdf4a',
+      0 => '7bd2c1b80c8e38515cdf2030b9109f8cd1a94840f6fc62959e308b33cbf9da15',
       1 => 
       array (
         0 => 'app\\modules\\plans\\models\\planpricingrule',
@@ -1815,7 +1826,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Models\\PlanVersion.php' => 
     array (
-      0 => 'f27388294aeca047b8e698f06bccd5184807929d7732567c4e8646d64cd9df4d',
+      0 => 'e0ee8b61439a275252dc93d175ff7e32a8f39ab92feec98a90174760a8ccb1c4',
       1 => 
       array (
         0 => 'app\\modules\\plans\\models\\planversion',
@@ -1836,7 +1847,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Policies\\PlanPolicy.php' => 
     array (
-      0 => '41404c07dcb9f56ad41ed5652850fddc416986b924d6e30a1e448ee0a70a37ac',
+      0 => '677d7a2150ef1de8b1206bad01852c41d4697a4d1b4cf55dc81c3afd6cd24f80',
       1 => 
       array (
         0 => 'app\\modules\\plans\\policies\\planpolicy',
@@ -1855,7 +1866,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Seeders\\PlanSeeder.php' => 
     array (
-      0 => '6d563eafc28cca3515c7cdcb1214590879c4150a5fedc5ef770cdb44596b4672',
+      0 => '810d2f3f0a400059dc62e1a41c18f5f0d51243a22bf96cda571a331943cba0fe',
       1 => 
       array (
         0 => 'app\\modules\\plans\\seeders\\planseeder',
@@ -1863,7 +1874,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\modules\\plans\\seeders\\run',
-        1 => 'app\\modules\\plans\\seeders\\seedplan',
+        1 => 'app\\modules\\plans\\seeders\\plans',
+        2 => 'app\\modules\\plans\\seeders\\seedplan',
       ),
       3 => 
       array (
@@ -1871,7 +1883,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Services\\PlanPricingService.php' => 
     array (
-      0 => 'c840e771566e3d4551ba6fc86f34f2b9ae21b17e9fbb87250b3b03147f98338a',
+      0 => 'f6f75a47373286fb62e0d3b35e8941f6aed72ddce8a633a580c80ffca6799b34',
       1 => 
       array (
         0 => 'app\\modules\\plans\\services\\planpricingservice',
@@ -1885,7 +1897,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         4 => 'app\\modules\\plans\\services\\findrule',
         5 => 'app\\modules\\plans\\services\\validateddays',
         6 => 'app\\modules\\plans\\services\\build',
-        7 => 'app\\modules\\plans\\services\\taxrate',
+        7 => 'app\\modules\\plans\\services\\resolvecoupon',
+        8 => 'app\\modules\\plans\\services\\taxrate',
       ),
       3 => 
       array (
@@ -1893,7 +1906,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Services\\PlanService.php' => 
     array (
-      0 => 'c91ddc46e3961a85d33810aeb642d12ab198b05b1a6675cd5f5630998faedf5b',
+      0 => 'cb81d1a4896fb0d8d1d2a90f06f411b6a6802435be5286511f6b2fe916791abb',
       1 => 
       array (
         0 => 'app\\modules\\plans\\services\\planservice',
@@ -1919,7 +1932,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Support\\Http\\Responses\\MoneyPresenter.php' => 
     array (
-      0 => 'd012162113990a400aa49175af1c8a8f5bebacf232be346ed1ea2321eaf829c6',
+      0 => 'd9488780a22c8bd82edcf70a2cb895e8cb013d9b896b6057a75921487e3f6e69',
       1 => 
       array (
         0 => 'app\\support\\http\\responses\\moneypresenter',
@@ -2121,7 +2134,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\app\\Modules\\Plans\\Seeders\\MealSeeder.php' => 
     array (
-      0 => 'f8eeebf924e8acedcd9269ab9976b6049bf990d915153a2a46842d3fd23f4f8b',
+      0 => '527ea4c16dfbba1685a442cac9d6d7adebb03decdffa3b48f1f21390701426fa',
       1 => 
       array (
         0 => 'app\\modules\\plans\\seeders\\mealseeder',
@@ -2151,6 +2164,2101 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         4 => 'app\\modules\\plans\\services\\syncplanmeals',
         5 => 'app\\modules\\plans\\services\\fill',
         6 => 'app\\modules\\plans\\services\\snapshot',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Account\\AccountController.php' => 
+    array (
+      0 => 'e63390738f6ee5cb02b93b1f2970fabec07fffbe0dcdbf7ddc2d2058133e26d2',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\accountcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\index',
+        1 => 'app\\http\\controllers\\web\\account\\order',
+        2 => 'app\\http\\controllers\\web\\account\\subscription',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Account\\ForgotPasswordController.php' => 
+    array (
+      0 => '4e6f6028623c31159a51b683d6e6963b7800d8e06791bfd42d976231e1ddbe2b',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\forgotpasswordcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\__construct',
+        1 => 'app\\http\\controllers\\web\\account\\create',
+        2 => 'app\\http\\controllers\\web\\account\\store',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Account\\LoginController.php' => 
+    array (
+      0 => '3bcd6b9432fdb3032f6b3148223c903fb4e93614102139927540047684410a48',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\logincontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\__construct',
+        1 => 'app\\http\\controllers\\web\\account\\create',
+        2 => 'app\\http\\controllers\\web\\account\\rememberintended',
+        3 => 'app\\http\\controllers\\web\\account\\store',
+        4 => 'app\\http\\controllers\\web\\account\\destroy',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Account\\RegisterController.php' => 
+    array (
+      0 => '22fe43ba99dddd5102cead9ebe2a9307157e0d39867af1e79aff31147ed0b9ba',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\registercontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\__construct',
+        1 => 'app\\http\\controllers\\web\\account\\create',
+        2 => 'app\\http\\controllers\\web\\account\\store',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Account\\ResetPasswordController.php' => 
+    array (
+      0 => 'f1b5977f615a8d219c66c3c20e2b3593288c927c939e9b0712bcd133d90bc114',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\resetpasswordcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\__construct',
+        1 => 'app\\http\\controllers\\web\\account\\create',
+        2 => 'app\\http\\controllers\\web\\account\\store',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\CategoryController.php' => 
+    array (
+      0 => 'b4ba66b99b0fdc2b0e446d48e173b0387d308c561ff3bc303bf32a362ac8c8a8',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\categorycontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\index',
+        2 => 'app\\http\\controllers\\web\\admin\\create',
+        3 => 'app\\http\\controllers\\web\\admin\\store',
+        4 => 'app\\http\\controllers\\web\\admin\\edit',
+        5 => 'app\\http\\controllers\\web\\admin\\update',
+        6 => 'app\\http\\controllers\\web\\admin\\destroy',
+        7 => 'app\\http\\controllers\\web\\admin\\parentoptions',
+        8 => 'app\\http\\controllers\\web\\admin\\withimage',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\CouponController.php' => 
+    array (
+      0 => 'ceb03450875463b2abdbbab2d194faf7b90f56384ae7e03f5c290ba6659004ce',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\couponcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\index',
+        2 => 'app\\http\\controllers\\web\\admin\\create',
+        3 => 'app\\http\\controllers\\web\\admin\\store',
+        4 => 'app\\http\\controllers\\web\\admin\\edit',
+        5 => 'app\\http\\controllers\\web\\admin\\update',
+        6 => 'app\\http\\controllers\\web\\admin\\destroy',
+        7 => 'app\\http\\controllers\\web\\admin\\formdata',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\CustomerController.php' => 
+    array (
+      0 => 'b2109316dc11e0c92fdc85863410315a06a6872ea5ffdb312a2a2eccb18efb9a',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\customercontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\index',
+        1 => 'app\\http\\controllers\\web\\admin\\show',
+        2 => 'app\\http\\controllers\\web\\admin\\guard',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\ProductController.php' => 
+    array (
+      0 => '1e1528ac849e31249b5bf0d11720ee332d47e820f67b777ba423749d709f40d3',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\productcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\index',
+        2 => 'app\\http\\controllers\\web\\admin\\create',
+        3 => 'app\\http\\controllers\\web\\admin\\store',
+        4 => 'app\\http\\controllers\\web\\admin\\edit',
+        5 => 'app\\http\\controllers\\web\\admin\\update',
+        6 => 'app\\http\\controllers\\web\\admin\\destroy',
+        7 => 'app\\http\\controllers\\web\\admin\\formdata',
+        8 => 'app\\http\\controllers\\web\\admin\\categoryoptions',
+        9 => 'app\\http\\controllers\\web\\admin\\withimage',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\CartController.php' => 
+    array (
+      0 => '44a2aaf7937d71b9c8f3bfea3625aef00eebea1c71fbf63ec9f4ab2fcaecbe34',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\cartcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\__construct',
+        1 => 'app\\http\\controllers\\web\\index',
+        2 => 'app\\http\\controllers\\web\\store',
+        3 => 'app\\http\\controllers\\web\\update',
+        4 => 'app\\http\\controllers\\web\\destroy',
+        5 => 'app\\http\\controllers\\web\\applycoupon',
+        6 => 'app\\http\\controllers\\web\\removecoupon',
+        7 => 'app\\http\\controllers\\web\\respond',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\CheckoutController.php' => 
+    array (
+      0 => '9271f886c3f51d43f9454bb4cbbc87245f14625348391cd7d662f5f82f2bcba4',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\checkoutcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\__construct',
+        1 => 'app\\http\\controllers\\web\\startsubscription',
+        2 => 'app\\http\\controllers\\web\\destroysubscription',
+        3 => 'app\\http\\controllers\\web\\show',
+        4 => 'app\\http\\controllers\\web\\storeaddress',
+        5 => 'app\\http\\controllers\\web\\store',
+        6 => 'app\\http\\controllers\\web\\methods',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\WebsiteController.php' => 
+    array (
+      0 => 'd4d79b84939af7f4b3348cd55a8b0a5bb9861f0683fa0cc2b5f78fd6a6c93205',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\websitecontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\__construct',
+        1 => 'app\\http\\controllers\\web\\home',
+        2 => 'app\\http\\controllers\\web\\main',
+        3 => 'app\\http\\controllers\\web\\store',
+        4 => 'app\\http\\controllers\\web\\subscribe',
+        5 => 'app\\http\\controllers\\web\\menu',
+        6 => 'app\\http\\controllers\\web\\blog',
+        7 => 'app\\http\\controllers\\web\\product',
+        8 => 'app\\http\\controllers\\web\\productshow',
+        9 => 'app\\http\\controllers\\web\\consult',
+        10 => 'app\\http\\controllers\\web\\terms',
+        11 => 'app\\http\\controllers\\web\\websiteplans',
+        12 => 'app\\http\\controllers\\web\\websiteplan',
+        13 => 'app\\http\\controllers\\web\\websiteplansdata',
+        14 => 'app\\http\\controllers\\web\\pricingmatrix',
+        15 => 'app\\http\\controllers\\web\\planmeals',
+        16 => 'app\\http\\controllers\\web\\financeconfig',
+        17 => 'app\\http\\controllers\\web\\activepublishedplans',
+        18 => 'app\\http\\controllers\\web\\websiteshoppreview',
+        19 => 'app\\http\\controllers\\web\\websitestore',
+        20 => 'app\\http\\controllers\\web\\websitestoreproduct',
+        21 => 'app\\http\\controllers\\web\\websiteproductdetail',
+        22 => 'app\\http\\controllers\\web\\trimdecimal',
+        23 => 'app\\http\\controllers\\web\\websitemeals',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Middleware\\EnsureUserType.php' => 
+    array (
+      0 => 'c1a45d8963d3942e4d2bd61d36fd962681aac783d87f465497e2423ab61c03f3',
+      1 => 
+      array (
+        0 => 'app\\http\\middleware\\ensureusertype',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\middleware\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Account\\ForgotPasswordRequest.php' => 
+    array (
+      0 => 'c8d7d4b8064a5cc04a01e8efd1a670d6205727bb4a6648414dd8b31b73b30fd8',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\forgotpasswordrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\authorize',
+        1 => 'app\\http\\requests\\web\\account\\rules',
+        2 => 'app\\http\\requests\\web\\account\\attributes',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Account\\LoginRequest.php' => 
+    array (
+      0 => '3b687570f046a793b9de49cf61bfdd23a5964741ad242867c4faeaa2ef5042c3',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\loginrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\authorize',
+        1 => 'app\\http\\requests\\web\\account\\rules',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Account\\RegisterRequest.php' => 
+    array (
+      0 => '8a530026826d04375d5527ad5bff5d40e368e0edb55ede0d19b18e378f6d4642',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\registerrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\authorize',
+        1 => 'app\\http\\requests\\web\\account\\rules',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Account\\ResetPasswordRequest.php' => 
+    array (
+      0 => '7155ba9ea491c2d5f317d9899706d52e2efa3717b5456d8338c0605844e15391',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\resetpasswordrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\authorize',
+        1 => 'app\\http\\requests\\web\\account\\rules',
+        2 => 'app\\http\\requests\\web\\account\\attributes',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Account\\SubscribeRequest.php' => 
+    array (
+      0 => 'd3c669198314bc62e9629d8ca881f936aeebe3324198e36950e9fe36e2424ef4',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\subscriberequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\account\\authorize',
+        1 => 'app\\http\\requests\\web\\account\\rules',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Categories\\CategoryRequest.php' => 
+    array (
+      0 => '8590484a82614c2c6c49615d0fca2a32f0868109433ded7c40e0a5effb47d37a',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\categories\\categoryrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\categories\\authorize',
+        1 => 'app\\http\\requests\\web\\admin\\categories\\rules',
+        2 => 'app\\http\\requests\\web\\admin\\categories\\attributes',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Categories\\StoreCategoryRequest.php' => 
+    array (
+      0 => 'a572134bfbf02d1376b284c0f601512cf944e5db63f097b28066679e0154984a',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\categories\\storecategoryrequest',
+      ),
+      2 => 
+      array (
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Categories\\UpdateCategoryRequest.php' => 
+    array (
+      0 => 'f8971745c5d389d294b522a6002465a7f492571d659d11ad9c0bd06729b9e7f7',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\categories\\updatecategoryrequest',
+      ),
+      2 => 
+      array (
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Coupons\\CouponRequest.php' => 
+    array (
+      0 => '2941f5552d3dd25d073fb1dc424f87adeb52a4882ddc52a0c1e540246f5aa48b',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\coupons\\couponrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\coupons\\authorize',
+        1 => 'app\\http\\requests\\web\\admin\\coupons\\prepareforvalidation',
+        2 => 'app\\http\\requests\\web\\admin\\coupons\\rules',
+        3 => 'app\\http\\requests\\web\\admin\\coupons\\attributes',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Coupons\\StoreCouponRequest.php' => 
+    array (
+      0 => 'a0b6c9ef094c80643c8ab881db7d058551f8e457707fb6449976dd26373882ee',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\coupons\\storecouponrequest',
+      ),
+      2 => 
+      array (
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Coupons\\UpdateCouponRequest.php' => 
+    array (
+      0 => '568beb34de6a312c4ac94f0a160bdd99c61b12cc99699a210c9013526b510363',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\coupons\\updatecouponrequest',
+      ),
+      2 => 
+      array (
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Products\\ProductRequest.php' => 
+    array (
+      0 => '2356d82d249c58dfbe4e2032a086b1411a7cd09789e8ea5252d177cd8fc92e3e',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\products\\productrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\products\\authorize',
+        1 => 'app\\http\\requests\\web\\admin\\products\\rules',
+        2 => 'app\\http\\requests\\web\\admin\\products\\attributes',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Products\\StoreProductRequest.php' => 
+    array (
+      0 => 'f8bc06a7dedad6b9f58e995e5b9044ffd9846d169f593207828773b2204ed21d',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\products\\storeproductrequest',
+      ),
+      2 => 
+      array (
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Products\\UpdateProductRequest.php' => 
+    array (
+      0 => '7bd1a77fca5ed0c6b842f8689f431807cf7edf215aacb98db796080563c9b2eb',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\products\\updateproductrequest',
+      ),
+      2 => 
+      array (
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Identity\\DTOs\\RegisterCustomerData.php' => 
+    array (
+      0 => 'ca9aca429f25f4f6de880e36c9e7ebff6580dee71b60d9233359e98fa896a16b',
+      1 => 
+      array (
+        0 => 'app\\modules\\identity\\dtos\\registercustomerdata',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\identity\\dtos\\__construct',
+        1 => 'app\\modules\\identity\\dtos\\fromarray',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Identity\\Enums\\UserType.php' => 
+    array (
+      0 => '6f9076a4d00d747b5ffe714d9b6ad7de470137b243e8342a24e9cec827e69825',
+      1 => 
+      array (
+        0 => 'app\\modules\\identity\\enums\\usertype',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\identity\\enums\\values',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Identity\\Services\\CustomerAuthService.php' => 
+    array (
+      0 => '650d758681fa7047012b8a13e2fb06a4e35406f7a3dd2551f64a82dac9b4a772',
+      1 => 
+      array (
+        0 => 'app\\modules\\identity\\services\\customerauthservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\identity\\services\\__construct',
+        1 => 'app\\modules\\identity\\services\\register',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Orders\\Enums\\OrderStatus.php' => 
+    array (
+      0 => '1d066af1837b95cfc673bfe86020e09a160e036bfcbf4d81d66f7d56252ca6c4',
+      1 => 
+      array (
+        0 => 'app\\modules\\orders\\enums\\orderstatus',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\orders\\enums\\values',
+        1 => 'app\\modules\\orders\\enums\\label',
+        2 => 'app\\modules\\orders\\enums\\badge',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Orders\\Exceptions\\EmptyCartException.php' => 
+    array (
+      0 => '07f0a37a26cf4000f977fce9b1b22041bf2c92fe9606c967b1008bb69f69e0a6',
+      1 => 
+      array (
+        0 => 'app\\modules\\orders\\exceptions\\emptycartexception',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\orders\\exceptions\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Orders\\Models\\Order.php' => 
+    array (
+      0 => '2e7e28a2c4207f2bc1f048b15894c469125e58f453813c84bdc6f34096bb47bc',
+      1 => 
+      array (
+        0 => 'app\\modules\\orders\\models\\order',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\orders\\models\\booted',
+        1 => 'app\\modules\\orders\\models\\newfactory',
+        2 => 'app\\modules\\orders\\models\\casts',
+        3 => 'app\\modules\\orders\\models\\getroutekeyname',
+        4 => 'app\\modules\\orders\\models\\user',
+        5 => 'app\\modules\\orders\\models\\address',
+        6 => 'app\\modules\\orders\\models\\items',
+        7 => 'app\\modules\\orders\\models\\payments',
+        8 => 'app\\modules\\orders\\models\\reference',
+        9 => 'app\\modules\\orders\\models\\deliveryaddress',
+        10 => 'app\\modules\\orders\\models\\totaldisplay',
+        11 => 'app\\modules\\orders\\models\\subtotaldisplay',
+        12 => 'app\\modules\\orders\\models\\discountdisplay',
+        13 => 'app\\modules\\orders\\models\\hasdiscount',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Orders\\Models\\OrderItem.php' => 
+    array (
+      0 => '3869b5e870ce16e9d7d0f43de5218edcb2b1e22af624d61f8fcceb091e34586b',
+      1 => 
+      array (
+        0 => 'app\\modules\\orders\\models\\orderitem',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\orders\\models\\newfactory',
+        1 => 'app\\modules\\orders\\models\\casts',
+        2 => 'app\\modules\\orders\\models\\order',
+        3 => 'app\\modules\\orders\\models\\product',
+        4 => 'app\\modules\\orders\\models\\unitpricedisplay',
+        5 => 'app\\modules\\orders\\models\\linetotaldisplay',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Orders\\Services\\OrderService.php' => 
+    array (
+      0 => '4bf0078b62641622bc584a2d54dcca1a96ea67510406f6f76851cb04c5e2ed90',
+      1 => 
+      array (
+        0 => 'app\\modules\\orders\\services\\orderservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\orders\\services\\__construct',
+        1 => 'app\\modules\\orders\\services\\placefromcart',
+        2 => 'app\\modules\\orders\\services\\settle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\DTOs\\AppliedCoupon.php' => 
+    array (
+      0 => '86df1fdc06d90497c66d74626a69aed82d36cae897f78f62e77b844fca776830',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\dtos\\appliedcoupon',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\dtos\\__construct',
+        1 => 'app\\modules\\promotions\\dtos\\code',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\DTOs\\CouponData.php' => 
+    array (
+      0 => 'd905832267284fa1985eb8e9501e4624c10bbcb68ec2d74b5308fb639b13b4ab',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\dtos\\coupondata',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\dtos\\__construct',
+        1 => 'app\\modules\\promotions\\dtos\\fromarray',
+        2 => 'app\\modules\\promotions\\dtos\\type',
+        3 => 'app\\modules\\promotions\\dtos\\scope',
+        4 => 'app\\modules\\promotions\\dtos\\localestrings',
+        5 => 'app\\modules\\promotions\\dtos\\tominor',
+        6 => 'app\\modules\\promotions\\dtos\\decimal',
+        7 => 'app\\modules\\promotions\\dtos\\nullableint',
+        8 => 'app\\modules\\promotions\\dtos\\date',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Enums\\CouponRejection.php' => 
+    array (
+      0 => 'a304b6779804b8205019225421bb79c8ceb2eeea6176209c2ffb77fdd731f062',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\enums\\couponrejection',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\enums\\values',
+        1 => 'app\\modules\\promotions\\enums\\message',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Enums\\CouponScope.php' => 
+    array (
+      0 => '21207433a22b1d0f9b15c4493b6fe70ae4dd8970a391c7d6f5c0526436d3d70b',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\enums\\couponscope',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\enums\\values',
+        1 => 'app\\modules\\promotions\\enums\\label',
+        2 => 'app\\modules\\promotions\\enums\\covers',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Enums\\CouponType.php' => 
+    array (
+      0 => '18ca2390d41871b5fd519afb49b1a636818cbe117dbbf177c8f6e7eb51c3599e',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\enums\\coupontype',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\enums\\values',
+        1 => 'app\\modules\\promotions\\enums\\label',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Exceptions\\CouponRejectedException.php' => 
+    array (
+      0 => '5ec38fa987981c8680c365106045f0953cc13e5a6db7ae73b88f649ef3545594',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\exceptions\\couponrejectedexception',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\exceptions\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Models\\Coupon.php' => 
+    array (
+      0 => '3e6590f40b6c59c5ab9900cac7fa9122b08be50a2a5a885edd4929ffdd24704d',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\models\\coupon',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\models\\booted',
+        1 => 'app\\modules\\promotions\\models\\newfactory',
+        2 => 'app\\modules\\promotions\\models\\casts',
+        3 => 'app\\modules\\promotions\\models\\getroutekeyname',
+        4 => 'app\\modules\\promotions\\models\\redemptions',
+        5 => 'app\\modules\\promotions\\models\\normalizecode',
+        6 => 'app\\modules\\promotions\\models\\label',
+        7 => 'app\\modules\\promotions\\models\\percentbasispoints',
+        8 => 'app\\modules\\promotions\\models\\amountoff',
+        9 => 'app\\modules\\promotions\\models\\minsubtotal',
+        10 => 'app\\modules\\promotions\\models\\maxdiscount',
+        11 => 'app\\modules\\promotions\\models\\isexhausted',
+        12 => 'app\\modules\\promotions\\models\\valuedisplay',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Models\\CouponRedemption.php' => 
+    array (
+      0 => '5cbc26be5a791a54599458b2a441d7150ed1311c2ab935fe1f3ec5574dc159fa',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\models\\couponredemption',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\models\\casts',
+        1 => 'app\\modules\\promotions\\models\\coupon',
+        2 => 'app\\modules\\promotions\\models\\user',
+        3 => 'app\\modules\\promotions\\models\\redeemable',
+        4 => 'app\\modules\\promotions\\models\\discountdisplay',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Policies\\CouponPolicy.php' => 
+    array (
+      0 => 'b3537a699f49f048c4778e6f02216274145392e43d581b1c8caa2bae2116dbc3',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\policies\\couponpolicy',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\policies\\viewany',
+        1 => 'app\\modules\\promotions\\policies\\view',
+        2 => 'app\\modules\\promotions\\policies\\create',
+        3 => 'app\\modules\\promotions\\policies\\update',
+        4 => 'app\\modules\\promotions\\policies\\delete',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Services\\CouponRedemptionService.php' => 
+    array (
+      0 => 'cb684f1e273068b5843908a7a638c2b4b2600f0355c9f717640f80cda32be4f1',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\services\\couponredemptionservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\services\\__construct',
+        1 => 'app\\modules\\promotions\\services\\apply',
+        2 => 'app\\modules\\promotions\\services\\resolvequietly',
+        3 => 'app\\modules\\promotions\\services\\redeem',
+        4 => 'app\\modules\\promotions\\services\\discountfor',
+        5 => 'app\\modules\\promotions\\services\\find',
+        6 => 'app\\modules\\promotions\\services\\assertusable',
+        7 => 'app\\modules\\promotions\\services\\userlimitreached',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Promotions\\Services\\CouponService.php' => 
+    array (
+      0 => '79e8c33ffc78f087787be35709ab9fc16d86eeca0656ad884fbb81b03ee910f7',
+      1 => 
+      array (
+        0 => 'app\\modules\\promotions\\services\\couponservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\promotions\\services\\__construct',
+        1 => 'app\\modules\\promotions\\services\\create',
+        2 => 'app\\modules\\promotions\\services\\update',
+        3 => 'app\\modules\\promotions\\services\\delete',
+        4 => 'app\\modules\\promotions\\services\\fill',
+        5 => 'app\\modules\\promotions\\services\\snapshot',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\DTOs\\CategoryData.php' => 
+    array (
+      0 => '8b058076b5eb7425bd1cf55b37a11c2d3e43db9764803a0a12859fec256121cb',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\dtos\\categorydata',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\dtos\\__construct',
+        1 => 'app\\modules\\store\\dtos\\fromarray',
+        2 => 'app\\modules\\store\\dtos\\localestrings',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\DTOs\\ProductData.php' => 
+    array (
+      0 => 'b17374005229f36c15673afafdf069e41da019cf60cfbcb923d113d6cb4b22a7',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\dtos\\productdata',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\dtos\\__construct',
+        1 => 'app\\modules\\store\\dtos\\fromarray',
+        2 => 'app\\modules\\store\\dtos\\localestrings',
+        3 => 'app\\modules\\store\\dtos\\tominor',
+        4 => 'app\\modules\\store\\dtos\\nullableint',
+        5 => 'app\\modules\\store\\dtos\\nullabledecimal',
+        6 => 'app\\modules\\store\\dtos\\toenum',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Enums\\NutritionNote.php' => 
+    array (
+      0 => 'a104a592ce91cd10767a558d17102ede30309531db792ea36c3445d04732b0c7',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\enums\\nutritionnote',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\enums\\values',
+        1 => 'app\\modules\\store\\enums\\label',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Enums\\ProductFlag.php' => 
+    array (
+      0 => '13105a85f23ffb9413bf947e083ff3e4622ca58661a6fdaec896c343395cb71b',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\enums\\productflag',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\enums\\values',
+        1 => 'app\\modules\\store\\enums\\label',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Enums\\ServingSize.php' => 
+    array (
+      0 => '8d06a0bba3324d1a7f4e387500af6d1dcd7603e916f7ae8362720271c823e737',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\enums\\servingsize',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\enums\\values',
+        1 => 'app\\modules\\store\\enums\\label',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Models\\Category.php' => 
+    array (
+      0 => '93c16d1a14f02a7e0d79e26fb2b24061c49bef43e2a4b1bb93d887e5a790ba9a',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\models\\category',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\models\\booted',
+        1 => 'app\\modules\\store\\models\\newfactory',
+        2 => 'app\\modules\\store\\models\\casts',
+        3 => 'app\\modules\\store\\models\\getroutekeyname',
+        4 => 'app\\modules\\store\\models\\parent',
+        5 => 'app\\modules\\store\\models\\children',
+        6 => 'app\\modules\\store\\models\\products',
+        7 => 'app\\modules\\store\\models\\isparent',
+        8 => 'app\\modules\\store\\models\\label',
+        9 => 'app\\modules\\store\\models\\imageurl',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Models\\Product.php' => 
+    array (
+      0 => 'e2e4c0cfa956712e80dbbaf948d40c3b542e5e0aafc0cb67f8fe53c96dacb065',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\models\\product',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\models\\booted',
+        1 => 'app\\modules\\store\\models\\newfactory',
+        2 => 'app\\modules\\store\\models\\casts',
+        3 => 'app\\modules\\store\\models\\getroutekeyname',
+        4 => 'app\\modules\\store\\models\\category',
+        5 => 'app\\modules\\store\\models\\label',
+        6 => 'app\\modules\\store\\models\\imageurl',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Policies\\CategoryPolicy.php' => 
+    array (
+      0 => '61909b5846e759bcf7b9149f39c177aa7deaf891074497746dfb66aa31713b9d',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\policies\\categorypolicy',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\policies\\viewany',
+        1 => 'app\\modules\\store\\policies\\view',
+        2 => 'app\\modules\\store\\policies\\create',
+        3 => 'app\\modules\\store\\policies\\update',
+        4 => 'app\\modules\\store\\policies\\delete',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Policies\\ProductPolicy.php' => 
+    array (
+      0 => '156a99f492560f6456223a607c77c4c50cdfb7dfbe8efb169966c33f11539ac2',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\policies\\productpolicy',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\policies\\viewany',
+        1 => 'app\\modules\\store\\policies\\view',
+        2 => 'app\\modules\\store\\policies\\create',
+        3 => 'app\\modules\\store\\policies\\update',
+        4 => 'app\\modules\\store\\policies\\delete',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Seeders\\StoreCatalogSeeder.php' => 
+    array (
+      0 => 'f6941c69f786a4c7fd90cf421e0aa78f1d55c6a8aec6e560b7dce28829a40489',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\seeders\\storecatalogseeder',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\seeders\\run',
+        1 => 'app\\modules\\store\\seeders\\localepair',
+        2 => 'app\\modules\\store\\seeders\\translations',
+        3 => 'app\\modules\\store\\seeders\\upsertcategory',
+        4 => 'app\\modules\\store\\seeders\\storeimage',
+        5 => 'app\\modules\\store\\seeders\\stringornull',
+        6 => 'app\\modules\\store\\seeders\\tominor',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Services\\CartService.php' => 
+    array (
+      0 => '310e95fcad8196b3416f343bd2c2ec35cd6f4bf76a44534c9c192fc26cf2f01d',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\services\\cartservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\services\\__construct',
+        1 => 'app\\modules\\store\\services\\add',
+        2 => 'app\\modules\\store\\services\\set',
+        3 => 'app\\modules\\store\\services\\remove',
+        4 => 'app\\modules\\store\\services\\clear',
+        5 => 'app\\modules\\store\\services\\count',
+        6 => 'app\\modules\\store\\services\\items',
+        7 => 'app\\modules\\store\\services\\subtotalminor',
+        8 => 'app\\modules\\store\\services\\subtotaldisplay',
+        9 => 'app\\modules\\store\\services\\applycoupon',
+        10 => 'app\\modules\\store\\services\\removecoupon',
+        11 => 'app\\modules\\store\\services\\couponcode',
+        12 => 'app\\modules\\store\\services\\appliedcoupon',
+        13 => 'app\\modules\\store\\services\\discountminor',
+        14 => 'app\\modules\\store\\services\\discountdisplay',
+        15 => 'app\\modules\\store\\services\\totalminor',
+        16 => 'app\\modules\\store\\services\\totaldisplay',
+        17 => 'app\\modules\\store\\services\\summary',
+        18 => 'app\\modules\\store\\services\\currentcustomer',
+        19 => 'app\\modules\\store\\services\\raw',
+        20 => 'app\\modules\\store\\services\\save',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Services\\CategoryService.php' => 
+    array (
+      0 => '6d049c77b5ae7b0dc3a89fb4c57b4c672164fbd8ab99f2ddb76bc6f8cff2c643',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\services\\categoryservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\services\\__construct',
+        1 => 'app\\modules\\store\\services\\create',
+        2 => 'app\\modules\\store\\services\\update',
+        3 => 'app\\modules\\store\\services\\delete',
+        4 => 'app\\modules\\store\\services\\fill',
+        5 => 'app\\modules\\store\\services\\snapshot',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Store\\Services\\ProductService.php' => 
+    array (
+      0 => '2919565317fbf5b18c7aea91304f6e2d111b9522a9b034c842abc31d599fff78',
+      1 => 
+      array (
+        0 => 'app\\modules\\store\\services\\productservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\store\\services\\__construct',
+        1 => 'app\\modules\\store\\services\\create',
+        2 => 'app\\modules\\store\\services\\update',
+        3 => 'app\\modules\\store\\services\\delete',
+        4 => 'app\\modules\\store\\services\\fill',
+        5 => 'app\\modules\\store\\services\\snapshot',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Subscriptions\\Enums\\SubscriptionStatus.php' => 
+    array (
+      0 => 'eee5e230a5bec65a685e70927900362ba18b5e405c60bc8913349006c1104b49',
+      1 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\enums\\subscriptionstatus',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\enums\\values',
+        1 => 'app\\modules\\subscriptions\\enums\\label',
+        2 => 'app\\modules\\subscriptions\\enums\\badge',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Subscriptions\\Models\\Subscription.php' => 
+    array (
+      0 => 'ad9d793109889757793832c6496129026edfec52de37f986f260836bd0a841ec',
+      1 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\models\\subscription',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\models\\booted',
+        1 => 'app\\modules\\subscriptions\\models\\newfactory',
+        2 => 'app\\modules\\subscriptions\\models\\casts',
+        3 => 'app\\modules\\subscriptions\\models\\getroutekeyname',
+        4 => 'app\\modules\\subscriptions\\models\\user',
+        5 => 'app\\modules\\subscriptions\\models\\handler',
+        6 => 'app\\modules\\subscriptions\\models\\plan',
+        7 => 'app\\modules\\subscriptions\\models\\address',
+        8 => 'app\\modules\\subscriptions\\models\\payments',
+        9 => 'app\\modules\\subscriptions\\models\\reference',
+        10 => 'app\\modules\\subscriptions\\models\\deliveryaddress',
+        11 => 'app\\modules\\subscriptions\\models\\totaldisplay',
+        12 => 'app\\modules\\subscriptions\\models\\perdaydisplay',
+        13 => 'app\\modules\\subscriptions\\models\\coupondiscountdisplay',
+        14 => 'app\\modules\\subscriptions\\models\\hascoupondiscount',
+        15 => 'app\\modules\\subscriptions\\models\\needshandling',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Subscriptions\\Services\\SubscriptionService.php' => 
+    array (
+      0 => '8be2e046dae0d9610c7a6848ba55b54b3f0b8c668afd091ae93f25924f361461',
+      1 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\services\\subscriptionservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\services\\__construct',
+        1 => 'app\\modules\\subscriptions\\services\\createfromquote',
+        2 => 'app\\modules\\subscriptions\\services\\updatehandling',
+        3 => 'app\\modules\\subscriptions\\services\\settle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Checkout\\AddressRequest.php' => 
+    array (
+      0 => 'eb606a7569263185e66b3c7c8477ff91fce021ef7c1c7101d2d039610d9ab67a',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\checkout\\addressrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\checkout\\authorize',
+        1 => 'app\\http\\requests\\web\\checkout\\rules',
+        2 => 'app\\http\\requests\\web\\checkout\\attributes',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Checkout\\PlaceOrderRequest.php' => 
+    array (
+      0 => '2df1dead06b1a4ea049b6a4c1fa659f84e8e2eb159528a45d8ab5b41fbeec275',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\checkout\\placeorderrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\checkout\\authorize',
+        1 => 'app\\http\\requests\\web\\checkout\\prepareforvalidation',
+        2 => 'app\\http\\requests\\web\\checkout\\rules',
+        3 => 'app\\http\\requests\\web\\checkout\\attributes',
+        4 => 'app\\http\\requests\\web\\checkout\\messages',
+        5 => 'app\\http\\requests\\web\\checkout\\paymentmethod',
+        6 => 'app\\http\\requests\\web\\checkout\\card',
+        7 => 'app\\http\\requests\\web\\checkout\\cardrule',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Addresses\\DTOs\\AddressData.php' => 
+    array (
+      0 => 'ddf32ca4f3a419f07789d1760a286a3d1cea2821919a9f0721f15afa81662edc',
+      1 => 
+      array (
+        0 => 'app\\modules\\addresses\\dtos\\addressdata',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\addresses\\dtos\\__construct',
+        1 => 'app\\modules\\addresses\\dtos\\fromarray',
+        2 => 'app\\modules\\addresses\\dtos\\text',
+        3 => 'app\\modules\\addresses\\dtos\\nullabletext',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Addresses\\DTOs\\AddressSnapshot.php' => 
+    array (
+      0 => '2943298f7b51420880b12c2eef59559cd45ecdc5dcb2a28cc0388b766fb0ae02',
+      1 => 
+      array (
+        0 => 'app\\modules\\addresses\\dtos\\addresssnapshot',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\addresses\\dtos\\__construct',
+        1 => 'app\\modules\\addresses\\dtos\\fromarray',
+        2 => 'app\\modules\\addresses\\dtos\\lines',
+        3 => 'app\\modules\\addresses\\dtos\\oneline',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Addresses\\Models\\Address.php' => 
+    array (
+      0 => 'df7cc7bad1cf3f1d42522e3275e3416d8a009fef7f7d13de01e721f94f6bad5e',
+      1 => 
+      array (
+        0 => 'app\\modules\\addresses\\models\\address',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\addresses\\models\\booted',
+        1 => 'app\\modules\\addresses\\models\\newfactory',
+        2 => 'app\\modules\\addresses\\models\\casts',
+        3 => 'app\\modules\\addresses\\models\\getroutekeyname',
+        4 => 'app\\modules\\addresses\\models\\user',
+        5 => 'app\\modules\\addresses\\models\\summary',
+        6 => 'app\\modules\\addresses\\models\\snapshot',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Addresses\\Services\\AddressService.php' => 
+    array (
+      0 => '1108573cfa26380ba37fdfef9a5ed6b17ce500c3af0ab69f3bccfdd661729f75',
+      1 => 
+      array (
+        0 => 'app\\modules\\addresses\\services\\addressservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\addresses\\services\\foruser',
+        1 => 'app\\modules\\addresses\\services\\create',
+        2 => 'app\\modules\\addresses\\services\\update',
+        3 => 'app\\modules\\addresses\\services\\makedefault',
+        4 => 'app\\modules\\addresses\\services\\delete',
+        5 => 'app\\modules\\addresses\\services\\defaultfor',
+        6 => 'app\\modules\\addresses\\services\\fill',
+        7 => 'app\\modules\\addresses\\services\\clearotherdefaults',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Checkout\\DTOs\\CheckoutSummary.php' => 
+    array (
+      0 => 'd2633ef981196cdd5b2cd2569501f93dcedee37d8f74b62125c0177e4dd6ad92',
+      1 => 
+      array (
+        0 => 'app\\modules\\checkout\\dtos\\checkoutsummary',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\checkout\\dtos\\__construct',
+        1 => 'app\\modules\\checkout\\dtos\\totaldisplay',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Checkout\\DTOs\\SubscriptionDraft.php' => 
+    array (
+      0 => '44639cedb768b7ba26bcc255567e092542cdd8e5f873dbb06ce144acea84e8e0',
+      1 => 
+      array (
+        0 => 'app\\modules\\checkout\\dtos\\subscriptiondraft',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\checkout\\dtos\\__construct',
+        1 => 'app\\modules\\checkout\\dtos\\fromarray',
+        2 => 'app\\modules\\checkout\\dtos\\toarray',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Checkout\\Enums\\CheckoutSource.php' => 
+    array (
+      0 => 'ddff3c8c1fbe80d85c623ffc9878061ba01012277e2795fbb392a7a6d43537b9',
+      1 => 
+      array (
+        0 => 'app\\modules\\checkout\\enums\\checkoutsource',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\checkout\\enums\\label',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Checkout\\Exceptions\\NothingToCheckoutException.php' => 
+    array (
+      0 => '61376473e03098384dd7972a8ca30c8272ed8c8fff1988d8427277776a96ac37',
+      1 => 
+      array (
+        0 => 'app\\modules\\checkout\\exceptions\\nothingtocheckoutexception',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\checkout\\exceptions\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Checkout\\Services\\CheckoutDraftService.php' => 
+    array (
+      0 => '23207e1c793c18995330666f3477a050d51246158cc1ef27cbd796754cb62efd',
+      1 => 
+      array (
+        0 => 'app\\modules\\checkout\\services\\checkoutdraftservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\checkout\\services\\putsubscription',
+        1 => 'app\\modules\\checkout\\services\\subscription',
+        2 => 'app\\modules\\checkout\\services\\hassubscription',
+        3 => 'app\\modules\\checkout\\services\\forgetsubscription',
+        4 => 'app\\modules\\checkout\\services\\source',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Checkout\\Services\\CheckoutService.php' => 
+    array (
+      0 => 'a3a345350c9dffe7646217220c49a04d8a57c8b74562bd0389ccdbd531704944',
+      1 => 
+      array (
+        0 => 'app\\modules\\checkout\\services\\checkoutservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\checkout\\services\\__construct',
+        1 => 'app\\modules\\checkout\\services\\source',
+        2 => 'app\\modules\\checkout\\services\\summary',
+        3 => 'app\\modules\\checkout\\services\\place',
+        4 => 'app\\modules\\checkout\\services\\invoiceifpaid',
+        5 => 'app\\modules\\checkout\\services\\placeorder',
+        6 => 'app\\modules\\checkout\\services\\placesubscription',
+        7 => 'app\\modules\\checkout\\services\\cartsummary',
+        8 => 'app\\modules\\checkout\\services\\subscriptionsummary',
+        9 => 'app\\modules\\checkout\\services\\plan',
+        10 => 'app\\modules\\checkout\\services\\quote',
+        11 => 'app\\modules\\checkout\\services\\confirmationroute',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Contracts\\PaymentGateway.php' => 
+    array (
+      0 => 'ebba4ada926d9e2cb6400e6901a5070ee45f77404c38fe2227a351f2ed2ceb35',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\contracts\\paymentgateway',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\contracts\\name',
+        1 => 'app\\modules\\payments\\contracts\\charge',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\DTOs\\CardDetails.php' => 
+    array (
+      0 => '5a9b0325ea4076031bde30c2755b965f8fa231039fc5bfa651f4f59debeb6642',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\dtos\\carddetails',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\dtos\\__construct',
+        1 => 'app\\modules\\payments\\dtos\\fromarray',
+        2 => 'app\\modules\\payments\\dtos\\last4',
+        3 => 'app\\modules\\payments\\dtos\\brand',
+        4 => 'app\\modules\\payments\\dtos\\hasexpired',
+        5 => 'app\\modules\\payments\\dtos\\fullyear',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\DTOs\\ChargeRequest.php' => 
+    array (
+      0 => 'c7ce6473434d9c369612fb1cd4fbc28cc43af28b109facb3e81e0eb0a8b7b46b',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\dtos\\chargerequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\dtos\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\DTOs\\ChargeResult.php' => 
+    array (
+      0 => '239f2d52ac5aae0d98cadd616326e778511ef3d2301af4686f1864ef2c6ec3c1',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\dtos\\chargeresult',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\dtos\\__construct',
+        1 => 'app\\modules\\payments\\dtos\\approved',
+        2 => 'app\\modules\\payments\\dtos\\declined',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Enums\\PaymentDecline.php' => 
+    array (
+      0 => '09ba04919c2fc3ead1f9993649fe5b445ef2a487f8bf6f649a052981c34dc9ee',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\enums\\paymentdecline',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\enums\\message',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Enums\\PaymentMethod.php' => 
+    array (
+      0 => 'b714456267fad9eb5fa73346062147728e130c5b9838a94c05f2be35624770c8',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\enums\\paymentmethod',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\enums\\values',
+        1 => 'app\\modules\\payments\\enums\\label',
+        2 => 'app\\modules\\payments\\enums\\requirescard',
+        3 => 'app\\modules\\payments\\enums\\isdeferred',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Enums\\PaymentStatus.php' => 
+    array (
+      0 => 'e63b6773567bd5dc965bfe146786180f7a87e200c2cfb73f4de9db4daf2722f9',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\enums\\paymentstatus',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\enums\\values',
+        1 => 'app\\modules\\payments\\enums\\label',
+        2 => 'app\\modules\\payments\\enums\\issettled',
+        3 => 'app\\modules\\payments\\enums\\badge',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Exceptions\\PaymentDeclinedException.php' => 
+    array (
+      0 => 'd89083a4f65f9c762f534b182295b53ea7a397ae0a6b6269b7f642934e7e5d5f',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\exceptions\\paymentdeclinedexception',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\exceptions\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Gateways\\SimulatedGateway.php' => 
+    array (
+      0 => '9eabeedacdeddb0601f3ff394dede2071fa66bc9a08dfa9cd859676ba23606b8',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\gateways\\simulatedgateway',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\gateways\\name',
+        1 => 'app\\modules\\payments\\gateways\\charge',
+        2 => 'app\\modules\\payments\\gateways\\passesluhn',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Models\\Payment.php' => 
+    array (
+      0 => '3b2ea0293884d02fb28aecba99d7ad4ef44bb37f9e5a0654ce7c1a15486a448f',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\models\\payment',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\models\\booted',
+        1 => 'app\\modules\\payments\\models\\casts',
+        2 => 'app\\modules\\payments\\models\\getroutekeyname',
+        3 => 'app\\modules\\payments\\models\\user',
+        4 => 'app\\modules\\payments\\models\\payable',
+        5 => 'app\\modules\\payments\\models\\amountdisplay',
+        6 => 'app\\modules\\payments\\models\\cardlabel',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Payments\\Services\\PaymentService.php' => 
+    array (
+      0 => '0e1424d9e141c8ba4828c4cc7d1a6b731201ae8f606d968ef1e4ccaa97758c6c',
+      1 => 
+      array (
+        0 => 'app\\modules\\payments\\services\\paymentservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\payments\\services\\__construct',
+        1 => 'app\\modules\\payments\\services\\charge',
+        2 => 'app\\modules\\payments\\services\\confirmmanually',
+        3 => 'app\\modules\\payments\\services\\describe',
+        4 => 'app\\modules\\payments\\services\\snapshot',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Support\\Time\\DisplayTime.php' => 
+    array (
+      0 => 'b872979e8aad07fb27bed5db85d30ae57f68ba9c8860dc014d2feb195db7d057',
+      1 => 
+      array (
+        0 => 'app\\support\\time\\displaytime',
+      ),
+      2 => 
+      array (
+        0 => 'app\\support\\time\\timezone',
+        1 => 'app\\support\\time\\parse',
+        2 => 'app\\support\\time\\forinput',
+        3 => 'app\\support\\time\\format',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\OrderController.php' => 
+    array (
+      0 => '56633bb5c75c176d2e808b9d2806bd1a7ebaa077387415ce1d4921cbfc77157a',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\ordercontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\index',
+        2 => 'app\\http\\controllers\\web\\admin\\show',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\SubscriptionController.php' => 
+    array (
+      0 => 'a8d68febfb8fda77cc8ab56d3f6868323ee20d658fd566918c0e14538bf2ce22',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\subscriptioncontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\index',
+        2 => 'app\\http\\controllers\\web\\admin\\show',
+        3 => 'app\\http\\controllers\\web\\admin\\updatehandling',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Orders\\Policies\\OrderPolicy.php' => 
+    array (
+      0 => '4beb65eabbdcb8c0a38848778ef9ab02ca477de4edbe3d4ff34532b4155b620e',
+      1 => 
+      array (
+        0 => 'app\\modules\\orders\\policies\\orderpolicy',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\orders\\policies\\viewany',
+        1 => 'app\\modules\\orders\\policies\\view',
+        2 => 'app\\modules\\orders\\policies\\update',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Subscriptions\\Policies\\SubscriptionPolicy.php' => 
+    array (
+      0 => 'dc5ad9ba04ee04d9affd58e5fa219dc8ac6e013c2ac4e27383209b72b9da598b',
+      1 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\policies\\subscriptionpolicy',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\policies\\viewany',
+        1 => 'app\\modules\\subscriptions\\policies\\view',
+        2 => 'app\\modules\\subscriptions\\policies\\update',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\NotificationController.php' => 
+    array (
+      0 => 'aca301658e4078881c551e258cc449f6e49cdd7c76410995826dc6c02ec11982',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\notificationcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\index',
+        1 => 'app\\http\\controllers\\web\\admin\\read',
+        2 => 'app\\http\\controllers\\web\\admin\\readall',
+        3 => 'app\\http\\controllers\\web\\admin\\user',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Notifications\\Enums\\NotificationEvent.php' => 
+    array (
+      0 => '2a863ab2dc2d93f138101df55aaf8f93acf3e0e2e0ee5a269cf2fa814e098e4a',
+      1 => 
+      array (
+        0 => 'app\\modules\\notifications\\enums\\notificationevent',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\notifications\\enums\\icon',
+        1 => 'app\\modules\\notifications\\enums\\title',
+        2 => 'app\\modules\\notifications\\enums\\body',
+        3 => 'app\\modules\\notifications\\enums\\url',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Notifications\\Notifications\\NewOrderNotification.php' => 
+    array (
+      0 => '057be794275aea2b6423a7c69fef852244cd86c6959b710ca2ade380c50a0c9f',
+      1 => 
+      array (
+        0 => 'app\\modules\\notifications\\notifications\\newordernotification',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\notifications\\notifications\\__construct',
+        1 => 'app\\modules\\notifications\\notifications\\via',
+        2 => 'app\\modules\\notifications\\notifications\\toarray',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Notifications\\Notifications\\NewSubscriptionNotification.php' => 
+    array (
+      0 => '1bb703f37548f698e3f739bdefcfc61903f52abd296c3b85908ee3f3e90da9be',
+      1 => 
+      array (
+        0 => 'app\\modules\\notifications\\notifications\\newsubscriptionnotification',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\notifications\\notifications\\__construct',
+        1 => 'app\\modules\\notifications\\notifications\\via',
+        2 => 'app\\modules\\notifications\\notifications\\toarray',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Notifications\\Services\\AdminNotifier.php' => 
+    array (
+      0 => 'ed9d2e9be8c6d42d62ff8cada563b3bdc3939adab9abe90a0f2dd769b4ed80d3',
+      1 => 
+      array (
+        0 => 'app\\modules\\notifications\\services\\adminnotifier',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\notifications\\services\\orderplaced',
+        1 => 'app\\modules\\notifications\\services\\subscriptionstarted',
+        2 => 'app\\modules\\notifications\\services\\recipients',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Notifications\\Support\\NotificationPresenter.php' => 
+    array (
+      0 => '297d3cf875d236d6f6876dcb6e18f9cfce881927c840d3d1bd5eeae19a006dff',
+      1 => 
+      array (
+        0 => 'app\\modules\\notifications\\support\\notificationpresenter',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\notifications\\support\\describe',
+        1 => 'app\\modules\\notifications\\support\\event',
+        2 => 'app\\modules\\notifications\\support\\title',
+        3 => 'app\\modules\\notifications\\support\\body',
+        4 => 'app\\modules\\notifications\\support\\icon',
+        5 => 'app\\modules\\notifications\\support\\url',
+        6 => 'app\\modules\\notifications\\support\\payload',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Subscriptions\\UpdateHandlingRequest.php' => 
+    array (
+      0 => '26189779079ad5623261130beefb5f4f86d85aea127b016111acd3ce70e611a2',
+      1 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\subscriptions\\updatehandlingrequest',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\requests\\web\\admin\\subscriptions\\authorize',
+        1 => 'app\\http\\requests\\web\\admin\\subscriptions\\rules',
+        2 => 'app\\http\\requests\\web\\admin\\subscriptions\\status',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Subscriptions\\Enums\\HandlingStatus.php' => 
+    array (
+      0 => 'f875c11155f3dc86b89b798def4449167c59de77f47861cb7b5dbc93956d377c',
+      1 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\enums\\handlingstatus',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\subscriptions\\enums\\values',
+        1 => 'app\\modules\\subscriptions\\enums\\label',
+        2 => 'app\\modules\\subscriptions\\enums\\badge',
+        3 => 'app\\modules\\subscriptions\\enums\\needsattention',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Account\\InvoiceController.php' => 
+    array (
+      0 => 'a24716d99da32c6d7bdbc6a045900d7d070b8ff9eef0458bfcf928815c6278a0',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\invoicecontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\account\\__construct',
+        1 => 'app\\http\\controllers\\web\\account\\download',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\InvoiceController.php' => 
+    array (
+      0 => 'ab5f2d34614a27b492c50f2299ccf48c9c157a1f58413f43852dc7e77c0a2ad7',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\invoicecontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\index',
+        2 => 'app\\http\\controllers\\web\\admin\\download',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\PaymentController.php' => 
+    array (
+      0 => '13b0146e7b4938aa2298e937dec2f015609696b835861de26e796359628ad26d',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\paymentcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\web\\admin\\__construct',
+        1 => 'app\\http\\controllers\\web\\admin\\confirm',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\DTOs\\InvoiceDraft.php' => 
+    array (
+      0 => 'c817bc4973bdcd9681d165febbc7a0d1c02259d3750f9bfd52a96dddcd91a8bc',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\dtos\\invoicedraft',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\dtos\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\DTOs\\InvoiceLine.php' => 
+    array (
+      0 => 'ca177275b716f004f7ba1cc583107c48575be5fdab676b305e896b3f2add58e3',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\dtos\\invoiceline',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\dtos\\__construct',
+        1 => 'app\\modules\\invoices\\dtos\\fromarray',
+        2 => 'app\\modules\\invoices\\dtos\\toarray',
+        3 => 'app\\modules\\invoices\\dtos\\unitpricedisplay',
+        4 => 'app\\modules\\invoices\\dtos\\linetotaldisplay',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\DTOs\\InvoiceParty.php' => 
+    array (
+      0 => '75a38f80a9e29caf17fa91caca5c530e3d28498a0de237536c2b3a0468924748',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\dtos\\invoiceparty',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\dtos\\__construct',
+        1 => 'app\\modules\\invoices\\dtos\\fromarray',
+        2 => 'app\\modules\\invoices\\dtos\\toarray',
+        3 => 'app\\modules\\invoices\\dtos\\nullablestring',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\Models\\Invoice.php' => 
+    array (
+      0 => '20aa152b5ba33f22c30fbe33241c9e1ed45e7e44e21b30dcd19a1b9b64182e0f',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\models\\invoice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\models\\booted',
+        1 => 'app\\modules\\invoices\\models\\newfactory',
+        2 => 'app\\modules\\invoices\\models\\casts',
+        3 => 'app\\modules\\invoices\\models\\getroutekeyname',
+        4 => 'app\\modules\\invoices\\models\\user',
+        5 => 'app\\modules\\invoices\\models\\payment',
+        6 => 'app\\modules\\invoices\\models\\invoiceable',
+        7 => 'app\\modules\\invoices\\models\\sellerparty',
+        8 => 'app\\modules\\invoices\\models\\buyerparty',
+        9 => 'app\\modules\\invoices\\models\\invoicelines',
+        10 => 'app\\modules\\invoices\\models\\isforsubscription',
+        11 => 'app\\modules\\invoices\\models\\isfororder',
+        12 => 'app\\modules\\invoices\\models\\hasdiscount',
+        13 => 'app\\modules\\invoices\\models\\taxratedisplay',
+        14 => 'app\\modules\\invoices\\models\\total',
+        15 => 'app\\modules\\invoices\\models\\totaldisplay',
+        16 => 'app\\modules\\invoices\\models\\netdisplay',
+        17 => 'app\\modules\\invoices\\models\\taxdisplay',
+        18 => 'app\\modules\\invoices\\models\\discountdisplay',
+        19 => 'app\\modules\\invoices\\models\\linestotaldisplay',
+        20 => 'app\\modules\\invoices\\models\\filename',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\Notifications\\InvoiceIssuedNotification.php' => 
+    array (
+      0 => 'd7b1d331fcdd040395d027ac32d34da9300d7c6cf5345106ddcf9c914da7e6b2',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\notifications\\invoiceissuednotification',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\notifications\\__construct',
+        1 => 'app\\modules\\invoices\\notifications\\via',
+        2 => 'app\\modules\\invoices\\notifications\\tomail',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\Policies\\InvoicePolicy.php' => 
+    array (
+      0 => '784b0ce4dfe6e0bd1a2f0f97e2ff0f2d8009e2184ed8975ecd6c39489069a8dc',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\policies\\invoicepolicy',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\policies\\viewany',
+        1 => 'app\\modules\\invoices\\policies\\view',
+        2 => 'app\\modules\\invoices\\policies\\download',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\Services\\InvoiceNumberGenerator.php' => 
+    array (
+      0 => '65f59ec2d68c7d53d033157d58d21db87f2648e634f8e2771538d53aa817c705',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\services\\invoicenumbergenerator',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\services\\next',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\Services\\InvoicePdfRenderer.php' => 
+    array (
+      0 => '54078ac803f02f4f631a2a9bd20ad1d670856615cea094f64fd6cec903a9cd2a',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\services\\invoicepdfrenderer',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\services\\render',
+        1 => 'app\\modules\\invoices\\services\\qrcode',
+        2 => 'app\\modules\\invoices\\services\\tempdir',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\Services\\InvoiceService.php' => 
+    array (
+      0 => '3dd9b72e74d2f89c7a2979bf22180a10f352396c212a668c4a4ede1a23969ceb',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\services\\invoiceservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\services\\__construct',
+        1 => 'app\\modules\\invoices\\services\\find',
+        2 => 'app\\modules\\invoices\\services\\issuefor',
+        3 => 'app\\modules\\invoices\\services\\deliver',
+        4 => 'app\\modules\\invoices\\services\\write',
+        5 => 'app\\modules\\invoices\\services\\draftfromorder',
+        6 => 'app\\modules\\invoices\\services\\draftfromsubscription',
+        7 => 'app\\modules\\invoices\\services\\subscriptionlabel',
+        8 => 'app\\modules\\invoices\\services\\allocate',
+        9 => 'app\\modules\\invoices\\services\\seller',
+        10 => 'app\\modules\\invoices\\services\\buyer',
+        11 => 'app\\modules\\invoices\\services\\taxratebps',
+        12 => 'app\\modules\\invoices\\services\\stringsetting',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Invoices\\Support\\ZatcaQr.php' => 
+    array (
+      0 => '7077442032b3b3b5c23d937d4485e6493aa1c1673a183ce571ae4891bcb3adb4',
+      1 => 
+      array (
+        0 => 'app\\modules\\invoices\\support\\zatcaqr',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\invoices\\support\\payload',
+        1 => 'app\\modules\\invoices\\support\\tag',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Dashboard\\DTOs\\DashboardSnapshot.php' => 
+    array (
+      0 => '975cd84a720c22f7b4af96e027ea1b65bcddc5656d195bff6f6fdbfb935e202f',
+      1 => 
+      array (
+        0 => 'app\\modules\\dashboard\\dtos\\dashboardsnapshot',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\dashboard\\dtos\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\newme\\app\\Modules\\Dashboard\\Services\\DashboardService.php' => 
+    array (
+      0 => '20a222f1e1d40547eb97ddcbd351aba34aaf7c269ccaf4d62576438f29bab59c',
+      1 => 
+      array (
+        0 => 'app\\modules\\dashboard\\services\\dashboardservice',
+      ),
+      2 => 
+      array (
+        0 => 'app\\modules\\dashboard\\services\\snapshot',
+        1 => 'app\\modules\\dashboard\\services\\salessince',
+        2 => 'app\\modules\\dashboard\\services\\statuscounts',
       ),
       3 => 
       array (

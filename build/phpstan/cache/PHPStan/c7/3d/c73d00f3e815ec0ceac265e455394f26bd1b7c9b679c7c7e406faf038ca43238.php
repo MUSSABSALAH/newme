@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Resources\V1\PlanQuoteResource.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Resources\V1\PlanQuoteResource
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-1c23361b1469bd46a5e203632fb4955167b3b19d5bd2832e3014292110dc75a5',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-4ef1e06426530d8a951034a8e3e9fb40022f1803692d617345b36c58bb3fda63',
    'data' => 
   array (
     'locatedSource' => 
@@ -29,7 +29,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 15,
-    'endLine' => 55,
+    'endLine' => 58,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Http\\Resources\\Json\\JsonResource',
@@ -96,7 +96,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @return array<string, mixed>
  */',
         'startLine' => 20,
-        'endLine' => 54,
+        'endLine' => 57,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

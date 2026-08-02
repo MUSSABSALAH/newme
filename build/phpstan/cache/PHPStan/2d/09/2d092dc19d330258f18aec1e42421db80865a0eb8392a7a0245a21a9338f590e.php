@@ -1434,7 +1434,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Models\\Role.php' => '34ee0e14f65c55d92289ccb7dfb1f3d3ee2e9bde7a011427392476a5c42a3b0c',
+      'C:\\newme\\app\\Modules\\Identity\\Models\\Role.php' => 'b8872020935c7b7a25b92cdf699cd49c3c38e4f3eada100ae38e8d8fb153703b',
       'C:\\newme\\vendor\\composer\\..\\spatie\\laravel-translatable\\src\\HasTranslations.php' => 'c60550d2c6ba63a47c49ff4c56ce3039beae5246c895b010f1d8b78a194a502a',
     ),
   ),

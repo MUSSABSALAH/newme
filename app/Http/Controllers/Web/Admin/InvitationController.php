@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Admin\Users\SendInvitationRequest;
 use App\Models\User;
 use App\Modules\Identity\DTOs\InvitationData;
+use App\Modules\Identity\Enums\RoleName;
 use App\Modules\Identity\Models\Role;
 use App\Modules\Identity\Models\UserInvitation;
 use App\Modules\Identity\Services\InvitationService;
@@ -25,7 +26,10 @@ final class InvitationController extends Controller
         $this->authorize('invite', User::class);
 
         return view('admin.users.create', [
-            'roles' => Role::query()->orderBy('name')->get(),
+            'roles' => Role::query()
+                ->where('name', '!=', RoleName::Customer->value)
+                ->orderBy('name')
+                ->get(),
             'assigned' => [],
         ]);
     }

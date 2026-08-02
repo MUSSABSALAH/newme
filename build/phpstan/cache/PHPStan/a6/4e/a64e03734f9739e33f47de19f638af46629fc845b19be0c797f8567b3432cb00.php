@@ -16,6 +16,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'sendinvitationrequest' => 'App\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest',
           'user' => 'App\\Models\\User',
           'invitationdata' => 'App\\Modules\\Identity\\DTOs\\InvitationData',
+          'rolename' => 'App\\Modules\\Identity\\Enums\\RoleName',
           'role' => 'App\\Modules\\Identity\\Models\\Role',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
           'invitationservice' => 'App\\Modules\\Identity\\Services\\InvitationService',
@@ -49,6 +50,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'sendinvitationrequest' => 'App\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest',
           'user' => 'App\\Models\\User',
           'invitationdata' => 'App\\Modules\\Identity\\DTOs\\InvitationData',
+          'rolename' => 'App\\Modules\\Identity\\Enums\\RoleName',
           'role' => 'App\\Modules\\Identity\\Models\\Role',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
           'invitationservice' => 'App\\Modules\\Identity\\Services\\InvitationService',
@@ -82,6 +84,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'sendinvitationrequest' => 'App\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest',
           'user' => 'App\\Models\\User',
           'invitationdata' => 'App\\Modules\\Identity\\DTOs\\InvitationData',
+          'rolename' => 'App\\Modules\\Identity\\Enums\\RoleName',
           'role' => 'App\\Modules\\Identity\\Models\\Role',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
           'invitationservice' => 'App\\Modules\\Identity\\Services\\InvitationService',
@@ -115,6 +118,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'sendinvitationrequest' => 'App\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest',
           'user' => 'App\\Models\\User',
           'invitationdata' => 'App\\Modules\\Identity\\DTOs\\InvitationData',
+          'rolename' => 'App\\Modules\\Identity\\Enums\\RoleName',
           'role' => 'App\\Modules\\Identity\\Models\\Role',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
           'invitationservice' => 'App\\Modules\\Identity\\Services\\InvitationService',
@@ -148,6 +152,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'sendinvitationrequest' => 'App\\Http\\Requests\\Web\\Admin\\Users\\SendInvitationRequest',
           'user' => 'App\\Models\\User',
           'invitationdata' => 'App\\Modules\\Identity\\DTOs\\InvitationData',
+          'rolename' => 'App\\Modules\\Identity\\Enums\\RoleName',
           'role' => 'App\\Modules\\Identity\\Models\\Role',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
           'invitationservice' => 'App\\Modules\\Identity\\Services\\InvitationService',
@@ -175,7 +180,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\InvitationController.php' => '4cd700fc08c3fafb40056657930a5521f966bab4e21272b45fe683b813b32c02',
+      'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\InvitationController.php' => 'a1f3ffde0e2d41cf69cb71836598d3c7bcde9a2b797e0b34ff9fe95ee2e9c49f',
     ),
   ),
 ));

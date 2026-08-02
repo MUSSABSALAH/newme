@@ -2,7 +2,7 @@
 
 // osfsl-C:/newme/database/factories/UserFactory.php-PHPStan\BetterReflection\Reflection\ReflectionClass-Database\Factories\UserFactory
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-e67ceeddd849b4a10daa1e388988f2303ae326a6272630fcf81c1b4b014e7edc-8.2.12-6.70.0.3',
+   'variableKey' => 'v2-4621fa6af11f4db73d9924783744cf918d3e507272822cdfac47cb5ded599be3-8.2.12-6.70.0.3',
    'data' => 
   array (
     'locatedSource' => 
@@ -28,8 +28,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 16,
-    'endLine' => 59,
+    'startLine' => 18,
+    'endLine' => 76,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Database\\Eloquent\\Factories\\Factory',
@@ -85,8 +85,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 21,
-        'endLine' => 21,
+        'startLine' => 23,
+        'endLine' => 23,
         'startColumn' => 5,
         'endColumn' => 39,
         'isPromoted' => false,
@@ -123,8 +123,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @return array<string, mixed>
  */',
-        'startLine' => 28,
-        'endLine' => 38,
+        'startLine' => 30,
+        'endLine' => 42,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -160,8 +160,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Indicate that the model\'s email address should be unverified.
  */',
-        'startLine' => 43,
-        'endLine' => 48,
+        'startLine' => 47,
+        'endLine' => 52,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -197,8 +197,45 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Indicate that the user is inactive.
  */',
-        'startLine' => 53,
-        'endLine' => 58,
+        'startLine' => 57,
+        'endLine' => 62,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'Database\\Factories',
+        'declaringClassName' => 'Database\\Factories\\UserFactory',
+        'implementingClassName' => 'Database\\Factories\\UserFactory',
+        'currentClassName' => 'Database\\Factories\\UserFactory',
+        'aliasName' => NULL,
+      ),
+      'customer' => 
+      array (
+        'name' => 'customer',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'static',
+            'isIdentifier' => false,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Public store customer account.
+ */',
+        'startLine' => 67,
+        'endLine' => 75,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

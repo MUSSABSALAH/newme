@@ -50,7 +50,8 @@ final class SettingsManagementTest extends TestCase
                 'finance__prices_include_tax' => '0',
                 'operations__stock_reservation_minutes' => '30',
                 'operations__payment_timeout_minutes' => '30',
-                'operations__subscription_cutoff_hours' => '24',
+                'operations__subscription_min_start_days' => '1',
+                'operations__meal_change_lead_days' => '1',
             ], $overrides),
         ];
     }
@@ -113,6 +114,21 @@ final class SettingsManagementTest extends TestCase
         $this->assertSame(45, app(SettingsService::class)->get('operations.stock_reservation_minutes'));
     }
 
+    public function test_subscription_lead_time_settings_are_typed(): void
+    {
+        $this->actingAs($this->admin())
+            ->put(route('admin.settings.update'), $this->payload([
+                'operations__subscription_min_start_days' => '2',
+                'operations__meal_change_lead_days' => '3',
+            ]))
+            ->assertRedirect(route('admin.settings.edit'));
+
+        $settings = app(SettingsService::class);
+
+        $this->assertSame(2, $settings->get('operations.subscription_min_start_days'));
+        $this->assertSame(3, $settings->get('operations.meal_change_lead_days'));
+    }
+
     public function test_settings_update_is_audited(): void
     {
         $admin = $this->admin();
@@ -157,6 +173,8 @@ final class SettingsManagementTest extends TestCase
 
         $this->assertSame('15.00', $settings->get('finance.tax_rate'));
         $this->assertSame(30, $settings->get('operations.payment_timeout_minutes'));
+        $this->assertSame(1, $settings->get('operations.subscription_min_start_days'));
+        $this->assertSame(1, $settings->get('operations.meal_change_lead_days'));
         $this->assertSame(false, $settings->get('finance.prices_include_tax'));
         $this->assertSame('SAR', $settings->get('finance.currency'));
     }

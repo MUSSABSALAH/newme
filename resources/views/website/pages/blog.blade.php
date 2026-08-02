@@ -38,7 +38,7 @@ nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;jus
 .nav-links a{padding:6px 0;border-bottom:2px solid transparent;white-space:nowrap}
 .nav-links a:hover,.nav-links a.on{border-color:var(--orange)}
 @media(min-width:960px){.nav-links{display:flex}}
-.nav-cta{font-size:12.5px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:10px 22px;transition:.2s}
+.nav-cta{font-size:12px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
 .nav-cta:hover{background:var(--ink);color:#fff}
 .phead{padding:56px 24px 30px;text-align:center}
 .phead h1{font-size:clamp(34px,8vw,64px);margin:8px 0 10px}

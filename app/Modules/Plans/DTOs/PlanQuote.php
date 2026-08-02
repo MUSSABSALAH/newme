@@ -12,6 +12,9 @@ use App\Support\Money\Money;
  *
  * All monetary figures are {@see Money} value objects (integer minor units);
  * the server is the single source of truth for every line of the breakdown.
+ *
+ * `discount` is the plan's duration discount and `couponDiscount` is a redeemed
+ * coupon; they are separate lines and both apply before delivery and tax.
  */
 final readonly class PlanQuote
 {
@@ -31,6 +34,9 @@ final readonly class PlanQuote
         public string $discountPercent,
         public Money $discount,
         public Money $afterDiscount,
+        public ?string $couponCode,
+        public Money $couponDiscount,
+        public Money $afterCoupon,
         public Money $deliveryFee,
         public string $taxRate,
         public bool $pricesIncludeTax,

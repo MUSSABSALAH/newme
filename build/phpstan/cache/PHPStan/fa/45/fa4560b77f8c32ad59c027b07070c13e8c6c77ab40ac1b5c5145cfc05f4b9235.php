@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Settings\Enums\SettingType.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Settings\Enums\SettingType
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-f885bf168292173b45d21cff4dc7249ca05e6474b70db06bbd1563c41707b835',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-727c1f6b2a1892d176fecedca672d47f4deebf8245616c9a8cde4936c22ae09f',
    'data' => 
   array (
     'locatedSource' => 
@@ -556,9 +556,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 9,
             'endLine' => 9,
             'startTokenPos' => 30,
-            'startFilePos' => 117,
+            'startFilePos' => 125,
             'endTokenPos' => 30,
-            'endFilePos' => 124,
+            'endFilePos' => 132,
           ),
         ),
         'attributes' => 
@@ -581,9 +581,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 10,
             'endLine' => 10,
             'startTokenPos' => 39,
-            'startFilePos' => 143,
+            'startFilePos' => 152,
             'endTokenPos' => 39,
-            'endFilePos' => 148,
+            'endFilePos' => 157,
           ),
         ),
         'attributes' => 
@@ -606,9 +606,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 11,
             'endLine' => 11,
             'startTokenPos' => 48,
-            'startFilePos' => 170,
+            'startFilePos' => 180,
             'endTokenPos' => 48,
-            'endFilePos' => 178,
+            'endFilePos' => 188,
           ),
         ),
         'attributes' => 
@@ -631,9 +631,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 12,
             'endLine' => 12,
             'startTokenPos' => 57,
-            'startFilePos' => 200,
+            'startFilePos' => 211,
             'endTokenPos' => 57,
-            'endFilePos' => 208,
+            'endFilePos' => 219,
           ),
         ),
         'attributes' => 
@@ -656,9 +656,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 13,
             'endLine' => 13,
             'startTokenPos' => 66,
-            'startFilePos' => 230,
+            'startFilePos' => 242,
             'endTokenPos' => 66,
-            'endFilePos' => 238,
+            'endFilePos' => 250,
           ),
         ),
         'attributes' => 
@@ -681,9 +681,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 14,
             'endLine' => 14,
             'startTokenPos' => 75,
-            'startFilePos' => 259,
+            'startFilePos' => 272,
             'endTokenPos' => 75,
-            'endFilePos' => 266,
+            'endFilePos' => 279,
           ),
         ),
         'attributes' => 

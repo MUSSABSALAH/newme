@@ -8,6 +8,7 @@ use App\Modules\Identity\Seeders\RolesAndPermissionsSeeder;
 use App\Modules\Identity\Seeders\SuperAdminSeeder;
 use App\Modules\Plans\Seeders\MealSeeder;
 use App\Modules\Plans\Seeders\PlanSeeder;
+use App\Modules\Store\Seeders\StoreCatalogSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
             SuperAdminSeeder::class,
             MealSeeder::class,
             PlanSeeder::class,
+            StoreCatalogSeeder::class,
         ]);
     }
 }

@@ -87,7 +87,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Resources\\V1\\PlanQuoteResource.php' => '1c23361b1469bd46a5e203632fb4955167b3b19d5bd2832e3014292110dc75a5',
+      'C:\\newme\\app\\Http\\Resources\\V1\\PlanQuoteResource.php' => '4ef1e06426530d8a951034a8e3e9fb40022f1803692d617345b36c58bb3fda63',
     ),
   ),
 ));

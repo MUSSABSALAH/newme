@@ -4,11 +4,28 @@ declare(strict_types=1);
 
 return [
     'title' => 'Dashboard',
-    'subtitle' => 'Overview of the New Me operations',
-    'active_users' => 'Active Users',
-    'roles' => 'Roles',
-    'pending_invitations' => 'Pending Invitations',
-    'audit_events' => 'Audit Events',
-    'getting_started' => 'Getting started',
-    'getting_started_body' => 'You are signed in to the control panel. User management, roles, and audit screens will appear here as they are built.',
+    'subtitle' => 'Sales, orders and subscriptions at a glance.',
+
+    'kpi' => [
+        'sales_today' => 'Sales today',
+        'sales_month' => 'Sales this month',
+        'orders_month' => 'Orders this month',
+        'orders_today' => 'Orders today',
+        'orders_pending' => 'Pending orders',
+        'subscriptions_active' => 'Active subscriptions',
+        'needs_handling' => 'Need handling',
+        'invoices_month' => 'Invoices this month',
+        'sales_hint' => 'From confirmed invoices',
+    ],
+
+    'sections' => [
+        'orders' => 'Recent orders',
+        'subscriptions' => 'Recent subscriptions',
+        'order_status' => 'Orders by status',
+        'subscription_status' => 'Subscriptions by status',
+        'view_all_orders' => 'All orders',
+        'view_all_subscriptions' => 'All subscriptions',
+        'empty_orders' => 'No orders yet.',
+        'empty_subscriptions' => 'No subscriptions yet.',
+    ],
 ];

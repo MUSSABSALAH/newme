@@ -196,7 +196,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Audit\\Models\\AuditLog.php' => 'a45837dc72b59e761a256b6d74ab07b5d43adcd56bf10be91dd7010e41cb2c15',
+      'C:\\newme\\app\\Modules\\Audit\\Models\\AuditLog.php' => '2bde148de266c6aa14e31b3f426cf891377f265d46d1386764f3e1be8463f674',
     ),
   ),
 ));

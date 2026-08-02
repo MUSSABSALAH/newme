@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Admin\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Modules\Identity\DTOs\UserData;
+use App\Modules\Identity\Enums\RoleName;
 use App\Modules\Identity\Models\Role;
 use App\Modules\Identity\Services\UserService;
 use App\Support\Exceptions\DomainException;
@@ -23,7 +24,9 @@ final class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
+        // Staff only — customers live under admin.customers.*
         $users = User::query()
+            ->staff()
             ->with(['roles', 'invitations'])
             ->orderBy('name')
             ->get();
@@ -90,6 +93,9 @@ final class UserController extends Controller
      */
     private function roles(): \Illuminate\Support\Collection
     {
-        return Role::query()->orderBy('name')->get();
+        return Role::query()
+            ->where('name', '!=', RoleName::Customer->value)
+            ->orderBy('name')
+            ->get();
     }
 }

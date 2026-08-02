@@ -25,23 +25,58 @@
                     @endisset
 
                     @auth
-                        @php $currentLocale = app()->getLocale(); @endphp
+                        @php
+                            $currentLocale = app()->getLocale();
+                            // Both come from the view composer in AppServiceProvider.
+                            $unread = $bellUnread;
+                            $recent = $bellRecent;
+                        @endphp
 
                         {{-- Notifications --}}
-                        <x-ui.dropdown align="end" width="320px">
+                        <x-ui.dropdown align="end" width="340px">
                             <x-slot:trigger>
                                 <span class="icon-btn" title="{{ __('messages.ui.notifications') }}" aria-label="{{ __('messages.ui.notifications') }}">
                                     <x-ui.icon name="bell" />
+                                    @if ($unread > 0)
+                                        <span class="icon-btn__badge">{{ $unread > 9 ? '9+' : $unread }}</span>
+                                    @endif
                                 </span>
                             </x-slot:trigger>
 
                             <div class="dropdown__head">
                                 <strong>{{ __('messages.ui.notifications') }}</strong>
+                                @if ($unread > 0)
+                                    <form method="POST" action="{{ route('admin.notifications.read-all') }}">
+                                        @csrf
+                                        <button type="submit" class="link-btn">{{ __('messages.ui.mark_all_read') }}</button>
+                                    </form>
+                                @endif
                             </div>
-                            <div class="dropdown__empty">
-                                <x-ui.icon name="bell-off" /><br>
-                                {{ __('messages.ui.no_notifications') }}
-                            </div>
+
+                            @forelse ($recent as $note)
+                                <form method="POST" action="{{ route('admin.notifications.read', $note['id']) }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown__item notif {{ $note['unread'] ? 'notif--unread' : '' }}">
+                                        <x-ui.icon :name="$note['icon']" size="sm" />
+                                        <span class="notif__copy">
+                                            <strong>{{ $note['title'] }}</strong>
+                                            <span class="text-muted">{{ $note['body'] }}</span>
+                                            <span class="notif__time">{{ $note['time'] }}</span>
+                                        </span>
+                                    </button>
+                                </form>
+                            @empty
+                                <div class="dropdown__empty">
+                                    <x-ui.icon name="bell-off" /><br>
+                                    {{ __('messages.ui.no_notifications') }}
+                                </div>
+                            @endforelse
+
+                            <div class="dropdown__divider"></div>
+
+                            <a href="{{ route('admin.notifications.index') }}" class="dropdown__item">
+                                <x-ui.icon name="inbox" size="sm" /> {{ __('notifications.view_all') }}
+                            </a>
                         </x-ui.dropdown>
 
                         {{-- Language switcher --}}

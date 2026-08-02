@@ -9,6 +9,7 @@ use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Audit\Services\AuditService;
 use App\Modules\Identity\DTOs\InvitationData;
 use App\Modules\Identity\Enums\UserStatus;
+use App\Modules\Identity\Enums\UserType;
 use App\Modules\Identity\Exceptions\InvitationAlreadyAcceptedException;
 use App\Modules\Identity\Exceptions\InvitationInvalidException;
 use App\Modules\Identity\Models\UserInvitation;
@@ -33,6 +34,7 @@ final class InvitationService
             $user->email = $data->email;
             $user->password = null;
             $user->status = UserStatus::Invited;
+            $user->type = UserType::Staff;
             $user->save();
 
             $user->syncRoles($data->roles);

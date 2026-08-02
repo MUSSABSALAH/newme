@@ -33,7 +33,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\newme\\routes\\web.php' => 
     array (
-      0 => '75228131d0620e438640ecc96edd7b3005c39b83eae4c1ad5853f9fe6c7b9eed',
+      0 => '823dbd5e5ea305cfbfd62d1709b443232973309dfabcc0d9e22f8a8bf7f23b51',
       1 => 
       array (
       ),

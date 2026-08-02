@@ -11,6 +11,10 @@ use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Models\PlanVersion;
 use App\Modules\Plans\Services\PlanPricingService;
 use App\Modules\Settings\Services\SettingsService;
+use App\Modules\Store\Models\Category;
+use App\Modules\Store\Models\Product;
+use App\Modules\Subscriptions\Support\SubscriptionStartRules;
+use App\Support\Money\Money;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 
@@ -42,12 +46,14 @@ class WebsiteController extends Controller
 
     public function main(): View
     {
-        return view('website.pages.main');
+        return view('website.pages.main', [
+            'shopProducts' => $this->websiteShopPreview(),
+        ]);
     }
 
     public function store(): View
     {
-        return view('website.pages.store');
+        return view('website.pages.store', $this->websiteStore());
     }
 
     public function subscribe(): View
@@ -58,9 +64,11 @@ class WebsiteController extends Controller
             'plans' => $plans->all(),
             'planNames' => $plans->pluck('name', 'key')->all(),
             'planSlugs' => $plans->pluck('key')->all(),
+            'planIds' => $plans->pluck('public_id', 'key')->all(),
             'defaultPlan' => $plans->firstWhere('key', 'balance') ?? $plans->first(),
             'plansData' => $this->websitePlansData(),
             'finance' => $this->financeConfig(),
+            'operations' => $this->operationsConfig(),
         ]);
     }
 
@@ -84,6 +92,44 @@ class WebsiteController extends Controller
         return view('website.pages.product');
     }
 
+    public function productShow(Product $product): View
+    {
+        abort_unless($product->is_active, 404);
+
+        $product->loadMissing('category.parent');
+
+        $topCategories = Category::query()
+            ->where('is_active', true)
+            ->whereNull('parent_id')
+            ->with(['children' => fn ($query) => $query->select('id', 'parent_id')])
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get()
+            ->map(function (Category $category): array {
+                $scopeIds = $category->children->pluck('id')->push($category->id)->all();
+
+                $thumb = Product::query()
+                    ->where('is_active', true)
+                    ->whereIn('category_id', $scopeIds)
+                    ->whereNotNull('image_path')
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->first();
+
+                return [
+                    'slug' => $category->slug,
+                    'label' => $category->label(),
+                    'image_url' => $category->imageUrl() ?? $thumb?->imageUrl(),
+                ];
+            })
+            ->all();
+
+        return view('website.pages.product-detail', [
+            'product' => $this->websiteProductDetail($product),
+            'categories' => $topCategories,
+        ]);
+    }
+
     public function consult(): View
     {
         return view('website.pages.consult');
@@ -97,27 +143,35 @@ class WebsiteController extends Controller
     /**
      * Active, published plans shaped for the public website (wizard + menu).
      *
-     * @return Collection<int, array{key: string, name: string, desc: string, image_url: string|null, icon: string, pop: bool, f: string, kcal: int, public_id: string}>
+     * @return Collection<int, array<string, mixed>>
      */
     private function websitePlans(): Collection
     {
         return $this->activePublishedPlans()
-            ->map(function (Plan $plan): array {
-                $slug = $plan->goal->websiteSlug();
-
-                return [
-                    'key' => $slug,
-                    'name' => $plan->label(),
-                    'desc' => (string) $plan->getTranslation('description', app()->getLocale(), false),
-                    'image_url' => $plan->image_path !== null ? asset('storage/'.$plan->image_path) : null,
-                    'icon' => self::PLAN_ICONS[$slug] ?? 'i-target',
-                    'pop' => $slug === 'balance',
-                    'f' => '1',
-                    'kcal' => $plan->goal->dailyCalorieTarget(),
-                    'public_id' => $plan->public_id,
-                ];
-            })
+            ->map($this->websitePlan(...))
             ->values();
+    }
+
+    /**
+     * A single plan shaped for the public website.
+     *
+     * @return array<string, mixed>
+     */
+    private function websitePlan(Plan $plan): array
+    {
+        $slug = $plan->goal->websiteSlug();
+
+        return [
+            'key' => $slug,
+            'name' => $plan->label(),
+            'desc' => (string) $plan->getTranslation('description', app()->getLocale(), false),
+            'image_url' => $plan->image_path !== null ? asset('storage/'.$plan->image_path) : null,
+            'icon' => self::PLAN_ICONS[$slug] ?? 'i-target',
+            'pop' => $slug === 'balance',
+            'f' => '1',
+            'kcal' => $plan->goal->dailyCalorieTarget(),
+            'public_id' => $plan->public_id,
+        ];
     }
 
     /**
@@ -227,6 +281,19 @@ class WebsiteController extends Controller
     }
 
     /**
+     * Operations knobs the subscribe wizard must honour.
+     *
+     * @return array{min_start_days: int, min_start_date: string}
+     */
+    private function operationsConfig(): array
+    {
+        return [
+            'min_start_days' => SubscriptionStartRules::minStartDays(),
+            'min_start_date' => SubscriptionStartRules::earliestDateString(),
+        ];
+    }
+
+    /**
      * @return Collection<int, Plan>
      */
     private function activePublishedPlans(): Collection
@@ -238,6 +305,213 @@ class WebsiteController extends Controller
             ->get()
             ->filter(fn (Plan $plan): bool => $plan->publishedVersion() !== null)
             ->values();
+    }
+
+    /**
+     * Featured (or latest) products for the home-page shop preview strip.
+     *
+     * @return list<array<string, mixed>>
+     */
+    private function websiteShopPreview(int $limit = 4): array
+    {
+        $flagIcons = [
+            'bestseller' => '#i-flame',
+            'sale' => '#i-leaf',
+            'occasions' => '#i-hat',
+        ];
+
+        $query = Product::query()
+            ->where('is_active', true)
+            ->with('category.parent')
+            ->orderByDesc('is_featured')
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->limit($limit);
+
+        return $query->get()->map(function (Product $product) use ($flagIcons): array {
+            $protein = $this->trimDecimal($product->protein_g);
+            $kcal = (int) $product->calories;
+            $flag = $product->flag?->value;
+
+            $description = (string) $product->getTranslation('description', app()->getLocale(), false);
+            if ($description === '') {
+                $description = $product->category->label();
+            }
+
+            return [
+                'name' => $product->label(),
+                'sub' => $description,
+                'image_url' => $product->imageUrl(),
+                'url' => route('website.product.show', ['product' => $product->slug]),
+                'flag' => $product->flag?->label(),
+                'flag_icon' => $flagIcons[$flag] ?? null,
+                'flag_style' => $flag === 'sale' ? 'color:var(--green)' : '',
+                'protein' => $protein !== ''
+                    ? __('website.main.shop.protein', ['value' => $protein])
+                    : null,
+                'kcal' => $kcal > 0
+                    ? __('website.main.shop.kcal', ['value' => $kcal])
+                    : null,
+                'price' => $this->trimDecimal(Money::fromMinor($product->price)->format()),
+            ];
+        })->all();
+    }
+
+    /**
+     * Store catalog shaped for the public store page: category tabs, the bakery
+     * subcategory row, and every active product with its display fields.
+     *
+     * @return array{tabs: list<array<string, mixed>>, subs: list<array<string, string>>, products: list<array<string, mixed>>, total: int}
+     */
+    private function websiteStore(): array
+    {
+        $topCategories = Category::query()
+            ->where('is_active', true)
+            ->whereNull('parent_id')
+            ->with(['children' => fn ($query) => $query
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id'),
+            ])
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+
+        $products = Product::query()
+            ->where('is_active', true)
+            ->with('category.parent')
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get()
+            ->map(fn (Product $product): array => $this->websiteStoreProduct($product))
+            ->values()
+            ->all();
+
+        $counts = [];
+        foreach ($products as $product) {
+            $counts[$product['cat']] = ($counts[$product['cat']] ?? 0) + 1;
+        }
+
+        $total = count($products);
+
+        $tabs = [[
+            'slug' => 'all',
+            'label' => (string) __('website.store.tabs.all'),
+            'count' => $total,
+            'has_subs' => false,
+        ]];
+
+        foreach ($topCategories as $category) {
+            $tabs[] = [
+                'slug' => $category->slug,
+                'label' => $category->label(),
+                'count' => $counts[$category->slug] ?? 0,
+                'has_subs' => $category->children->isNotEmpty(),
+            ];
+        }
+
+        $subs = [[
+            'slug' => 'all',
+            'label' => (string) __('website.store.subs.all'),
+        ]];
+
+        $withSubs = $topCategories->first(fn (Category $category): bool => $category->children->isNotEmpty());
+
+        if ($withSubs instanceof Category) {
+            foreach ($withSubs->children as $child) {
+                $subs[] = [
+                    'slug' => $child->slug,
+                    'label' => $child->label(),
+                ];
+            }
+        }
+
+        return compact('tabs', 'subs', 'products', 'total');
+    }
+
+    /**
+     * Shape a single product for the store grid (filter attributes + display).
+     *
+     * @return array<string, mixed>
+     */
+    private function websiteStoreProduct(Product $product): array
+    {
+        $category = $product->category;
+        $parent = $category->parent;
+
+        // A child category keeps its parent as the top-level tab and itself as
+        // the sub-tab; a top-level category has no sub.
+        $topSlug = $parent !== null ? $parent->slug : $category->slug;
+        $subSlug = $parent !== null ? $category->slug : '';
+
+        $catLabel = $parent !== null
+            ? $parent->label().' — '.$category->label()
+            : $category->label();
+
+        return [
+            'id' => $product->slug,
+            'cat' => $topSlug,
+            'sub' => $subSlug,
+            'href' => route('website.product.show', ['product' => $product->slug]),
+            'image_url' => $product->imageUrl(),
+            'name' => $product->label(),
+            'cat_label' => $catLabel,
+            'kcal' => (int) $product->calories,
+            'serving' => $product->serving_size?->label() ?? '',
+            'protein' => $this->trimDecimal($product->protein_g),
+            'fat' => $this->trimDecimal($product->fat_g),
+            'carbs' => $this->trimDecimal($product->carbs_g),
+            'note' => $product->nutrition_note?->value,
+            'price' => $this->trimDecimal(Money::fromMinor($product->price)->format()),
+            'flag' => $product->flag?->value,
+            'feat' => $product->is_featured,
+        ];
+    }
+
+    /**
+     * A single product shaped for the product-detail page.
+     *
+     * @return array<string, mixed>
+     */
+    private function websiteProductDetail(Product $product): array
+    {
+        $category = $product->category;
+        $parent = $category->parent;
+
+        return [
+            'id' => $product->id,
+            'name' => $product->label(),
+            'description' => (string) $product->getTranslation('description', app()->getLocale(), false),
+            'image_url' => $product->imageUrl(),
+            'price' => Money::fromMinor($product->price)->format(),
+            'kcal' => (int) $product->calories,
+            'serving' => $product->serving_size?->label() ?? '',
+            'protein' => $this->trimDecimal($product->protein_g),
+            'fat' => $this->trimDecimal($product->fat_g),
+            'carbs' => $this->trimDecimal($product->carbs_g),
+            'note' => $product->nutrition_note?->value,
+            'flag' => $product->flag?->value,
+            'cat_slug' => $parent !== null ? $parent->slug : $category->slug,
+            'cat_label' => $parent !== null
+                ? $parent->label().' — '.$category->label()
+                : $category->label(),
+        ];
+    }
+
+    /**
+     * Drop trailing zeros from a decimal string ("12.10" => "12.1", "4.00" => "4").
+     */
+    private function trimDecimal(?string $value): string
+    {
+        if ($value === null || $value === '') {
+            return '';
+        }
+
+        if (str_contains($value, '.')) {
+            $value = rtrim(rtrim($value, '0'), '.');
+        }
+
+        return $value;
     }
 
     /**

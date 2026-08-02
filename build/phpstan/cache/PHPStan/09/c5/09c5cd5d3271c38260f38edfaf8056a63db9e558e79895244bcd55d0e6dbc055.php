@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Exceptions\LastSuperAdminException.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Exceptions\LastSuperAdminException
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-490130c2b31456b05176130dca899c060fb42ca8fd8fa1bfcf8595d0e3a48356',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-537f2bbb9210135ac22f3f4e121666d40234ac6cda0ebc0d81935f3a8242c329',
    'data' => 
   array (
     'locatedSource' => 

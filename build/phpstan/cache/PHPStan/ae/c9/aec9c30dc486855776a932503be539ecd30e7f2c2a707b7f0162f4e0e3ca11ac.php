@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Exceptions\CannotDeactivateSelfException.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Exceptions\CannotDeactivateSelfException
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-17632bb1aff7d129dea8521b6a137918b221822b926e53d93335c5d0fb11a5a6',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-2e3d8ce9e6e83b35015fbeeba1ab4ed8e21b73f5b489391085f2315c632b9f48',
    'data' => 
   array (
     'locatedSource' => 

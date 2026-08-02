@@ -40,7 +40,8 @@ return [
         'operations' => [
             'stock_reservation_minutes' => 'Stock reservation (minutes)',
             'payment_timeout_minutes' => 'Payment timeout (minutes)',
-            'subscription_cutoff_hours' => 'Subscription cutoff (hours)',
+            'subscription_min_start_days' => 'Minimum days before subscription start',
+            'meal_change_lead_days' => 'Meal change lead time (days)',
         ],
         'policies' => [
             'cancellation_ar' => 'Cancellation policy (Arabic)',
@@ -58,7 +59,8 @@ return [
         'operations' => [
             'stock_reservation_minutes' => 'How long stock stays reserved for an unpaid order.',
             'payment_timeout_minutes' => 'How long a pending payment stays valid.',
-            'subscription_cutoff_hours' => 'Hours before delivery after which same-day changes are blocked.',
+            'subscription_min_start_days' => 'Earliest start is today plus this many days (e.g. 1 = tomorrow).',
+            'meal_change_lead_days' => 'Days before a delivery day when meal changes are still allowed.',
         ],
     ],
 

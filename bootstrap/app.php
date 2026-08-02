@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\AssignRequestId;
+use App\Http\Middleware\EnsureUserType;
 use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\SetWebLocale;
 use App\Support\Enums\ApiErrorCode;
@@ -36,13 +37,32 @@ return Application::configure(basePath: dirname(__DIR__))
             SetWebLocale::class,
         ]);
 
+        $middleware->alias([
+            'user.type' => EnsureUserType::class,
+        ]);
+
         // Locale is not sensitive; leaving it unencrypted lets it persist
         // across logout and remain readable by the client.
         $middleware->encryptCookies(except: [SetWebLocale::COOKIE]);
 
-        // Unauthenticated web requests are sent to the admin login screen.
-        $middleware->redirectGuestsTo(fn (): string => route('admin.login'));
-        $middleware->redirectUsersTo(fn (): string => route('admin.dashboard'));
+        // Guests are sent to the login screen for the area they requested:
+        // the admin panel or the public store account.
+        $middleware->redirectGuestsTo(function (Request $request): string {
+            if ($request->routeIs('admin.*') || $request->is('admin', 'admin/*')) {
+                return route('admin.login');
+            }
+
+            return route('website.login');
+        });
+
+        // Authenticated users hitting a guest-only page go to their own home.
+        $middleware->redirectUsersTo(function (Request $request): string {
+            $user = $request->user();
+
+            return $user !== null && $user->isCustomer()
+                ? route('website.account')
+                : route('admin.dashboard');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Throwable $e, Request $request): ?JsonResponse {

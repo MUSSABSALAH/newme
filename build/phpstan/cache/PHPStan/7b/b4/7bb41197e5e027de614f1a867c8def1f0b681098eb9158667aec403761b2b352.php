@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Exceptions\InvitationInvalidException.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Exceptions\InvitationInvalidException
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-85ac6a1bbe3e1d4e6298589817433dc60e807d0a5f59f48e83b51769bf6c5c9d',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-98d2a12ce3fa42c65c884c2e43479766ed99e5ee7c5e1c5af9d5b6805e14d8e0',
    'data' => 
   array (
     'locatedSource' => 

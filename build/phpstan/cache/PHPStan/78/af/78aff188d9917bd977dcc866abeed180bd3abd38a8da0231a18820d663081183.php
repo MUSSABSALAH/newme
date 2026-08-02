@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Requests\Web\Admin\Auth\ForgotPasswordRequest.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Requests\Web\Admin\Auth\ForgotPasswordRequest
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-b8bd3a0e2a18e12da654d8456ec7ac17c579ec1765bebb4dfbb63c54bdff513e',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-0c1163799238b560f5e3f089c93db726785f7943fd41045e2746795420c1684f',
    'data' => 
   array (
     'locatedSource' => 

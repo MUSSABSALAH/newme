@@ -12,9 +12,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
           'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
           'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3350,9 +3355,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
           'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
           'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3370,9 +3380,156 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
             'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
             'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
             'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+            'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '191e3ef925d0195b9a8a048e322ea3fe' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
+          'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+          'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+          'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+          'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'scopeStaff',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
+            'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+            'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+            'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+            'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '2bdd5e586c2e0610293b8871f4021540' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
+          'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+          'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+          'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+          'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'scopeCustomers',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
+            'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+            'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+            'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3411,9 +3568,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
           'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
           'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3431,9 +3593,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
             'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
             'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
             'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3472,9 +3639,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
           'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
           'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3492,9 +3664,156 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
             'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
             'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
             'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+            'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '34288d2dc26debe4d8563fbadfa2cb68' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
+          'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+          'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+          'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+          'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'isStaff',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
+            'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+            'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+            'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+            'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '040caacf26e9fad1b1777eee9a665cda' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
+          'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+          'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+          'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+          'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'isCustomer',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
+            'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+            'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+            'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3533,9 +3852,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
           'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
           'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3553,9 +3877,227 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
             'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
             'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
             'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+            'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      'f7cd5e003075263fc93aab963fefcfa4' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
+          'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+          'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+          'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+          'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'addresses',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
+            'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+            'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+            'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+            'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '5ec323b5ff4bf79914f35a856690f0e6' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
+          'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+          'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+          'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+          'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'orders',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
+            'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+            'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+            'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+            'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '6d7272a3cc60133f4b8a7c72c7380ab6' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
+          'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+          'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+          'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          'hasapitokens' => 'Laravel\\Sanctum\\HasApiTokens',
+          'hasroles' => 'Spatie\\Permission\\Traits\\HasRoles',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'subscriptions',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
+            'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
+            'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
+            'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3594,9 +4136,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'address' => 'App\\Modules\\Addresses\\Models\\Address',
           'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+          'order' => 'App\\Modules\\Orders\\Models\\Order',
+          'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
           'userfactory' => 'Database\\Factories\\UserFactory',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3614,9 +4161,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'address' => 'App\\Modules\\Addresses\\Models\\Address',
             'userstatus' => 'App\\Modules\\Identity\\Enums\\UserStatus',
+            'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
             'userinvitation' => 'App\\Modules\\Identity\\Models\\UserInvitation',
+            'order' => 'App\\Modules\\Orders\\Models\\Order',
+            'subscription' => 'App\\Modules\\Subscriptions\\Models\\Subscription',
             'userfactory' => 'Database\\Factories\\UserFactory',
+            'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
@@ -3653,7 +4205,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Models\\User.php' => '5602cd5dce0d2d502e654c7202f2fd50719a856e55acc48bef37636512c5c255',
+      'C:\\newme\\app\\Models\\User.php' => 'fb2bb6503fcbf6954a445fed29fe49cd41b2ec218e871d8048aad0a387c77e49',
       'C:\\newme\\vendor\\composer\\..\\laravel\\sanctum\\src\\HasApiTokens.php' => '7400600b832dc377ac5f51d051a917775f6efc0d2176a1de7bd7826499ae6509',
       'C:\\newme\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\newme\\vendor\\composer\\..\\spatie\\laravel-permission\\src\\Traits\\HasRoles.php' => '2a592993c44a108bcce617ba904f42128ceebbddf464e87b2d40f6af986fce0f',

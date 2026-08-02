@@ -14,6 +14,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'controller' => 'App\\Http\\Controllers\\Controller',
           'resetpasswordrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\ResetPasswordRequest',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'passwordresetinvalidexception' => 'App\\Modules\\Identity\\Exceptions\\PasswordResetInvalidException',
           'passwordresetservice' => 'App\\Modules\\Identity\\Services\\PasswordResetService',
           'view' => 'Illuminate\\Contracts\\View\\View',
@@ -45,6 +46,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'controller' => 'App\\Http\\Controllers\\Controller',
           'resetpasswordrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\ResetPasswordRequest',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'passwordresetinvalidexception' => 'App\\Modules\\Identity\\Exceptions\\PasswordResetInvalidException',
           'passwordresetservice' => 'App\\Modules\\Identity\\Services\\PasswordResetService',
           'view' => 'Illuminate\\Contracts\\View\\View',
@@ -76,6 +78,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'controller' => 'App\\Http\\Controllers\\Controller',
           'resetpasswordrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\ResetPasswordRequest',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'passwordresetinvalidexception' => 'App\\Modules\\Identity\\Exceptions\\PasswordResetInvalidException',
           'passwordresetservice' => 'App\\Modules\\Identity\\Services\\PasswordResetService',
           'view' => 'Illuminate\\Contracts\\View\\View',
@@ -107,6 +110,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'controller' => 'App\\Http\\Controllers\\Controller',
           'resetpasswordrequest' => 'App\\Http\\Requests\\Web\\Admin\\Auth\\ResetPasswordRequest',
+          'usertype' => 'App\\Modules\\Identity\\Enums\\UserType',
           'passwordresetinvalidexception' => 'App\\Modules\\Identity\\Exceptions\\PasswordResetInvalidException',
           'passwordresetservice' => 'App\\Modules\\Identity\\Services\\PasswordResetService',
           'view' => 'Illuminate\\Contracts\\View\\View',
@@ -134,7 +138,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\Auth\\ResetPasswordController.php' => 'ad8a4e57b4b074a4ff473087303b543474f3f3a7742fd4d6458b661e99c3a4d3',
+      'C:\\newme\\app\\Http\\Controllers\\Web\\Admin\\Auth\\ResetPasswordController.php' => 'bf46aa5e6fbc9d9e2c5469f5363efe64e19c84405553baeb0924d7c886ac59fd',
     ),
   ),
 ));

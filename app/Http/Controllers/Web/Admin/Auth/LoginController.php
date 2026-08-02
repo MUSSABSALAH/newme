@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Web\Admin\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Admin\Auth\LoginRequest;
 use App\Modules\Identity\DTOs\LoginData;
+use App\Modules\Identity\Enums\UserType;
 use App\Modules\Identity\Exceptions\InactiveUserException;
 use App\Modules\Identity\Exceptions\InvalidCredentialsException;
 use App\Modules\Identity\Services\AuthService;
@@ -37,7 +38,7 @@ final class LoginController extends Controller
         ]);
 
         try {
-            $user = $this->authService->attempt($data);
+            $user = $this->authService->attempt($data, UserType::Staff);
         } catch (InvalidCredentialsException|InactiveUserException $e) {
             throw ValidationException::withMessages([
                 'email' => $e->getMessage(),

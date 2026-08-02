@@ -66,5 +66,38 @@ return [
             'updated' => 'Meal updated',
             'archived' => 'Meal archived',
         ],
+        'category' => [
+            'created' => 'Category created',
+            'updated' => 'Category updated',
+            'archived' => 'Category archived',
+        ],
+        'product' => [
+            'created' => 'Product created',
+            'updated' => 'Product updated',
+            'archived' => 'Product archived',
+        ],
+        'customer' => [
+            'registered' => 'Customer registered',
+            'updated' => 'Customer updated',
+        ],
+        'order' => [
+            'placed' => 'Order placed',
+            'status_updated' => 'Order status updated',
+        ],
+        'subscription' => [
+            'created' => 'Subscription created',
+            'handling_updated' => 'Subscription handling updated',
+        ],
+        'coupon' => [
+            'created' => 'Discount code created',
+            'updated' => 'Discount code updated',
+            'archived' => 'Discount code archived',
+            'redeemed' => 'Discount code redeemed',
+        ],
+        'payment' => [
+            'captured' => 'Payment captured',
+            'pending' => 'Payment pending',
+            'declined' => 'Payment declined',
+        ],
     ],
 ];

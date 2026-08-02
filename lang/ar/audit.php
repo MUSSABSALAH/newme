@@ -66,5 +66,38 @@ return [
             'updated' => 'تعديل وجبة',
             'archived' => 'أرشفة وجبة',
         ],
+        'category' => [
+            'created' => 'إنشاء فئة',
+            'updated' => 'تعديل فئة',
+            'archived' => 'أرشفة فئة',
+        ],
+        'product' => [
+            'created' => 'إنشاء منتج',
+            'updated' => 'تعديل منتج',
+            'archived' => 'أرشفة منتج',
+        ],
+        'customer' => [
+            'registered' => 'تسجيل عميل جديد',
+            'updated' => 'تعديل عميل',
+        ],
+        'order' => [
+            'placed' => 'إنشاء طلب',
+            'status_updated' => 'تحديث حالة الطلب',
+        ],
+        'subscription' => [
+            'created' => 'إنشاء اشتراك',
+            'handling_updated' => 'تحديث حالة معالجة اشتراك',
+        ],
+        'coupon' => [
+            'created' => 'إنشاء كود خصم',
+            'updated' => 'تعديل كود خصم',
+            'archived' => 'أرشفة كود خصم',
+            'redeemed' => 'استخدام كود خصم',
+        ],
+        'payment' => [
+            'captured' => 'تحصيل دفعة',
+            'pending' => 'دفعة معلّقة',
+            'declined' => 'رفض دفعة',
+        ],
     ],
 ];

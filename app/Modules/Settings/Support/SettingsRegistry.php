@@ -90,7 +90,8 @@ final class SettingsRegistry
             // Operations
             new SettingDefinition('operations.stock_reservation_minutes', SettingGroup::Operations, SettingType::Integer, 30, ['required', 'integer', 'min:1', 'max:1440']),
             new SettingDefinition('operations.payment_timeout_minutes', SettingGroup::Operations, SettingType::Integer, 30, ['required', 'integer', 'min:1', 'max:1440']),
-            new SettingDefinition('operations.subscription_cutoff_hours', SettingGroup::Operations, SettingType::Integer, 24, ['required', 'integer', 'min:0', 'max:168']),
+            new SettingDefinition('operations.subscription_min_start_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
+            new SettingDefinition('operations.meal_change_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
 
             // Policies
             new SettingDefinition('policies.cancellation_ar', SettingGroup::Policies, SettingType::Text, null, ['nullable', 'string', 'max:5000']),

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Http\Controllers\Web\LocaleController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\Web\LocaleController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-c400c960eeed41d45fe141e60eab0e8b5fa0a4de4b9da32ff615a6d82c39bce7',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-64b21a13bbffd6afc2968c0b3657b4e08c8490d5c0b795894933b77b8911c546',
    'data' => 
   array (
     'locatedSource' => 

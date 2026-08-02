@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Services\AuthService.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Services\AuthService
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ba85c783268d4e1082dd4d53d6083065d64689499b31644af9d9f954c97efb6d',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-6bf735edad3fb252a2f8cb6e9ec820344df624b8de6953321251deaac16217c6',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 14,
-    'endLine' => 62,
+    'startLine' => 15,
+    'endLine' => 70,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -69,12 +69,69 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 25,
-            'endLine' => 25,
+            'startLine' => 28,
+            'endLine' => 28,
             'startColumn' => 29,
             'endColumn' => 43,
             'parameterIndex' => 0,
             'isOptional' => false,
+          ),
+          'expectedType' => 
+          array (
+            'name' => 'expectedType',
+            'default' => 
+            array (
+              'code' => 'null',
+              'attributes' => 
+              array (
+                'startLine' => 28,
+                'endLine' => 28,
+                'startTokenPos' => 78,
+                'startFilePos' => 969,
+                'endTokenPos' => 78,
+                'endFilePos' => 972,
+              ),
+            ),
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionUnionType',
+              'data' => 
+              array (
+                'types' => 
+                array (
+                  0 => 
+                  array (
+                    'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                    'data' => 
+                    array (
+                      'name' => 'App\\Modules\\Identity\\Enums\\UserType',
+                      'isIdentifier' => false,
+                    ),
+                  ),
+                  1 => 
+                  array (
+                    'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                    'data' => 
+                    array (
+                      'name' => 'null',
+                      'isIdentifier' => true,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => false,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 28,
+            'endLine' => 28,
+            'startColumn' => 46,
+            'endColumn' => 75,
+            'parameterIndex' => 1,
+            'isOptional' => true,
           ),
         ),
         'returnsReference' => false,
@@ -94,13 +151,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Verify credentials and account status, returning the matching user.
  *
  * Shared by the token-based API login and the session-based web login so
- * both channels enforce identical business rules.
+ * both channels enforce identical business rules. When $expectedType is
+ * given, an account of a different type is treated as invalid credentials
+ * so staff and customers cannot sign in on each other\'s channels.
  *
  * @throws InvalidCredentialsException
  * @throws InactiveUserException
  */',
-        'startLine' => 25,
-        'endLine' => 38,
+        'startLine' => 28,
+        'endLine' => 45,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => true,
@@ -138,8 +197,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 46,
-            'endLine' => 46,
+            'startLine' => 53,
+            'endLine' => 53,
             'startColumn' => 27,
             'endColumn' => 41,
             'parameterIndex' => 0,
@@ -165,8 +224,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @throws InvalidCredentialsException
  * @throws InactiveUserException
  */',
-        'startLine' => 46,
-        'endLine' => 53,
+        'startLine' => 53,
+        'endLine' => 61,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -204,8 +263,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 58,
-            'endLine' => 58,
+            'startLine' => 66,
+            'endLine' => 66,
             'startColumn' => 28,
             'endColumn' => 37,
             'parameterIndex' => 0,
@@ -228,8 +287,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Revoke the token currently used by the authenticated user.
  */',
-        'startLine' => 58,
-        'endLine' => 61,
+        'startLine' => 66,
+        'endLine' => 69,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

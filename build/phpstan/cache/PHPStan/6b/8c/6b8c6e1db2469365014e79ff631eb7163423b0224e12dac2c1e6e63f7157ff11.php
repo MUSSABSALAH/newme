@@ -830,7 +830,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Modules\\Identity\\Notifications\\UserInvitationNotification.php' => '48ab2488087f373d6d58a14106fc5e892cf53fe1cd04541c3cd1731cc3e62d2e',
+      'C:\\newme\\app\\Modules\\Identity\\Notifications\\UserInvitationNotification.php' => '314a20d48d9f7d90a7a94ae0507cfc7d84a39af73765d954fa3accd4ff910789',
       'C:\\newme\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Bus\\Queueable.php' => '7df8b51aab8bd3196229be1a8e398c2c2ec636ae1767ce499a64bfdbf5675c47',
     ),
   ),

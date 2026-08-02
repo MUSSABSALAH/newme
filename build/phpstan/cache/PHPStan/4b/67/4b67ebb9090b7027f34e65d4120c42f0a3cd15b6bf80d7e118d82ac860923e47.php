@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Settings\Policies\SettingsPolicy.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Settings\Policies\SettingsPolicy
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-9f78a17c991a08d7c014234e6e3a4822f83d9260f868851be0cdb22ad200257b',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-6c768cd82bbe94824d6365823cf7428881f371a9ca3eeb1aa61a81917e646b7c',
    'data' => 
   array (
     'locatedSource' => 

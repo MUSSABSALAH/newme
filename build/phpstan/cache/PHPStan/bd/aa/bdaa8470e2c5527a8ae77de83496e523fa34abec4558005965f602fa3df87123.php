@@ -110,7 +110,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Roles\\StoreRoleRequest.php' => '47431664ad0e0edf4016d5f3ad00fab6cb25aef2dfdb3848b61f06c08870f585',
+      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Roles\\StoreRoleRequest.php' => 'c9e646cd7a13067916aca3a6c7f701a6998c88f539efb45e7b585faaa35bee40',
     ),
   ),
 ));

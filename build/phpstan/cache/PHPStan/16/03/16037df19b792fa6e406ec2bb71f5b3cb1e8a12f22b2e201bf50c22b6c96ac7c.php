@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Enums\RoleName.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Enums\RoleName
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-f65ba6effcee36f01628dceb982b91a5b7fa858d22a231c7f9fc34512dd49d42',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-ba7a0727505c2413698b689157df955793d1ef2deb5e95373f4c9f0e0c93cc2d',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 7,
-    'endLine' => 32,
+    'endLine' => 48,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -129,8 +129,47 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return list<string>
  */',
-        'startLine' => 28,
-        'endLine' => 31,
+        'startLine' => 31,
+        'endLine' => 34,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 17,
+        'namespace' => 'App\\Modules\\Identity\\Enums',
+        'declaringClassName' => 'App\\Modules\\Identity\\Enums\\RoleName',
+        'implementingClassName' => 'App\\Modules\\Identity\\Enums\\RoleName',
+        'currentClassName' => 'App\\Modules\\Identity\\Enums\\RoleName',
+        'aliasName' => NULL,
+      ),
+      'staffValues' => 
+      array (
+        'name' => 'staffValues',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'array',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Staff-assignable role identifiers (everything except the customer role).
+ *
+ * @return list<string>
+ */',
+        'startLine' => 41,
+        'endLine' => 47,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -755,6 +794,31 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'endLine' => 23,
         'startColumn' => 5,
         'endColumn' => 40,
+      ),
+      'Customer' => 
+      array (
+        'name' => 'Customer',
+        'value' => 
+        array (
+          'code' => '\'customer\'',
+          'attributes' => 
+          array (
+            'startLine' => 26,
+            'endLine' => 26,
+            'startTokenPos' => 167,
+            'startFilePos' => 854,
+            'endTokenPos' => 167,
+            'endFilePos' => 863,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 26,
+        'endLine' => 26,
+        'startColumn' => 5,
+        'endColumn' => 31,
       ),
     ),
   ),

@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Audit\Models\AuditLog.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Audit\Models\AuditLog
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-a45837dc72b59e761a256b6d74ab07b5d43adcd56bf10be91dd7010e41cb2c15',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-2bde148de266c6aa14e31b3f426cf891377f265d46d1386764f3e1be8463f674',
    'data' => 
   array (
     'locatedSource' => 
@@ -64,9 +64,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 26,
             'endLine' => 26,
             'startTokenPos' => 60,
-            'startFilePos' => 657,
+            'startFilePos' => 682,
             'endTokenPos' => 60,
-            'endFilePos' => 660,
+            'endFilePos' => 685,
           ),
         ),
         'docComment' => NULL,
@@ -96,9 +96,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 31,
             'endLine' => 39,
             'startTokenPos' => 71,
-            'startFilePos' => 731,
+            'startFilePos' => 761,
             'endTokenPos' => 94,
-            'endFilePos' => 891,
+            'endFilePos' => 929,
           ),
         ),
         'docComment' => '/**

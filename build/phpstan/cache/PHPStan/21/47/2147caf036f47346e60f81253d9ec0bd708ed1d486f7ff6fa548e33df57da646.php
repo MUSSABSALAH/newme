@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Plans\Models\PlanPricingRule.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Plans\Models\PlanPricingRule
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-b10ee0d950f8e45ec57bf8482bb8844fac158628ee57f06fb60931e9661fdf4a',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-7bd2c1b80c8e38515cdf2030b9109f8cd1a94840f6fc62959e308b33cbf9da15',
    'data' => 
   array (
     'locatedSource' => 
@@ -72,9 +72,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 38,
             'endLine' => 48,
             'startTokenPos' => 77,
-            'startFilePos' => 1021,
+            'startFilePos' => 1058,
             'endTokenPos' => 106,
-            'endFilePos' => 1242,
+            'endFilePos' => 1289,
           ),
         ),
         'docComment' => '/**

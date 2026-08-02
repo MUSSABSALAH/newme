@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Identity\Exceptions\InvitationAlreadyAcceptedException.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Identity\Exceptions\InvitationAlreadyAcceptedException
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-383672ab02789fffa776c3f3ed85c5300b1311ad56b5fad9cb0c06967f592d38',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-c278f81155083d05cc7d27f4ccfac52ba474af236f76eba2420bc71d0b4496a2',
    'data' => 
   array (
     'locatedSource' => 

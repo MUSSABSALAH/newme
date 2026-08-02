@@ -130,7 +130,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Settings\\UpdateSettingsRequest.php' => '75810bdcb423ca85b6aeb4c0d59f3ed1dfa28794b75fedafa627a2349742045d',
+      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Settings\\UpdateSettingsRequest.php' => '0ab7d6178740d46bde98d518b8b20732579140986a4419b241e72ac81b2b5b67',
     ),
   ),
 ));

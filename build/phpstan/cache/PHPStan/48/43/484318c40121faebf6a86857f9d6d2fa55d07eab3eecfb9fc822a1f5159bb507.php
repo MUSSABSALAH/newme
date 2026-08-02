@@ -102,7 +102,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Auth\\ForgotPasswordRequest.php' => 'b8bd3a0e2a18e12da654d8456ec7ac17c579ec1765bebb4dfbb63c54bdff513e',
+      'C:\\newme\\app\\Http\\Requests\\Web\\Admin\\Auth\\ForgotPasswordRequest.php' => '0c1163799238b560f5e3f089c93db726785f7943fd41045e2746795420c1684f',
     ),
   ),
 ));

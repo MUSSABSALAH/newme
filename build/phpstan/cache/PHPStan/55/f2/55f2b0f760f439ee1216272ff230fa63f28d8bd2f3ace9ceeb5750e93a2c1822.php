@@ -2,7 +2,7 @@
 
 // odsl-C:\newme\app\Modules\Plans\Seeders\MealSeeder.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Modules\Plans\Seeders\MealSeeder
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-f8eeebf924e8acedcd9269ab9976b6049bf990d915153a2a46842d3fd23f4f8b',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-527ea4c16dfbba1685a442cac9d6d7adebb03decdffa3b48f1f21390701426fa',
    'data' => 
   array (
     'locatedSource' => 
@@ -22,12 +22,17 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'isEnum' => false,
     'isBackedEnum' => false,
     'modifiers' => 32,
-    'docComment' => NULL,
+    'docComment' => '/**
+ * Seeds the meal catalog from the public website menu
+ * (`lang/{ar,en}/website_menu_page.php` → `js.menu`).
+ *
+ * Images live at storage/app/public/meals (public disk root folder).
+ */',
     'attributes' => 
     array (
     ),
-    'startLine' => 11,
-    'endLine' => 49,
+    'startLine' => 17,
+    'endLine' => 79,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Database\\Seeder',
@@ -65,8 +70,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 13,
-        'endLine' => 31,
+        'startLine' => 19,
+        'endLine' => 38,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -100,10 +105,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => '/**
- * @return list<array{type: MealType, name: array<string, string>, calories: int, protein_g: int, carbs_g: int, fat_g: int}>
+ * @return list<array{type: MealType, name: array<string, string>, calories: int, protein_g: int, carbs_g: int, fat_g: int, image: string}>
  */',
-        'startLine' => 36,
-        'endLine' => 48,
+        'startLine' => 43,
+        'endLine' => 78,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
