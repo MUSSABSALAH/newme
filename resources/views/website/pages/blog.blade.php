@@ -98,12 +98,8 @@ body.menu-open{overflow:hidden}
 
 @section('content')
 @php
-  $blogArticles = __('website.blog.articles');
-  $blogRecipes = __('website.blog.recipes');
-  $articleImgs = ['p92_1200x640.jpg', 'p93_1200x640.jpg', 'p94_1200x640.jpg'];
-  $recipeImgs = ['p95_1200x640.jpg', 'p96_1200x640.jpg', 'p97_1200x640.jpg'];
-  $articleHrefs = [route('website.store'), route('website.subscribe').'#plan=muscle', route('website.store')];
-  $recipeHrefs = [route('website.product'), route('website.store'), route('website.store')];
+  $blogArticles = $articles ?? collect();
+  $blogRecipes = $recipes ?? collect();
 @endphp
 <div class="announce">{!! __('website.blog.announce') !!}</div>
 
@@ -118,36 +114,49 @@ body.menu-open{overflow:hidden}
 
 <div class="sec-rule" id="articles"><div class="line"></div><span class="kick">{{ __('website.blog.articles_kick') }}</span><h2>{{ __('website.blog.articles_h2') }}</h2></div>
 
-@foreach ($blogArticles as $i => $a)
-<article class="post" id="a{{ $i + 1 }}">
-  <div class="pimg"><img class="aiimg" src="{{ asset('assets/images/'.$articleImgs[$i]) }}" alt="" onerror="this.remove()"></div>
-  <div class="meta"><span><b>{{ $a['cat'] }}</b></span><span>{{ $a['time'] }}</span><span>{{ $a['author'] }}</span></div>
-  <h3>{{ $a['title'] }}</h3>
-  <p>{{ $a['p1'] }}</p>
-  <p>{{ $a['p2'] }}</p>
-  <div class="hl">{{ $a['hl'] }}</div>
-  <p>{{ $a['p3'] }}</p>
-  <a class="back" href="{{ $articleHrefs[$i] }}">{{ $a['cta'] }}</a>
+@foreach ($blogArticles as $a)
+<article class="post" id="{{ $a->anchorId() }}">
+  @if ($a->imageUrl())
+  <div class="pimg"><img class="aiimg" src="{{ $a->imageUrl() }}" alt="" onerror="this.remove()"></div>
+  @endif
+  <div class="meta"><span><b>{{ $a->translated('category') }}</b></span><span>{{ $a->translated('read_time') }}</span><span>{{ $a->translated('author') }}</span></div>
+  <h3>{{ $a->translated('title') }}</h3>
+  @if ($a->translated('body_1') !== '')<p>{{ $a->translated('body_1') }}</p>@endif
+  @if ($a->translated('body_2') !== '')<p>{{ $a->translated('body_2') }}</p>@endif
+  @if ($a->translated('highlight') !== '')<div class="hl">{{ $a->translated('highlight') }}</div>@endif
+  @if ($a->translated('body_3') !== '')<p>{{ $a->translated('body_3') }}</p>@endif
+  @if ($a->translated('cta_label') !== '' && $a->cta_url)
+  <a class="back" href="{{ $a->cta_url }}">{{ $a->translated('cta_label') }}</a>
+  @endif
 </article>
 @endforeach
 
 <div class="sec-rule" id="recipes"><div class="line"></div><span class="kick">{{ __('website.blog.recipes_kick') }}</span><h2>{{ __('website.blog.recipes_h2') }}</h2></div>
 
-@foreach ($blogRecipes as $i => $r)
-<article class="post" id="r{{ $i + 1 }}">
-  <div class="pimg"><img class="aiimg" src="{{ asset('assets/images/'.$recipeImgs[$i]) }}" alt="" onerror="this.remove()"></div>
-  <div class="meta"><span><b>{{ $r['cat'] }}</b></span><span>{{ $r['meta_title'] }}</span></div>
-  <h3>{{ $r['title'] }}</h3>
-  <div class="rmeta"><span>{{ $r['time'] }}</span><span>{{ $r['kcal'] }}</span><span>{{ $r['protein'] }}</span><span>{{ $r['servings'] }}</span></div>
+@foreach ($blogRecipes as $r)
+<article class="post" id="{{ $r->anchorId() }}">
+  @if ($r->imageUrl())
+  <div class="pimg"><img class="aiimg" src="{{ $r->imageUrl() }}" alt="" onerror="this.remove()"></div>
+  @endif
+  <div class="meta"><span><b>{{ $r->translated('category') }}</b></span><span>{{ $r->translated('meta_title') }}</span></div>
+  <h3>{{ $r->translated('title') }}</h3>
+  <div class="rmeta">
+    @if ($r->translated('time_label') !== '')<span>{{ $r->translated('time_label') }}</span>@endif
+    @if ($r->translated('kcal_label') !== '')<span>{{ $r->translated('kcal_label') }}</span>@endif
+    @if ($r->translated('protein_label') !== '')<span>{{ $r->translated('protein_label') }}</span>@endif
+    @if ($r->translated('servings_label') !== '')<span>{{ $r->translated('servings_label') }}</span>@endif
+  </div>
   <div class="rcols">
     <div class="rbox"><h4>{{ __('website.blog.ingredients') }}</h4><ul>
-      @foreach ($r['ingredients'] as $ing)<li>{{ $ing }}</li>@endforeach
+      @foreach ($r->listFor('ingredients') as $ing)<li>{{ $ing }}</li>@endforeach
     </ul></div>
     <div class="rbox"><h4>{{ __('website.blog.method') }}</h4><ol>
-      @foreach ($r['steps'] as $step)<li>{{ $step }}</li>@endforeach
+      @foreach ($r->listFor('steps') as $step)<li>{{ $step }}</li>@endforeach
     </ol></div>
   </div>
-  <a class="back" href="{{ $recipeHrefs[$i] }}">{{ $r['cta'] }}</a>
+  @if ($r->translated('cta_label') !== '' && $r->cta_url)
+  <a class="back" href="{{ $r->cta_url }}">{{ $r->translated('cta_label') }}</a>
+  @endif
 </article>
 @endforeach
 

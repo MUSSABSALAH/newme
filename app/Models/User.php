@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Modules\Addresses\Models\Address;
 use App\Modules\Identity\Enums\UserStatus;
 use App\Modules\Identity\Enums\UserType;
+use App\Modules\Identity\Models\BodyMeasurement;
 use App\Modules\Identity\Models\UserInvitation;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
@@ -16,13 +17,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
+ * @property string|null $email
  * @property UserStatus $status
  * @property UserType $type
  * @property string|null $phone
+ * @property Carbon|null $birth_date
+ * @property string|null $allergies
+ * @property string|null $medications
  */
 class User extends Authenticatable
 {
@@ -36,6 +42,9 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
+        'birth_date',
+        'allergies',
+        'medications',
         'password',
         'status',
         'type',
@@ -56,6 +65,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'birth_date' => 'date',
             'password' => 'hashed',
             'status' => UserStatus::class,
             'type' => UserType::class,
@@ -116,6 +126,18 @@ class User extends Authenticatable
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
+    }
+
+    /**
+     * Dated body readings, newest first.
+     *
+     * @return HasMany<BodyMeasurement, $this>
+     */
+    public function bodyMeasurements(): HasMany
+    {
+        return $this->hasMany(BodyMeasurement::class)
+            ->orderByDesc('measured_on')
+            ->orderByDesc('id');
     }
 
     /**

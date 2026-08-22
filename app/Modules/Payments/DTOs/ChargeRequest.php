@@ -15,5 +15,9 @@ final readonly class ChargeRequest
         public string $reference,
         public string $description,
         public ?CardDetails $card = null,
+        public ?PayerDetails $payer = null,
+        public ?string $returnUrl = null,
+        public ?string $callbackUrl = null,
+        public string $language = 'en',
     ) {}
 }

@@ -69,8 +69,14 @@ final class SubscriptionCheckoutTest extends TestCase
             'meal_types' => [MealType::Breakfast->value, MealType::Lunch->value],
             'duration_unit' => 'week',
             'duration_length' => 4,
-            'mode' => 'flex',
+            'health' => ['birth_date' => self::birthDateFor(32), 'allergies' => 'Nuts', 'medications' => null],
         ];
+    }
+
+    /** A date of birth that reads as the given age today. */
+    private static function birthDateFor(int $age): string
+    {
+        return now()->subYears($age)->subMonth()->toDateString();
     }
 
     public function test_a_guest_leaving_the_wizard_is_sent_to_sign_in_with_the_draft_kept(): void
@@ -132,6 +138,141 @@ final class SubscriptionCheckoutTest extends TestCase
         $this->assertSame($earliest, session('checkout_subscription_draft.start_date'));
 
         Carbon::setTestNow();
+    }
+
+    public function test_the_first_step_counts_the_programs_on_offer(): void
+    {
+        $this->publishedPlan();
+        $this->publishedPlan();
+        $this->publishedPlan();
+
+        $this->get(route('website.subscribe'))
+            ->assertOk()
+            ->assertSee(trans_choice('website.subscribe.step1.sub', 3));
+    }
+
+    public function test_the_wizard_asks_for_the_health_details(): void
+    {
+        $plan = $this->publishedPlan();
+
+        $this->get(route('website.subscribe'))
+            ->assertOk()
+            ->assertSee(__('website.subscribe.step_health.title'))
+            ->assertSee(__('website.subscribe.step_health.allergies'))
+            ->assertSee(__('website.subscribe.step_health.medications'))
+            ->assertSee(__('website.subscribe.step_health.birth_date'))
+            ->assertSee('id="hBirth"', false);
+
+        $this->assertNotNull($plan->public_id);
+    }
+
+    public function test_a_date_of_birth_outside_the_accepted_range_is_rejected(): void
+    {
+        $plan = $this->publishedPlan();
+
+        $this->postJson(route('website.checkout.subscription'), [
+            ...$this->draft($plan),
+            'health' => ['birth_date' => self::birthDateFor(4)],
+        ])
+            ->assertUnprocessable()
+            ->assertJsonPath('error.code', 'VALIDATION_FAILED')
+            ->assertJsonStructure(['error' => ['details' => ['health.birth_date']]]);
+    }
+
+    public function test_a_missing_date_of_birth_is_rejected(): void
+    {
+        $plan = $this->publishedPlan();
+        $draft = $this->draft($plan);
+        unset($draft['health']);
+
+        $this->postJson(route('website.checkout.subscription'), $draft)
+            ->assertUnprocessable()
+            ->assertJsonStructure(['error' => ['details' => ['health.birth_date']]]);
+    }
+
+    public function test_the_health_details_are_kept_on_the_subscription(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $plan = $this->publishedPlan();
+        $address = $this->addressFor($customer);
+        $birthDate = self::birthDateFor(41);
+
+        $this->actingAs($customer)
+            ->postJson(route('website.checkout.subscription'), [
+                ...$this->draft($plan),
+                'health' => ['birth_date' => $birthDate, 'allergies' => ' Lactose ', 'medications' => 'Metformin'],
+            ])
+            ->assertOk();
+
+        $this->placeOrder($customer, $address)->assertRedirect();
+
+        $subscription = Subscription::query()->firstOrFail();
+
+        $this->assertSame($birthDate, $subscription->health_birth_date?->toDateString());
+        $this->assertSame(41, $subscription->health_birth_date?->age);
+        $this->assertSame('Lactose', $subscription->health_allergies);
+        $this->assertSame('Metformin', $subscription->health_medications);
+    }
+
+    public function test_health_notes_left_empty_are_stored_as_nothing(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $plan = $this->publishedPlan();
+        $address = $this->addressFor($customer);
+
+        $this->actingAs($customer)
+            ->postJson(route('website.checkout.subscription'), [
+                ...$this->draft($plan),
+                'health' => ['birth_date' => self::birthDateFor(28), 'allergies' => '   ', 'medications' => null],
+            ])
+            ->assertOk();
+
+        $this->placeOrder($customer, $address)->assertRedirect();
+
+        $subscription = Subscription::query()->firstOrFail();
+
+        $this->assertSame(28, $subscription->health_birth_date?->age);
+        $this->assertNull($subscription->health_allergies);
+        $this->assertNull($subscription->health_medications);
+    }
+
+    public function test_the_health_details_are_remembered_on_the_account(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $plan = $this->publishedPlan();
+        $address = $this->addressFor($customer);
+        $birthDate = self::birthDateFor(37);
+
+        $this->actingAs($customer)
+            ->postJson(route('website.checkout.subscription'), [
+                ...$this->draft($plan),
+                'health' => ['birth_date' => $birthDate, 'allergies' => 'Gluten', 'medications' => null],
+            ])
+            ->assertOk();
+
+        $this->placeOrder($customer, $address)->assertRedirect();
+
+        $customer->refresh();
+
+        $this->assertSame($birthDate, $customer->birth_date?->toDateString());
+        $this->assertSame('Gluten', $customer->allergies);
+        $this->assertNull($customer->medications);
+    }
+
+    public function test_the_wizard_offers_back_the_details_the_customer_already_shared(): void
+    {
+        $birthDate = self::birthDateFor(37);
+
+        $customer = User::factory()->customer()->create([
+            'birth_date' => $birthDate,
+            'allergies' => 'Gluten',
+        ]);
+
+        $this->actingAs($customer)
+            ->get(route('website.subscribe'))
+            ->assertOk()
+            ->assertSee($birthDate)
+            ->assertSee('Gluten');
     }
 
     public function test_a_signed_in_customer_goes_straight_to_checkout(): void
@@ -196,6 +337,7 @@ final class SubscriptionCheckoutTest extends TestCase
         $subscription = Subscription::query()->firstOrFail();
 
         $this->assertSame(41400, $subscription->total_minor);
+        $this->assertSame('once', $subscription->mode);
         $this->assertSame(SubscriptionStatus::Active, $subscription->status);
         $this->assertSame(PaymentStatus::Paid, $subscription->payment_status);
         $this->assertSame(PaymentMethod::Visa, $subscription->payment_method);
@@ -244,11 +386,30 @@ final class SubscriptionCheckoutTest extends TestCase
         $this->placeOrder($customer, $address)->assertRedirect();
 
         $subscription = Subscription::query()->firstOrFail();
+        $byDate = collect($subscription->meal_schedule)->keyBy('date');
 
         $this->assertTrue($subscription->hasMealSchedule());
-        $this->assertSame('Oatmeal bowl', $subscription->meal_schedule[0]['meals']['breakfast']);
-        $this->assertNull($subscription->meal_schedule[0]['meals']['lunch']);
-        $this->assertSame('Grilled chicken', $subscription->meal_schedule[1]['meals']['lunch']);
+        $this->assertCount($subscription->total_days, $subscription->meal_schedule);
+        $this->assertSame('Oatmeal bowl', $byDate[$schedule[0]['date']]['meals']['breakfast']);
+        $this->assertNull($byDate[$schedule[0]['date']]['meals']['lunch']);
+        $this->assertSame('Grilled chicken', $byDate[$schedule[1]['date']]['meals']['lunch']);
+
+        $later = collect($subscription->meal_schedule)->first(
+            fn (array $day): bool => ! in_array($day['date'], [$schedule[0]['date'], $schedule[1]['date']], true),
+        );
+
+        $this->assertNotNull($later);
+        $this->assertNull($later['meals']['breakfast']);
+    }
+
+    public function test_the_subscribe_wizard_only_asks_for_the_first_two_days(): void
+    {
+        $this->publishedPlan();
+
+        $this->get(route('website.subscribe'))
+            ->assertOk()
+            ->assertSee(__('website.subscribe.step_dishes.title'))
+            ->assertSee('NM_CHECKOUT_MEAL_DAYS = 2', false);
     }
 
     public function test_a_declined_card_leaves_no_subscription_and_keeps_the_draft(): void

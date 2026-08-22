@@ -5,18 +5,26 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Modules\Cms\Models\Article;
+use App\Modules\Cms\Models\Recipe;
+use App\Modules\Consultations\Enums\ConsultationStatus;
+use App\Modules\Consultations\Models\Consultation;
+use App\Modules\Identity\DTOs\HealthProfile;
 use App\Modules\Plans\Enums\MealType;
 use App\Modules\Plans\Models\Meal;
 use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Models\PlanVersion;
 use App\Modules\Plans\Services\PlanPricingService;
 use App\Modules\Settings\Services\SettingsService;
+use App\Modules\Settings\Support\ConsultationSchedule;
 use App\Modules\Store\Models\Category;
 use App\Modules\Store\Models\Product;
 use App\Modules\Subscriptions\Support\SubscriptionStartRules;
 use App\Support\Money\Money;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class WebsiteController extends Controller
 {
@@ -37,6 +45,7 @@ class WebsiteController extends Controller
     public function __construct(
         private readonly PlanPricingService $pricing,
         private readonly SettingsService $settings,
+        private readonly ConsultationSchedule $consultationSchedule,
     ) {}
 
     public function home(): View
@@ -48,6 +57,18 @@ class WebsiteController extends Controller
     {
         return view('website.pages.main', [
             'shopProducts' => $this->websiteShopPreview(),
+            'homeArticles' => Article::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->limit(3)
+                ->get(),
+            'homeRecipes' => Recipe::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->limit(3)
+                ->get(),
         ]);
     }
 
@@ -69,6 +90,9 @@ class WebsiteController extends Controller
             'plansData' => $this->websitePlansData(),
             'finance' => $this->financeConfig(),
             'operations' => $this->operationsConfig(),
+            'birthDateRange' => HealthProfile::birthDateRange(),
+            'ageLimits' => ['min' => HealthProfile::MIN_AGE, 'max' => HealthProfile::MAX_AGE],
+            'healthProfile' => $this->savedHealthProfile()->toArray(),
         ]);
     }
 
@@ -84,7 +108,18 @@ class WebsiteController extends Controller
 
     public function blog(): View
     {
-        return view('website.pages.blog');
+        return view('website.pages.blog', [
+            'articles' => Article::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get(),
+            'recipes' => Recipe::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get(),
+        ]);
     }
 
     public function product(): View
@@ -132,12 +167,65 @@ class WebsiteController extends Controller
 
     public function consult(): View
     {
-        return view('website.pages.consult');
+        $user = Auth::user();
+        abort_unless($user instanceof User, 401);
+
+        $schedule = $this->consultationSchedule->forFrontend();
+        $schedule['booked'] = $this->bookedConsultationStarts(
+            (int) ($schedule['days_ahead'] ?? ConsultationSchedule::DAYS_AHEAD),
+        );
+
+        return view('website.pages.consult', [
+            'consultationSchedule' => $schedule,
+            'customer' => $user,
+        ]);
+    }
+
+    /**
+     * Occupied slot starts keyed by Y-m-d for the public booking UI.
+     *
+     * @return array<string, list<string>>
+     */
+    private function bookedConsultationStarts(int $daysAhead): array
+    {
+        $from = now()->startOfDay()->addDay();
+        $to = now()->startOfDay()->addDays(max(1, $daysAhead));
+
+        $rows = Consultation::query()
+            ->whereIn('status', ConsultationStatus::occupyingValues())
+            ->whereBetween('scheduled_on', [$from->toDateString(), $to->toDateString()])
+            ->get(['scheduled_on', 'starts_at']);
+
+        $booked = [];
+
+        foreach ($rows as $row) {
+            $date = $row->scheduled_on?->toDateString();
+
+            if ($date === null) {
+                continue;
+            }
+
+            $booked[$date] ??= [];
+            $booked[$date][] = $row->startsAtDisplay();
+        }
+
+        return $booked;
     }
 
     public function terms(): View
     {
         return view('website.pages.terms');
+    }
+
+    /**
+     * Health details the signed-in customer already shared, so the wizard can
+     * offer them back instead of asking again.
+     */
+    private function savedHealthProfile(): HealthProfile
+    {
+        $user = Auth::user();
+
+        return $user instanceof User ? HealthProfile::fromUser($user) : HealthProfile::empty();
     }
 
     /**

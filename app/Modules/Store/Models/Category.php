@@ -137,6 +137,14 @@ class Category extends Model
             return asset('storage/'.$this->image_path);
         }
 
+        $stored = 'store/categories/'.$this->image_path;
+        if (
+            is_file(storage_path('app/public/'.$stored))
+            || is_file(public_path('storage/'.$stored))
+        ) {
+            return asset('storage/'.$stored);
+        }
+
         return asset('assets/images/'.$this->image_path);
     }
 }

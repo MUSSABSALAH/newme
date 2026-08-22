@@ -9,6 +9,7 @@ use App\Http\Requests\Web\Account\ResetPasswordRequest;
 use App\Modules\Identity\Enums\UserType;
 use App\Modules\Identity\Exceptions\PasswordResetInvalidException;
 use App\Modules\Identity\Services\PasswordResetService;
+use App\Modules\Identity\Support\CustomerAuthChannels;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,10 +18,17 @@ use Illuminate\Validation\ValidationException;
 
 final class ResetPasswordController extends Controller
 {
-    public function __construct(private readonly PasswordResetService $passwordResetService) {}
+    public function __construct(
+        private readonly PasswordResetService $passwordResetService,
+        private readonly CustomerAuthChannels $channels,
+    ) {}
 
-    public function create(Request $request, string $token): View
+    public function create(Request $request, string $token): View|RedirectResponse
     {
+        if ($this->channels->otpEnabled()) {
+            return redirect()->route('website.login');
+        }
+
         return view('website.account.reset-password', [
             'token' => $token,
             'email' => (string) $request->query('email', ''),
@@ -32,6 +40,10 @@ final class ResetPasswordController extends Controller
      */
     public function store(ResetPasswordRequest $request): RedirectResponse
     {
+        if ($this->channels->otpEnabled()) {
+            return redirect()->route('website.login');
+        }
+
         try {
             $user = $this->passwordResetService->reset(
                 $request->validated('email'),

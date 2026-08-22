@@ -14,11 +14,12 @@ enum RoleName: string
     case SubscriptionOfficer = 'subscription_officer';
     case Nutritionist = 'nutritionist';
     case KitchenStaff = 'kitchen_staff';
+    case ShippingOfficer = 'shipping_officer';
     case DeliveryCoordinator = 'delivery_coordinator';
     case Driver = 'driver';
     case Accountant = 'accountant';
     case CustomerSupport = 'customer_support';
-    case AppointmentOfficer = 'appointment_officer';
+    case Consultant = 'consultant';
     case ContentEditor = 'content_editor';
     case ReportViewer = 'report_viewer';
 

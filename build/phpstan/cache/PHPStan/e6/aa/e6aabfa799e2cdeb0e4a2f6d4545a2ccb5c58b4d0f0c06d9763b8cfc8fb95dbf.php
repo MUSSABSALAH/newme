@@ -5,7 +5,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
    'variableKey' => 'v1-enums',
    'data' => 
   array (
-    'C:/newme/vendor/composer/../guzzlehttp/guzzle/src/functions_include.php' => 
+    'D:/newme/newme/vendor/composer/../guzzlehttp/guzzle/src/functions_include.php' => 
     array (
       0 => '188619ae14fd7457f450a02fba9f4ab58ef3fd2eccf90ee5e0d39b2b6078480a',
       1 => 
@@ -18,7 +18,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Collections/functions.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Collections/functions.php' => 
     array (
       0 => '8308c0ddc8e20ec2fd6c362632aa4548612135932e255de6837cf30749ee55a8',
       1 => 
@@ -32,7 +32,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Collections/helpers.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Collections/helpers.php' => 
     array (
       0 => '0ab3c32b59702c826377fa2af8246cc11c803f7f69f86c41bfe84ab8fb86a8df',
       1 => 
@@ -55,7 +55,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Events/functions.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Events/functions.php' => 
     array (
       0 => 'a92f9ce9127248e29cb81564de57d9ca664a7fd7beecd460d04dbe9ec32c604f',
       1 => 
@@ -69,7 +69,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Filesystem/functions.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Filesystem/functions.php' => 
     array (
       0 => 'b73728cc75efbf6254ae79b77ecead9722b85f11abf07b33c5886e6169aec282',
       1 => 
@@ -83,7 +83,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Foundation/helpers.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Foundation/helpers.php' => 
     array (
       0 => '3fe9475e8c073a9c58af7e9cb8c74416031941413358f6082d558134d416ba86',
       1 => 
@@ -160,7 +160,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Log/functions.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Log/functions.php' => 
     array (
       0 => '9e7bd52e145e686ab716fceea81534f81528e339b48c498c8212006779c286da',
       1 => 
@@ -174,7 +174,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Reflection/helpers.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Reflection/helpers.php' => 
     array (
       0 => '7a07703c5343527b0eac6f26dc7f52d9a34653ba8a90b1a8800d5600f0331740',
       1 => 
@@ -191,7 +191,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Support/functions.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Support/functions.php' => 
     array (
       0 => 'fe246e687097276d36307d934b3fdedf5fd9ea06b2681ed9088f0ea07ddfd9cb',
       1 => 
@@ -217,7 +217,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/framework/src/Illuminate/Support/helpers.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/framework/src/Illuminate/Support/helpers.php' => 
     array (
       0 => '60a6387a3241a9d7780bf04bf2d928ce75e6a37c78cca9d9e3a8ee7599e3f613',
       1 => 
@@ -255,7 +255,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../laravel/prompts/src/helpers.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/prompts/src/helpers.php' => 
     array (
       0 => '7ccc2f3fa7d8d3f8504785839a762028768775a492612a1c88a2f2a72e422e08',
       1 => 
@@ -299,7 +299,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../mockery/mockery/library/helpers.php' => 
+    'D:/newme/newme/vendor/composer/../mockery/mockery/library/helpers.php' => 
     array (
       0 => '93da8798c256eafe88dfc319557f853143c48aa1027f5197de1b963a87503e8f',
       1 => 
@@ -318,7 +318,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../mockery/mockery/library/Mockery.php' => 
+    'D:/newme/newme/vendor/composer/../mockery/mockery/library/Mockery.php' => 
     array (
       0 => '8b6663d4d2c8acda387d4e3a48a8d8998f80315912dcd119a1f67c4ada60f43f',
       1 => 
@@ -386,7 +386,22 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../myclabs/deep-copy/src/DeepCopy/deep_copy.php' => 
+    'D:/newme/newme/vendor/composer/../mpdf/mpdf/src/functions.php' => 
+    array (
+      0 => '2e02c2536d4eb78032ee3ec9acf0e12363a6d6fb216b3777e06acf1033a693e4',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'str_starts_with',
+        1 => 'str_ends_with',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'D:/newme/newme/vendor/composer/../myclabs/deep-copy/src/DeepCopy/deep_copy.php' => 
     array (
       0 => '83a2f8c4b6e65d0c6c658a60614859a62faccc0f11f014c5ad609ba7d1fcebc2',
       1 => 
@@ -400,7 +415,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../nunomaduro/collision/./src/Adapters/Phpunit/Autoload.php' => 
+    'D:/newme/newme/vendor/composer/../nunomaduro/collision/./src/Adapters/Phpunit/Autoload.php' => 
     array (
       0 => '2b94063d75f6b7e4f0e46319d6a0d478df2be33ee3567c69fb91f17f15d802df',
       1 => 
@@ -413,7 +428,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../nunomaduro/termwind/src/Functions.php' => 
+    'D:/newme/newme/vendor/composer/../nunomaduro/termwind/src/Functions.php' => 
     array (
       0 => '211730f0c2316e6eed107a9523efcf48da5b3413431899947c7c22bfbc3b538f',
       1 => 
@@ -432,7 +447,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../phpstan/phpstan/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../phpstan/phpstan/bootstrap.php' => 
     array (
       0 => '7e685476f4b179a3b113e8dc5e1f72456f65ec7b770514128eb3d06008e772b7',
       1 => 
@@ -447,7 +462,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../phpunit/phpunit/src/Framework/Assert/Functions.php' => 
+    'D:/newme/newme/vendor/composer/../phpunit/phpunit/src/Framework/Assert/Functions.php' => 
     array (
       0 => 'f6ff5e503f687f79e9cf782157e645f33264dfc839e3607a456d975caf3e904a',
       1 => 
@@ -702,7 +717,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../psy/psysh/src/functions.php' => 
+    'D:/newme/newme/vendor/composer/../psy/psysh/src/functions.php' => 
     array (
       0 => '832ef9e9db50daea72597825b6b59327dd72b63da6e0146a2346a48915dbdab6',
       1 => 
@@ -719,7 +734,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../ralouphie/getallheaders/src/getallheaders.php' => 
+    'D:/newme/newme/vendor/composer/../ralouphie/getallheaders/src/getallheaders.php' => 
     array (
       0 => 'b2275333d82617732ad407dd55420ff16c0d0c19a5599d60aa9e1e3871d5a654',
       1 => 
@@ -733,7 +748,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../ramsey/uuid/src/functions.php' => 
+    'D:/newme/newme/vendor/composer/../ramsey/uuid/src/functions.php' => 
     array (
       0 => 'ca402a0577a7b3235e22fbc2bd6d6d5282900b039debb13a9f9400390668f45e',
       1 => 
@@ -754,7 +769,23 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/clock/Resources/now.php' => 
+    'D:/newme/newme/vendor/composer/../spatie/laravel-permission/src/helpers.php' => 
+    array (
+      0 => '0167d55aa741ea1531f91877b910b42bef42fd788eebe87ed0eda6b80ea0416e',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'getmodelforguard',
+        1 => 'setpermissionsteamid',
+        2 => 'getpermissionsteamid',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'D:/newme/newme/vendor/composer/../symfony/clock/Resources/now.php' => 
     array (
       0 => '26423cefde6ed92b0e0d5476a890f91c199546fc23b7c07f6c252c8c8f74934a',
       1 => 
@@ -768,7 +799,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/deprecation-contracts/function.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/deprecation-contracts/function.php' => 
     array (
       0 => '7b613b9e9473ab25c57052225446644319d4cfc18fb757921d827c278feadeb1',
       1 => 
@@ -782,7 +813,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-ctype/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-ctype/bootstrap.php' => 
     array (
       0 => 'df3a3ec4b85eb857e59297b6dd6b95245bc30bdb725bf947b20a819256abe052',
       1 => 
@@ -806,11 +837,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-intl-grapheme/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-intl-grapheme/bootstrap.php' => 
     array (
-      0 => 'f8fe6f266364354cc84dfa5171da4e717553bb0f84d34ec52ff11a608b500c51',
+      0 => '356c4b7e565eb25919dc31c504bcd91353c0777e7de99809676e11e27db7e076',
       1 => 
       array (
+        0 => 'valueerror',
       ),
       2 => 
       array (
@@ -834,7 +866,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         2 => 'GRAPHEME_EXTR_MAXCHARS',
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-intl-idn/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-intl-idn/bootstrap.php' => 
     array (
       0 => 'd1c848be8e40cd932b4c417062a06e344aebe6beefebaf627f4990a05e651653',
       1 => 
@@ -887,7 +919,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         35 => 'IDNA_ERROR_CONTEXTJ',
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-intl-normalizer/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-intl-normalizer/bootstrap.php' => 
     array (
       0 => '22d58e117d75904b90c22c692c908d2f1f1cd54f1bcfaf94168a8bcb7a7f6996',
       1 => 
@@ -903,7 +935,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-mbstring/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-mbstring/bootstrap.php' => 
     array (
       0 => '0449da72338523c51270ddfe84447cd16fc110b7d4fae2bee1c2790d9f113fb0',
       1 => 
@@ -916,7 +948,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-php80/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-php80/bootstrap.php' => 
     array (
       0 => 'b4d02a09f7ff5a3bda455bcba0db48e110bcc0cb3aae554f9b1635aa792c757a',
       1 => 
@@ -937,7 +969,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         0 => 'FILTER_VALIDATE_BOOL',
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-php83/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-php83/bootstrap.php' => 
     array (
       0 => 'c1a38e6aeea87046fb4d04d5e5aeea5d4287faa995b1701fc76a1f7694af5476',
       1 => 
@@ -957,7 +989,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-php84/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-php84/bootstrap.php' => 
     array (
       0 => '3d9f616921fe53c928b93fef324736cc82b90dd98b09b06f7c74687b7000586b',
       1 => 
@@ -987,11 +1019,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         1 => 'CURL_HTTP_VERSION_3ONLY',
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-php85/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-php85/bootstrap.php' => 
     array (
-      0 => '284aa090970bfaca0589ac017efd9116bf54f6116fbf1203bb91e652ee1d4115',
+      0 => 'b40bb89199e8dedcf55ef1597be54216a9bb134647138925b3f43a1fa0001d55',
       1 => 
       array (
+        0 => 'valueerror',
       ),
       2 => 
       array (
@@ -1006,7 +1039,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/polyfill-uuid/bootstrap.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/polyfill-uuid/bootstrap.php' => 
     array (
       0 => '971a77f0d03fd33f8ed6cce53010a372b76ffc64aebf1c7ae96bb613002d6b0b',
       1 => 
@@ -1044,7 +1077,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         12 => 'UUID_TYPE_INVALID',
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/string/Resources/functions.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/string/Resources/functions.php' => 
     array (
       0 => '974e6a19bccfc71615061207a08243311152b4759ce416b8f2bc3390790b1644',
       1 => 
@@ -1060,7 +1093,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/translation/Resources/functions.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/translation/Resources/functions.php' => 
     array (
       0 => 'd3d21d3abab120c2488eaf5850182d2a6c64e42c27723500a58c980d658da8b6',
       1 => 
@@ -1074,7 +1107,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../symfony/var-dumper/Resources/functions/dump.php' => 
+    'D:/newme/newme/vendor/composer/../symfony/var-dumper/Resources/functions/dump.php' => 
     array (
       0 => 'b56854286c54a7e648bbb8b5126deb36f673bde888085c4cc0130cb1afbf27eb',
       1 => 
@@ -1089,32 +1122,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:/newme/vendor/composer/../spatie/laravel-permission/src/helpers.php' => 
+    'D:/newme/newme/vendor/composer/../laravel/agent-detector/src/functions.php' => 
     array (
-      0 => '0167d55aa741ea1531f91877b910b42bef42fd788eebe87ed0eda6b80ea0416e',
+      0 => '06010f8a2e899b15dd9de998d7d663752c92ae8af35dc363a0c82ff4f98d8ef5',
       1 => 
       array (
       ),
       2 => 
       array (
-        0 => 'getmodelforguard',
-        1 => 'setpermissionsteamid',
-        2 => 'getpermissionsteamid',
-      ),
-      3 => 
-      array (
-      ),
-    ),
-    'C:/newme/vendor/composer/../mpdf/mpdf/src/functions.php' => 
-    array (
-      0 => '2e02c2536d4eb78032ee3ec9acf0e12363a6d6fb216b3777e06acf1033a693e4',
-      1 => 
-      array (
-      ),
-      2 => 
-      array (
-        0 => 'str_starts_with',
-        1 => 'str_ends_with',
+        0 => 'laravel\\agentdetector\\detectagent',
       ),
       3 => 
       array (

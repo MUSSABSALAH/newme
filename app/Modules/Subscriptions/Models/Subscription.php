@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -34,7 +35,7 @@ use Illuminate\Support\Str;
  * @property SubscriptionStatus $status
  * @property HandlingStatus $handling_status
  * @property int|null $handled_by
- * @property \Illuminate\Support\Carbon|null $handled_at
+ * @property Carbon|null $handled_at
  * @property string $mode
  * @property array<int, string> $meal_types
  * @property string $duration_unit
@@ -42,7 +43,13 @@ use Illuminate\Support\Str;
  * @property int $total_days
  * @property array<int, int>|null $selected_days
  * @property list<array{date: string, meals: array<string, string|null>}>|null $meal_schedule
- * @property \Illuminate\Support\Carbon|null $start_date
+ * @property list<array{date: string, meals: array<string, string|null>}>|null $paused_schedule
+ * @property Carbon|null $start_date
+ * @property Carbon|null $health_birth_date
+ * @property string|null $health_allergies
+ * @property string|null $health_medications
+ * @property Carbon|null $pause_started_on
+ * @property Carbon|null $paused_at
  * @property string $currency
  * @property int|null $coupon_id
  * @property string|null $coupon_code
@@ -82,7 +89,13 @@ class Subscription extends Model
         'total_days',
         'selected_days',
         'meal_schedule',
+        'paused_schedule',
         'start_date',
+        'health_birth_date',
+        'health_allergies',
+        'health_medications',
+        'pause_started_on',
+        'paused_at',
         'currency',
         'coupon_id',
         'coupon_code',
@@ -126,7 +139,11 @@ class Subscription extends Model
             'meal_types' => 'array',
             'selected_days' => 'array',
             'meal_schedule' => 'array',
+            'paused_schedule' => 'array',
             'start_date' => 'date',
+            'health_birth_date' => 'date',
+            'pause_started_on' => 'date',
+            'paused_at' => 'datetime',
             'duration_length' => 'integer',
             'total_days' => 'integer',
             'subtotal_minor' => 'integer',
@@ -229,7 +246,101 @@ class Subscription extends Model
 
     public function hasMealSchedule(): bool
     {
-        return $this->mealScheduleDays() !== [];
+        return $this->scheduleDaysWithPauseState() !== [];
+    }
+
+    public function isPaused(): bool
+    {
+        return $this->status === SubscriptionStatus::Paused;
+    }
+
+    /**
+     * Whether this subscription's plan permits temporary pause.
+     *
+     * Subscriptions without a linked plan keep the historical default (allowed).
+     */
+    public function allowsPause(): bool
+    {
+        $plan = $this->plan;
+
+        if ($plan === null) {
+            return true;
+        }
+
+        return (bool) $plan->allows_pause;
+    }
+
+    /**
+     * Number of delivery days currently frozen by a pause.
+     */
+    public function frozenDaysCount(): int
+    {
+        return count(MealSchedule::normalize($this->paused_schedule ?? []));
+    }
+
+    /**
+     * Active + frozen days for admin/customer display (paused days flagged).
+     *
+     * When paused, never fall back to a full skeleton — that would reintroduce
+     * the frozen days as "active" and show duplicates.
+     *
+     * @return list<array{date: string, weekday: string, label: string, paused: bool, meals: list<array{type: string, label: string, dish: string, is_chef: bool}>}>
+     */
+    public function scheduleDaysWithPauseState(): array
+    {
+        $activeSchedule = MealSchedule::normalize($this->meal_schedule ?? []);
+
+        if ($activeSchedule === [] && ! $this->isPaused()) {
+            $activeSchedule = MealSchedule::resolve(
+                null,
+                $this->start_date?->toDateString(),
+                is_array($this->selected_days) ? $this->selected_days : [],
+                (int) $this->total_days,
+                is_array($this->meal_types) ? $this->meal_types : [],
+            );
+        }
+
+        $byDate = [];
+
+        foreach (MealSchedule::present($activeSchedule) as $day) {
+            $byDate[$day['date']] = [
+                ...$day,
+                'paused' => false,
+            ];
+        }
+
+        if ($this->isPaused()) {
+            foreach (MealSchedule::present(MealSchedule::normalize($this->paused_schedule ?? [])) as $day) {
+                $byDate[$day['date']] = [
+                    ...$day,
+                    'paused' => true,
+                ];
+            }
+        }
+
+        ksort($byDate);
+
+        return array_values($byDate);
+    }
+
+    /**
+     * Last scheduled delivery date (active days only).
+     */
+    public function endDate(): ?Carbon
+    {
+        $days = MealSchedule::resolve(
+            $this->meal_schedule,
+            $this->start_date?->toDateString(),
+            is_array($this->selected_days) ? $this->selected_days : [],
+            (int) $this->total_days,
+            is_array($this->meal_types) ? $this->meal_types : [],
+        );
+
+        if ($days === []) {
+            return null;
+        }
+
+        return Carbon::parse($days[array_key_last($days)]['date'])->startOfDay();
     }
 
     /**

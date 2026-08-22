@@ -15,6 +15,17 @@ return [
         'status_updated' => 'Order status updated.',
     ],
 
+    'mail' => [
+        'subject' => 'Your order :reference is confirmed',
+        'greeting' => 'Hello :name,',
+        'intro' => 'Thank you for your order. We have received order :reference and started preparing it.',
+        'total' => 'Order total: :total :currency',
+        'payment' => 'Payment method: :method',
+        'cash_on_delivery' => 'Please have the amount ready when your order is delivered.',
+        'action' => 'View your order',
+        'outro' => 'We will contact you to arrange delivery.',
+    ],
+
     'errors' => [
         'empty_cart' => 'Your cart is empty.',
         'invalid_transition' => 'Cannot move the order from “:from” to “:to”.',

@@ -38,4 +38,48 @@
         if (closeBtn) closeBtn.addEventListener("click", close);
         menu.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", close); });
     }
+
+    /* ---- disable submit while the request is in flight ---- */
+    document.addEventListener("submit", function (event) {
+        var form = event.target;
+        if (!(form instanceof HTMLFormElement) || event.defaultPrevented) {
+            return;
+        }
+
+        var button = form.querySelector("[data-busy-label]");
+        if (!(button instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        if (form.getAttribute("data-submitting") === "1") {
+            event.preventDefault();
+            return;
+        }
+
+        form.setAttribute("data-submitting", "1");
+
+        window.setTimeout(function () {
+            button.disabled = true;
+            button.setAttribute("aria-busy", "true");
+
+            var label = button.querySelector("[data-busy-text]");
+            var busy = button.getAttribute("data-busy-label");
+            if (busy) {
+                if (label) {
+                    label.textContent = busy;
+                } else {
+                    button.textContent = busy;
+                }
+            }
+
+            var group = form.getAttribute("data-busy-group");
+            if (!group) {
+                return;
+            }
+
+            document.querySelectorAll('form[data-busy-group="' + group + '"] button[type="submit"]').forEach(function (other) {
+                other.disabled = true;
+            });
+        }, 0);
+    });
 })();

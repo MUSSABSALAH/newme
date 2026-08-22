@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Web\Admin\Auth;
 
 use App\Models\User;
+use App\Modules\Identity\Enums\RoleName;
 use App\Modules\Identity\Enums\UserStatus;
+use App\Modules\Identity\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -36,6 +38,19 @@ final class LoginTest extends TestCase
 
         $response->assertRedirect(route('admin.dashboard'));
         $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_a_shipping_officer_lands_on_todays_board(): void
+    {
+        $this->seed(RolesAndPermissionsSeeder::class);
+
+        $officer = User::factory()->create(['email' => 'ship@example.com']);
+        $officer->assignRole(RoleName::ShippingOfficer->value);
+
+        $this->post(route('admin.login'), [
+            'email' => 'ship@example.com',
+            'password' => 'password',
+        ])->assertRedirect(route('admin.deliveries.index'));
     }
 
     public function test_login_fails_with_invalid_password(): void

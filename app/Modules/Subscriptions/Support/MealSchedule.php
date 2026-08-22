@@ -18,7 +18,12 @@ use Illuminate\Support\Carbon;
 final class MealSchedule
 {
     /**
-     * @param  mixed  $raw
+     * How many delivery days the subscribe wizard asks the customer to pick.
+     * Remaining days stay chef’s pick until they finish them in the account.
+     */
+    public const CHECKOUT_PICK_DAYS = 2;
+
+    /**
      * @return list<array{date: string, meals: array<string, string|null>}>
      */
     public static function normalize(mixed $raw): array
@@ -126,9 +131,45 @@ final class MealSchedule
     }
 
     /**
+     * Expand a (possibly partial) wizard payload onto the full delivery calendar.
+     * Matching dates keep the customer’s picks; the rest stay chef’s pick.
+     *
+     * @param  list<int>  $selectedDays
+     * @param  list<string>  $mealTypes
+     * @return list<array{date: string, meals: array<string, string|null>}>
+     */
+    public static function complete(
+        mixed $stored,
+        ?string $startDate,
+        array $selectedDays,
+        int $totalDays,
+        array $mealTypes,
+    ): array {
+        $skeleton = self::skeleton($startDate, $selectedDays, $totalDays, $mealTypes);
+        $picks = [];
+
+        foreach (self::normalize($stored) as $day) {
+            $picks[$day['date']] = $day['meals'];
+        }
+
+        if ($skeleton === []) {
+            return self::normalize($stored);
+        }
+
+        foreach ($skeleton as $index => $day) {
+            if (! isset($picks[$day['date']])) {
+                continue;
+            }
+
+            $skeleton[$index]['meals'] = array_merge($day['meals'], $picks[$day['date']]);
+        }
+
+        return $skeleton;
+    }
+
+    /**
      * Prefer saved dish picks; otherwise build the calendar from the plan choices.
      *
-     * @param  mixed  $stored
      * @param  list<int>  $selectedDays
      * @param  list<string>  $mealTypes
      * @return list<array{date: string, meals: array<string, string|null>}>
@@ -192,6 +233,70 @@ final class MealSchedule
         }
 
         return $presented;
+    }
+
+    /**
+     * Split a schedule into days kept before the pause date and days frozen from it.
+     *
+     * @param  list<array{date: string, meals: array<string, string|null>}>  $schedule
+     * @return array{kept: list<array{date: string, meals: array<string, string|null>}>, frozen: list<array{date: string, meals: array<string, string|null>}>}
+     */
+    public static function splitFromDate(array $schedule, string $pauseFrom): array
+    {
+        $kept = [];
+        $frozen = [];
+
+        foreach (self::normalize($schedule) as $day) {
+            if ($day['date'] < $pauseFrom) {
+                $kept[] = $day;
+            } else {
+                $frozen[] = $day;
+            }
+        }
+
+        return ['kept' => $kept, 'frozen' => $frozen];
+    }
+
+    /**
+     * Re-date frozen days starting at $fromDate, keeping weekday selection and meal picks.
+     *
+     * @param  list<array{date: string, meals: array<string, string|null>}>  $days
+     * @param  list<int>  $selectedDays
+     * @return list<array{date: string, meals: array<string, string|null>}>
+     */
+    public static function rescheduleFrom(array $days, string $fromDate, array $selectedDays): array
+    {
+        if ($days === []) {
+            return [];
+        }
+
+        $weekdays = array_values(array_unique(array_map(
+            static fn ($day): int => (int) $day,
+            $selectedDays,
+        )));
+
+        $cursor = Carbon::parse($fromDate)->startOfDay();
+        $out = [];
+        $guard = 0;
+
+        foreach ($days as $day) {
+            while ($guard < 800) {
+                $guard++;
+
+                if ($weekdays === [] || in_array($cursor->dayOfWeek, $weekdays, true)) {
+                    $out[] = [
+                        'date' => $cursor->toDateString(),
+                        'meals' => $day['meals'],
+                    ];
+                    $cursor = $cursor->copy()->addDay();
+                    break;
+                }
+
+                $cursor = $cursor->copy()->addDay();
+            }
+        }
+
+        return $out;
     }
 
     private static function date(mixed $value): ?string

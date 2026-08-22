@@ -10,8 +10,10 @@ use App\Modules\Identity\Enums\RoleName;
 use App\Modules\Identity\Seeders\RolesAndPermissionsSeeder;
 use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Invoices\Notifications\InvoiceIssuedNotification;
+use App\Modules\Invoices\Services\InvoicePdfRenderer;
 use App\Modules\Invoices\Services\InvoiceService;
 use App\Modules\Orders\Models\Order;
+use App\Modules\Orders\Notifications\OrderConfirmationNotification;
 use App\Modules\Payments\Enums\PaymentMethod;
 use App\Modules\Payments\Enums\PaymentStatus;
 use App\Modules\Payments\Models\Payment;
@@ -86,7 +88,10 @@ final class InvoiceTest extends TestCase
         ])->assertRedirect();
 
         $this->assertDatabaseCount('invoices', 0);
-        Notification::assertNothingSent();
+
+        // The order itself is still confirmed by email; only the invoice waits.
+        Notification::assertSentTo($customer, OrderConfirmationNotification::class);
+        Notification::assertNotSentTo($customer, InvoiceIssuedNotification::class);
 
         $order = Order::query()->sole();
         $payment = Payment::query()->sole();
@@ -149,6 +154,37 @@ final class InvoiceTest extends TestCase
             ->get(route('admin.invoices.download', $invoice))
             ->assertOk()
             ->assertHeader('content-type', 'application/pdf');
+    }
+
+    public function test_the_pdf_is_a_simplified_zatca_tax_invoice(): void
+    {
+        $invoice = Invoice::factory()->create();
+
+        $html = view('invoices.pdf', ['invoice' => $invoice])->render();
+
+        $this->assertStringContainsString('فاتورة ضريبية مبسطة', $html);
+        $this->assertStringContainsString('Simplified Tax Invoice', $html);
+        $this->assertStringContainsString('310000000000003', $html);
+        $this->assertStringContainsString($invoice->number, $html);
+        $this->assertStringContainsString($invoice->sellerParty()->name, $html);
+
+        $this->assertStringContainsString('dir="rtl"', $html);
+        $this->assertLessThan(
+            strpos($html, 'إلى / To:'),
+            strpos($html, 'بيانات الفاتورة'),
+            'Invoice details stay on the left; the recipient stays on the right.',
+        );
+        $this->assertLessThan(
+            strpos($html, 'البيان / Item Descriptions'),
+            strpos($html, 'المبلغ'),
+            'Amounts stay on the left; the item description stays on the right.',
+        );
+
+        $pdf = app(InvoicePdfRenderer::class)->render($invoice);
+
+        $this->assertSame('%PDF', substr($pdf, 0, 4));
+        $this->assertGreaterThan(20_000, strlen($pdf));
+        $this->assertSame(1, preg_match_all('/\/Type\s*\/Page[^s]/', $pdf));
     }
 
     public function test_the_order_page_links_to_the_invoice_pdf(): void

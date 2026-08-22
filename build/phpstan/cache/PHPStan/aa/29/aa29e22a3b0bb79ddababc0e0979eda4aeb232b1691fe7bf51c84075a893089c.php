@@ -1,0 +1,269 @@
+<?php declare(strict_types = 1);
+
+// osfsl-D:/newme/newme/database/factories/UserFactory.php-PHPStan\BetterReflection\Reflection\ReflectionClass-Database\Factories\UserFactory
+return \PHPStan\Cache\CacheItem::__set_state(array(
+   'variableKey' => 'v2-4621fa6af11f4db73d9924783744cf918d3e507272822cdfac47cb5ded599be3-8.4.24-6.70.0.3',
+   'data' => 
+  array (
+    'locatedSource' => 
+    array (
+      'class' => 'PHPStan\\BetterReflection\\SourceLocator\\Located\\LocatedSource',
+      'data' => 
+      array (
+        'name' => 'Database\\Factories\\UserFactory',
+        'filename' => 'D:/newme/newme/database/factories/UserFactory.php',
+      ),
+    ),
+    'namespace' => 'Database\\Factories',
+    'name' => 'Database\\Factories\\UserFactory',
+    'shortName' => 'UserFactory',
+    'isInterface' => false,
+    'isTrait' => false,
+    'isEnum' => false,
+    'isBackedEnum' => false,
+    'modifiers' => 0,
+    'docComment' => '/**
+ * @extends Factory<User>
+ */',
+    'attributes' => 
+    array (
+    ),
+    'startLine' => 18,
+    'endLine' => 76,
+    'startColumn' => 1,
+    'endColumn' => 1,
+    'parentClassName' => 'Illuminate\\Database\\Eloquent\\Factories\\Factory',
+    'implementsClassNames' => 
+    array (
+    ),
+    'traitClassNames' => 
+    array (
+    ),
+    'immediateConstants' => 
+    array (
+    ),
+    'immediateProperties' => 
+    array (
+      'password' => 
+      array (
+        'declaringClassName' => 'Database\\Factories\\UserFactory',
+        'implementingClassName' => 'Database\\Factories\\UserFactory',
+        'name' => 'password',
+        'modifiers' => 18,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionUnionType',
+          'data' => 
+          array (
+            'types' => 
+            array (
+              0 => 
+              array (
+                'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                'data' => 
+                array (
+                  'name' => 'string',
+                  'isIdentifier' => true,
+                ),
+              ),
+              1 => 
+              array (
+                'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                'data' => 
+                array (
+                  'name' => 'null',
+                  'isIdentifier' => true,
+                ),
+              ),
+            ),
+          ),
+        ),
+        'default' => NULL,
+        'docComment' => '/**
+ * The current password being used by the factory.
+ */',
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 23,
+        'endLine' => 23,
+        'startColumn' => 5,
+        'endColumn' => 39,
+        'isPromoted' => false,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
+    ),
+    'immediateMethods' => 
+    array (
+      'definition' => 
+      array (
+        'name' => 'definition',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'array',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Define the model\'s default state.
+ *
+ * @return array<string, mixed>
+ */',
+        'startLine' => 30,
+        'endLine' => 42,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'Database\\Factories',
+        'declaringClassName' => 'Database\\Factories\\UserFactory',
+        'implementingClassName' => 'Database\\Factories\\UserFactory',
+        'currentClassName' => 'Database\\Factories\\UserFactory',
+        'aliasName' => NULL,
+      ),
+      'unverified' => 
+      array (
+        'name' => 'unverified',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'static',
+            'isIdentifier' => false,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Indicate that the model\'s email address should be unverified.
+ */',
+        'startLine' => 47,
+        'endLine' => 52,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'Database\\Factories',
+        'declaringClassName' => 'Database\\Factories\\UserFactory',
+        'implementingClassName' => 'Database\\Factories\\UserFactory',
+        'currentClassName' => 'Database\\Factories\\UserFactory',
+        'aliasName' => NULL,
+      ),
+      'inactive' => 
+      array (
+        'name' => 'inactive',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'static',
+            'isIdentifier' => false,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Indicate that the user is inactive.
+ */',
+        'startLine' => 57,
+        'endLine' => 62,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'Database\\Factories',
+        'declaringClassName' => 'Database\\Factories\\UserFactory',
+        'implementingClassName' => 'Database\\Factories\\UserFactory',
+        'currentClassName' => 'Database\\Factories\\UserFactory',
+        'aliasName' => NULL,
+      ),
+      'customer' => 
+      array (
+        'name' => 'customer',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'static',
+            'isIdentifier' => false,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Public store customer account.
+ */',
+        'startLine' => 67,
+        'endLine' => 75,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'Database\\Factories',
+        'declaringClassName' => 'Database\\Factories\\UserFactory',
+        'implementingClassName' => 'Database\\Factories\\UserFactory',
+        'currentClassName' => 'Database\\Factories\\UserFactory',
+        'aliasName' => NULL,
+      ),
+    ),
+    'traitsData' => 
+    array (
+      'aliases' => 
+      array (
+      ),
+      'modifiers' => 
+      array (
+      ),
+      'precedences' => 
+      array (
+      ),
+      'hashes' => 
+      array (
+      ),
+    ),
+  ),
+));

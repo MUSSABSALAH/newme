@@ -50,6 +50,8 @@ return [
         'image' => 'صورة الغلاف',
         'requires_day_selection' => 'إلزام اختيار أيام التوصيل',
         'requires_day_selection_hint' => 'يجب على العميل اختيار أيام الأسبوع التي يستلم فيها الوجبات.',
+        'allows_pause' => 'يسمح بالإيقاف المؤقت',
+        'allows_pause_hint' => 'إذا أُلغي التفعيل، لن يتمكن مشتركي هذه الباقة من تعليق الاشتراك.',
         'min_delivery_days_per_week' => 'الحد الأدنى لأيام التوصيل أسبوعيًا',
         'min_delivery_days_hint' => 'من 1 إلى 7 أيام.',
         'delivery_fee' => 'رسوم التوصيل',

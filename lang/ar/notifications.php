@@ -38,5 +38,11 @@ return [
                 'body' => 'الاشتراك رقم :reference من :customer — :total ريال.',
             ],
         ],
+        'consultation' => [
+            'booked' => [
+                'title' => 'استشارة جديدة',
+                'body' => 'استشارة رقم :reference من :customer — :when.',
+            ],
+        ],
     ],
 ];

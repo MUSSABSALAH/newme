@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Web\Account\AccountController;
 use App\Http\Controllers\Web\Account\AddressController as CustomerAddressController;
+use App\Http\Controllers\Web\Account\BodyMeasurementController;
 use App\Http\Controllers\Web\Account\ForgotPasswordController as CustomerForgotPasswordController;
 use App\Http\Controllers\Web\Account\InvoiceController as CustomerInvoiceController;
 use App\Http\Controllers\Web\Account\LoginController as CustomerLoginController;
 use App\Http\Controllers\Web\Account\RegisterController as CustomerRegisterController;
 use App\Http\Controllers\Web\Account\ResetPasswordController as CustomerResetPasswordController;
+use App\Http\Controllers\Web\Account\VerifyOtpController as CustomerVerifyOtpController;
+use App\Http\Controllers\Web\Admin\ArticleController;
 use App\Http\Controllers\Web\Admin\AuditController;
 use App\Http\Controllers\Web\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Web\Admin\Auth\LoginController;
 use App\Http\Controllers\Web\Admin\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Admin\CategoryController;
+use App\Http\Controllers\Web\Admin\ConsultationController;
 use App\Http\Controllers\Web\Admin\CouponController;
 use App\Http\Controllers\Web\Admin\CustomerController;
 use App\Http\Controllers\Web\Admin\DashboardController;
+use App\Http\Controllers\Web\Admin\DeliveryController;
 use App\Http\Controllers\Web\Admin\InvitationController as AdminInvitationController;
 use App\Http\Controllers\Web\Admin\InvoiceController;
 use App\Http\Controllers\Web\Admin\MealController;
@@ -28,14 +33,18 @@ use App\Http\Controllers\Web\Admin\PlanMealController;
 use App\Http\Controllers\Web\Admin\PlanPricingController;
 use App\Http\Controllers\Web\Admin\PlanVersionController;
 use App\Http\Controllers\Web\Admin\ProductController;
+use App\Http\Controllers\Web\Admin\RecipeController;
 use App\Http\Controllers\Web\Admin\RoleController;
 use App\Http\Controllers\Web\Admin\SettingController;
 use App\Http\Controllers\Web\Admin\SubscriptionController;
 use App\Http\Controllers\Web\Admin\UserController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CheckoutController;
+use App\Http\Controllers\Web\ConsultationBookingController;
 use App\Http\Controllers\Web\InvitationController;
 use App\Http\Controllers\Web\LocaleController;
+use App\Http\Controllers\Web\MailPreviewController;
+use App\Http\Controllers\Web\PayTabsReturnController;
 use App\Http\Controllers\Web\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,8 +78,12 @@ Route::name('website.')->group(function () {
     // in the session so it survives the trip through login or registration.
     Route::post('/checkout/subscription', [CheckoutController::class, 'startSubscription'])->name('checkout.subscription');
 
-    Route::get('/consult', [WebsiteController::class, 'consult'])->name('consult');
     Route::get('/terms', [WebsiteController::class, 'terms'])->name('terms');
+
+    // PayTabs sends the shopper back here after the hosted page. Auth is
+    // optional: the IPN still settles the payment if the session is gone.
+    Route::match(['GET', 'POST'], 'payments/paytabs/return', PayTabsReturnController::class)
+        ->name('payments.paytabs.return');
 
     // Legacy paths kept as redirects.
     Route::redirect('/plans', '/subscribe');
@@ -84,6 +97,10 @@ Route::name('website.')->group(function () {
         Route::post('login', [CustomerLoginController::class, 'store']);
         Route::get('register', [CustomerRegisterController::class, 'create'])->name('register');
         Route::post('register', [CustomerRegisterController::class, 'store']);
+
+        Route::get('verify', [CustomerVerifyOtpController::class, 'create'])->name('otp.create');
+        Route::post('verify', [CustomerVerifyOtpController::class, 'store'])->name('otp.store');
+        Route::post('verify/resend', [CustomerVerifyOtpController::class, 'resend'])->name('otp.resend');
 
         Route::get('forgot-password', [CustomerForgotPasswordController::class, 'create'])->name('password.request');
         Route::post('forgot-password', [CustomerForgotPasswordController::class, 'store'])->name('password.email');
@@ -102,10 +119,18 @@ Route::name('website.')->group(function () {
         Route::delete('account/addresses/{address}', [CustomerAddressController::class, 'destroy'])->name('account.addresses.destroy');
         Route::patch('account/addresses/{address}/default', [CustomerAddressController::class, 'makeDefault'])->name('account.addresses.default');
 
+        Route::post('account/measurements', [BodyMeasurementController::class, 'store'])->name('account.measurements.store');
+        Route::delete('account/measurements/{measurement}', [BodyMeasurementController::class, 'destroy'])->name('account.measurements.destroy');
+
         Route::get('account/orders/{order}', [AccountController::class, 'order'])->name('account.order');
         Route::get('account/subscriptions/{subscription}', [AccountController::class, 'subscription'])->name('account.subscription');
         Route::put('account/subscriptions/{subscription}/meals', [AccountController::class, 'updateMeals'])->name('account.subscriptions.meals');
+        Route::post('account/subscriptions/{subscription}/pause', [AccountController::class, 'pause'])->name('account.subscriptions.pause');
+        Route::post('account/subscriptions/{subscription}/resume', [AccountController::class, 'resume'])->name('account.subscriptions.resume');
         Route::get('account/invoices/{invoice}', [CustomerInvoiceController::class, 'download'])->name('account.invoice');
+
+        Route::get('consult', [WebsiteController::class, 'consult'])->name('consult');
+        Route::post('consult', [ConsultationBookingController::class, 'store'])->name('consult.store');
 
         // Checkout: confirm the address, pay, then place. Shared by the store
         // cart and a parked subscription draft.
@@ -126,6 +151,10 @@ Route::middleware('guest')->group(function () {
 
 // Temporary design-system preview (removed once real admin screens land).
 Route::view('/design', 'admin.styleguide')->name('design');
+
+// Branded email HTML previews — these pages do not send mail.
+Route::get('/mail/preview', [MailPreviewController::class, 'index'])->name('mail.preview');
+Route::get('/mail/preview/{template}', [MailPreviewController::class, 'show'])->name('mail.preview.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -173,6 +202,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Meals: shared catalog available to plans.
         Route::resource('meals', MealController::class)->except('show');
 
+        // CMS: website articles & recipes.
+        Route::resource('articles', ArticleController::class)->except('show');
+        Route::resource('recipes', RecipeController::class)->except('show');
+
         // Customer subscriptions: read-only, apart from the staff handling state.
         Route::resource('subscriptions', SubscriptionController::class)->only(['index', 'show']);
         Route::patch('subscriptions/{subscription}/handling', [SubscriptionController::class, 'updateHandling'])
@@ -187,6 +220,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('orders', OrderController::class)->only(['index', 'show']);
         Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])
             ->name('orders.status');
+
+        // Shipping: the day sheet of store orders and subscription deliveries.
+        Route::get('deliveries', [DeliveryController::class, 'index'])->name('deliveries.index');
+        Route::patch('deliveries/subscriptions/{subscription}', [DeliveryController::class, 'updateStop'])
+            ->name('deliveries.stops.update');
+        Route::patch('deliveries/orders/{order}', [DeliveryController::class, 'updateOrder'])
+            ->name('deliveries.orders.update');
+
+        Route::resource('consultations', ConsultationController::class)->only(['index', 'show']);
+        Route::patch('consultations/{consultation}/status', [ConsultationController::class, 'updateStatus'])
+            ->name('consultations.status');
 
         // Billing: invoices are issued by the system, never by hand.
         Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices.index');

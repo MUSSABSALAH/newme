@@ -152,6 +152,13 @@ final class OrderService
         }
 
         $order->status = $status;
+
+        // Stamped here so the shipping board can report a past day by what it
+        // handed over, not only by what is still open.
+        if ($status === OrderStatus::Delivered) {
+            $order->delivered_at = now();
+        }
+
         $order->save();
 
         $this->audit->log(

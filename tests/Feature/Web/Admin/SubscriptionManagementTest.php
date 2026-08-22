@@ -112,6 +112,40 @@ final class SubscriptionManagementTest extends TestCase
             ->assertSee(__('subscriptions.show.delivery'));
     }
 
+    public function test_the_detail_page_shows_the_health_profile(): void
+    {
+        $birthDate = now()->subYears(46)->subMonth();
+
+        $subscription = Subscription::factory()->create([
+            'health_birth_date' => $birthDate->toDateString(),
+            'health_allergies' => 'Shellfish',
+            'health_medications' => 'Insulin',
+        ]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.subscriptions.show', $subscription))
+            ->assertOk()
+            ->assertSee(__('subscriptions.show.health'))
+            ->assertSee($birthDate->translatedFormat('d M Y'))
+            ->assertSee(__('subscriptions.show.age_years', ['n' => 46]))
+            ->assertSee('Shellfish')
+            ->assertSee('Insulin');
+    }
+
+    public function test_the_detail_page_says_when_no_health_details_were_shared(): void
+    {
+        $subscription = Subscription::factory()->create([
+            'health_birth_date' => null,
+            'health_allergies' => null,
+            'health_medications' => null,
+        ]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.subscriptions.show', $subscription))
+            ->assertOk()
+            ->assertSee(__('subscriptions.show.no_health'));
+    }
+
     public function test_the_detail_page_shows_the_coupon_discount(): void
     {
         $subscription = Subscription::factory()->create([

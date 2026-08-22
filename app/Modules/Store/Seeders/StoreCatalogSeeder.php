@@ -187,8 +187,17 @@ class StoreCatalogSeeder extends Seeder
             Storage::disk('public')->put($target, (string) file_get_contents($source));
         }
 
-        // Fall back to the bare filename if the source asset is missing.
-        return Storage::disk('public')->exists($target) ? $target : $filename;
+        // Prefer the storage-relative path whenever the file is available under
+        // either the public disk or the committed public/storage tree.
+        if (
+            Storage::disk('public')->exists($target)
+            || is_file(public_path('storage/'.$target))
+        ) {
+            return $target;
+        }
+
+        // Last resort: keep pointing at the static assets folder.
+        return is_file($source) ? $filename : null;
     }
 
     /**

@@ -24,6 +24,7 @@ use Spatie\Translatable\HasTranslations;
  * @property array<string, list<string>>|null $features
  * @property string|null $image_path
  * @property bool $requires_day_selection
+ * @property bool $allows_pause
  * @property int $min_delivery_days_per_week
  * @property int $delivery_fee
  * @property bool $is_active
@@ -45,6 +46,7 @@ class Plan extends Model
         'features',
         'image_path',
         'requires_day_selection',
+        'allows_pause',
         'min_delivery_days_per_week',
         'delivery_fee',
         'is_active',
@@ -78,6 +80,7 @@ class Plan extends Model
         return [
             'goal' => PlanGoal::class,
             'requires_day_selection' => 'boolean',
+            'allows_pause' => 'boolean',
             'min_delivery_days_per_week' => 'integer',
             'delivery_fee' => 'integer',
             'is_active' => 'boolean',

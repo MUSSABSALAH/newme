@@ -5,7 +5,9 @@
   <a class="mlink" href="{{ route('website.main') }}#journey">{{ __('website.nav.journey') }}</a>
   <a class="mlink" href="{{ route('website.store') }}">{{ __('website.nav.store') }}</a>
   <a class="mlink" href="{{ route('website.subscribe') }}">{{ __('website.nav.subscribe') }}</a>
-  <a class="mlink" href="{{ route('website.menu') }}">{{ __('website.nav.menu') }}</a>
+  @if (false)
+    <a class="mlink" href="{{ route('website.menu') }}">{{ __('website.nav.menu') }}</a>
+  @endif
   <a class="mlink" href="{{ route('website.blog') }}#articles">{{ __('website.nav.articles') }}</a>
   <a class="mlink" href="{{ route('website.consult') }}">{{ __('website.nav.consult') }}</a>
   <a class="mlink" href="{{ route('website.terms') }}">{{ __('website.nav.terms_full') }}</a>
@@ -16,7 +18,9 @@
   @else
     <a class="mlink" href="{{ route('website.login') }}">{{ __('account.nav.login') }}</a>
     <a class="mlink" href="{{ route('website.register') }}">{{ __('account.register.submit') }}</a>
-    <a class="mlink" href="{{ route('website.password.request') }}">{{ __('account.login.forgot') }}</a>
+    @unless (app(\App\Modules\Identity\Support\CustomerAuthChannels::class)->otpEnabled())
+      <a class="mlink" href="{{ route('website.password.request') }}">{{ __('account.login.forgot') }}</a>
+    @endunless
   @endauth
   <a class="mcta" href="{{ route('website.subscribe') }}">{{ __('website.menu.cta') }}</a>
   @include('website.partials.lang-toggle')

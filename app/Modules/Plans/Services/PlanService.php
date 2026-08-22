@@ -11,7 +11,6 @@ use App\Modules\Plans\DTOs\PricingRuleData;
 use App\Modules\Plans\Enums\PlanVersionStatus;
 use App\Modules\Plans\Exceptions\PublishedVersionImmutableException;
 use App\Modules\Plans\Models\Plan;
-use App\Modules\Plans\Models\PlanPricingRule;
 use App\Modules\Plans\Models\PlanVersion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -249,6 +248,7 @@ final class PlanService
         $plan->setTranslations('description', $data->description);
         $plan->setTranslations('features', $data->features);
         $plan->requires_day_selection = $data->requiresDaySelection;
+        $plan->allows_pause = $data->allowsPause;
         $plan->min_delivery_days_per_week = $data->minDeliveryDaysPerWeek;
         $plan->delivery_fee = $data->deliveryFee;
         $plan->is_active = $data->isActive;
@@ -269,6 +269,7 @@ final class PlanService
             'name' => $plan->getTranslations('name'),
             'is_active' => $plan->is_active,
             'requires_day_selection' => $plan->requires_day_selection,
+            'allows_pause' => $plan->allows_pause,
             'min_delivery_days_per_week' => $plan->min_delivery_days_per_week,
             'delivery_fee' => $plan->delivery_fee,
         ];

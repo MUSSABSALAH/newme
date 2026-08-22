@@ -64,7 +64,7 @@ final class SubscriptionCouponTest extends TestCase
             'meal_types' => [MealType::Breakfast->value, MealType::Lunch->value],
             'duration_unit' => 'week',
             'duration_length' => 4,
-            'mode' => 'flex',
+            'health' => ['birth_date' => now()->subYears(32)->toDateString()],
         ], $overrides);
     }
 

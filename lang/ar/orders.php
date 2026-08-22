@@ -15,6 +15,17 @@ return [
         'status_updated' => 'تم تحديث حالة الطلب.',
     ],
 
+    'mail' => [
+        'subject' => 'تم تأكيد طلبك :reference',
+        'greeting' => 'مرحبًا :name،',
+        'intro' => 'شكرًا لطلبك. استلمنا الطلب :reference وبدأنا في تجهيزه.',
+        'total' => 'إجمالي الطلب: :total :currency',
+        'payment' => 'طريقة الدفع: :method',
+        'cash_on_delivery' => 'يرجى تجهيز المبلغ عند استلام الطلب.',
+        'action' => 'عرض طلبك',
+        'outro' => 'سنتواصل معك لترتيب التوصيل.',
+    ],
+
     'errors' => [
         'empty_cart' => 'سلة التسوق فارغة.',
         'invalid_transition' => 'لا يمكن نقل الطلب من «:from» إلى «:to».',

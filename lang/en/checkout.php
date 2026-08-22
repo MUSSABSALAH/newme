@@ -41,6 +41,7 @@ return [
         'heading' => 'How would you like to pay?',
         'card_details' => 'Card details',
         'simulated_note' => 'Payments are simulated for now — no real charge is made and no card details are stored.',
+        'hosted_note' => 'You will be redirected to our payment partner to pay securely. We never see your full card number.',
         'test_hint' => 'Try 4242 4242 4242 4242 for an approval, or a number ending in 0002 for a decline.',
         'cod_note' => 'Pay the courier when your order arrives.',
     ],
@@ -51,7 +52,9 @@ return [
         'note' => 'Order note (optional)',
         'note_placeholder' => 'Anything we should know about the delivery?',
         'place' => 'Place order',
+        'pay' => 'Pay securely',
         'placing' => 'Placing your order…',
+        'redirecting' => 'Redirecting to payment…',
         'edit' => 'Edit',
     ],
 

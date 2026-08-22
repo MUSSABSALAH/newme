@@ -18,10 +18,6 @@
         ->unique()
         ->sort()
         ->values();
-
-    $modeKey = 'subscriptions.modes.'.$subscription->mode;
-    $modeLabel = __($modeKey);
-    $modeLabel = $modeLabel === $modeKey ? $subscription->mode : $modeLabel;
 @endphp
 
 <x-layouts.admin :title="$reference" :heading="$reference" :subtitle="$subscription->plan_name">
@@ -139,11 +135,6 @@
                     </div>
 
                     <div class="detail-row">
-                        <span class="detail-row__label">{{ __('subscriptions.fields.mode') }}</span>
-                        <span class="detail-row__value">{{ $modeLabel }}</span>
-                    </div>
-
-                    <div class="detail-row">
                         <span class="detail-row__label">{{ __('subscriptions.fields.duration') }}</span>
                         <span class="detail-row__value">
                             {{ $subscription->duration_length }} {{ __('plans.units.'.$subscription->duration_unit) }}
@@ -162,6 +153,38 @@
                         </div>
                     @endif
                 </div>
+            </x-ui.card>
+
+            <x-ui.card :title="__('subscriptions.show.health')">
+                @if ($subscription->health_birth_date === null && $subscription->health_allergies === null && $subscription->health_medications === null)
+                    <span class="text-muted">{{ __('subscriptions.show.no_health') }}</span>
+                @else
+                    <div class="detail-list">
+                        @if ($subscription->health_birth_date !== null)
+                            <div class="detail-row">
+                                <span class="detail-row__label">{{ __('subscriptions.fields.health_birth_date') }}</span>
+                                <span class="detail-row__value">
+                                    {{ $subscription->health_birth_date->translatedFormat('d M Y') }}
+                                    <span class="text-muted">({{ __('subscriptions.show.age_years', ['n' => $subscription->health_birth_date->age]) }})</span>
+                                </span>
+                            </div>
+                        @endif
+
+                        <div class="detail-row">
+                            <span class="detail-row__label">{{ __('subscriptions.fields.health_allergies') }}</span>
+                            <span class="detail-row__value">
+                                {{ $subscription->health_allergies ?? __('subscriptions.show.none_reported') }}
+                            </span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span class="detail-row__label">{{ __('subscriptions.fields.health_medications') }}</span>
+                            <span class="detail-row__value">
+                                {{ $subscription->health_medications ?? __('subscriptions.show.none_reported') }}
+                            </span>
+                        </div>
+                    </div>
+                @endif
             </x-ui.card>
 
             <x-ui.card :title="__('subscriptions.show.meals')">
@@ -275,13 +298,27 @@
             {{ __('subscriptions.schedule.subtitle') }}
         </p>
 
-        @if ($subscription->hasMealSchedule())
+        @if ($subscription->isPaused())
+            <div class="meal-cal__pause-banner" role="status">
+                {{ __('subscriptions.schedule.paused_banner', [
+                    'date' => $subscription->pause_started_on?->translatedFormat('d M Y') ?? '—',
+                    'count' => $subscription->frozenDaysCount(),
+                ]) }}
+            </div>
+        @endif
+
+        @php $scheduleDays = $subscription->scheduleDaysWithPauseState(); @endphp
+
+        @if ($scheduleDays !== [])
             <div class="meal-cal__grid">
-                @foreach ($subscription->mealScheduleDays() as $day)
-                    <article class="meal-cal__day">
+                @foreach ($scheduleDays as $day)
+                    <article class="meal-cal__day {{ $day['paused'] ? 'meal-cal__day--paused' : '' }}">
                         <header class="meal-cal__day-h">
                             <strong>{{ $day['weekday'] }}</strong>
                             <span>{{ $day['label'] }}</span>
+                            @if ($day['paused'])
+                                <em class="meal-cal__paused-badge">{{ __('subscriptions.schedule.paused_badge') }}</em>
+                            @endif
                         </header>
                         <ul class="meal-cal__meals">
                             @foreach ($day['meals'] as $meal)

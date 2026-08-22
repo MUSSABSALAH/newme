@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#122B4A">
+<title>نيو مي — جدّد حياتك يومياً</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.css">
+<style>
+:root{
+  --navy:#122B4A; --navy-2:#1B3A61; --navy-3:#24487A;
+  --white:#fff; --bg:#F7F5F1; --tile:#F0EDE6; --gray-2:#E8E4DC; --gray-3:#D5D0C6;
+  --ink:#12233B; --body:#43536A; --muted:#7C8799;
+  --orange:#F07F2D; --orange-deep:#DD6516; --orange-hi:#FFA05C; --orange-soft:#FFF0E1;
+  --green:#39B478;
+  --grad:linear-gradient(105deg,var(--orange-hi),var(--orange) 55%,var(--orange-deep));
+  --font:'Cairo',-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  --mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter:max(20px,calc((100vw - 1260px)/2 + 20px));
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:100px}
+body{font-family:var(--font);background:var(--bg);color:var(--body);line-height:1.75;font-size:15.5px;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+h1,h2,h3,h4{color:var(--navy);font-weight:900;line-height:1.18;letter-spacing:-.015em}
+img{display:block;width:100%;height:100%;object-fit:cover}
+button{font-family:var(--font);cursor:pointer}
+.container{max-width:1260px;margin:0 auto;padding:0 20px}
+.aiimg{transition:opacity .9s ease}
+.js .aiimg{opacity:0}
+.js .aiimg.loaded{opacity:1}
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.2,.7,.2,1),transform .65s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+.kick{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-deep)}
+.mono{font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase}
+
+/* ===== flat 2d icons ===== */
+.i{width:1.05em;height:1.05em;fill:currentColor;vertical-align:-0.14em;display:inline-block}
+.ph svg{width:54px;height:54px;color:var(--gray-3);fill:currentColor}
+.ph::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 32%,rgba(255,255,255,.28) 50%,transparent 68%);transform:translateX(-100%);animation:shimmer 2.4s ease infinite;pointer-events:none}
+@keyframes shimmer{to{transform:translateX(100%)}}
+
+/* ===== buttons ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:15px;border-radius:999px;padding:16px 32px;min-height:54px;border:2px solid var(--orange);background:var(--grad);color:#fff;transition:.2s;box-shadow:0 12px 28px rgba(240,127,45,.35)}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:scale(.97)}
+.btn.navy{background:var(--navy);border-color:var(--navy);box-shadow:0 12px 28px rgba(18,43,74,.3)}
+.btn.navy:hover{background:var(--navy-2)}
+.btn.inv{background:#fff;border-color:var(--navy);color:var(--navy);box-shadow:none}
+.btn.inv:hover{background:var(--navy);color:#fff}
+.btn.sm{padding:12px 22px;min-height:46px;font-size:13.5px}
+
+/* ===== fuel/energy bars ===== */
+.fuel{--v:0%}
+.fuel-bar{height:9px;background:rgba(18,43,74,.1);border-radius:99px;overflow:hidden;position:relative}
+.fuel-bar i{position:absolute;inset-block:0;inset-inline-start:0;width:var(--v);background:var(--grad);border-radius:99px;box-shadow:0 0 12px rgba(240,127,45,.55);transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+.spec-card .fuel-bar{background:rgba(255,255,255,.14)}
+.macro{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:11px;font-weight:800;color:var(--ink)}
+.macro small{color:var(--muted);font-weight:700;min-width:52px}
+.macro b{font-family:var(--mono);font-size:11px;color:var(--navy)}
+
+/* ===== announcement ===== */
+.announce{background:var(--navy);color:#fff;text-align:center;padding:9px 14px;font-size:12.5px;font-weight:700;position:relative;overflow:hidden;min-height:calc(38px + var(--sat))}
+.announce b{color:var(--orange-hi)}
+.announce span{position:absolute;inset-inline:14px;top:calc(9px + var(--sat));opacity:0;transition:opacity .4s}
+.announce span.on{opacity:1}
+
+/* ===== nav ===== */
+nav.main{position:sticky;top:0;padding-top:var(--sat);z-index:90;background:rgba(247,245,241,.9);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--gray-2)}
+nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 20px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .mark{width:36px;height:36px;border-radius:50%;background:conic-gradient(from 210deg,var(--navy-3),var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
+.logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(255,255,255,.2) 36%, transparent 60%)}
+.logo b{font-size:19px;color:var(--navy);font-weight:900}
+.nav-links{display:none;gap:20px;font-weight:800;font-size:13.5px;color:var(--ink)}
+.nav-links a{padding:6px 0;border-bottom:2.5px solid transparent;white-space:nowrap}
+.nav-links a:hover{border-color:var(--orange)}
+@media(min-width:1060px){.nav-links{display:flex}}
+.nav-right{display:flex;align-items:center;gap:10px}
+.cart{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;position:relative}
+.cart .i{width:19px;height:19px;color:var(--navy)}
+.cart i{position:absolute;top:-3px;inset-inline-start:-3px;background:var(--orange);color:#fff;font-style:normal;font-size:10px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+
+/* ===== hero: clean split ===== */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--gray-2);display:grid}
+@media(min-width:920px){.hero{grid-template-columns:1.02fr .98fr;min-height:74vh}}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:start;padding:72px 20px 64px}
+@media(min-width:920px){.hero-copy{padding:80px 40px;padding-inline-start:var(--gutter);max-width:none;width:100%}}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--gray-2);border-radius:999px;padding:9px 18px;font-size:12px;font-weight:900;color:var(--navy);box-shadow:0 10px 26px rgba(18,43,74,.08);margin-bottom:24px}
+.hero-pill b{color:var(--orange-deep);font-family:var(--mono)}
+.hero h1{font-size:clamp(38px,7vw,76px);line-height:1.12;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--orange-deep)}
+.hero p.lead{font-size:17px;max-width:540px;margin:0 0 30px;font-weight:700;color:var(--ink)}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-rating{margin-top:28px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;color:var(--ink)}
+.stars{color:var(--orange);letter-spacing:2px;font-size:15px}
+.hero-media{position:relative;min-height:360px;background:var(--tile)}
+@media(min-width:920px){.hero-media{min-height:0}}
+.hero-media .bgph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(165deg,#F1EBE0,#E6DECD)}
+.hero-media .bgph svg{width:90px;height:90px;color:rgba(18,43,74,.14);fill:currentColor}
+.hero-media img{position:absolute;inset:0}
+
+/* ===== USP strip ===== */
+.usp-strip{border-bottom:1px solid var(--gray-2);background:#fff}
+.usp-grid{max-width:1260px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(2,1fr)}
+@media(min-width:920px){.usp-grid{grid-template-columns:repeat(4,1fr)}}
+.usp{padding:24px 18px;text-align:center;border-inline-start:1px solid var(--gray-2)}
+.usp:first-child,.usp:nth-child(3){border-inline-start:none}
+@media(min-width:920px){.usp:nth-child(3){border-inline-start:1px solid var(--gray-2)}}
+.usp .ic{width:46px;height:46px;border-radius:13px;background:var(--orange-soft);color:var(--orange-deep);display:grid;place-items:center;margin:0 auto 9px}
+.usp .ic .i{width:22px;height:22px}
+.usp b{display:block;font-size:15px;color:var(--navy);font-weight:900}
+.usp small{font-size:12px;color:var(--muted);font-weight:700}
+
+/* ===== scrolling text strip ===== */
+.marquee{background:var(--navy);color:#fff;overflow:hidden;padding:14px 0;border-block:1px solid rgba(255,255,255,.08)}
+.marquee .track{display:inline-flex;align-items:center;gap:0;white-space:nowrap;width:max-content;animation:marq 30s linear infinite;will-change:transform}
+.marquee:hover .track{animation-play-state:paused}
+.marquee .item{display:inline-flex;align-items:center;gap:14px;padding:0 22px;font-weight:900;font-size:14px;letter-spacing:.02em}
+.marquee .item .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);flex-shrink:0}
+.marquee .item em{font-style:normal;color:var(--orange-hi)}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@media (prefers-reduced-motion: reduce){.marquee .track{animation:none}}
+
+/* ===== sections ===== */
+.section{padding:76px 0}
+.sec-head{max-width:820px;margin:0 auto 44px;text-align:center;padding:0 20px}
+.sec-head h2{font-size:clamp(30px,6.5vw,52px);margin:10px 0 12px}
+.sec-head h2 em{font-style:normal;color:var(--orange-deep)}
+.sec-head p{font-size:15px;font-weight:600;color:var(--muted)}
+.sec-head .kick{display:inline-flex;align-items:center;gap:10px}
+.sec-head .kick::before,.sec-head .kick::after{content:"";width:26px;height:2px;border-radius:2px;background:var(--orange)}
+
+/* ===== ABOUT ===== */
+.about-grid{max-width:1260px;margin:0 auto;padding:0 20px;display:grid;gap:28px}
+@media(min-width:920px){.about-grid{grid-template-columns:1fr 1.08fr;align-items:center;gap:52px}}
+.about-photo{border-radius:22px;overflow:hidden;position:relative;aspect-ratio:4/4.2;background:var(--tile);box-shadow:0 24px 54px rgba(18,43,74,.14)}
+@supports not (aspect-ratio:1){.about-photo{height:0;padding-bottom:85%}}
+.about-photo .ph{position:absolute;inset:0;display:grid;place-items:center}
+.about-photo img{position:absolute;inset:0}
+.about-badge{position:absolute;bottom:14px;inset-inline-start:14px;z-index:2;background:#fff;border-radius:14px;padding:10px 16px;font-size:12px;font-weight:900;color:var(--navy);box-shadow:0 12px 28px rgba(18,43,74,.18)}
+.about-badge b{color:var(--orange-deep);font-family:var(--mono)}
+.about-copy h2{font-size:clamp(28px,5.6vw,44px);margin:8px 0 14px}
+.about-copy h2 em{font-style:normal;color:var(--orange-deep)}
+.about-copy p{font-size:14.5px;font-weight:600;margin-bottom:15px;max-width:560px}
+.about-quote{background:#fff;border-inline-start:4px solid var(--orange);border-radius:18px;padding:18px 20px;box-shadow:0 16px 36px rgba(18,43,74,.08);color:var(--navy);font-weight:800;font-size:15px;line-height:1.9}
+.about-quote b{display:block;margin-top:10px;color:var(--orange-deep);font-size:12.5px;letter-spacing:.04em}
+.about-list{list-style:none;margin:4px 0 22px}
+.about-list li{display:flex;gap:10px;font-size:13.5px;font-weight:700;color:var(--body);padding:7px 0;line-height:1.75;max-width:560px}
+.about-list li b{color:var(--navy)}
+.about-list li .i{color:var(--green);width:18px;height:18px;flex-shrink:0;margin-top:3px}
+.about-mini{display:flex;gap:26px;border-top:1.5px solid var(--gray-2);padding-top:18px}
+.about-mini b{display:block;font-size:24px;color:var(--navy);font-weight:900}
+.about-mini b .a{color:var(--orange-deep)}
+.about-mini span{font-size:11.5px;color:var(--muted);font-weight:800}
+
+/* ===== VISION 2030 + OPS INFOGRAPHIC ===== */
+.ops-wrap{max-width:1260px;margin:52px auto 0;padding:0 20px}
+.vision{display:flex;gap:22px;align-items:center;background:linear-gradient(115deg,var(--navy),var(--navy-3));border-radius:22px;padding:26px;color:#fff;position:relative;overflow:hidden;box-shadow:0 24px 54px rgba(18,43,74,.22)}
+.vision::before{content:"";position:absolute;top:-90px;inset-inline-end:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.3),transparent 65%)}
+.v-badge{flex-shrink:0;width:104px;height:104px;border-radius:26px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.22);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative;z-index:2}
+.v-badge small{font-size:10.5px;font-weight:800;color:#B9C9E2;letter-spacing:.06em}
+.v-badge b{font-family:var(--mono);font-size:34px;font-weight:700;color:var(--orange-hi);line-height:1}
+.v-copy{position:relative;z-index:2}
+.v-copy .kick{color:var(--orange-hi)}
+.v-copy h3{color:#fff;font-size:clamp(19px,3.6vw,26px);margin:6px 0 8px}
+.v-copy p{font-size:14px;font-weight:600;color:#C7D6EC;max-width:640px}
+.v-copy p b{color:#fff}
+@media(max-width:640px){.vision{flex-direction:column;text-align:center}.v-copy .kick{justify-content:center}}
+.ops-head{text-align:center;margin:38px 0 22px}
+.ops-head h3{font-size:clamp(21px,4.4vw,30px);margin-top:8px}
+.ops-flow{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:640px){.ops-flow{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1020px){.ops-flow{grid-template-columns:repeat(5,1fr);gap:16px}}
+.op{background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:22px 16px 20px;text-align:center;position:relative;transition:transform .2s,box-shadow .2s}
+.op:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(18,43,74,.1)}
+@media(min-width:1020px){.op:not(:last-child)::after{content:"";position:absolute;top:52px;inset-inline-end:-16px;width:16px;border-top:2px dashed var(--gray-3)}}
+.op-n{position:absolute;top:12px;inset-inline-start:14px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--orange-deep);letter-spacing:.1em}
+.op-ic{width:56px;height:56px;border-radius:16px;background:var(--orange-soft);color:var(--orange-deep);display:grid;place-items:center;margin:4px auto 12px}
+.op-ic .i{width:26px;height:26px}
+.op-kpi{display:block;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.op h4{font-size:14.5px;color:var(--navy);margin-bottom:6px}
+.op p{font-size:12px;font-weight:600;color:var(--muted);line-height:1.8}
+
+/* ===== PRODUCTS (spec-row pattern) ===== */
+.shop{background:#EFEBE3}
+.prod-grid{display:grid;gap:26px 16px;grid-template-columns:repeat(2,1fr);max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:1040px){.prod-grid{grid-template-columns:repeat(4,1fr);gap:30px 18px}}
+.prod{display:flex;flex-direction:column}
+.prod-tile{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--tile);border-radius:18px;margin-bottom:14px}
+.prod-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.5px rgba(18,43,74,.06);pointer-events:none;z-index:2}
+@supports not (aspect-ratio:1){.prod-tile{height:0;padding-bottom:100%}}
+.prod-tile .ph{position:absolute;inset:0;display:grid;place-items:center}
+.prod-tile img{position:absolute;inset:0;transition:transform .45s ease}
+.prod:hover .prod-tile img{transform:scale(1.05)}
+.p-flag{position:absolute;top:12px;inset-inline-start:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:900;letter-spacing:.08em;color:var(--navy)}
+.p-flag .i{width:15px;height:15px;color:var(--orange-deep)}
+.prod h3{font-size:17px;font-weight:900;line-height:1.35}
+.p-sub{font-size:13px;color:var(--body);font-weight:600;margin:2px 0 0}
+.p-specs{border-top:1.5px solid var(--gray-2);border-bottom:1.5px solid var(--gray-2);margin:13px 0;padding:11px 0;display:grid;gap:9px}
+.p-spec{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800;color:var(--ink)}
+.p-spec .i{width:19px;height:19px;color:var(--navy);flex-shrink:0}
+.kcal-box{display:inline-grid;place-items:center;min-width:38px;height:22px;border:1.8px solid var(--navy);border-radius:6px;font-family:var(--mono);font-size:9.5px;font-weight:700;color:var(--navy);padding:0 5px;flex-shrink:0}
+.p-price{font-weight:900;font-size:19px;color:var(--navy)}
+.p-price small{display:block;font-size:12px;color:var(--muted);font-weight:700}
+.p-view{margin-top:13px;display:flex;justify-content:center;background:var(--navy);color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:13px;min-height:48px;align-items:center;transition:.2s}
+.p-view:hover{background:var(--orange-deep)}
+.p-view:active{transform:scale(.97)}
+.shop-cta{text-align:center;margin-top:38px}
+
+/* ===== NUTRITION SPEC ===== */
+.spec-grid{max-width:1260px;margin:0 auto;padding:0 20px;display:grid;gap:22px}
+@media(min-width:920px){.spec-grid{grid-template-columns:1fr 1fr;align-items:center}}
+.spec-photo{border-radius:22px;overflow:hidden;position:relative;aspect-ratio:4/3.4;background:var(--tile);box-shadow:0 24px 54px rgba(18,43,74,.14)}
+@supports not (aspect-ratio:1){.spec-photo{height:0;padding-bottom:85%}}
+.spec-photo .ph{position:absolute;inset:0;display:grid;place-items:center}
+.spec-photo .ph svg{width:72px;height:72px}
+.spec-photo img{position:absolute;inset:0}
+.spec-photo .cap{position:absolute;bottom:12px;inset-inline-start:12px;z-index:2;background:rgba(18,43,74,.85);color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:7px 14px}
+.spec-card{background:var(--navy);border-radius:22px;padding:26px 24px;color:#fff;box-shadow:0 24px 54px rgba(18,43,74,.3)}
+.spec-card h3{color:#fff;font-size:22px;margin-bottom:4px}
+.spec-card .sub{font-size:12px;color:#9FB4D2;font-weight:800;margin-bottom:18px}
+.spec-row{display:grid;grid-template-columns:1.1fr 2fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px;font-weight:800}
+.spec-row:first-of-type{border-top:none}
+.spec-row .n{color:#C7D6EC}
+.spec-row .v{font-family:var(--mono);color:#fff;font-size:13px;min-width:64px;text-align:left}
+.spec-row .v em{font-style:normal;color:var(--orange-hi)}
+.spec-note{margin-top:14px;font-size:10.5px;color:#8FA4C4;font-weight:700}
+
+/* ===== JOURNEY ===== */
+.zig{max-width:1260px;margin:0 auto;padding:0 20px}
+.zrow{display:grid;gap:22px;border-top:1px solid var(--gray-2);padding:36px 0}
+@media(min-width:920px){.zrow{grid-template-columns:1fr 1fr;gap:40px;min-height:420px}.zrow.flip .zmedia{order:2}}
+.zmedia{position:relative;min-height:290px;background:var(--tile);overflow:hidden;border-radius:22px;box-shadow:0 24px 54px rgba(18,43,74,.12)}
+.zmedia .ph{position:absolute;inset:0;display:grid;place-items:center}
+.zmedia .ph svg{width:64px;height:64px}
+.zmedia img{position:absolute;inset:0}
+.znum{position:absolute;top:16px;inset-inline-start:16px;z-index:2;background:var(--orange);color:#fff;font-size:11px;font-weight:900;padding:7px 15px;border-radius:999px;letter-spacing:.08em;box-shadow:0 8px 20px rgba(240,127,45,.4)}
+.zcopy{padding:6px 2px 10px;display:flex;flex-direction:column;justify-content:center}
+@media(min-width:920px){.zcopy{padding:20px 8px}}
+.zcopy h3{font-size:clamp(25px,5.4vw,40px);margin:8px 0 12px}
+.zcopy p{font-size:14.5px;max-width:540px;font-weight:600;margin-bottom:18px}
+.z-fuel{max-width:360px;margin-bottom:18px}
+.z-fuel .macro{margin-bottom:7px}
+.zlink{font-weight:900;font-size:14px;color:var(--orange-deep);display:inline-flex;align-items:center;gap:8px;border-bottom:2.5px solid var(--orange);padding-bottom:2px;width:max-content}
+
+/* ===== video placeholders ===== */
+.vid{position:relative;cursor:pointer;overflow:hidden}
+.vid img{transition:transform .5s ease}
+.vid:hover img{transform:scale(1.04)}
+.vid::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,rgba(18,43,74,.05) 40%,rgba(18,43,74,.55));z-index:1}
+.vid .play{position:absolute;top:50%;inset-inline-start:50%;transform:translate(50%,-50%);z-index:3;width:74px;height:74px;border-radius:50%;background:var(--grad);display:grid;place-items:center;box-shadow:0 16px 40px rgba(240,127,45,.5),0 0 0 0 rgba(240,127,45,.45);animation:playPulse 2.4s ease-out infinite;transition:transform .2s;border:none}
+.vid:hover .play{transform:translate(50%,-50%) scale(1.08)}
+.vid .play svg{width:28px;height:28px;fill:#fff;transform:scaleX(-1);margin-inline-end:-4px}
+@keyframes playPulse{0%{box-shadow:0 16px 40px rgba(240,127,45,.5),0 0 0 0 rgba(240,127,45,.45)}70%{box-shadow:0 16px 40px rgba(240,127,45,.5),0 0 0 22px rgba(240,127,45,0)}100%{box-shadow:0 16px 40px rgba(240,127,45,.5),0 0 0 0 rgba(240,127,45,0)}}
+.vid .dur{position:absolute;bottom:13px;inset-inline-end:13px;z-index:3;background:rgba(18,43,74,.85);color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;border-radius:999px;padding:6px 13px}
+.vid .vtag{position:absolute;top:13px;inset-inline-end:13px;z-index:3;background:#fff;color:var(--navy);font-size:10px;font-weight:900;letter-spacing:.1em;border-radius:999px;padding:6px 13px}
+.vid .vnote{position:absolute;bottom:13px;inset-inline-start:13px;z-index:3;background:rgba(255,255,255,.94);color:var(--navy);font-size:11px;font-weight:800;border-radius:999px;padding:7px 14px;opacity:0;transform:translateY(6px);transition:.3s;max-width:70%}
+.vid.nudge .vnote{opacity:1;transform:none}
+.vid.playing .play,.vid.playing .dur,.vid.playing .vtag,.vid.playing .vnote{display:none}
+.vid.playing::after{display:none}
+.vid video,.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:4;background:#000;object-fit:cover}
+.film-wrap{max-width:1260px;margin:0 auto;padding:0 20px}
+.film{border-radius:22px;aspect-ratio:16/9;background:var(--navy-2);box-shadow:0 30px 70px rgba(18,43,74,.22)}
+@supports not (aspect-ratio:1){.film{height:0;padding-bottom:56.25%}}
+.film .ph{position:absolute;inset:0;display:grid;place-items:center}
+.film .ph svg{width:80px;height:80px;color:rgba(255,255,255,.18)}
+.film img{position:absolute;inset:0}
+.film-cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1260px;margin:14px auto 0;padding:0 20px;font-size:12.5px;font-weight:800;color:var(--muted)}
+.film-cap b{color:var(--navy)}
+
+/* ===== VALUES ===== */
+.val-grid{display:grid;gap:14px;grid-template-columns:1fr;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:700px){.val-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1040px){.val-grid{grid-template-columns:repeat(4,1fr)}}
+.val{background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:24px 20px;transition:transform .2s,box-shadow .2s}
+.val:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(18,43,74,.1)}
+.val .ic{width:48px;height:48px;border-radius:14px;background:var(--orange-soft);color:var(--orange-deep);display:grid;place-items:center;margin-bottom:14px}
+.val .ic .i{width:23px;height:23px}
+.val h3{font-size:17px;margin-bottom:6px}
+.val p{font-size:13px;font-weight:600;color:var(--body);line-height:1.85}
+.band{background:var(--navy);color:#fff;padding:70px 0;position:relative;overflow:hidden;margin-top:56px}
+.band::before{content:"";position:absolute;top:-140px;inset-inline-start:15%;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.25),transparent 65%)}
+.band .kick{color:var(--orange-hi)}
+.band h2{color:#fff;font-size:clamp(28px,6.2vw,52px);max-width:840px;margin:12px auto 40px;text-align:center;padding:0 20px;position:relative;z-index:2}
+.band h2 .u{box-shadow:inset 0 -0.28em 0 var(--orange)}
+.band-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid rgba(255,255,255,.12);padding:0 20px;position:relative;z-index:2}
+@media(min-width:920px){.band-grid{grid-template-columns:repeat(4,1fr)}}
+.bstat{padding:26px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.12)}
+.bstat b{display:block;font-size:clamp(30px,6.2vw,46px);font-weight:900;color:#fff;line-height:1.15}
+.bstat b .a{color:var(--orange-hi)}
+.bstat span{display:block;margin-top:4px;font-size:12px;color:#9FB4D2;font-weight:700;line-height:1.6}
+.band-tag{position:relative;z-index:2;text-align:center;margin:36px 20px 0;color:#C7D6EC;font-weight:700;font-size:15px}
+.band-tag em{font-style:normal;color:var(--orange-hi);font-weight:900}
+
+/* ===== reviews ===== */
+.rev-head{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:34px;text-align:center;padding:0 20px}
+.rev-head .stars{font-size:24px;letter-spacing:4px}
+.rev-head b{font-size:15px;color:var(--navy);font-weight:900}
+.rev-grid{display:grid;gap:14px;grid-template-columns:1fr;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:760px){.rev-grid{grid-template-columns:repeat(3,1fr)}}
+.rev{background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:22px}
+.rev .stars{font-size:13px;letter-spacing:2px;margin-bottom:10px}
+.rev h4{font-size:15px;margin-bottom:6px}
+.rev p{font-size:13.5px;font-weight:600;margin-bottom:16px}
+.rev .who{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);font-weight:800}
+.rev .who .av{width:40px;height:40px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0;border:2px solid var(--orange-soft)}
+.rev .who .av .ph{position:absolute;inset:0;display:grid;place-items:center}
+.rev .who .av .ph svg{width:22px;height:22px;color:var(--muted)}
+.rev .who .av img{position:absolute;inset:0}
+.rev .who b{color:var(--navy);display:block;line-height:1.4}
+.rev .who i{font-style:normal;color:var(--green);font-weight:800}
+
+/* ===== SUBSCRIPTIONS ===== */
+.subs{background:linear-gradient(180deg,var(--navy) 0%,#0C1F38 100%);color:#fff;padding:80px 0 90px;position:relative;overflow:hidden;border-radius:44px 44px 0 0}
+.subs::before{content:"";position:absolute;top:-160px;inset-inline-end:-100px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.3),transparent 65%);animation:glow 6s ease-in-out infinite alternate}
+.subs::after{content:"";position:absolute;bottom:-180px;inset-inline-start:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(36,72,122,.7),transparent 65%)}
+@keyframes glow{from{opacity:.7;transform:scale(1)}to{opacity:1;transform:scale(1.15)}}
+.subs .sec-head h2{color:#fff}
+.subs .sec-head p{color:#B9C9E2}
+.subs .inner{position:relative;z-index:2}
+.toggle-wrap{display:flex;justify-content:center;margin-bottom:40px}
+.toggle{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px;position:relative;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.toggle button{position:relative;z-index:2;border:none;background:none;color:#B9C9E2;font-weight:800;font-size:13.5px;padding:11px 24px;border-radius:999px;transition:color .25s;display:flex;align-items:center;gap:7px}
+.toggle button.on{color:var(--navy)}
+.toggle button .save{background:var(--green);color:#fff;font-size:9.5px;font-weight:900;border-radius:999px;padding:2px 8px}
+.toggle .pill{position:absolute;top:5px;bottom:5px;border-radius:999px;background:#fff;transition:all .35s cubic-bezier(.2,.8,.2,1);z-index:1}
+.sub-grid{display:grid;gap:16px;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:920px){.sub-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+.splan{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:22px;padding:28px 24px;display:flex;flex-direction:column;position:relative;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:transform .25s}
+.splan:hover{transform:translateY(-6px)}
+.splan.pop{background:linear-gradient(165deg,rgba(240,127,45,.16),rgba(255,255,255,.05));border:2px solid var(--orange);box-shadow:0 0 0 6px rgba(240,127,45,.12),0 34px 70px rgba(0,0,0,.45)}
+@media(min-width:920px){.splan.pop{transform:scale(1.05)}.splan.pop:hover{transform:scale(1.05) translateY(-6px)}}
+.splan .tag{position:absolute;top:-14px;inset-inline-start:50%;transform:translateX(50%);background:var(--grad);color:#fff;font-size:11px;font-weight:900;border-radius:999px;padding:6px 18px;box-shadow:0 10px 24px rgba(240,127,45,.5);white-space:nowrap}
+.splan .code{font-family:var(--mono);font-size:10px;color:#8FA4C4;letter-spacing:.16em}
+.splan h3{color:#fff;font-size:23px;margin:4px 0 2px}
+.splan .goal{font-size:12px;color:#B9C9E2;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.splan .goal .i{width:13px;height:13px;color:var(--orange-hi)}
+.splan .pline{display:flex;align-items:baseline;gap:7px}
+.splan .pline b{font-size:clamp(38px,8vw,50px);font-weight:900;color:#fff;line-height:1.05;font-family:var(--mono)}
+.splan .pline small{font-size:13px;color:#8FA4C4;font-weight:800}
+.splan .was{font-size:12px;color:#8FA4C4;font-weight:700;height:20px}
+.splan .was s{color:#E88}
+.splan .per{display:inline-flex;width:max-content;background:rgba(57,180,120,.18);border:1px solid rgba(57,180,120,.4);color:#5FE0A0;font-size:11.5px;font-weight:900;border-radius:999px;padding:4px 12px;margin:8px 0 16px}
+.plan-fuel{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 14px;margin-bottom:16px}
+.plan-fuel .hd{display:flex;justify-content:space-between;font-size:10.5px;font-weight:900;color:#B9C9E2;margin-bottom:8px;letter-spacing:.06em}
+.plan-fuel .hd .i{width:13px;height:13px;color:var(--orange-hi)}
+.plan-fuel .hd b{font-family:var(--mono);color:var(--orange-hi)}
+.plan-fuel .fuel-bar{background:rgba(255,255,255,.14)}
+.plan-fuel .meals{display:flex;gap:6px;margin-top:9px}
+.plan-fuel .meals span{flex:1;text-align:center;font-size:9.5px;font-weight:800;color:#8FA4C4;background:rgba(255,255,255,.06);border-radius:8px;padding:5px 2px}
+.plan-fuel .meals span.on{background:rgba(240,127,45,.22);color:var(--orange-hi);border:1px solid rgba(240,127,45,.4)}
+.splan ul{list-style:none;margin-bottom:20px}
+.splan li{display:flex;gap:9px;font-size:13px;font-weight:700;color:#DCE6F4;padding:5px 0}
+.splan li::before{content:"✓";color:var(--orange-hi);font-weight:900}
+.splan li.no{opacity:.35}
+.splan li.no::before{content:"—"}
+.splan .btn{width:100%;margin-top:auto}
+.sub-guarantee{display:flex;align-items:center;justify-content:center;gap:10px;margin:34px auto 0;max-width:600px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:14px 24px;font-size:13px;font-weight:800;color:#DCE6F4;text-align:center;position:relative;z-index:2}
+.sub-guarantee .i{width:17px;height:17px;color:var(--orange-hi);flex-shrink:0}
+.sub-trust{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:20px;font-size:11.5px;font-weight:800;color:#8FA4C4;position:relative;z-index:2}
+.sub-trust span{display:inline-flex;gap:6px;align-items:center}
+.sub-trust b{color:var(--orange-hi)}
+
+/* ===== ARTICLES & RECIPES ===== */
+.card-grid{display:grid;gap:16px;grid-template-columns:1fr;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:760px){.card-grid{grid-template-columns:repeat(3,1fr)}}
+.acard{background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.acard:hover{transform:translateY(-5px);box-shadow:0 22px 48px rgba(18,43,74,.12)}
+.acard .media{aspect-ratio:16/10;position:relative;overflow:hidden;background:var(--tile)}
+@supports not (aspect-ratio:1){.acard .media{height:0;padding-bottom:62.5%}}
+.acard .media .ph{position:absolute;inset:0;display:grid;place-items:center}
+.acard .media img{position:absolute;inset:0;transition:transform .45s ease}
+.acard:hover .media img{transform:scale(1.05)}
+.acard .cat{position:absolute;top:12px;inset-inline-start:12px;z-index:2;background:#fff;color:var(--navy);font-size:10.5px;font-weight:900;border-radius:999px;padding:5px 13px}
+.acard .body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+.acard .meta{display:flex;gap:12px;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:8px;flex-wrap:wrap}
+.acard .meta span{display:inline-flex;align-items:center;gap:5px}
+.acard .meta .i{width:14px;height:14px;color:var(--orange-deep)}
+.acard h3{font-size:16.5px;line-height:1.45;margin-bottom:6px}
+.acard .ex{font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:14px}
+.acard .go{margin-top:auto;font-weight:900;font-size:13.5px;color:var(--orange-deep);display:inline-flex;align-items:center;gap:7px}
+.center-cta{text-align:center;margin-top:34px}
+
+/* ===== FAQ ===== */
+.faq{max-width:780px;margin:0 auto;padding:0 20px}
+.fitem{border-bottom:1px solid var(--gray-2)}
+.fq{width:100%;background:none;border:none;text-align:start;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px 2px;font-size:15.5px;font-weight:900;color:var(--navy)}
+.fq .x{width:28px;height:28px;border-radius:50%;background:var(--orange-soft);color:var(--orange-deep);display:grid;place-items:center;font-size:16px;font-weight:900;flex-shrink:0;transition:transform .3s}
+.fitem.open .fq .x{transform:rotate(45deg)}
+.fa{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.fa p{padding:0 2px 20px;font-size:14px;font-weight:600}
+
+/* ===== photo CTA ===== */
+.photo-cta{position:relative;min-height:440px;display:grid;place-items:center;text-align:center;overflow:hidden;background:var(--navy)}
+.photo-cta .ph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(160deg,var(--navy-2),#0C1F38)}
+.photo-cta .ph svg{width:90px;height:90px;color:rgba(255,255,255,.16)}
+.photo-cta img{position:absolute;inset:0;opacity:.45}
+.photo-cta .inner{position:relative;z-index:2;padding:70px 20px}
+.photo-cta h2{color:#fff;font-size:clamp(34px,8vw,64px);margin-bottom:12px}
+.photo-cta h2 em{font-style:normal;color:var(--orange-hi)}
+.photo-cta p{color:#DCE6F4;font-weight:700;font-size:15px;margin-bottom:28px}
+.photo-cta small{display:block;margin-top:14px;color:#B9C9E2;font-size:12px;font-weight:700}
+
+/* ===== footer ===== */
+footer{background:#0C1F38;color:#9FB4D2;padding:64px 0 calc(100px + var(--sab))}
+.f-grid{max-width:1260px;margin:0 auto;padding:0 20px;display:grid;gap:36px}
+@media(min-width:920px){.f-grid{grid-template-columns:1.3fr 1fr 1fr 1fr}}
+.f-news h3{color:#fff;font-size:22px;margin-bottom:8px}
+.f-news p{font-size:13px;font-weight:600;margin-bottom:16px}
+.f-form{display:flex;background:#fff;border-radius:999px;padding:5px;max-width:380px}
+.f-form input{flex:1;border:none;outline:none;background:none;padding:10px 18px;font-family:var(--font);font-size:13.5px;font-weight:600;color:var(--navy);min-width:0}
+.f-form button{border:none;background:var(--grad);color:#fff;font-weight:800;font-size:13px;border-radius:999px;padding:11px 22px}
+.f-col h4{color:#fff;font-size:14px;font-weight:900;margin-bottom:14px}
+.f-col a{display:block;font-size:13.5px;font-weight:600;margin-bottom:10px;color:#9FB4D2}
+.f-col a:hover{color:var(--orange-hi)}
+.f-bottom{max-width:1260px;margin:44px auto 0;padding:22px 20px 0;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11px;font-weight:600;color:#6E84A5}
+
+/* ===== sticky mobile ===== */
+.sticky-cta{position:fixed;bottom:0;inset-inline:0;z-index:95;background:rgba(247,245,241,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--gray-2);padding:10px 16px calc(10px + var(--sab));display:flex;align-items:center;gap:12px;transform:translateY(110%);transition:transform .4s cubic-bezier(.2,.85,.2,1)}
+.sticky-cta.show{transform:none}
+.sticky-cta .info b{display:block;font-size:13.5px;color:var(--navy);font-weight:900;line-height:1.3}
+.sticky-cta .info small{font-size:10.5px;color:var(--green);font-weight:800}
+.sticky-cta .btn{flex:1;min-height:48px;padding:12px 18px;font-size:14px}
+@media(min-width:920px){.sticky-cta{display:none}}
+
+@media (prefers-reduced-motion: reduce){
+  .subs::before,.vid .play,.ph::before{animation:none}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .fuel-bar i{transition:none}
+}
+/* ===== locomotive smooth-scroll mode (desktop) ===== */
+html.loco nav.main{position:fixed;top:0;inset-inline:0}
+html.loco #locoScroll{padding-top:calc(66px + var(--sat))}
+[data-scroll-container]{will-change:transform}
+
+/* ===== iPhone menu (design unchanged on desktop) ===== */
+.burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line,var(--gray-2,#E2DCCE));background:transparent;color:var(--ink,var(--navy,#122B4A));flex-shrink:0}
+.burger svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+@media(min-width:960px){.burger{display:none}}
+.mmenu{position:fixed;inset:0;z-index:300;background:linear-gradient(160deg,#122B4A,#0A1B31 70%);display:flex;flex-direction:column;justify-content:center;padding:80px 34px 50px;transform:translateY(-102%);transition:transform .5s cubic-bezier(.77,0,.18,1);overflow-y:auto}
+.mmenu.open{transform:translateY(0)}
+.mmenu::before{content:"";position:absolute;top:-120px;inset-inline-end:-100px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.25),transparent 65%);pointer-events:none}
+.mmenu .mkick{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.34em;color:#FFA05C;text-transform:uppercase;margin-bottom:20px}
+.mmenu a.mlink{display:block;color:#EAF1FA;font-size:27px;font-weight:900;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);letter-spacing:-.01em}
+.mmenu a.mlink:active{color:#FFA05C}
+.mmenu a.mcta{display:inline-flex;align-items:center;justify-content:center;margin-top:26px;background:linear-gradient(105deg,#FFA05C,#F07F2D 55%,#DD6516);color:#fff;font-weight:900;font-size:15px;border-radius:999px;padding:16px 34px;box-shadow:0 14px 34px rgba(240,127,45,.4)}
+.mmenu .mfoot{margin-top:auto;padding-top:28px;font-size:11px;font-weight:700;color:#8FA6C6}
+.mclose{position:absolute;top:calc(20px + env(safe-area-inset-top,0px));inset-inline-end:22px;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:none;color:#fff;font-size:20px;font-weight:900;display:grid;place-items:center}
+body.menu-open{overflow:hidden}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H10L9 22l8.5-11.5H12L13 2z"/></symbol>
+<symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M2 10h2v4H2v-4zm18 0h2v4h-2v-4zM5 7.5h3v9H5v-9zm11 0h3v9h-3v-9zM8 11h8v2H8v-2z"/></symbol>
+<symbol id="i-protein" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9c3-4 6 4 9 0s6 4 9 0"/><path d="M3 15c3-4 6 4 9 0s6 4 9 0"/><path d="M6 7.2v3.6M12 11v3.8M18 7.2v3.6"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2.5c3.8 5.4 6 8.6 6 11.5a6 6 0 0 1-12 0c0-2.9 2.2-6.1 6-11.5z"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2c.8 3.8 5 6.2 5 11a5 5 0 0 1-10 0c0-1.8.8-3.1 1.8-4.6.2 1.6.9 2.6 2 3.1-.9-3.2-.2-6.6 1.2-9.5z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></symbol>
+<symbol id="i-wheat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22V6"/><path d="M12 9C9.5 9 8 7.5 8 5c2.5 0 4 1.5 4 4zM12 9c2.5 0 4-1.5 4-4-2.5 0-4 1.5-4 4zM12 14c-2.5 0-4-1.5-4-4 2.5 0 4 1.5 4 4zM12 14c2.5 0 4-1.5 4-4-2.5 0-4 1.5-4 4zM12 19c-2.5 0-4-1.5-4-4 2.5 0 4 1.5 4 4zM12 19c2.5 0 4-1.5 4-4-2.5 0-4 1.5-4 4z"/></symbol>
+<symbol id="i-bread" viewBox="0 0 24 24"><path d="M7.5 5h9A3.5 3.5 0 0 1 20 8.5c0 1.5-.9 2.7-2 3.2V18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-6.3c-1.1-.5-2-1.7-2-3.2A3.5 3.5 0 0 1 7.5 5z"/></symbol>
+<symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="9.5" cy="10" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.1" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18c0 4.4-3.2 8-9 8s-9-3.6-9-8zm5 9.5h8v1.5H8v-1.5z"/><path d="M9 8.5c0-1.5 1-1.8 1-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13.5 8.5c0-1.5 1-1.8 1-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8.5 4.2v9.1L12 21l-8.5-4.7V7.2L12 3z"/><path d="M3.5 7.2 12 11.5l8.5-4.3M12 11.5V21"/></symbol>
+<symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 3h6v4H9z" fill="currentColor" stroke="none"/><path d="M9 12h6M9 16h4" stroke-linecap="round"/></symbol>
+<symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.4L8 15h10l2.2-8H6"/><circle cx="9.5" cy="19.5" r="1.6" fill="currentColor" stroke="none"/><circle cx="16.5" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6.2c0 4.8-3.3 8.3-8 10.8-4.7-2.5-8-6-8-10.8V5l8-3zm-1.2 13.4 5.4-5.4-1.4-1.4-4 4-1.8-1.8-1.4 1.4 3.2 3.2z"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M12 3.5a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4zM4.5 20.5c0-4 3.3-6 7.5-6s7.5 2 7.5 6h-15z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12L20.1 5.6z"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4c.5 8-2.5 15-10 15-3 0-5-1.5-6-3.5C8 16 10 15 12 13c-2 .5-4 .5-6 2 .5-6 5-11 14-11z"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20"/></symbol>
+<symbol id="i-hat" viewBox="0 0 24 24"><path d="M12 3a4.5 4.5 0 0 1 4.4 3.5A3.8 3.8 0 0 1 19 13.7V15H5v-1.3A3.8 3.8 0 0 1 7.6 6.5 4.5 4.5 0 0 1 12 3zM5 17h14v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-2z"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"/></symbol>
+</defs></svg>
+
+<!-- NAV -->
+<nav class="main">
+  <div class="bar">
+    <a class="logo" href="newme-main.html"><span class="mark"></span><b>نيو مي</b></a>
+    <div class="nav-links">
+      <a href="#about">عن نيومي</a><a href="#journey">الرحلة</a><a href="#values">قيمنا</a><a href="newme-store.html">المتجر</a><a href="newme-subscribe.html">الاشتراكات</a><a href="#articles">مقالات</a><a href="newme-consult.html">الاستشارات</a><a href="newme-terms.html">الشروط</a><a href="#recipes">وصفات</a>
+    </div>
+    <button class="burger" id="mBurger" aria-label="القائمة"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="nav-right">
+      <button class="cart" aria-label="السلة"><svg class="i"><use href="#i-cart"/></svg><i>2</i></button>
+      <a href="newme-subscribe.html" class="btn sm">اشترك ووفّر</a>
+    </div>
+  </div>
+</nav>
+
+<main id="locoScroll" data-scroll-container>
+<!-- ANNOUNCEMENT -->
+<div class="announce" id="announce">
+  <span class="on">دفعة اليوم <b>NM-26</b> جاهزة — خُبزت 07:00 صباحاً</span>
+  <span>توصيل مجاني للطلبات فوق <b>150 ر.س</b></span>
+  <span>اشترك ووفّر حتى <b>20%</b> + استشارة تغذية مجانية</span>
+</div>
+
+
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-copy">
+    <span class="hero-pill">دفعة اليوم <b>NM-26</b> · خُبزت 07:00 صباحاً</span>
+    <h1>غذاؤك اليومي،<br><em>بمعايير لا تقبل المساومة.</em></h1>
+    <p class="lead">وجبات صحية متكاملة من دقيق نيو مي الفاخر — ترمس أسترالي وكتان هندي، بسعرات موثّقة، تصلك طازجة خلال 48 ساعة.</p>
+    <div class="hero-ctas">
+      <a href="newme-subscribe.html" class="btn">ابدأ اشتراكك — وفّر 20%</a>
+      <a href="newme-store.html" class="btn inv">تسوق مرة واحدة</a>
+    </div>
+    <div class="hero-rating"><span class="stars">★★★★★</span> 4.9 · +2,300 تقييم موثق</div>
+  </div>
+  <div class="hero-media">
+    <span class="bgph"><svg><use href="#i-bread"/></svg></span>
+    <img class="aiimg" src="https://image.pollinations.ai/prompt/bright%20airy%20editorial%20food%20photography%2C%20freshly%20baked%20artisan%20protein%20bread%20loaf%20and%20golden%20flaxseed%20crackers%20with%20small%20bowl%20of%20white%20lupin%20beans%20on%20light%20cream%20linen%20table%2C%20soft%20diffused%20morning%20daylight%2C%20muted%20warm%20neutral%20tones%2C%20vertical%20composition%2C%20premium%20minimal%2C%208k%20photorealistic?width=1000&height=1250&nologo=true&seed=88&model=flux" alt="خبز الترمس وبذور الكتان" onerror="this.remove()">
+  </div>
+</header>
+
+<!-- USP -->
+<div class="usp-strip">
+  <div class="usp-grid">
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-dumbbell"/></svg></span><b>40% بروتين</b><small>من الترمس الأبيض الأسترالي — الأعلى في فئته</small></div>
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-drop"/></svg></span><b>أوميغا-3 نقي</b><small>من بذور الكتان الهندية المنتقاة</small></div>
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-flame"/></svg></span><b>سعرات موثّقة</b><small>مطبوعة على كل منتج ووجبة</small></div>
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><b>طازج خلال 48 ساعة</b><small>يُخبز صباح كل يوم دون استثناء</small></div>
+  </div>
+</div>
+
+<!-- SCROLLING TEXT -->
+<div class="marquee" aria-hidden="true"><div class="track"><span class="item"><span class="dot"></span>جدّد حياتك يومياً</span><span class="item"><span class="dot"></span>يُخبز <em>07:00</em> صباح كل يوم</span><span class="item"><span class="dot"></span><em>40%</em> بروتين من الترمس الأسترالي</span><span class="item"><span class="dot"></span>أوميغا-3 من الكتان الهندي</span><span class="item"><span class="dot"></span>طازج خلال <em>48 ساعة</em></span><span class="item"><span class="dot"></span>سعرات موثّقة على كل منتج</span><span class="item"><span class="dot"></span>BATCH <em>NM-26</em></span><span class="item"><span class="dot"></span>جدّد حياتك يومياً</span><span class="item"><span class="dot"></span>يُخبز <em>07:00</em> صباح كل يوم</span><span class="item"><span class="dot"></span><em>40%</em> بروتين من الترمس الأسترالي</span><span class="item"><span class="dot"></span>أوميغا-3 من الكتان الهندي</span><span class="item"><span class="dot"></span>طازج خلال <em>48 ساعة</em></span><span class="item"><span class="dot"></span>سعرات موثّقة على كل منتج</span><span class="item"><span class="dot"></span>BATCH <em>NM-26</em></span></div></div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="sec-head">
+    <span class="kick">عن نيومي</span>
+    <h2>نيو مي — <em>جدّد حياتك يومياً</em></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-photo rv">
+      <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+      <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20small%20team%20of%20bakers%20in%20aprons%20working%20together%20in%20bright%20modern%20artisan%20bakery%20at%20dawn%2C%20arranging%20fresh%20bread%20loaves%2C%20warm%20golden%20morning%20light%2C%20flour%20dust%2C%20authentic%20candid%20moment%2C%208k%20photorealistic?width=1000&height=850&nologo=true&seed=98&model=flux" alt="فريق مخبز نيومي" onerror="this.remove()">
+      <span class="about-badge">منذ الصباح · <b>BATCH NM-26</b></span>
+    </div>
+    <div class="about-copy rv">
+      <span class="kick">قصتنا</span>
+      <h2>من مطبخ عائلي في الرياض... <em>إلى قيادة قطاع التغذية الصحي في المملكة</em></h2>
+      <p>ولدت <b>نيو مي</b> من قلب تحدٍّ حقيقي: أمّ واجهت إصابة ابنتها بالسكري في سوق يخلو من البدائل الطازجة الموثوقة — فقررت ابتكار الحل بنفسها.</p>
+      <p>من مطبخها في الرياض، وبمعايير مخبرية صارمة، وُلد <b>دقيق نيو مي الفاخر (New Me Flour)</b>: خبز منخفض النشويات بـ <b>40% بروتين وألياف</b> ومذاق جعل قوائم الانتظار أسبوعية — حتى أصبحت العلامة تقود السوق اليوم.</p>
+      <p class="about-quote">"كل وجبة ومنتج يغادر متجرنا اليوم، نلتزم بخبزه بنفس المعايير العلمية الدقيقة والحب الذي وضعناه في الرغيف الأول لعائلتنا."<b>— مؤسِّستا نيو مي</b></p>
+      <div class="about-mini">
+        <div><b>22<span class="a">+</span></b><span>عاماً من الخبرة</span></div>
+        <div><b>10,000<span class="a">+</span></b><span>دراسة علمية</span></div>
+        <div><b>2024</b><span>سنة التأسيس</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISION 2030 + OPERATIONS INFOGRAPHIC -->
+  <div class="ops-wrap">
+    <div class="vision rv">
+      <span class="v-badge"><small>رؤية المملكة</small><b>2030</b></span>
+      <div class="v-copy">
+        <span class="kick">رؤية وطنية مشتركة</span>
+        <h3>شريك فاعل في الطب الوقائي والتغذية العلاجية</h3>
+        <p>ندعم مستهدفات <b>رؤية المملكة 2030</b> في الطب الوقائي والتغذية العلاجية — الصحة المستدامة تبدأ قبل الحاجة إلى العلاج.</p>
+      </div>
+    </div>
+    <div class="ops-head rv">
+      <span class="kick">المنظومة التشغيلية</span>
+      <h3>خمسة معايير حاسمة — لا مجال للتخمين</h3>
+    </div>
+    <div class="ops-flow">
+      <div class="op rv">
+        <span class="op-n">01</span>
+        <span class="op-ic"><svg class="i"><use href="#i-wheat"/></svg></span>
+        <b class="op-kpi">يومياً</b>
+        <h4>طحن فوري ومباشر</h4>
+        <p>طحن المواد الأولية داخل منشأتنا يومياً لحماية خصائصها الحيوية.</p>
+      </div>
+      <div class="op rv">
+        <span class="op-n">02</span>
+        <span class="op-ic"><svg class="i"><use href="#i-clock"/></svg></span>
+        <b class="op-kpi">07:00</b>
+        <h4>معيار السابعة صباحاً</h4>
+        <p>يبدأ الإنتاج عند الـ 07:00 تماماً — طزاجة بأعلى معايير الجودة.</p>
+      </div>
+      <div class="op rv">
+        <span class="op-n">03</span>
+        <span class="op-ic"><svg class="i"><use href="#i-box"/></svg></span>
+        <b class="op-kpi"><span dir="ltr">≤ 48</span> س</b>
+        <h4>التوزيع المباشر والآمن</h4>
+        <p>توزيع لا يتجاوز 48 ساعة — وما لا يوزَّع يُتلف فوراً.</p>
+      </div>
+      <div class="op rv">
+        <span class="op-n">04</span>
+        <span class="op-ic"><svg class="i"><use href="#i-clipboard"/></svg></span>
+        <b class="op-kpi">100%</b>
+        <h4>الشفافية المخبرية</h4>
+        <p>سعرات وماكروز مطبوعة على كل منتج — أرقام لا تخمين.</p>
+      </div>
+      <div class="op rv">
+        <span class="op-n">05</span>
+        <span class="op-ic"><svg class="i"><use href="#i-shield"/></svg></span>
+        <b class="op-kpi">NM-26</b>
+        <h4>تتبع كامل وحوكمة</h4>
+        <p>رقم الدفعة وساعة الإنتاج موثقان على كل صندوق.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="section shop" id="shop">
+  <div class="sec-head">
+    <span class="kick">المتجر · دفعة اليوم</span>
+    <h2>بطاقات غذائية <em>دقيقة وموثقة</em></h2>
+    <p>كل منتج ببطاقته الغذائية الكاملة — بروتين وسعرات وماكروز موثقة، لا وعود تسويقية.</p>
+  </div>
+  <div class="prod-grid">
+
+    <article class="prod rv">
+      <div class="prod-tile">
+        <span class="p-flag"><svg class="i"><use href="#i-flame"/></svg> الأكثر مبيعاً</span>
+        <div class="ph"><svg><use href="#i-cookie"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20thin%20golden%20crackers%20densely%20topped%20with%20flax%20seeds%20stacked%20casually%20on%20small%20ceramic%20plate%2C%20crumbs%20and%20scattered%20seeds%2C%20bright%20natural%20daylight%20on%20light%20wooden%20table%2C%20appetizing%2C%20shallow%20depth%20of%20field%2C%208k%20photorealistic?width=800&height=800&nologo=true&seed=72&model=flux" alt="مقرمشات بذور الكتان" onerror="this.remove()">
+      </div>
+      <h3>مقرمشات بذور الكتان</h3>
+      <p class="p-sub">سناك مقرمش غني بالأوميغا-3</p>
+      <div class="p-specs">
+        <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 9غ بروتين</div>
+        <div class="p-spec"><span class="kcal-box">kcal</span> 120 سعرة للحصة</div>
+      </div>
+      <div class="p-price">من 22 ر.س <small>/ 2.2 ر.س للحصة</small></div>
+      <a href="newme-product.html" class="p-view">عرض المنتج</a>
+    </article>
+
+    <article class="prod rv">
+      <div class="prod-tile">
+        <span class="p-flag"><svg class="i" style="color:var(--green)"><use href="#i-leaf"/></svg> جديد</span>
+        <div class="ph"><svg><use href="#i-bread"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20rustic%20high%20protein%20bread%20loaf%20partially%20sliced%20showing%20soft%20golden%20crumb%20with%20visible%20flax%20seeds%2C%20bread%20knife%20beside%20on%20wooden%20cutting%20board%2C%20bright%20natural%20daylight%2C%20appetizing%2C%208k%20photorealistic?width=800&height=800&nologo=true&seed=73&model=flux" alt="خبز الترمس البروتيني" onerror="this.remove()">
+      </div>
+      <h3>خبز الترمس البروتيني</h3>
+      <p class="p-sub">خبز يومي متكامل عالي البروتين</p>
+      <div class="p-specs">
+        <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 24غ بروتين</div>
+        <div class="p-spec"><span class="kcal-box">kcal</span> 140 سعرة للشريحة</div>
+      </div>
+      <div class="p-price">من 14 ر.س <small>/ 1.4 ر.س للشريحة</small></div>
+      <a href="newme-product.html" class="p-view">عرض المنتج</a>
+    </article>
+
+    <article class="prod rv">
+      <div class="prod-tile">
+        <div class="ph"><svg><use href="#i-bowl"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20crunchy%20granola%20clusters%20with%20golden%20flax%20seeds%20and%20drizzle%20of%20honey%20in%20white%20ceramic%20bowl%2C%20wooden%20spoon%2C%20bright%20natural%20daylight%20on%20linen%20tablecloth%2C%20appetizing%2C%208k%20photorealistic?width=800&height=800&nologo=true&seed=74&model=flux" alt="جرانولا الكتان والعسل" onerror="this.remove()">
+      </div>
+      <h3>جرانولا الكتان والعسل</h3>
+      <p class="p-sub">إفطار سريع غني بالألياف</p>
+      <div class="p-specs">
+        <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 8غ بروتين</div>
+        <div class="p-spec"><span class="kcal-box">kcal</span> 180 سعرة للحصة</div>
+      </div>
+      <div class="p-price">من 26 ر.س <small>/ 2.6 ر.س للحصة</small></div>
+      <a href="newme-product.html" class="p-view">عرض المنتج</a>
+    </article>
+
+    <article class="prod rv">
+      <div class="prod-tile">
+        <span class="p-flag"><svg class="i"><use href="#i-hat"/></svg> اختيار الشيف</span>
+        <div class="ph"><svg><use href="#i-box"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20open%20kraft%20meal%20box%20with%20healthy%20breakfast%20of%20flaxseed%20toast%2C%20labneh%2C%20fresh%20berries%20and%20hummus%2C%20bright%20natural%20morning%20light%20on%20wooden%20cafe%20table%2C%20appetizing%2C%208k%20photorealistic?width=800&height=800&nologo=true&seed=75&model=flux" alt="بوكس إفطار نيومي" onerror="this.remove()">
+      </div>
+      <h3>بوكس إفطار نيومي</h3>
+      <p class="p-sub">وجبة صباح متكاملة جاهزة</p>
+      <div class="p-specs">
+        <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 28غ بروتين</div>
+        <div class="p-spec"><span class="kcal-box">kcal</span> 450 سعرة للوجبة</div>
+      </div>
+      <div class="p-price">من 34 ر.س <small>/ وجبة كاملة</small></div>
+      <a href="newme-product.html" class="p-view">عرض المنتج</a>
+    </article>
+  </div>
+  <div class="shop-cta"><a href="newme-store.html" class="btn navy">عرض كل المنتجات ←</a></div>
+</section>
+
+<!-- NUTRITION SPEC -->
+<section class="section" id="nutrition">
+  <div class="sec-head">
+    <span class="kick">القيم الغذائية · Nutrition Facts</span>
+    <h2>المواصفات <em>الغذائية</em> — خبز الترمس البروتيني</h2>
+    <p>شفافية كاملة: هذا ما يمنحه جسمك في كل 100 غرام.</p>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-photo rv">
+      <div class="ph"><svg><use href="#i-bread"/></svg></div>
+      <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20extreme%20macro%20food%20photography%2C%20cross%20section%20slice%20of%20protein%20bread%20showing%20airy%20golden%20crumb%20texture%20with%20embedded%20flax%20seeds%2C%20soft%20natural%20window%20light%2C%20wooden%20board%2C%20extreme%20detail%2C%20shallow%20depth%20of%20field%2C%208k%20photorealistic?width=1000&height=850&nologo=true&seed=82&model=flux" alt="مقطع خبز الترمس" onerror="this.remove()">
+      <span class="cap">مقطع خبز الترمس · دفعة NM-26</span>
+    </div>
+    <div class="spec-card rv">
+      <h3>خبز الترمس البروتيني</h3>
+      <div class="sub">القيم لكل 100غ · محسوبة ومعايَرة من أخصائي تغذية معتمد</div>
+      <div class="spec-row"><span class="n">الطاقة</span><span class="fuel-bar fuel" data-v="46"><i></i></span><span class="v"><em>233</em> سعرة</span></div>
+      <div class="spec-row"><span class="n">البروتين</span><span class="fuel-bar fuel" data-v="95"><i></i></span><span class="v"><em>40</em> غ</span></div>
+      <div class="spec-row"><span class="n">الكربوهيدرات</span><span class="fuel-bar fuel" data-v="30"><i></i></span><span class="v">15 غ</span></div>
+      <div class="spec-row"><span class="n">الدهون الصحية</span><span class="fuel-bar fuel" data-v="22"><i></i></span><span class="v">7 غ</span></div>
+      <div class="spec-row"><span class="n">الألياف</span><span class="fuel-bar fuel" data-v="60"><i></i></span><span class="v"><em>12</em> غ</span></div>
+      <div class="spec-row"><span class="n">أوميغا-3</span><span class="fuel-bar fuel" data-v="78"><i></i></span><span class="v"><em>3.8</em> غ</span></div>
+      <div class="spec-row"><span class="n">السكر المضاف</span><span class="fuel-bar fuel" data-v="0"><i></i></span><span class="v">صفر</span></div>
+      <div class="spec-note">* قيم استرشادية للنموذج — تُعتمد القيم النهائية من المختبر قبل الطباعة.</div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="section" id="journey" style="padding-bottom:0;background:#fff;border-top:1px solid var(--gray-2)">
+  <div class="sec-head">
+    <span class="kick">الرحلة</span>
+    <h2>من مزارع أستراليا والهند — <em>إلى بابك</em></h2>
+    <p>ثلاث محطات موثّقة تمر بها كل دفعة — نفس الرحلة، كل يوم.</p>
+  </div>
+  <div class="zig">
+    <div class="zrow">
+      <div class="zmedia rv">
+        <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20golden%20flax%20seeds%20and%20white%20lupin%20beans%20in%20ceramic%20bowls%20on%20warm%20wooden%20surface%2C%20soft%20morning%20light%2C%20premium%20editorial%2C%208k%20photorealistic?width=1100&height=900&nologo=true&seed=76&model=flux" alt="" onerror="this.remove()">
+        <span class="znum">المحطة 01 · المصدر العالمي</span>
+      </div>
+      <div class="zcopy">
+        <span class="kick">المصدر العالمي</span>
+        <h3>مكوّنان استثنائيان من أفضل مصدرين في العالم</h3>
+        <p>ترمس أبيض فاخر من أستراليا وكتان منتقى من الهند — تُفحص كل شحنة وتُطحن طازجة صباح كل يوم.</p>
+        <div class="z-fuel">
+          <div class="macro"><small>بروتين الترمس الأسترالي</small><span class="fuel-bar fuel" data-v="90"><i></i></span><b>40%</b></div>
+          <div class="macro"><small>أوميغا-3 من الكتان الهندي</small><span class="fuel-bar fuel" data-v="80"><i></i></span><b>عالي</b></div>
+        </div>
+        <a class="zlink" href="#nutrition">اطلع على القيم الغذائية ←</a>
+      </div>
+    </div>
+    <div class="zrow flip">
+      <div class="zmedia rv vid" data-video="" role="button" tabindex="0" aria-label="تشغيل مقطع الخبز">
+        <div class="ph"><svg><use href="#i-flame"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20golden%20bread%20loaves%20covered%20with%20flax%20seeds%20on%20wooden%20peel%20emerging%20from%20glowing%20stone%20oven%2C%20warm%20fire%20glow%2C%20steam%20rising%2C%20artisan%20bakery%20at%20dawn%2C%20natural%20warm%20tones%2C%208k%20photorealistic?width=1100&height=900&nologo=true&seed=13&model=flux" alt="" onerror="this.remove()">
+        <span class="znum">المحطة 02 · المخبز</span>
+        <span class="vtag">VIDEO</span>
+        <span class="play" style="width:60px;height:60px"><svg style="width:24px;height:24px"><use href="#i-play"/></svg></span>
+        <span class="dur">0:30</span>
+        <span class="vnote">مكان مخصص للفيديو</span>
+      </div>
+      <div class="zcopy">
+        <span class="kick">صباح كل يوم</span>
+        <h3>يُحمى الفرن على 180° عند 07:00 تماماً</h3>
+        <p>رقم الدفعة وساعة الخبز على كل صندوق، وتوزيع خلال 48 ساعة كحد أقصى — ما يصلك اليوم خُبز اليوم.</p>
+        <div class="z-fuel">
+          <div class="macro"><small>حرارة الخبز</small><span class="fuel-bar fuel" data-v="72"><i></i></span><b>180°C</b></div>
+          <div class="macro"><small>نافذة التوزيع</small><span class="fuel-bar fuel" data-v="40"><i></i></span><b><span dir="ltr">≤ 48</span> س</b></div>
+        </div>
+        <a class="zlink" href="#shop">تسوّق دفعة اليوم ←</a>
+      </div>
+    </div>
+    <div class="zrow">
+      <div class="zmedia rv">
+        <div class="ph"><svg><use href="#i-clipboard"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20professional%20photography%2C%20saudi%20female%20nutritionist%20in%20white%20lab%20coat%20and%20hijab%20reviewing%20a%20healthy%20meal%20plan%20at%20a%20bright%20modern%20clinic%20desk%20with%20fresh%20vegetables%20and%20laptop%2C%20soft%20natural%20daylight%2C%208k%20photorealistic?width=1100&height=900&nologo=true&seed=41&model=flux" alt="" onerror="this.remove()">
+        <span class="znum">المحطة 03 · المعايرة</span>
+      </div>
+      <div class="zcopy">
+        <span class="kick">وصفات معتمدة</span>
+        <h3>قيمك الغذائية محسوبة من مختصين، لا من تقديرات</h3>
+        <p>وصفات معايَرة من فريق تغذية مرخّص — واستشارتك الأولى مجانية مع أي اشتراك.</p>
+        <div class="z-fuel">
+          <div class="macro"><small>دقة الحساب</small><span class="fuel-bar fuel" data-v="100"><i></i></span><b>100%</b></div>
+        </div>
+        <a class="zlink" href="newme-subscribe.html">ابدأ مع استشارة مجانية ←</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND FILM -->
+<section class="section" id="film" style="padding-bottom:56px">
+  <div class="sec-head">
+    <span class="kick">شاهد القصة</span>
+    <h2>دقيقة واحدة <em>داخل المتجر</em></h2>
+    <p>من طحن الترمس صباحاً حتى ختم الصندوق برقم الدفعة — بشفافية تامة.</p>
+  </div>
+  <div class="film-wrap">
+    <div class="vid film rv" data-video="" role="button" tabindex="0" aria-label="تشغيل فيلم نيومي">
+      <div class="ph"><svg><use href="#i-bread"/></svg></div>
+      <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20cinematic%20wide%20photography%2C%20baker%20in%20apron%20sliding%20wooden%20tray%20of%20golden%20flax%20seed%20bread%20loaves%20inside%20warm%20artisan%20bakery%20at%20dawn%2C%20flour%20dust%20floating%20in%20air%2C%20steam%20rising%2C%20warm%20golden%20light%20rays%20through%20window%2C%20cinematic%20film%20still%2C%208k%20photorealistic?width=1600&height=900&nologo=true&seed=91&model=flux" alt="فيلم مخبز نيومي" onerror="this.remove()">
+      <span class="vtag">VIDEO</span>
+      <span class="play"><svg><use href="#i-play"/></svg></span>
+      <span class="dur">0:60</span>
+      <span class="vnote">مكان مخصص للفيديو — أضف رابط الفيديو عند جاهزيته</span>
+    </div>
+    <div class="film-cap"><span><b>فيلم الدفعة NM-26</b> · تصوير داخل المخبز</span><span>ترجمة عربية · بدون موسيقى صاخبة</span></div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section" id="values" style="padding-bottom:0;background:#EFEBE3">
+  <div class="sec-head" style="padding-top:0">
+    <span class="kick">قيم نيومي</span>
+    <h2>أربع قيم <em>لا نساوم عليها</em></h2>
+  </div>
+  <div class="val-grid">
+    <div class="val rv">
+      <span class="ic"><svg class="i"><use href="#i-clock"/></svg></span>
+      <h3>الإنتاج اليومي الموثّق</h3>
+      <p>نخبز 07:00 ونوزّع خلال 48 ساعة — وما لا يوزَّع لا يُباع.</p>
+    </div>
+    <div class="val rv">
+      <span class="ic"><svg class="i"><use href="#i-flame"/></svg></span>
+      <h3>الشفافية الغذائية</h3>
+      <p>أرقام محسوبة من مختصين ومعتمدة مخبرياً — على كل منتج.</p>
+    </div>
+    <div class="val rv">
+      <span class="ic"><svg class="i"><use href="#i-leaf"/></svg></span>
+      <h3>الجودة العالمية والاستدامة</h3>
+      <p>مكونات من أستراليا والهند، وتغليف قابل لإعادة التدوير 100%.</p>
+    </div>
+    <div class="val rv">
+      <span class="ic"><svg class="i"><use href="#i-clipboard"/></svg></span>
+      <h3>الخبرة المعتمدة</h3>
+      <p>فريق تغذية مرخّص يعاير كل وصفة — واستشارتك الأولى مجانية.</p>
+    </div>
+  </div>
+  <div class="band">
+    <div style="text-align:center"><span class="kick">لماذا نيومي</span></div>
+    <h2>طاقة <span class="u">تُقاس بالأرقام</span>، لا بالوعود.</h2>
+    <div class="band-grid">
+      <div class="bstat rv"><b><span data-count="10000">0</span><span class="a">+</span></b><span>وجبة وُصلت عبر المملكة</span></div>
+      <div class="bstat rv"><b><span data-count="40">0</span><span class="a">%</span></b><span>بروتين في خبز الترمس — الأعلى في فئته</span></div>
+      <div class="bstat rv"><b><span data-count="48">0</span><span class="a">س</span></b><span>أقصى مدة من الفرن إلى بابك</span></div>
+      <div class="bstat rv"><b><span data-count="97">0</span><span class="a">%</span></b><span>من عملائنا يجددون اشتراكهم</span></div>
+    </div>
+    <p class="band-tag"><em>نيو مي — جدّد حياتك يومياً.</em> بدأت بقصة عائلة... واليوم قصتها في كل بيت.</p>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section" id="reviews">
+  <div class="rev-head">
+    <span class="kick">التقييمات</span>
+    <span class="stars">★★★★★</span>
+    <b>ممتاز · 4.9 من 5 — بناءً على +2,300 تقييم موثق</b>
+  </div>
+  <div class="rev-grid">
+    <div class="rev rv">
+      <div class="stars">★★★★★</div>
+      <h4>«طاقة حقيقية لإفطاري»</h4>
+      <p>خبز الترمس — 24غ بروتين في الشريحة! شبع أطول وطاقة حقيقية، ويصل دائماً في موعده.</p>
+      <div class="who"><span class="av"><span class="ph" style="background:#FFE1C4"><svg><use href="#i-user"/></svg></span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20portrait%20of%20smiling%20saudi%20woman%20in%20beige%20hijab%2C%20soft%20studio%20light%2C%20cream%20background%2C%20professional%20headshot%2C%208k?width=200&height=200&nologo=true&seed=31&model=flux" alt="" onerror="this.remove()"></span><span><b>نورة ع.</b>الرياض · <i>✓ شراء موثق</i></span></div>
+    </div>
+    <div class="rev rv">
+      <div class="stars">★★★★★</div>
+      <h4>«أعرف تماماً ماذا آكل»</h4>
+      <p>السعرات والبروتين على كل بطاقة منتج — أول علامة سعودية أحسبها بهذه الشفافية. والطعم ممتاز.</p>
+      <div class="who"><span class="av"><span class="ph" style="background:#DCEFD2"><svg><use href="#i-user"/></svg></span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20portrait%20of%20smiling%20saudi%20man%20in%20white%20thobe%20short%20beard%2C%20soft%20studio%20light%2C%20cream%20background%2C%20professional%20headshot%2C%208k?width=200&height=200&nologo=true&seed=32&model=flux" alt="" onerror="this.remove()"></span><span><b>فهد د.</b>الرياض · <i>✓ شراء موثق</i></span></div>
+    </div>
+    <div class="rev rv">
+      <div class="stars">★★★★★</div>
+      <h4>«فرق واضح في تمريني»</h4>
+      <p>خطة البروتين+ مع متابعة الأخصائي ضبطت ماكروزي بالكامل — 97% منا يجددون لسبب.</p>
+      <div class="who"><span class="av"><span class="ph" style="background:#D8E8F8"><svg><use href="#i-user"/></svg></span><img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20portrait%20of%20young%20smiling%20saudi%20woman%20in%20navy%20hijab%2C%20soft%20studio%20light%2C%20cream%20background%2C%20professional%20headshot%2C%208k?width=200&height=200&nologo=true&seed=33&model=flux" alt="" onerror="this.remove()"></span><span><b>سارة ق.</b>الخبر · <i>✓ شراء موثق</i></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBSCRIPTIONS -->
+<section class="subs" id="subs">
+  <div class="inner">
+    <div class="sec-head">
+      <span class="kick" style="color:var(--orange-hi)">اشتراكات نيومي</span>
+      <h2>وجباتك الطازجة <em style="font-style:normal;color:var(--orange-hi)">تصلك تلقائياً</em> كل يوم</h2>
+      <p>اختر خطتك، وحدد فوترتك — كل الخطط تشمل التوصيل واستشارة تغذية أولى مجانية.</p>
+    </div>
+
+    <div class="toggle-wrap rv">
+      <div class="toggle" id="billToggle">
+        <span class="pill" id="togglePill"></span>
+        <button class="on" data-bill="m">شهري</button>
+        <button data-bill="q">3 أشهر <span class="save">وفّر 20%</span></button>
+      </div>
+    </div>
+
+    <div class="sub-grid">
+      <div class="splan rv">
+        <span class="code">NM-01 · BASIC</span>
+        <h3>خطة البداية</h3>
+        <div class="goal"><svg class="i"><use href="#i-target"/></svg> لهدف: بداية صحية وخسارة الوزن</div>
+        <div class="was">بدل <s data-was-m="332" data-was-q="299">332 ر.س</s></div>
+        <div class="pline"><b data-m="299" data-q="239">299</b><small>ر.س / شهرياً</small></div>
+        <span class="per">≈ <span data-pm-m="10" data-pm-q="8">10</span> ر.س للوجبة</span>
+        <div class="plan-fuel">
+          <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> طاقة اليوم</span><b>630 KCAL</b></div>
+          <div class="fuel-bar fuel" data-v="34"><i></i></div>
+          <div class="meals"><span class="on">إفطار</span><span>غداء</span><span>سناك</span><span>عشاء</span></div>
+        </div>
+        <ul>
+          <li>وجبة متوازنة يومياً (سعرات محسوبة)</li>
+          <li>قائمة أسبوعية متجددة</li>
+          <li>توصيل مجاني</li>
+          <li class="no">استشارة تغذية شهرية</li>
+          <li class="no">تخصيص الماكروز</li>
+        </ul>
+        <a href="newme-subscribe.html#plan=loss" class="btn navy" style="border-color:rgba(255,255,255,.3)">ابدأ بالبداية</a>
+      </div>
+
+      <div class="splan pop rv">
+        <span class="tag">★ الأكثر اختياراً</span>
+        <span class="code">NM-02 · BALANCED</span>
+        <h3>خطة التوازن</h3>
+        <div class="goal"><svg class="i"><use href="#i-target"/></svg> لهدف: أكل صحي متوازن يومي</div>
+        <div class="was">بدل <s data-was-m="610" data-was-q="549">610 ر.س</s></div>
+        <div class="pline"><b data-m="549" data-q="439">549</b><small>ر.س / شهرياً</small></div>
+        <span class="per">≈ <span data-pm-m="9" data-pm-q="7">9</span> ر.س للوجبة</span>
+        <div class="plan-fuel">
+          <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> طاقة اليوم</span><b>1,150 KCAL</b></div>
+          <div class="fuel-bar fuel" data-v="62"><i></i></div>
+          <div class="meals"><span class="on">إفطار</span><span class="on">غداء</span><span class="on">سناك</span><span>عشاء</span></div>
+        </div>
+        <ul>
+          <li>وجبتان + سناك يومياً</li>
+          <li>استشارة تغذية شهرية مجانية</li>
+          <li>تخصيص السعرات والماكروز</li>
+          <li>توصيل مجاني بأولوية</li>
+          <li>تبديل الوجبات في أي وقت</li>
+        </ul>
+        <a href="newme-subscribe.html#plan=balance" class="btn">اشترك في التوازن ←</a>
+      </div>
+
+      <div class="splan rv">
+        <span class="code">NM-03 · PRO</span>
+        <h3>خطة البروتين+</h3>
+        <div class="goal"><svg class="i"><use href="#i-target"/></svg> لهدف: بناء العضلات والرياضيين</div>
+        <div class="was">بدل <s data-was-m="832" data-was-q="749">832 ر.س</s></div>
+        <div class="pline"><b data-m="749" data-q="599">749</b><small>ر.س / شهرياً</small></div>
+        <span class="per">≈ <span data-pm-m="8" data-pm-q="6.5">8</span> ر.س للوجبة</span>
+        <div class="plan-fuel">
+          <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> طاقة اليوم</span><b>1,150 KCAL</b></div>
+          <div class="fuel-bar fuel" data-v="100"><i></i></div>
+          <div class="meals"><span class="on">إفطار</span><span class="on">غداء</span><span class="on">سناك</span><span class="on">عشاء</span></div>
+        </div>
+        <ul>
+          <li>ثلاث وجبات + سناك غنية بالبروتين</li>
+          <li>متابعة أسبوعية مع أخصائي</li>
+          <li>حساب الماكروز الدقيق (بروتين 140غ+)</li>
+          <li>أولوية توصيل قصوى</li>
+          <li>خصم 10% على المتجر</li>
+        </ul>
+        <a href="newme-subscribe.html#plan=muscle" class="btn navy" style="border-color:rgba(255,255,255,.3)">ابدأ بالبروتين+</a>
+      </div>
+    </div>
+
+    <div class="sub-guarantee"><svg class="i"><use href="#i-shield"/></svg> ضمان الطزاجة — ما عجبتك أول دفعة؟ نرجّع المبلغ كاملاً، بدون أسئلة.</div>
+    <div class="sub-trust">
+      <span><b>✓</b> إلغاء أو إيقاف في أي وقت</span>
+      <span><b>✓</b> تبديل الخطة بضغطة</span>
+      <span><b>✓</b> دفع آمن — مدى · Apple Pay · فيزا</span>
+    </div>
+  </div>
+</section>
+
+<!-- HEALTH ARTICLES -->
+<section class="section" id="articles">
+  <div class="sec-head">
+    <span class="kick">مقالات صحية</span>
+    <h2>اعرف أكثر، <em>كُل أفضل</em></h2>
+    <p>مقالات قصيرة يكتبها فريق التغذية لدينا — علم بلا تعقيد.</p>
+  </div>
+  <div class="card-grid">
+    <article class="acard rv">
+      <div class="media">
+        <span class="cat">تغذية</span>
+        <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20white%20lupin%20beans%20in%20wooden%20scoop%20with%20green%20lupin%20plant%20leaves%2C%20bright%20natural%20daylight%20on%20light%20stone%20surface%2C%20clean%20editorial%20food%20photography%2C%208k%20photorealistic?width=900&height=560&nologo=true&seed=92&model=flux" alt="" onerror="this.remove()">
+      </div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 4 دقائق قراءة</span><span><svg class="i"><use href="#i-clipboard"/></svg> د. لمى الشمري</span></div>
+        <h3>لماذا يُعد الترمس أقوى بروتين نباتي لم تسمع عنه؟</h3>
+        <p class="ex">40% بروتيناً وألياف عالية ومؤشر جلايسيمي منخفض — ماذا يقول العلم عن حبة الترمس؟</p>
+        <a href="newme-blog.html#a1" class="go">اقرأ المقال ←</a>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media">
+        <span class="cat">لياقة</span>
+        <div class="ph"><svg><use href="#i-dumbbell"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20healthy%20post%20workout%20meal%20with%20protein%20bread%20toast%20eggs%20and%20avocado%20beside%20gym%20towel%20and%20water%20bottle%2C%20bright%20natural%20light%2C%20clean%20lifestyle%20editorial%2C%208k%20photorealistic?width=900&height=560&nologo=true&seed=93&model=flux" alt="" onerror="this.remove()">
+      </div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 5 دقائق قراءة</span><span><svg class="i"><use href="#i-clipboard"/></svg> أ. عبدالله الحربي</span></div>
+        <h3>كم غرام بروتين تحتاج فعلاً بعد التمرين؟</h3>
+        <p class="ex">دليل عملي لحساب احتياجك اليومي حسب وزنك وهدفك — مع أمثلة وجبات جاهزة.</p>
+        <a href="newme-blog.html#a2" class="go">اقرأ المقال ←</a>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media">
+        <span class="cat">نمط حياة</span>
+        <div class="ph"><svg><use href="#i-drop"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20photography%2C%20golden%20flax%20seeds%20in%20glass%20jar%20with%20wooden%20spoon%20and%20omega%20rich%20breakfast%20bowl%2C%20soft%20morning%20window%20light%2C%20clean%20editorial%20food%20photography%2C%208k%20photorealistic?width=900&height=560&nologo=true&seed=94&model=flux" alt="" onerror="this.remove()">
+      </div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 3 دقائق قراءة</span><span><svg class="i"><use href="#i-clipboard"/></svg> د. ريم الغامدي</span></div>
+        <h3>أوميغا-3 النباتي: ماذا تفعل ملعقة كتان يومياً لقلبك؟</h3>
+        <p class="ex">الفرق بين مصادر الأوميغا، وكيف تدمج بذور الكتان في يومك دون أن تشعر.</p>
+        <a href="newme-blog.html#a3" class="go">اقرأ المقال ←</a>
+      </div>
+    </article>
+  </div>
+  <div class="center-cta"><a href="newme-blog.html#articles" class="btn inv">كل المقالات ←</a></div>
+</section>
+
+<!-- RECIPES -->
+<section class="section" id="recipes" style="background:#EFEBE3">
+  <div class="sec-head">
+    <span class="kick">وصفات</span>
+    <h2>اطبخ بمنتجات <em>نيومي</em></h2>
+    <p>وصفات سريعة بسعرات محسوبة — من مطبخنا إلى مطبخك.</p>
+  </div>
+  <div class="card-grid">
+    <article class="acard rv">
+      <div class="media">
+        <span class="cat">إفطار</span>
+        <div class="ph"><svg><use href="#i-bread"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20avocado%20toast%20on%20thick%20slice%20of%20seeded%20protein%20bread%20topped%20with%20poached%20egg%20and%20flax%20seeds%2C%20bright%20natural%20daylight%2C%20appetizing%20closeup%2C%208k%20photorealistic?width=900&height=560&nologo=true&seed=95&model=flux" alt="" onerror="this.remove()">
+      </div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 15 دقيقة</span><span><span class="kcal-box">kcal</span> 320 سعرة</span><span><svg class="i"><use href="#i-protein"/></svg> 21غ بروتين</span></div>
+        <h3>توست الترمس بالأفوكادو والبيض</h3>
+        <p class="ex">إفطار متكامل على شريحة واحدة من خبز الترمس البروتيني.</p>
+        <a href="newme-blog.html#r1" class="go">شاهد الوصفة ←</a>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media">
+        <span class="cat">سناك</span>
+        <div class="ph"><svg><use href="#i-bowl"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20yogurt%20parfait%20glass%20layered%20with%20granola%20honey%20and%20fresh%20berries%2C%20bright%20natural%20daylight%2C%20appetizing%20closeup%2C%208k%20photorealistic?width=900&height=560&nologo=true&seed=96&model=flux" alt="" onerror="this.remove()">
+      </div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 10 دقائق</span><span><span class="kcal-box">kcal</span> 280 سعرة</span><span><svg class="i"><use href="#i-protein"/></svg> 14غ بروتين</span></div>
+        <h3>بارفيه الجرانولا واللبن بالتوت</h3>
+        <p class="ex">طبقات جرانولا الكتان والعسل مع لبن يوناني وتوت طازج.</p>
+        <a href="newme-blog.html#r2" class="go">شاهد الوصفة ←</a>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media">
+        <span class="cat">غداء</span>
+        <div class="ph"><svg><use href="#i-bowl"/></svg></div>
+        <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20food%20photography%2C%20colorful%20salad%20bowl%20with%20white%20lupin%20beans%20quinoa%20cherry%20tomatoes%20cucumber%20and%20lemon%20dressing%2C%20bright%20natural%20daylight%2C%20appetizing%20overhead%2C%208k%20photorealistic?width=900&height=560&nologo=true&seed=97&model=flux" alt="" onerror="this.remove()">
+      </div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 20 دقيقة</span><span><span class="kcal-box">kcal</span> 410 سعرة</span><span><svg class="i"><use href="#i-protein"/></svg> 24غ بروتين</span></div>
+        <h3>سلطة الترمس والكينوا بالليمون</h3>
+        <p class="ex">غداء خفيف مشبع يجمع بروتين الترمس مع انتعاش الليمون.</p>
+        <a href="newme-blog.html#r3" class="go">شاهد الوصفة ←</a>
+      </div>
+    </article>
+  </div>
+  <div class="center-cta"><a href="newme-blog.html#recipes" class="btn inv">كل الوصفات ←</a></div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="sec-head">
+    <span class="kick">الأسئلة الشائعة</span>
+    <h2>عندك سؤال؟</h2>
+  </div>
+  <div class="faq">
+    <div class="fitem">
+      <button class="fq">ما هي نطاقات التغطية والتوصيل المتاحة؟<span class="x">+</span></button>
+      <div class="fa"><p>نقوم بالتوصيل المباشر لكافة عملائنا داخل مدينة الرياض عبر أسطولنا الخاص. أما بالنسبة لبقية مدن ومناطق المملكة، فيتم شحن وتوصيل الطلبات عبر شركائنا اللوجستيين المعتمدين: جاهز، هنقرستيشن، كيتا، ذا شيفز، نينجا، وديلي ميلز.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">كيف يتم احتساب وتدقيق القيم الغذائية للمنتجات؟<span class="x">+</span></button>
+      <div class="fa"><p>تخضع كافة الوصفات لرقابة وإشراف فريق من أخصائيي التغذية المرخصين لضمان دقة المعايير. وتظهر القيم الغذائية التفصيلية (السعرات الحرارية، البروتين، الكربوهيدرات، الدهون، الألياف، والأوميغا-3) بوضوح على بطاقة كل منتج وعلى الملصق الخارجي لكل صندوق، مرفقة برقم الدفعة لضمان التتبع.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">هل تتوفر مرونة في إلغاء الاشتراك أو تعديل خطة الطلب؟<span class="x">+</span></button>
+      <div class="fa"><p>نعم، يتيح النظام التحكم الكامل بالاشتراك؛ حيث يمكنكم إلغاء الخطة، إيقافها مؤقتاً، أو ترقيتها في أي وقت مباشرة عبر حسابكم الشخصي بضغطة زر واحدة، دون ترتب أي رسوم إضافية.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">ما هي الأهمية الغذائية للترمس وبذور الكتان في منتجاتكم؟<span class="x">+</span></button>
+      <div class="fa"><p>يمثل الترمس الأبيض أحد أغنى المصادر النباتية بالبروتين (بنسبة تصل إلى 40%)، بينما تعد بذور الكتان مصدراً غنياً بالألياف والأوميغا-3. حرصاً على القيمة الغذائية، نقوم بطحن هذه المكونات طازجة صباح كل يوم وفقاً للمعايير والوصفات المعتمدة لدينا.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">كيف يتم ضمان جودة وصلاحية المنتجات؟<span class="x">+</span></button>
+      <div class="fa"><p>تبدأ عمليات الخبز يومياً في تمام الساعة 07:00 صباحاً، ويتم التوزيع خلال مدة لا تتجاوز 48 ساعة كحد أقصى. يحمل كل صندوق ملصقاً يوضح ساعة الخبز ورقم الدفعة بدقة. وفي حال عدم رضاكم التام عن الدفعة الأولى، نلتزم بإعادة قيمة الطلب بالكامل.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO CTA -->
+<section class="photo-cta">
+  <div class="ph"><svg><use href="#i-bread"/></svg></div>
+  <img class="aiimg" src="https://image.pollinations.ai/prompt/hyperrealistic%20wide%20editorial%20photography%2C%20long%20wooden%20bakery%20table%20with%20fresh%20artisan%20flax%20seed%20bread%20loaves%20and%20kraft%20meal%20boxes%2C%20gentle%20steam%20rising%2C%20warm%20golden%20morning%20sunlight%20streaming%20through%20window%2C%20appetizing%20premium%20bakery%20atmosphere%2C%208k%20photorealistic?width=1600&height=800&nologo=true&seed=77&model=flux" alt="" onerror="this.remove()">
+  <div class="inner">
+    <h2>جدّد طاقتك. <em>جدّد حياتك.</em></h2>
+    <p>أول دفعة عليها ضمان استرجاع كامل — والتوصيل الأول مجاني.</p>
+    <a href="newme-subscribe.html" class="btn">ابدأ اشتراكك الآن ←</a>
+    <small>بدون التزام · إلغاء في أي وقت</small>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<!-- consultation + terms strip -->
+<section class="consult-strip" style="background:var(--navy,#122B4A);padding:44px 0;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-120px;inset-inline-start:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.25),transparent 65%);pointer-events:none"></div>
+  <div style="max-width:1260px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;position:relative;z-index:2">
+    <div>
+      <div style="font-family:var(--mono,monospace);font-size:10px;letter-spacing:.28em;color:#FFA05C;font-weight:800;text-transform:uppercase">FREE CONSULTATION</div>
+      <h2 style="color:#fff;font-size:clamp(22px,4.5vw,32px);font-weight:900;margin:6px 0 4px;letter-spacing:-.015em">غير متأكد أي برنامج يناسبك؟</h2>
+      <p style="color:#B9C9E2;font-size:13.5px;font-weight:600;margin:0">استشارة مجانية 20 دقيقة مع أخصائي تغذية — احجز اسمك وتاريخك ووقتك في أقل من دقيقة.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <a href="newme-consult.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(105deg,#FFA05C,#F07F2D 55%,#DD6516);color:#fff;font-weight:900;font-size:14.5px;border-radius:999px;padding:15px 32px;text-decoration:none;box-shadow:0 14px 34px rgba(240,127,45,.4)">احجز استشارتك ←</a>
+      <a href="newme-terms.html" style="color:#C7D6EC;font-weight:800;font-size:12.5px;text-decoration:none;border-bottom:1.5px solid rgba(255,255,255,.35);padding-bottom:2px">الشروط والأحكام</a>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="f-grid">
+    <div class="f-news">
+      <a class="logo" href="newme-main.html" style="margin-bottom:14px"><span class="mark"></span><b style="color:#fff">نيو مي</b></a>
+      <h3>انضم لقائمة نيومي</h3>
+      <p>عروض حصرية ووصفات ومقالات أسبوعية من أخصائيي التغذية — بلا إزعاج.</p>
+      <div class="f-form">
+        <input type="email" placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني">
+        <button id="newsBtn">اشترك</button>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>الأقسام</h4>
+      <a href="#about">عن نيومي</a><a href="#journey">الرحلة</a><a href="#values">قيمنا</a><a href="newme-store.html">المتجر</a><a href="newme-subscribe.html">الاشتراكات</a>
+    </div>
+    <div class="f-col">
+      <h4>المحتوى</h4>
+      <a href="newme-blog.html#articles">مقالات صحية</a><a href="newme-blog.html#recipes">وصفات</a><a href="#reviews">التقييمات</a><a href="#faq">الأسئلة الشائعة</a>
+    </div>
+    <div class="f-col">
+      <h4>تواصل</h4>
+      <a href="https://wa.me/966533360317">واتساب 966533360317+</a><a href="mailto:info@newmeforever.com">info@newmeforever.com</a><a href="#about">الرياض، السعودية</a>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <span>© 2026 نيو مي — جميع الحقوق محفوظة · الرقم الضريبي 312782087600003</span>
+    <span>طاقتك اليومية · جدّد حياتك · Renew your life</span>
+  </div>
+</footer>
+</main>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="info"><b>خطة التوازن — <span id="stickyPrice">549</span> ر.س</b><small>1,150 سعرة يومياً · إلغاء بأي وقت</small></div>
+  <a href="newme-subscribe.html" class="btn">اشترك ووفّر</a>
+</div>
+
+<script>
+function failOpen(){
+  try{
+    document.querySelectorAll('img.aiimg').forEach(function(i){i.classList.add('loaded');});
+    document.querySelectorAll('.rv').forEach(function(r){r.classList.add('in');});
+    document.querySelectorAll('.fuel').forEach(function(f){f.style.setProperty('--v',(f.getAttribute('data-v')||0)+'%');});
+  }catch(_){}
+}
+window.addEventListener('error',failOpen);
+try{
+'use strict';
+
+/* announcement rotation */
+var msgs=Array.prototype.slice.call(document.querySelectorAll('#announce span')),ai=0;
+setInterval(function(){
+  msgs[ai].classList.remove('on'); ai=(ai+1)%msgs.length; msgs[ai].classList.add('on');
+},3500);
+
+/* AI images */
+document.querySelectorAll('img.aiimg').forEach(function(img){
+  img.loading='lazy'; img.decoding='async';
+  if(img.complete&&img.naturalWidth>0)img.classList.add('loaded');
+  else img.addEventListener('load',function(){img.classList.add('loaded');});
+});
+
+/* counters */
+function countEl(el){
+  var target=+el.getAttribute('data-count'),start=null,dur=1300;
+  function step(ts){
+    if(!start)start=ts;
+    var p=Math.min(1,(ts-start)/dur); p=1-Math.pow(1-p,3);
+    var v=Math.round(target*p);
+    el.textContent=v>=1000?v.toLocaleString('en-US'):v;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function heroKcal(){
+  var el=document.getElementById('dayKcal'); if(!el)return;
+  var t=1150,s=null;
+  function st(ts){if(!s)s=ts;var p=Math.min(1,(ts-s)/1400);p=1-Math.pow(1-p,3);
+    el.textContent=Math.round(t*p).toLocaleString('en-US')+' KCAL';
+    if(p<1)requestAnimationFrame(st);}
+  requestAnimationFrame(st);
+}
+
+/* reveals: fire fuel bars + counters on view */
+function fireFuel(scope){
+  var list=[];
+  if(scope.matches&&scope.matches('.fuel'))list.push(scope);
+  if(scope.querySelectorAll)list=list.concat(Array.prototype.slice.call(scope.querySelectorAll('.fuel')));
+  list.forEach(function(f){f.style.setProperty('--v',(f.getAttribute('data-v')||0)+'%');});
+}
+if('IntersectionObserver' in window){
+  var done={};
+  var rio=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.classList.add('in');
+      fireFuel(e.target);
+      e.target.querySelectorAll('[data-count]').forEach(function(c){
+        var k=c.getAttribute('data-count');
+        if(!done[k]){countEl(c);done[k]=1;}
+      });
+      if(e.target.querySelector&&e.target.querySelector('#dayKcal')&&!done.hero){heroKcal();done.hero=1;}
+      rio.unobserve(e.target);
+    });
+  },{threshold:.18});
+  document.querySelectorAll('.rv,.bstat,.spec-row,.z-fuel,.plan-fuel,.day-fuel,.val').forEach(function(el){rio.observe(el);});
+}else{ failOpen(); document.querySelectorAll('[data-count]').forEach(countEl); heroKcal(); }
+
+/* billing toggle */
+var toggle=document.getElementById('billToggle'),pill=document.getElementById('togglePill');
+var tbtns=Array.prototype.slice.call(toggle.querySelectorAll('button'));
+function placePill(btn){
+  if(!btn)return;
+  pill.style.width=btn.offsetWidth+'px';
+  pill.style.left=btn.offsetLeft+'px';
+}
+function activeBtn(){
+  for(var i=0;i<tbtns.length;i++)if(tbtns[i].classList.contains('on'))return tbtns[i];
+  return tbtns[0];
+}
+function setBill(mode){
+  tbtns.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-bill')===mode);});
+  placePill(activeBtn());
+  document.querySelectorAll('[data-m]').forEach(function(el){
+    el.textContent=el.getAttribute(mode==='m'?'data-m':'data-q');
+  });
+  document.querySelectorAll('[data-pm-m]').forEach(function(el){
+    el.textContent=el.getAttribute(mode==='m'?'data-pm-m':'data-pm-q');
+  });
+  document.querySelectorAll('s[data-was-m]').forEach(function(el){
+    el.textContent=el.getAttribute(mode==='m'?'data-was-m':'data-was-q')+' ر.س';
+  });
+  var sp=document.getElementById('stickyPrice');
+  if(sp)sp.textContent=mode==='m'?'549':'439';
+}
+tbtns.forEach(function(b){b.addEventListener('click',function(){setBill(b.getAttribute('data-bill'));});});
+setTimeout(function(){placePill(activeBtn());},60);
+window.addEventListener('resize',function(){placePill(activeBtn());});
+
+/* video placeholders */
+document.querySelectorAll('.vid').forEach(function(v){
+  v.addEventListener('click',function(){
+    var src=(v.getAttribute('data-video')||'').trim();
+    if(!src){
+      v.classList.add('nudge');
+      clearTimeout(v._t); v._t=setTimeout(function(){v.classList.remove('nudge');},2600);
+      return;
+    }
+    if(v.classList.contains('playing'))return;
+    v.classList.add('playing');
+    var el;
+    if(/youtube\.com|youtu\.be|vimeo\.com/.test(src)){
+      el=document.createElement('iframe');
+      el.src=src+(src.indexOf('?')>-1?'&':'?')+'autoplay=1';
+      el.setAttribute('allow','autoplay; fullscreen');
+      el.setAttribute('allowfullscreen','');
+    }else{
+      el=document.createElement('video');
+      el.src=src; el.controls=true; el.autoplay=true; el.setAttribute('playsinline','');
+    }
+    v.appendChild(el);
+  });
+});
+
+/* sticky mobile CTA */
+var sticky=document.getElementById('stickyCta'),heroEl=document.querySelector('.hero');
+if('IntersectionObserver' in window){
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){sticky.classList.toggle('show',!e.isIntersecting&&e.boundingClientRect.top<0);});
+  },{threshold:0}).observe(heroEl);
+}else{
+  window.addEventListener('scroll',function(){sticky.classList.toggle('show',window.scrollY>600);},{passive:true});
+}
+
+/* FAQ */
+document.querySelectorAll('.fitem').forEach(function(item){
+  var q=item.querySelector('.fq'),a=item.querySelector('.fa');
+  q.addEventListener('click',function(){
+    var open=item.classList.contains('open');
+    document.querySelectorAll('.fitem.open').forEach(function(o){
+      o.classList.remove('open');o.querySelector('.fa').style.maxHeight='0px';
+    });
+    if(!open){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+  });
+});
+
+/* newsletter demo */
+var nb=document.getElementById('newsBtn');
+if(nb)nb.addEventListener('click',function(){
+  nb.textContent='✓ تم';
+  setTimeout(function(){nb.textContent='اشترك';},2500);
+});
+
+}catch(err){ failOpen(); }
+</script>
+
+
+<div class="mmenu" id="mmenu"><button class="mclose" aria-label="إغلاق">×</button><div class="mkick">NEWME — MENU</div><a class="mlink" href="#about">عن نيومي</a><a class="mlink" href="#journey">الرحلة</a><a class="mlink" href="#values">قيمنا</a><a class="mlink" href="newme-store.html">المتجر</a><a class="mlink" href="newme-subscribe.html">الاشتراكات</a><a class="mlink" href="#articles">مقالات</a><a class="mlink" href="#recipes">وصفات</a><a class="mlink" href="newme-consult.html">الاستشارات</a><a class="mlink" href="newme-terms.html">الشروط والأحكام</a><a class="mcta" href="newme-subscribe.html">اشترك ووفّر ←</a><div class="mfoot">جدّد حياتك · Renew your life · واتساب <a href="https://wa.me/966533360317" style="color:#FFA05C">+966 53 336 0317</a></div></div>
+<script>
+try{(function(){
+var b=document.getElementById('mBurger'),m=document.getElementById('mmenu');
+if(!b||!m)return;
+function open(){m.classList.add('open');document.body.classList.add('menu-open');}
+function close(){m.classList.remove('open');document.body.classList.remove('menu-open');}
+b.addEventListener('click',open);
+m.querySelector('.mclose').addEventListener('click',close);
+m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();}catch(_){}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.js"></script>
+<script>
+/* GSAP enhancement layer — page works fully without it */
+try{
+if(window.gsap){
+  document.documentElement.classList.add('gs');
+  if(window.ScrollTrigger)gsap.registerPlugin(ScrollTrigger);
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce){
+
+  /* ===== Locomotive Scroll — premium smooth scrolling (desktop) ===== */
+  var loco=null;
+  try{
+    if(window.LocomotiveScroll&&window.ScrollTrigger&&matchMedia('(min-width:1024px)').matches){
+      document.documentElement.classList.add('loco');
+      loco=new LocomotiveScroll({
+        el:document.querySelector('#locoScroll'),
+        smooth:true,lerp:.085,multiplier:1,
+        smartphone:{smooth:false},tablet:{smooth:false},
+        reloadOnContextChange:true
+      });
+      loco.on('scroll',ScrollTrigger.update);
+      ScrollTrigger.scrollerProxy('#locoScroll',{
+        scrollTop:function(value){
+          return arguments.length?loco.scrollTo(value,{duration:0,disableLerp:true}):loco.scroll.instance.scroll.y;
+        },
+        getBoundingClientRect:function(){return{top:0,left:0,width:window.innerWidth,height:window.innerHeight};},
+        pinType:document.querySelector('#locoScroll').style.transform?'transform':'fixed'
+      });
+      ScrollTrigger.addEventListener('refresh',function(){loco.update();});
+      ScrollTrigger.defaults({scroller:'#locoScroll'});
+      /* in-page anchors ride the smooth scroller */
+      document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click',function(e){
+          var id=a.getAttribute('href');
+          if(id&&id.length>1){var t=document.querySelector(id);if(t){e.preventDefault();loco.scrollTo(t,{offset:-76});}}
+        });
+      });
+      /* keep measurements honest as AI images stream in */
+      document.addEventListener('load',function(e){
+        if(e.target&&e.target.tagName==='IMG'){clearTimeout(window.__locoU);window.__locoU=setTimeout(function(){loco.update();ScrollTrigger.refresh();},250);}
+      },true);
+      window.addEventListener('load',function(){ScrollTrigger.refresh();});
+      setTimeout(function(){ScrollTrigger.refresh();},700);
+    }
+  }catch(_){}
+
+
+  /* hand elements over to GSAP (disable CSS reveal for them) */
+  function tk(sel){
+    var els=gsap.utils.toArray(sel);
+    els.forEach(function(e){e.classList.add('in');e.style.transition='none';});
+    return els;
+  }
+
+  /* ===== hero intro timeline ===== */
+  tk('.hero-pill,.hero h1,.hero .lead,.hero-ctas .btn,.hero-rating');
+  var chips=[];
+  var tl=gsap.timeline({defaults:{ease:'power3.out'},onComplete:function(){
+    chips.forEach(function(c){c.style.animation='';c.style.transform='';});
+  }});
+  tl.from('.hero-pill',{y:20,opacity:0,duration:.5,clearProps:'all'})
+    .from('.hero h1',{y:40,opacity:0,duration:.85,clearProps:'all'},'-=.25')
+    .from('.hero .lead',{y:26,opacity:0,duration:.6,clearProps:'all'},'-=.55')
+    .from('.hero-ctas .btn',{y:20,opacity:0,duration:.5,stagger:.1,clearProps:'all'},'-=.4')
+    .from('.hero-rating',{opacity:0,duration:.5,clearProps:'all'},'-=.25');
+
+  if(window.ScrollTrigger){
+    /* ===== scroll-in staggers ===== */
+    [['.usp',.06],['.prod',.09],['.val',.08],['.rev',.09],['.splan',.12],['.acard',.09],['.bstat',.08]].forEach(function(cfg){
+      tk(cfg[0]);
+      ScrollTrigger.batch(cfg[0],{start:'top 88%',once:true,onEnter:function(els){
+        gsap.from(els,{y:36,opacity:0,duration:.7,stagger:cfg[1],ease:'power3.out',clearProps:'all'});
+      }});
+    });
+    [['.about-photo','.about-copy'],['.spec-photo','.spec-card']].forEach(function(pair){
+      tk(pair[0]+','+pair[1]);
+      ScrollTrigger.create({trigger:pair[0],start:'top 85%',once:true,onEnter:function(){
+        gsap.from(pair[0],{x:40,opacity:0,duration:.8,ease:'power3.out',clearProps:'all'});
+        gsap.from(pair[1],{x:-40,opacity:0,duration:.8,delay:.12,ease:'power3.out',clearProps:'all'});
+      }});
+    });
+
+    /* ===== fuel bars ===== */
+    ScrollTrigger.batch('.fuel',{start:'top 90%',once:true,onEnter:function(els){
+      els.forEach(function(f){
+        var v=+f.getAttribute('data-v')||0, bar=f.querySelector('i');
+        if(bar)gsap.fromTo(bar,{width:'0%'},{width:v+'%',duration:1.5,ease:'power4.out'});
+      });
+    }});
+
+    /* ===== parallax on photography ===== */
+    gsap.utils.toArray('.zmedia img,.photo-cta img,.film img').forEach(function(img){
+      gsap.fromTo(img,{yPercent:-7},{yPercent:7,ease:'none',
+        scrollTrigger:{trigger:img.parentNode,scrub:.6,start:'top bottom',end:'bottom top'}});
+    });
+
+    /* ===== subscription section glow entrance ===== */
+    tk('.toggle-wrap');
+    ScrollTrigger.create({trigger:'.subs',start:'top 75%',once:true,onEnter:function(){
+      gsap.from('.toggle-wrap',{scale:.85,opacity:0,duration:.6,ease:'back.out(1.8)',clearProps:'all'});
+    }});
+  }
+  }
+}
+}catch(_){}
+</script>
+</body>
+</html>

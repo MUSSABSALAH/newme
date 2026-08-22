@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Admin\Auth\LoginRequest;
+use App\Modules\Dashboard\Support\StaffLanding;
 use App\Modules\Identity\DTOs\LoginData;
 use App\Modules\Identity\Enums\UserType;
 use App\Modules\Identity\Exceptions\InactiveUserException;
@@ -48,7 +49,7 @@ final class LoginController extends Controller
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.dashboard'));
+        return redirect()->intended(StaffLanding::routeFor($user));
     }
 
     public function destroy(Request $request): RedirectResponse

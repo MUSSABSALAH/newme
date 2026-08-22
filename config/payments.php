@@ -11,8 +11,9 @@ return [
     |
     | Which implementation of App\Modules\Payments\Contracts\PaymentGateway
     | handles charges. "simulated" approves cards that look valid and declines a
-    | few reserved test numbers; swap in a real provider by adding it to the
-    | "gateways" map below.
+    | few reserved test numbers. Set PAYMENTS_DRIVER=paytabs to send customers
+    | to PayTabs' hosted page instead. A later provider is another class in the
+    | "gateways" map — checkout never talks to PayTabs directly.
     |
     */
 
@@ -20,6 +21,7 @@ return [
 
     'gateways' => [
         'simulated' => App\Modules\Payments\Gateways\SimulatedGateway::class,
+        'paytabs' => App\Modules\Payments\Gateways\PayTabs\PayTabsGateway::class,
     ],
 
     /*

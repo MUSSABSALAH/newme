@@ -8,7 +8,9 @@
       <a href="{{ route('website.main') }}#journey">{{ __('website.nav.journey') }}</a>
       <a href="{{ route('website.store') }}" class="{{ $active === 'store' ? 'on' : '' }}">{{ __('website.nav.store') }}</a>
       <a href="{{ route('website.subscribe') }}" class="{{ $active === 'subscribe' ? 'on' : '' }}">{{ __('website.nav.subscribe') }}</a>
-      <a href="{{ route('website.menu') }}" class="{{ $active === 'menu' ? 'on' : '' }}">{{ __('website.nav.menu') }}</a>
+      @if (false)
+        <a href="{{ route('website.menu') }}" class="{{ $active === 'menu' ? 'on' : '' }}">{{ __('website.nav.menu') }}</a>
+      @endif
       <a href="{{ route('website.blog') }}#articles" class="{{ $active === 'blog' ? 'on' : '' }}">{{ __('website.nav.articles') }}</a>
       <a href="{{ route('website.consult') }}" class="{{ $active === 'consult' ? 'on' : '' }}">{{ __('website.nav.consult') }}</a>
       <a href="{{ route('website.terms') }}" class="{{ $active === 'terms' ? 'on' : '' }}">{{ __('website.nav.terms') }}</a>

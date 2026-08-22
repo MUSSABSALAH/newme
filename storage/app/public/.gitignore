@@ -6,3 +6,5 @@
 !subscription/**
 !store/
 !store/**
+!cms/
+!cms/**

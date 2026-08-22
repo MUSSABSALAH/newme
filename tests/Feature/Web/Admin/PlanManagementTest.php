@@ -44,6 +44,7 @@ final class PlanManagementTest extends TestCase
             'goal' => 'weight_loss',
             'name' => ['ar' => 'باقة تجريبية', 'en' => 'Sample Plan'],
             'requires_day_selection' => '1',
+            'allows_pause' => '1',
             'min_delivery_days_per_week' => '5',
             'delivery_fee' => '0',
             'is_active' => '1',

@@ -15,15 +15,17 @@
   --green:#39B478;
   --grad:linear-gradient(105deg,var(--orange-hi),var(--orange) 55%,var(--orange-deep));
   --font:'Cairo',-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter:max(20px,calc((100vw - 1260px)/2 + 20px));
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:100px}
 body{font-family:var(--font);background:var(--bg);color:var(--body);line-height:1.75;font-size:15.5px;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 h1,h2,h3,h4{color:var(--navy);font-weight:900;line-height:1.18;letter-spacing:-.015em}
-img{display:block;width:100%;height:100%;object-fit:cover}
+img:not(.logo__img){display:block;width:100%;height:100%;object-fit:cover}
+.logo__img{display:block;height:40px;width:auto;max-width:160px;object-fit:contain}
 button{font-family:var(--font);cursor:pointer}
 .container{max-width:1260px;margin:0 auto;padding:0 20px}
 .aiimg{transition:opacity .9s ease}
@@ -37,6 +39,8 @@ button{font-family:var(--font);cursor:pointer}
 /* ===== flat 2d icons ===== */
 .i{width:1.05em;height:1.05em;fill:currentColor;vertical-align:-0.14em;display:inline-block}
 .ph svg{width:54px;height:54px;color:var(--gray-3);fill:currentColor}
+.ph::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 32%,rgba(255,255,255,.28) 50%,transparent 68%);transform:translateX(-100%);animation:shimmer 2.4s ease infinite;pointer-events:none}
+@keyframes shimmer{to{transform:translateX(100%)}}
 
 /* ===== buttons ===== */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:15px;border-radius:999px;padding:16px 32px;min-height:54px;border:2px solid var(--orange);background:var(--grad);color:#fff;transition:.2s;box-shadow:0 12px 28px rgba(240,127,45,.35)}
@@ -57,14 +61,14 @@ button{font-family:var(--font);cursor:pointer}
 .macro small{color:var(--muted);font-weight:700;min-width:52px}
 .macro b{font-family:var(--mono);font-size:11px;color:var(--navy)}
 
-/* ===== announcement ===== */
-.announce{background:var(--navy);color:#fff;text-align:center;padding:9px 14px;font-size:12.5px;font-weight:700;position:relative;overflow:hidden;min-height:calc(38px + var(--sat))}
+/* ===== announcement (always above the main nav) ===== */
+.announce{background:var(--navy);color:#fff;text-align:center;padding:calc(9px + var(--sat)) 14px 9px;font-size:12.5px;font-weight:700;position:relative;overflow:hidden;min-height:calc(38px + var(--sat));z-index:91}
 .announce b{color:var(--orange-hi)}
 .announce span{position:absolute;inset-inline:14px;top:calc(9px + var(--sat));opacity:0;transition:opacity .4s}
 .announce span.on{opacity:1}
 
 /* ===== nav ===== */
-nav.main{position:sticky;top:0;padding-top:var(--sat);z-index:90;background:rgba(247,245,241,.9);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--gray-2)}
+nav.main{position:sticky;top:0;padding-top:0;z-index:90;background:rgba(247,245,241,.9);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--gray-2)}
 nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 20px;gap:12px}
 .logo{display:flex;align-items:center;gap:10px}
 .logo .mark{width:36px;height:36px;border-radius:50%;background:conic-gradient(from 210deg,var(--navy-3),var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
@@ -74,47 +78,33 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .nav-links a{padding:6px 0;border-bottom:2.5px solid transparent;white-space:nowrap}
 .nav-links a:hover{border-color:var(--orange)}
 @media(min-width:1060px){.nav-links{display:flex}}
-.nav-right{display:flex;align-items:center;gap:8px}
-.cart{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;position:relative}
-.cart .i{width:16px;height:16px;color:var(--navy)}
-.cart i{position:absolute;top:-3px;inset-inline-start:-3px;background:var(--orange);color:#fff;font-style:normal;font-size:9px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.nav-right{display:flex;align-items:center;gap:10px}
+.cart{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;position:relative}
+.cart .i{width:19px;height:19px;color:var(--navy)}
+.cart i{position:absolute;top:-3px;inset-inline-start:-3px;background:var(--orange);color:#fff;font-style:normal;font-size:10px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-weight:800}
 
-/* ===== hero ===== */
-.hero{border-bottom:1px solid var(--gray-2);position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;top:-160px;inset-inline-end:-160px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.14),transparent 65%)}
-.hero-grid{max-width:1260px;margin:0 auto;display:grid;min-height:540px;position:relative;z-index:2}
-@media(min-width:920px){.hero-grid{grid-template-columns:1.05fr .95fr;min-height:640px}}
-.hero-copy{padding:52px 20px 40px;display:flex;flex-direction:column;justify-content:center}
-@media(min-width:920px){.hero-copy{padding:60px 20px 60px 40px}}
-.hero-rating{display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:13px;font-weight:800;color:var(--ink)}
-.stars{color:var(--orange);letter-spacing:2px;font-size:15px}
-.hero h1{font-size:clamp(42px,10vw,86px);line-height:1.06;margin-bottom:18px}
+/* ===== hero: clean split ===== */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--gray-2);display:grid}
+@media(min-width:920px){.hero{grid-template-columns:1.02fr .98fr;min-height:74vh}}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:start;padding:72px 20px 64px}
+@media(min-width:920px){.hero-copy{padding:80px 40px;padding-inline-start:var(--gutter);max-width:none;width:100%}}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--gray-2);border-radius:999px;padding:9px 18px;font-size:12px;font-weight:900;color:var(--navy);box-shadow:0 10px 26px rgba(18,43,74,.08);margin-bottom:24px}
+.hero-pill b{color:var(--orange-deep);font-family:var(--mono)}
+.hero h1{font-size:clamp(38px,7vw,76px);line-height:1.12;margin-bottom:18px}
 .hero h1 em{font-style:normal;color:var(--orange-deep)}
-.hero p.lead{font-size:17px;max-width:460px;margin-bottom:24px;font-weight:600}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
-.day-fuel{max-width:440px;background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:16px 18px;box-shadow:0 14px 34px rgba(18,43,74,.08)}
-.day-fuel .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;font-weight:900;color:var(--navy);font-size:13.5px}
-.day-fuel .top .i{color:var(--orange-deep);width:14px;height:14px}
-.day-fuel .top b{font-family:var(--mono);color:var(--orange-deep);font-size:15px}
-.day-fuel .segs{display:flex;gap:5px;font-size:10px;font-weight:800;color:var(--muted);margin-top:8px;justify-content:space-between}
-.hero-visual{position:relative;background:var(--navy);min-height:360px}
-.hero-visual .ph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(160deg,var(--navy-2),var(--navy))}
-.hero-visual .ph svg{width:88px;height:88px;color:rgba(255,255,255,.2)}
-.hero-visual img{position:absolute;inset:0}
-.hero-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,transparent 60%,rgba(18,43,74,.55))}
-.hv-chip{position:absolute;z-index:3;background:#fff;border-radius:16px;box-shadow:0 18px 40px rgba(18,43,74,.25);padding:11px 15px;display:flex;align-items:center;gap:10px;animation:floaty 4.5s ease-in-out infinite}
-.hv-chip.a{top:18px;inset-inline-start:16px}
-.hv-chip.b{bottom:64px;inset-inline-end:16px;animation-delay:-2.2s}
-.hv-chip .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--orange-soft);color:var(--orange-deep);flex-shrink:0}
-.hv-chip .ic .i{width:19px;height:19px}
-.hv-chip b{display:block;font-size:14px;color:var(--navy);line-height:1.3}
-.hv-chip small{font-size:10.5px;color:var(--muted);font-weight:700}
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-.hero-tag{position:absolute;bottom:18px;inset-inline-start:18px;z-index:3;background:var(--orange);color:#fff;font-size:11.5px;font-weight:900;padding:9px 16px;border-radius:999px;letter-spacing:.05em;box-shadow:0 10px 24px rgba(240,127,45,.4)}
+.hero p.lead{font-size:17px;max-width:540px;margin:0 0 30px;font-weight:700;color:var(--ink)}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-rating{margin-top:28px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;color:var(--ink)}
+.stars{color:var(--orange);letter-spacing:2px;font-size:15px}
+.hero-media{position:relative;min-height:360px;background:var(--tile)}
+@media(min-width:920px){.hero-media{min-height:0}}
+.hero-media .bgph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(165deg,#F1EBE0,#E6DECD)}
+.hero-media .bgph svg{width:90px;height:90px;color:rgba(18,43,74,.14);fill:currentColor}
+.hero-media img{position:absolute;inset:0}
 
 /* ===== USP strip ===== */
 .usp-strip{border-bottom:1px solid var(--gray-2);background:#fff}
-.usp-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr)}
+.usp-grid{max-width:1260px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(2,1fr)}
 @media(min-width:920px){.usp-grid{grid-template-columns:repeat(4,1fr)}}
 .usp{padding:24px 18px;text-align:center;border-inline-start:1px solid var(--gray-2)}
 .usp:first-child,.usp:nth-child(3){border-inline-start:none}
@@ -124,17 +114,29 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .usp b{display:block;font-size:15px;color:var(--navy);font-weight:900}
 .usp small{font-size:12px;color:var(--muted);font-weight:700}
 
+/* ===== scrolling text strip ===== */
+.marquee{background:var(--navy);color:#fff;overflow:hidden;padding:14px 0;border-block:1px solid rgba(255,255,255,.08)}
+.marquee .track{display:inline-flex;align-items:center;gap:0;white-space:nowrap;width:max-content;animation:marq 30s linear infinite;will-change:transform}
+.marquee:hover .track{animation-play-state:paused}
+.marquee .item{display:inline-flex;align-items:center;gap:14px;padding:0 22px;font-weight:900;font-size:14px;letter-spacing:.02em}
+.marquee .item .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);flex-shrink:0}
+.marquee .item em{font-style:normal;color:var(--orange-hi)}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@media (prefers-reduced-motion: reduce){.marquee .track{animation:none}}
+
 /* ===== sections ===== */
-.section{padding:72px 0}
-.sec-head{max-width:780px;margin:0 auto 40px;text-align:center;padding:0 20px}
+.section{padding:76px 0}
+.sec-head{max-width:820px;margin:0 auto 44px;text-align:center;padding:0 20px}
 .sec-head h2{font-size:clamp(30px,6.5vw,52px);margin:10px 0 12px}
 .sec-head h2 em{font-style:normal;color:var(--orange-deep)}
-.sec-head p{font-size:15.5px;font-weight:600}
+.sec-head p{font-size:15px;font-weight:600;color:var(--muted)}
+.sec-head .kick{display:inline-flex;align-items:center;gap:10px}
+.sec-head .kick::before,.sec-head .kick::after{content:"";width:26px;height:2px;border-radius:2px;background:var(--orange)}
 
 /* ===== ABOUT ===== */
-.about-grid{max-width:1160px;margin:0 auto;padding:0 20px;display:grid;gap:28px}
-@media(min-width:920px){.about-grid{grid-template-columns:1fr 1fr;align-items:center;gap:48px}}
-.about-photo{border-radius:22px;overflow:hidden;position:relative;aspect-ratio:4/3.4;background:var(--tile);box-shadow:0 24px 54px rgba(18,43,74,.14)}
+.about-grid{max-width:1260px;margin:0 auto;padding:0 20px;display:grid;gap:28px}
+@media(min-width:920px){.about-grid{grid-template-columns:1fr 1.08fr;align-items:center;gap:52px}}
+.about-photo{border-radius:22px;overflow:hidden;position:relative;aspect-ratio:4/4.2;background:var(--tile);box-shadow:0 24px 54px rgba(18,43,74,.14)}
 @supports not (aspect-ratio:1){.about-photo{height:0;padding-bottom:85%}}
 .about-photo .ph{position:absolute;inset:0;display:grid;place-items:center}
 .about-photo img{position:absolute;inset:0}
@@ -142,21 +144,49 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .about-badge b{color:var(--orange-deep);font-family:var(--mono)}
 .about-copy h2{font-size:clamp(28px,5.6vw,44px);margin:8px 0 14px}
 .about-copy h2 em{font-style:normal;color:var(--orange-deep)}
-.about-copy p{font-size:15px;font-weight:600;margin-bottom:16px;max-width:480px}
-.about-list{list-style:none;margin:4px 0 22px}
-.about-list li{display:flex;gap:10px;font-size:14px;font-weight:800;color:var(--ink);padding:6px 0}
-.about-list li .i{color:var(--green);width:18px;height:18px;flex-shrink:0;margin-top:3px}
+.about-copy p{font-size:14.5px;font-weight:600;margin-bottom:15px;max-width:560px}
+.about-quote{background:#fff;border-inline-start:4px solid var(--orange);border-radius:18px;padding:18px 20px;box-shadow:0 16px 36px rgba(18,43,74,.08);color:var(--navy);font-weight:800;font-size:15px;line-height:1.9}
+.about-quote b{display:block;margin-top:10px;color:var(--orange-deep);font-size:12.5px;letter-spacing:.04em}
 .about-mini{display:flex;gap:26px;border-top:1.5px solid var(--gray-2);padding-top:18px}
 .about-mini b{display:block;font-size:24px;color:var(--navy);font-weight:900}
 .about-mini b .a{color:var(--orange-deep)}
 .about-mini span{font-size:11.5px;color:var(--muted);font-weight:800}
+
+/* ===== VISION 2030 + OPS INFOGRAPHIC ===== */
+.ops-wrap{max-width:1260px;margin:52px auto 0;padding:0 20px}
+.vision{display:flex;gap:22px;align-items:center;background:linear-gradient(115deg,var(--navy),var(--navy-3));border-radius:22px;padding:26px;color:#fff;position:relative;overflow:hidden;box-shadow:0 24px 54px rgba(18,43,74,.22)}
+.vision::before{content:"";position:absolute;top:-90px;inset-inline-end:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.3),transparent 65%)}
+.v-badge{flex-shrink:0;width:104px;height:104px;border-radius:26px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.22);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative;z-index:2}
+.v-badge small{font-size:10.5px;font-weight:800;color:#B9C9E2;letter-spacing:.06em}
+.v-badge b{font-family:var(--mono);font-size:34px;font-weight:700;color:var(--orange-hi);line-height:1}
+.v-copy{position:relative;z-index:2}
+.v-copy .kick{color:var(--orange-hi)}
+.v-copy h3{color:#fff;font-size:clamp(19px,3.6vw,26px);margin:6px 0 8px}
+.v-copy p{font-size:14px;font-weight:600;color:#C7D6EC;max-width:640px}
+.v-copy p b{color:#fff}
+@media(max-width:640px){.vision{flex-direction:column;text-align:center}.v-copy .kick{justify-content:center}}
+.ops-head{text-align:center;margin:38px 0 22px}
+.ops-head h3{font-size:clamp(21px,4.4vw,30px);margin-top:8px}
+.ops-flow{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:640px){.ops-flow{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1020px){.ops-flow{grid-template-columns:repeat(5,1fr);gap:16px}}
+.op{background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:22px 16px 20px;text-align:center;position:relative;transition:transform .2s,box-shadow .2s}
+.op:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(18,43,74,.1)}
+@media(min-width:1020px){.op:not(:last-child)::after{content:"";position:absolute;top:52px;inset-inline-end:-16px;width:16px;border-top:2px dashed var(--gray-3)}}
+.op-n{position:absolute;top:12px;inset-inline-start:14px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--orange-deep);letter-spacing:.1em}
+.op-ic{width:56px;height:56px;border-radius:16px;background:var(--orange-soft);color:var(--orange-deep);display:grid;place-items:center;margin:4px auto 12px}
+.op-ic .i{width:26px;height:26px}
+.op-kpi{display:block;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.op h4{font-size:14.5px;color:var(--navy);margin-bottom:6px}
+.op p{font-size:12px;font-weight:600;color:var(--muted);line-height:1.8}
 
 /* ===== PRODUCTS (spec-row pattern) ===== */
 .shop{background:#EFEBE3}
 .prod-grid{display:grid;gap:26px 16px;grid-template-columns:repeat(2,1fr);max-width:1260px;margin:0 auto;padding:0 20px}
 @media(min-width:1040px){.prod-grid{grid-template-columns:repeat(4,1fr);gap:30px 18px}}
 .prod{display:flex;flex-direction:column}
-.prod-tile{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--tile);border-radius:16px;margin-bottom:14px}
+.prod-tile{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--tile);border-radius:18px;margin-bottom:14px}
+.prod-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.5px rgba(18,43,74,.06);pointer-events:none;z-index:2}
 @supports not (aspect-ratio:1){.prod-tile{height:0;padding-bottom:100%}}
 .prod-tile .ph{position:absolute;inset:0;display:grid;place-items:center}
 .prod-tile img{position:absolute;inset:0;transition:transform .45s ease}
@@ -205,7 +235,7 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .spec-photo .ph svg{width:72px;height:72px}
 .spec-photo img{position:absolute;inset:0}
 .spec-photo .cap{position:absolute;bottom:12px;inset-inline-start:12px;z-index:2;background:rgba(18,43,74,.85);color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:7px 14px}
-.spec-card{background:var(--navy);border-radius:20px;padding:26px 24px;color:#fff;box-shadow:0 24px 54px rgba(18,43,74,.3)}
+.spec-card{background:var(--navy);border-radius:22px;padding:26px 24px;color:#fff;box-shadow:0 24px 54px rgba(18,43,74,.3)}
 .spec-card h3{color:#fff;font-size:22px;margin-bottom:4px}
 .spec-card .sub{font-size:12px;color:#9FB4D2;font-weight:800;margin-bottom:18px}
 .spec-row{display:grid;grid-template-columns:1.1fr 2fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px;font-weight:800}
@@ -216,18 +246,18 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .spec-note{margin-top:14px;font-size:10.5px;color:#8FA4C4;font-weight:700}
 
 /* ===== JOURNEY ===== */
-.zig{max-width:1260px;margin:0 auto}
-.zrow{display:grid;border-top:1px solid var(--gray-2)}
-@media(min-width:920px){.zrow{grid-template-columns:1fr 1fr;min-height:460px}.zrow.flip .zmedia{order:2}}
-.zmedia{position:relative;min-height:290px;background:var(--tile);overflow:hidden}
+.zig{max-width:1260px;margin:0 auto;padding:0 20px}
+.zrow{display:grid;gap:22px;border-top:1px solid var(--gray-2);padding:36px 0}
+@media(min-width:920px){.zrow{grid-template-columns:1fr 1fr;gap:40px;min-height:420px}.zrow.flip .zmedia{order:2}}
+.zmedia{position:relative;min-height:290px;background:var(--tile);overflow:hidden;border-radius:22px;box-shadow:0 24px 54px rgba(18,43,74,.12)}
 .zmedia .ph{position:absolute;inset:0;display:grid;place-items:center}
 .zmedia .ph svg{width:64px;height:64px}
 .zmedia img{position:absolute;inset:0}
 .znum{position:absolute;top:16px;inset-inline-start:16px;z-index:2;background:var(--orange);color:#fff;font-size:11px;font-weight:900;padding:7px 15px;border-radius:999px;letter-spacing:.08em;box-shadow:0 8px 20px rgba(240,127,45,.4)}
-.zcopy{padding:40px 20px;display:flex;flex-direction:column;justify-content:center}
-@media(min-width:920px){.zcopy{padding:50px 48px}}
+.zcopy{padding:6px 2px 10px;display:flex;flex-direction:column;justify-content:center}
+@media(min-width:920px){.zcopy{padding:20px 8px}}
 .zcopy h3{font-size:clamp(25px,5.4vw,40px);margin:8px 0 12px}
-.zcopy p{font-size:15px;max-width:430px;font-weight:600;margin-bottom:18px}
+.zcopy p{font-size:14.5px;max-width:540px;font-weight:600;margin-bottom:18px}
 .z-fuel{max-width:360px;margin-bottom:18px}
 .z-fuel .macro{margin-bottom:7px}
 .zlink{font-weight:900;font-size:14px;color:var(--orange-deep);display:inline-flex;align-items:center;gap:8px;border-bottom:2.5px solid var(--orange);padding-bottom:2px;width:max-content}
@@ -248,36 +278,38 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .vid.playing .play,.vid.playing .dur,.vid.playing .vtag,.vid.playing .vnote{display:none}
 .vid.playing::after{display:none}
 .vid video,.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:4;background:#000;object-fit:cover}
-.film-wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.film-wrap{max-width:1260px;margin:0 auto;padding:0 20px}
 .film{border-radius:22px;aspect-ratio:16/9;background:var(--navy-2);box-shadow:0 30px 70px rgba(18,43,74,.22)}
 @supports not (aspect-ratio:1){.film{height:0;padding-bottom:56.25%}}
 .film .ph{position:absolute;inset:0;display:grid;place-items:center}
 .film .ph svg{width:80px;height:80px;color:rgba(255,255,255,.18)}
 .film img{position:absolute;inset:0}
-.film-cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1080px;margin:14px auto 0;padding:0 20px;font-size:12.5px;font-weight:800;color:var(--muted)}
+.film-cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1260px;margin:14px auto 0;padding:0 20px;font-size:12.5px;font-weight:800;color:var(--muted)}
 .film-cap b{color:var(--navy)}
 
 /* ===== VALUES ===== */
-.val-grid{display:grid;gap:14px;grid-template-columns:1fr;max-width:1160px;margin:0 auto;padding:0 20px}
+.val-grid{display:grid;gap:14px;grid-template-columns:1fr;max-width:1260px;margin:0 auto;padding:0 20px}
 @media(min-width:700px){.val-grid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1040px){.val-grid{grid-template-columns:repeat(4,1fr)}}
 .val{background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:24px 20px;transition:transform .2s,box-shadow .2s}
 .val:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(18,43,74,.1)}
 .val .ic{width:48px;height:48px;border-radius:14px;background:var(--orange-soft);color:var(--orange-deep);display:grid;place-items:center;margin-bottom:14px}
 .val .ic .i{width:23px;height:23px}
-.val h3{font-size:16.5px;margin-bottom:5px}
-.val p{font-size:12.5px;font-weight:600;color:var(--muted)}
+.val h3{font-size:17px;margin-bottom:6px}
+.val p{font-size:13px;font-weight:600;color:var(--body);line-height:1.85}
 .band{background:var(--navy);color:#fff;padding:70px 0;position:relative;overflow:hidden;margin-top:56px}
 .band::before{content:"";position:absolute;top:-140px;inset-inline-start:15%;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.25),transparent 65%)}
 .band .kick{color:var(--orange-hi)}
 .band h2{color:#fff;font-size:clamp(28px,6.2vw,52px);max-width:840px;margin:12px auto 40px;text-align:center;padding:0 20px;position:relative;z-index:2}
 .band h2 .u{box-shadow:inset 0 -0.28em 0 var(--orange)}
-.band-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid rgba(255,255,255,.12);padding:0 20px;position:relative;z-index:2}
+.band-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid rgba(255,255,255,.12);padding:0 20px;position:relative;z-index:2}
 @media(min-width:920px){.band-grid{grid-template-columns:repeat(4,1fr)}}
 .bstat{padding:26px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.12)}
 .bstat b{display:block;font-size:clamp(30px,6.2vw,46px);font-weight:900;color:#fff;line-height:1.15}
 .bstat b .a{color:var(--orange-hi)}
-.bstat span{font-size:12.5px;color:#9FB4D2;font-weight:700}
+.bstat span{display:block;margin-top:4px;font-size:12px;color:#9FB4D2;font-weight:700;line-height:1.6}
+.band-tag{position:relative;z-index:2;text-align:center;margin:36px 20px 0;color:#C7D6EC;font-weight:700;font-size:15px}
+.band-tag em{font-style:normal;color:var(--orange-hi);font-weight:900}
 
 /* ===== reviews ===== */
 .rev-head{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:34px;text-align:center;padding:0 20px}
@@ -311,9 +343,9 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .toggle button.on{color:var(--navy)}
 .toggle button .save{background:var(--green);color:#fff;font-size:9.5px;font-weight:900;border-radius:999px;padding:2px 8px}
 .toggle .pill{position:absolute;top:5px;bottom:5px;border-radius:999px;background:#fff;transition:all .35s cubic-bezier(.2,.8,.2,1);z-index:1}
-.sub-grid{display:grid;gap:16px;max-width:1120px;margin:0 auto;padding:0 20px}
-@media(min-width:920px){.sub-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}}
-.splan{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:24px;padding:28px 24px;display:flex;flex-direction:column;position:relative;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:transform .25s}
+.sub-grid{display:grid;gap:16px;max-width:1260px;margin:0 auto;padding:0 20px;width:100%;justify-content:center}
+@media(min-width:920px){.sub-grid{grid-template-columns:repeat(3,minmax(0,360px));align-items:stretch;justify-content:center}}
+.splan{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:22px;padding:28px 24px;display:flex;flex-direction:column;position:relative;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:transform .25s;width:100%;max-width:400px;margin-inline:auto}
 .splan:hover{transform:translateY(-6px)}
 .splan.pop{background:linear-gradient(165deg,rgba(240,127,45,.16),rgba(255,255,255,.05));border:2px solid var(--orange);box-shadow:0 0 0 6px rgba(240,127,45,.12),0 34px 70px rgba(0,0,0,.45)}
 @media(min-width:920px){.splan.pop{transform:scale(1.05)}.splan.pop:hover{transform:scale(1.05) translateY(-6px)}}
@@ -322,12 +354,13 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .splan h3{color:#fff;font-size:23px;margin:4px 0 2px}
 .splan .goal{font-size:12px;color:#B9C9E2;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:6px}
 .splan .goal .i{width:13px;height:13px;color:var(--orange-hi)}
-.splan .pline{display:flex;align-items:baseline;gap:7px}
+.splan .pline{display:flex;align-items:baseline;gap:7px;justify-content:flex-start}
 .splan .pline b{font-size:clamp(38px,8vw,50px);font-weight:900;color:#fff;line-height:1.05;font-family:var(--mono)}
-.splan .pline small{font-size:13px;color:#8FA4C4;font-weight:800}
-.splan .was{font-size:12px;color:#8FA4C4;font-weight:700;height:20px}
-.splan .was s{color:#E88}
-.splan .per{display:inline-flex;width:max-content;background:rgba(57,180,120,.18);border:1px solid rgba(57,180,120,.4);color:#5FE0A0;font-size:11.5px;font-weight:900;border-radius:999px;padding:4px 12px;margin:8px 0 16px}
+.splan .pline small{font-size:13px;color:#8FA4C4;font-weight:800;display:inline-flex;align-items:center;gap:4px}
+.splan .pline .icon-saudi-riyal,.splan .was .icon-saudi-riyal,.splan .per .icon-saudi-riyal{color:currentColor}
+.splan .was{font-size:12px;color:#8FA4C4;font-weight:700;height:20px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.splan .was s{color:#E88;display:inline-flex;align-items:center;gap:4px}
+.splan .per{display:inline-flex;align-items:center;gap:4px;width:max-content;background:rgba(57,180,120,.18);border:1px solid rgba(57,180,120,.4);color:#5FE0A0;font-size:11.5px;font-weight:900;border-radius:999px;padding:4px 12px;margin:8px 0 16px}
 .plan-fuel{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 14px;margin-bottom:16px}
 .plan-fuel .hd{display:flex;justify-content:space-between;font-size:10.5px;font-weight:900;color:#B9C9E2;margin-bottom:8px;letter-spacing:.06em}
 .plan-fuel .hd .i{width:13px;height:13px;color:var(--orange-hi)}
@@ -411,13 +444,14 @@ footer{background:#0C1F38;color:#9FB4D2;padding:64px 0 calc(100px + var(--sab))}
 @media(min-width:920px){.sticky-cta{display:none}}
 
 @media (prefers-reduced-motion: reduce){
-  .hv-chip,.subs::before,.vid .play{animation:none}
+  .subs::before,.vid .play,.ph::before{animation:none}
   .js .rv{opacity:1;transform:none;transition:none}
   .fuel-bar i{transition:none}
 }
 /* ===== locomotive smooth-scroll mode (desktop) ===== */
-html.loco nav.main{position:fixed;top:0;inset-inline:0}
-html.loco #locoScroll{padding-top:calc(66px + var(--sat))}
+html.loco .announce{position:fixed;top:0;inset-inline:0;width:100%}
+html.loco nav.main{position:fixed;top:calc(38px + var(--sat));inset-inline:0}
+html.loco #locoScroll{padding-top:calc(38px + 66px + var(--sat))}
 [data-scroll-container]{will-change:transform}
 
 /* ===== iPhone menu (design unchanged on desktop) ===== */
@@ -463,43 +497,32 @@ body.menu-open{overflow:hidden}
 <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"/></symbol>
 </defs></svg>
 
-<!-- NAV -->
-@include('website.partials.nav', ['active' => 'main', 'showCart' => true])
-
-<main id="locoScroll" data-scroll-container>
-<!-- ANNOUNCEMENT -->
+<!-- ANNOUNCEMENT (above main nav) -->
 <div class="announce" id="announce">
   <span class="on">{!! __('website.main.announce.batch') !!}</span>
   <span>{!! __('website.main.announce.shipping') !!}</span>
   <span>{!! __('website.main.announce.subscribe') !!}</span>
 </div>
 
+<!-- NAV -->
+@include('website.partials.nav', ['active' => 'main', 'showCart' => true])
 
-
+<main id="locoScroll" data-scroll-container>
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-grid">
-    <div class="hero-copy">
-      <div class="hero-rating"><span class="stars">★★★★★</span> {{ __('website.main.hero.rating') }}</div>
-      <h1>{!! __('website.main.hero.h1') !!}</h1>
-      <p class="lead">{{ __('website.main.hero.lead') }}</p>
-      <div class="hero-ctas">
-        <a href="/subscribe" class="btn">{{ __('website.main.hero.cta_sub') }}</a>
-        <a href="/store" class="btn inv">{{ __('website.main.hero.cta_once') }}</a>
-      </div>
-      <div class="day-fuel rv">
-        <div class="top"><span><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.main.hero.fuel_label') }}</span><b id="dayKcal">0</b></div>
-        <div class="fuel-bar fuel" data-v="92"><i></i></div>
-        <div class="segs"><span>{{ __('website.main.hero.seg_bf') }}</span><span>{{ __('website.main.hero.seg_ln') }}</span><span>{{ __('website.main.hero.seg_sn') }}</span><span>{{ __('website.main.hero.seg_dn') }}</span></div>
-      </div>
+  <div class="hero-copy">
+    <span class="hero-pill">{!! __('website.main.hero.pill') !!}</span>
+    <h1>{!! __('website.main.hero.h1') !!}</h1>
+    <p class="lead">{{ __('website.main.hero.lead') }}</p>
+    <div class="hero-ctas">
+      <a href="{{ route('website.subscribe') }}" class="btn">{{ __('website.main.hero.cta_sub') }}</a>
+      <a href="{{ route('website.store') }}" class="btn inv">{{ __('website.main.hero.cta_once') }}</a>
     </div>
-    <div class="hero-visual rv">
-      <div class="ph"><svg><use href="#i-bread"/></svg></div>
-      <img class="aiimg" src="{{ asset('assets/images/p81_1000x1150.jpg') }}" alt="{{ __('website.main.hero.alt') }}" onerror="this.remove()">
-      <div class="hv-chip a"><span class="ic"><svg class="i"><use href="#i-protein"/></svg></span><div><b>{{ __('website.main.hero.chip_protein') }}</b><small>{{ __('website.main.hero.chip_protein_sub') }}</small></div></div>
-      <div class="hv-chip b"><span class="ic"><svg class="i"><use href="#i-bolt"/></svg></span><div><b>{{ __('website.main.hero.chip_kcal') }}</b><small>{{ __('website.main.hero.chip_kcal_sub') }}</small></div></div>
-      <span class="hero-tag">{{ __('website.main.hero.tag') }}</span>
-    </div>
+    <div class="hero-rating"><span class="stars">★★★★★</span> {{ __('website.main.hero.rating') }}</div>
+  </div>
+  <div class="hero-media">
+    <span class="bgph"><svg><use href="#i-bread"/></svg></span>
+    <img class="aiimg" src="{{ asset('assets/images/p81_1000x1150.jpg') }}" alt="{{ __('website.main.hero.alt') }}" onerror="this.remove()">
   </div>
 </header>
 
@@ -512,6 +535,16 @@ body.menu-open{overflow:hidden}
     @endforeach
   </div>
 </div>
+
+<!-- SCROLLING TEXT -->
+@php $marqueeItems = __('website.main.marquee'); @endphp
+<div class="marquee" aria-hidden="true"><div class="track">
+@foreach ([1, 2] as $_)
+  @foreach ($marqueeItems as $item)
+  <span class="item"><span class="dot"></span>{!! $item !!}</span>
+  @endforeach
+@endforeach
+</div></div>
 
 <!-- ABOUT -->
 <section class="section" id="about">
@@ -528,17 +561,44 @@ body.menu-open{overflow:hidden}
     <div class="about-copy rv">
       <span class="kick">{{ __('website.main.about.story_kick') }}</span>
       <h2>{!! __('website.main.about.story_title') !!}</h2>
-      <p>{{ __('website.main.about.story_p') }}</p>
-      <ul class="about-list">
-        <li><svg class="i"><use href="#i-check"/></svg> {{ __('website.main.about.li1') }}</li>
-        <li><svg class="i"><use href="#i-check"/></svg> {{ __('website.main.about.li2') }}</li>
-        <li><svg class="i"><use href="#i-check"/></svg> {{ __('website.main.about.li3') }}</li>
-      </ul>
+      <p>{!! __('website.main.about.story_p1') !!}</p>
+      <p>{!! __('website.main.about.story_p2') !!}</p>
+      <p class="about-quote">{!! __('website.main.about.quote') !!}<b>{{ __('website.main.about.quote_by') }}</b></p>
       <div class="about-mini">
-        <div><b>2024</b><span>{{ __('website.main.about.stat1') }}</span></div>
-        <div><b><span class="a">+</span>10,000</b><span>{{ __('website.main.about.stat2') }}</span></div>
-        <div><b>6</b><span>{{ __('website.main.about.stat3') }}</span></div>
+        <div><b>22<span class="a">+</span></b><span>{{ __('website.main.about.stat1') }}</span></div>
+        <div><b>10,000<span class="a">+</span></b><span>{{ __('website.main.about.stat2') }}</span></div>
+        <div><b>2024</b><span>{{ __('website.main.about.stat3') }}</span></div>
       </div>
+    </div>
+  </div>
+
+  @php
+    $ops = __('website.main.ops.items');
+    $opIcons = ['#i-wheat','#i-clock','#i-box','#i-clipboard','#i-shield'];
+  @endphp
+  <div class="ops-wrap">
+    <div class="vision rv">
+      <span class="v-badge"><small>{{ __('website.main.vision.badge_small') }}</small><b>{{ __('website.main.vision.badge_year') }}</b></span>
+      <div class="v-copy">
+        <span class="kick">{{ __('website.main.vision.kick') }}</span>
+        <h3>{{ __('website.main.vision.title') }}</h3>
+        <p>{!! __('website.main.vision.body') !!}</p>
+      </div>
+    </div>
+    <div class="ops-head rv">
+      <span class="kick">{{ __('website.main.ops.kick') }}</span>
+      <h3>{{ __('website.main.ops.title') }}</h3>
+    </div>
+    <div class="ops-flow">
+      @foreach ($ops as $i => $op)
+      <div class="op rv">
+        <span class="op-n">{{ $op['n'] }}</span>
+        <span class="op-ic"><svg class="i"><use href="{{ $opIcons[$i] }}"/></svg></span>
+        <b class="op-kpi">{!! $op['kpi'] !!}</b>
+        <h4>{{ $op['title'] }}</h4>
+        <p>{{ $op['body'] }}</p>
+      </div>
+      @endforeach
     </div>
   </div>
 </section>
@@ -805,6 +865,7 @@ body.menu-open{overflow:hidden}
       <div class="bstat rv"><b><span data-count="48">0</span><span class="a">{{ __('website.main.values.stat3_unit') }}</span></b><span>{{ __('website.main.values.stat3') }}</span></div>
       <div class="bstat rv"><b><span data-count="97">0</span><span class="a">%</span></b><span>{{ __('website.main.values.stat4') }}</span></div>
     </div>
+    <p class="band-tag">{!! __('website.main.values.band_tag') !!}</p>
   </div>
 </section>
 
@@ -851,9 +912,9 @@ body.menu-open{overflow:hidden}
         <span class="code">NM-01 · BASIC</span>
         <h3>{{ $plans[0]['name'] }}</h3>
         <div class="goal"><svg class="i"><use href="#i-target"/></svg> {{ $plans[0]['goal'] }}</div>
-        <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="332" data-was-q="299">332{{ __('website.main.js.sar') }}</s></div>
+        <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="332" data-was-q="299">332 <x-ui.sar :label="false" /></s></div>
         <div class="pline"><b data-m="299" data-q="239">299</b><small>{!! __('website.main.subs.per_month') !!}</small></div>
-        <span class="per">≈ <span data-pm-m="10" data-pm-q="8">10</span> {{ __('website.main.subs.per_meal') }}</span>
+        <span class="per">≈ <span data-pm-m="10" data-pm-q="8">10</span> {!! __('website.main.subs.per_meal') !!}</span>
         <div class="plan-fuel">
           <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.main.subs.day_energy') }}</span><b>630 KCAL</b></div>
           <div class="fuel-bar fuel" data-v="34"><i></i></div>
@@ -874,9 +935,9 @@ body.menu-open{overflow:hidden}
         <span class="code">NM-02 · BALANCED</span>
         <h3>{{ $plans[1]['name'] }}</h3>
         <div class="goal"><svg class="i"><use href="#i-target"/></svg> {{ $plans[1]['goal'] }}</div>
-        <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="610" data-was-q="549">610{{ __('website.main.js.sar') }}</s></div>
+        <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="610" data-was-q="549">610 <x-ui.sar :label="false" /></s></div>
         <div class="pline"><b data-m="549" data-q="439">549</b><small>{!! __('website.main.subs.per_month') !!}</small></div>
-        <span class="per">≈ <span data-pm-m="9" data-pm-q="7">9</span> {{ __('website.main.subs.per_meal') }}</span>
+        <span class="per">≈ <span data-pm-m="9" data-pm-q="7">9</span> {!! __('website.main.subs.per_meal') !!}</span>
         <div class="plan-fuel">
           <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.main.subs.day_energy') }}</span><b>1,150 KCAL</b></div>
           <div class="fuel-bar fuel" data-v="62"><i></i></div>
@@ -892,9 +953,9 @@ body.menu-open{overflow:hidden}
         <span class="code">NM-03 · PRO</span>
         <h3>{{ $plans[2]['name'] }}</h3>
         <div class="goal"><svg class="i"><use href="#i-target"/></svg> {{ $plans[2]['goal'] }}</div>
-        <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="832" data-was-q="749">832{{ __('website.main.js.sar') }}</s></div>
+        <div class="was">{{ __('website.main.subs.was') }} <s data-was-m="832" data-was-q="749">832 <x-ui.sar :label="false" /></s></div>
         <div class="pline"><b data-m="749" data-q="599">749</b><small>{!! __('website.main.subs.per_month') !!}</small></div>
-        <span class="per">≈ <span data-pm-m="8" data-pm-q="6.5">8</span> {{ __('website.main.subs.per_meal') }}</span>
+        <span class="per">≈ <span data-pm-m="8" data-pm-q="6.5">8</span> {!! __('website.main.subs.per_meal') !!}</span>
         <div class="plan-fuel">
           <div class="hd"><span><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.main.subs.day_energy') }}</span><b>1,850 KCAL</b></div>
           <div class="fuel-bar fuel" data-v="100"><i></i></div>
@@ -917,7 +978,10 @@ body.menu-open{overflow:hidden}
 </section>
 
 <!-- HEALTH ARTICLES -->
-@php $articles = __('website.main.articles.items'); $artImgs = ['p92_900x560.jpg','p93_900x560.jpg','p94_900x560.jpg']; $artIcons = ['#i-wheat','#i-dumbbell','#i-drop']; @endphp
+@php
+  $homeArticles = $homeArticles ?? collect();
+  $artIcons = ['#i-wheat','#i-dumbbell','#i-drop'];
+@endphp
 <section class="section" id="articles">
   <div class="sec-head">
     <span class="kick">{{ __('website.main.articles.kick') }}</span>
@@ -925,27 +989,32 @@ body.menu-open{overflow:hidden}
     <p>{{ __('website.main.articles.sub') }}</p>
   </div>
   <div class="card-grid">
-    @foreach ($articles as $i => $a)
+    @foreach ($homeArticles as $i => $a)
     <article class="acard rv">
       <div class="media">
-        <span class="cat">{{ $a['cat'] }}</span>
-        <div class="ph"><svg><use href="{{ $artIcons[$i] }}"/></svg></div>
-        <img class="aiimg" src="{{ asset('assets/images/'.$artImgs[$i]) }}" alt="" onerror="this.remove()">
+        <span class="cat">{{ $a->translated('category') }}</span>
+        <div class="ph"><svg><use href="{{ $artIcons[$i % count($artIcons)] }}"/></svg></div>
+        @if ($a->imageUrl())
+        <img class="aiimg" src="{{ $a->imageUrl() }}" alt="" onerror="this.remove()">
+        @endif
       </div>
       <div class="body">
-        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> {{ $a['time'] }}</span><span><svg class="i"><use href="#i-clipboard"/></svg> {{ $a['author'] }}</span></div>
-        <h3>{{ $a['title'] }}</h3>
-        <p class="ex">{{ $a['ex'] }}</p>
-        <a href="/blog#a{{ $i+1 }}" class="go">{{ __('website.main.articles.read') }}</a>
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> {{ $a->translated('read_time') }}</span><span><svg class="i"><use href="#i-clipboard"/></svg> {{ $a->translated('author') }}</span></div>
+        <h3>{{ $a->translated('title') }}</h3>
+        <p class="ex">{{ $a->translated('excerpt') }}</p>
+        <a href="{{ route('website.blog') }}#{{ $a->anchorId() }}" class="go">{{ __('website.main.articles.read') }}</a>
       </div>
     </article>
     @endforeach
   </div>
-  <div class="center-cta"><a href="/blog#articles" class="btn inv">{{ __('website.main.articles.all') }}</a></div>
+  <div class="center-cta"><a href="{{ route('website.blog') }}#articles" class="btn inv">{{ __('website.main.articles.all') }}</a></div>
 </section>
 
 <!-- RECIPES -->
-@php $recipes = __('website.main.recipes.items'); $recImgs = ['p95_900x560.jpg','p96_900x560.jpg','p97_900x560.jpg']; $recIcons = ['#i-bread','#i-bowl','#i-bowl']; @endphp
+@php
+  $homeRecipes = $homeRecipes ?? collect();
+  $recIcons = ['#i-bread','#i-bowl','#i-bowl'];
+@endphp
 <section class="section" id="recipes" style="background:#EFEBE3">
   <div class="sec-head">
     <span class="kick">{{ __('website.main.recipes.kick') }}</span>
@@ -953,23 +1022,25 @@ body.menu-open{overflow:hidden}
     <p>{{ __('website.main.recipes.sub') }}</p>
   </div>
   <div class="card-grid">
-    @foreach ($recipes as $i => $r)
+    @foreach ($homeRecipes as $i => $r)
     <article class="acard rv">
       <div class="media">
-        <span class="cat">{{ $r['cat'] }}</span>
-        <div class="ph"><svg><use href="{{ $recIcons[$i] }}"/></svg></div>
-        <img class="aiimg" src="{{ asset('assets/images/'.$recImgs[$i]) }}" alt="" onerror="this.remove()">
+        <span class="cat">{{ $r->translated('category') }}</span>
+        <div class="ph"><svg><use href="{{ $recIcons[$i % count($recIcons)] }}"/></svg></div>
+        @if ($r->imageUrl())
+        <img class="aiimg" src="{{ $r->imageUrl() }}" alt="" onerror="this.remove()">
+        @endif
       </div>
       <div class="body">
-        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> {{ $r['time'] }}</span><span><span class="kcal-box">kcal</span> {{ $r['kcal'] }}</span><span><svg class="i"><use href="#i-protein"/></svg> {{ $r['protein'] }}</span></div>
-        <h3>{{ $r['title'] }}</h3>
-        <p class="ex">{{ $r['ex'] }}</p>
-        <a href="/blog#r{{ $i+1 }}" class="go">{{ __('website.main.recipes.view') }}</a>
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> {{ $r->translated('time_label') }}</span><span><span class="kcal-box">kcal</span> {{ $r->translated('kcal_label') }}</span><span><svg class="i"><use href="#i-protein"/></svg> {{ $r->translated('protein_label') }}</span></div>
+        <h3>{{ $r->translated('title') }}</h3>
+        <p class="ex">{{ $r->translated('excerpt') }}</p>
+        <a href="{{ route('website.blog') }}#{{ $r->anchorId() }}" class="go">{{ __('website.main.recipes.view') }}</a>
       </div>
     </article>
     @endforeach
   </div>
-  <div class="center-cta"><a href="/blog#recipes" class="btn inv">{{ __('website.main.recipes.all') }}</a></div>
+  <div class="center-cta"><a href="{{ route('website.blog') }}#recipes" class="btn inv">{{ __('website.main.recipes.all') }}</a></div>
 </section>
 
 <!-- FAQ -->
@@ -1107,8 +1178,8 @@ if('IntersectionObserver' in window){
       rio.unobserve(e.target);
     });
   },{threshold:.18});
-  document.querySelectorAll('.rv,.bstat,.spec-row,.z-fuel,.plan-fuel,.day-fuel,.val').forEach(function(el){rio.observe(el);});
-}else{ failOpen(); document.querySelectorAll('[data-count]').forEach(countEl); heroKcal(); }
+  document.querySelectorAll('.rv,.bstat,.spec-row,.z-fuel,.plan-fuel,.op,.val').forEach(function(el){rio.observe(el);});
+}else{ failOpen(); document.querySelectorAll('[data-count]').forEach(countEl); }
 
 /* billing toggle */
 var toggle=document.getElementById('billToggle'),pill=document.getElementById('togglePill');
@@ -1132,7 +1203,7 @@ function setBill(mode){
     el.textContent=el.getAttribute(mode==='m'?'data-pm-m':'data-pm-q');
   });
   document.querySelectorAll('s[data-was-m]').forEach(function(el){
-    el.innerHTML=el.getAttribute(mode==='m'?'data-was-m':'data-was-q')+(I18N.sar||'');
+    el.innerHTML=el.getAttribute(mode==='m'?'data-was-m':'data-was-q')+' '+(I18N.sar||'<span class="icon-saudi-riyal" aria-hidden="true"></span>');
   });
   var sp=document.getElementById('stickyPrice');
   if(sp)sp.textContent=mode==='m'?'549':'439';
@@ -1253,7 +1324,7 @@ if(window.gsap){
       document.querySelectorAll('a[href^="#"]').forEach(function(a){
         a.addEventListener('click',function(e){
           var id=a.getAttribute('href');
-          if(id&&id.length>1){var t=document.querySelector(id);if(t){e.preventDefault();loco.scrollTo(t,{offset:-76});}}
+          if(id&&id.length>1){var t=document.querySelector(id);if(t){e.preventDefault();loco.scrollTo(t,{offset:-104});}}
         });
       });
       /* keep measurements honest as AI images stream in */
@@ -1274,24 +1345,18 @@ if(window.gsap){
   }
 
   /* ===== hero intro timeline ===== */
-  tk('.hero-rating,.hero h1,.hero .lead,.hero-ctas .btn,.day-fuel,.hero-visual,.hv-chip,.hero-tag');
-  var chips=gsap.utils.toArray('.hv-chip');
-  chips.forEach(function(c){c.style.animation='none';});
-  var tl=gsap.timeline({defaults:{ease:'power3.out'},onComplete:function(){
-    chips.forEach(function(c){c.style.animation='';c.style.transform='';});
-  }});
-  tl.from('.hero-rating',{y:24,opacity:0,duration:.55,clearProps:'all'})
-    .from('.hero h1',{y:44,opacity:0,duration:.8,clearProps:'all'},'-=.3')
+  tk('.hero-pill,.hero h1,.hero .lead,.hero-ctas .btn,.hero-rating,.hero-media');
+  var tl=gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.from('.hero-pill',{y:20,opacity:0,duration:.5,clearProps:'all'})
+    .from('.hero h1',{y:44,opacity:0,duration:.8,clearProps:'all'},'-=.25')
     .from('.hero .lead',{y:28,opacity:0,duration:.6,clearProps:'all'},'-=.55')
     .from('.hero-ctas .btn',{y:22,opacity:0,duration:.5,stagger:.1,clearProps:'all'},'-=.4')
-    .from('.day-fuel',{y:26,opacity:0,duration:.6,clearProps:'all'},'-=.3')
-    .from('.hero-visual',{opacity:0,scale:1.05,duration:1,clearProps:'all'},'-=.85')
-    .from('.hv-chip',{scale:.4,opacity:0,duration:.7,ease:'back.out(2.2)',stagger:.16},'-=.55')
-    .from('.hero-tag',{y:16,opacity:0,duration:.4,clearProps:'all'},'-=.45');
+    .from('.hero-rating',{y:18,opacity:0,duration:.45,clearProps:'all'},'-=.3')
+    .from('.hero-media',{opacity:0,scale:1.04,duration:1,clearProps:'all'},'-=.85');
 
   if(window.ScrollTrigger){
     /* ===== scroll-in staggers ===== */
-    [['.usp',.06],['.prod',.09],['.val',.08],['.rev',.09],['.splan',.12],['.acard',.09],['.bstat',.08]].forEach(function(cfg){
+    [['.usp',.06],['.prod',.09],['.val',.08],['.rev',.09],['.splan',.12],['.acard',.09],['.bstat',.08],['.op',.08]].forEach(function(cfg){
       tk(cfg[0]);
       ScrollTrigger.batch(cfg[0],{start:'top 88%',once:true,onEnter:function(els){
         gsap.from(els,{y:36,opacity:0,duration:.7,stagger:cfg[1],ease:'power3.out',clearProps:'all'});

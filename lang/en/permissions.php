@@ -16,7 +16,7 @@ return [
         'invoices' => 'Invoices',
         'plans' => 'Plans',
         'subscriptions' => 'Subscriptions',
-        'appointments' => 'Appointments',
+        'consultations' => 'Consultations',
         'delivery' => 'Delivery',
         'cms' => 'Content (CMS)',
         'notifications' => 'Notifications',
@@ -84,12 +84,13 @@ return [
             'pause' => 'Pause subscriptions',
             'cancel' => 'Cancel subscriptions',
         ],
-        'appointments' => [
-            'view' => 'View appointments',
-            'manage' => 'Manage appointments',
+        'consultations' => [
+            'view' => 'View consultations',
+            'manage' => 'Manage consultations',
         ],
         'delivery' => [
             'view' => 'View deliveries',
+            'update' => 'Record deliveries',
             'assign' => 'Assign deliveries',
         ],
         'cms' => [
@@ -169,12 +170,13 @@ return [
             'pause' => 'Temporarily pause subscriptions.',
             'cancel' => 'Cancel active subscriptions.',
         ],
-        'appointments' => [
-            'view' => 'See the appointments calendar.',
-            'manage' => 'Book, reschedule, and cancel appointments.',
+        'consultations' => [
+            'view' => 'See consultation bookings and their details.',
+            'manage' => 'Confirm, complete, and cancel consultations.',
         ],
         'delivery' => [
             'view' => 'See delivery tasks and routes.',
+            'update' => 'Mark shipments as delivered or not delivered.',
             'assign' => 'Assign deliveries to drivers.',
         ],
         'cms' => [

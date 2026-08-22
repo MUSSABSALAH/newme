@@ -34,6 +34,7 @@ class PlanFactory extends Factory
             'features' => ['en' => ['Fresh meals', 'Free delivery'], 'ar' => ['وجبات طازجة', 'توصيل مجاني']],
             'image_path' => null,
             'requires_day_selection' => true,
+            'allows_pause' => true,
             'min_delivery_days_per_week' => 5,
             'delivery_fee' => 0,
             'is_active' => true,
@@ -44,5 +45,10 @@ class PlanFactory extends Factory
     public function inactive(): static
     {
         return $this->state(fn (array $attributes): array => ['is_active' => false]);
+    }
+
+    public function withoutPause(): static
+    {
+        return $this->state(fn (array $attributes): array => ['allows_pause' => false]);
     }
 }

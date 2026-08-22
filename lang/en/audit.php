@@ -66,6 +66,16 @@ return [
             'updated' => 'Meal updated',
             'archived' => 'Meal archived',
         ],
+        'article' => [
+            'created' => 'Article created',
+            'updated' => 'Article updated',
+            'archived' => 'Article archived',
+        ],
+        'recipe' => [
+            'created' => 'Recipe created',
+            'updated' => 'Recipe updated',
+            'archived' => 'Recipe archived',
+        ],
         'category' => [
             'created' => 'Category created',
             'updated' => 'Category updated',
@@ -87,6 +97,8 @@ return [
         'subscription' => [
             'created' => 'Subscription created',
             'handling_updated' => 'Subscription handling updated',
+            'paused' => 'Subscription paused',
+            'resumed' => 'Subscription resumed',
         ],
         'coupon' => [
             'created' => 'Discount code created',
@@ -98,6 +110,17 @@ return [
             'captured' => 'Payment captured',
             'pending' => 'Payment pending',
             'declined' => 'Payment declined',
+            'confirmed' => 'Payment confirmed',
+        ],
+        'invoice' => [
+            'issued' => 'Invoice issued',
+        ],
+        'delivery' => [
+            'status_updated' => 'Delivery status updated',
+        ],
+        'consultation' => [
+            'created' => 'Consultation booked',
+            'status_updated' => 'Consultation status updated',
         ],
     ],
 ];

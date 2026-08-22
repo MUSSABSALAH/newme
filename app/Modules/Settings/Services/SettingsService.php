@@ -24,7 +24,7 @@ final class SettingsService
     /**
      * All settings as typed values, merging stored rows over registry defaults.
      *
-     * @return array<string, string|int|bool|null>
+     * @return array<string, string|int|bool|array|null>
      */
     public function all(): array
     {
@@ -41,7 +41,7 @@ final class SettingsService
         return $resolved;
     }
 
-    public function get(string $key): string|int|bool|null
+    public function get(string $key): string|int|bool|array|null
     {
         return $this->all()[$key] ?? null;
     }
@@ -49,7 +49,7 @@ final class SettingsService
     /**
      * Typed values for a single group, keyed by setting key.
      *
-     * @return array<string, string|int|bool|null>
+     * @return array<string, string|int|bool|array|null>
      */
     public function group(string $group): array
     {

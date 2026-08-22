@@ -12,11 +12,14 @@ use App\Modules\Checkout\DTOs\CheckoutSummary;
 use App\Modules\Checkout\DTOs\SubscriptionDraft;
 use App\Modules\Checkout\Enums\CheckoutSource;
 use App\Modules\Checkout\Exceptions\NothingToCheckoutException;
+use App\Modules\Identity\Services\CustomerProfileService;
 use App\Modules\Invoices\Services\InvoiceService;
 use App\Modules\Notifications\Services\AdminNotifier;
+use App\Modules\Notifications\Services\CustomerNotifier;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Services\OrderService;
 use App\Modules\Payments\DTOs\CardDetails;
+use App\Modules\Payments\DTOs\PayerDetails;
 use App\Modules\Payments\Enums\PaymentMethod;
 use App\Modules\Payments\Enums\PaymentStatus;
 use App\Modules\Payments\Exceptions\PaymentDeclinedException;
@@ -43,6 +46,8 @@ use Illuminate\Support\Facades\DB;
  */
 final class CheckoutService
 {
+    private ?string $hostedRedirectUrl = null;
+
     public function __construct(
         private readonly CheckoutDraftService $drafts,
         private readonly CartService $cart,
@@ -52,7 +57,9 @@ final class CheckoutService
         private readonly PaymentService $payments,
         private readonly AuditService $audit,
         private readonly AdminNotifier $notifier,
+        private readonly CustomerNotifier $customerNotifier,
         private readonly InvoiceService $invoices,
+        private readonly CustomerProfileService $profiles,
     ) {}
 
     public function source(): CheckoutSource
@@ -93,12 +100,15 @@ final class CheckoutService
         ?CardDetails $card = null,
         ?string $note = null,
     ): Order|Subscription {
+        $this->hostedRedirectUrl = null;
         $draft = $this->drafts->subscription();
 
         try {
-            $placed = $draft instanceof SubscriptionDraft
-                ? $this->placeSubscription($user, $draft, $address, $method, $card)
-                : $this->placeOrder($user, $address, $method, $card, $note);
+            if ($draft instanceof SubscriptionDraft) {
+                [$placed, $this->hostedRedirectUrl] = $this->placeSubscription($user, $draft, $address, $method, $card);
+            } else {
+                [$placed, $this->hostedRedirectUrl] = $this->placeOrder($user, $address, $method, $card, $note);
+            }
         } catch (PaymentDeclinedException $e) {
             // The transaction rolled back with the payment row, so keep a trace
             // of the refusal outside it.
@@ -112,19 +122,40 @@ final class CheckoutService
             throw $e;
         }
 
-        // Only notify once the transaction has committed, so staff never see a
-        // bell for an order that was rolled back.
+        // Hosted checkout: the payable is parked pending until the gateway
+        // confirms. Clear the cart now so the customer cannot place twice, but
+        // wait for the return/IPN before invoicing or mailing.
         if ($placed instanceof Subscription) {
             $this->drafts->forgetSubscription();
-            $this->notifier->subscriptionStarted($placed);
         } else {
             $this->cart->clear();
+        }
+
+        if ($this->hostedRedirectUrl !== null) {
+            return $placed;
+        }
+
+        // Only notify once the transaction has committed, so neither staff nor
+        // the customer hears about an order that was rolled back.
+        if ($placed instanceof Subscription) {
+            $this->notifier->subscriptionStarted($placed);
+            $this->customerNotifier->subscriptionStarted($placed);
+        } else {
             $this->notifier->orderPlaced($placed);
+            $this->customerNotifier->orderPlaced($placed);
         }
 
         $this->invoiceIfPaid($placed);
 
         return $placed;
+    }
+
+    /**
+     * Off-site URL after a hosted charge, or null when settlement was immediate.
+     */
+    public function hostedRedirectUrl(): ?string
+    {
+        return $this->hostedRedirectUrl;
     }
 
     /**
@@ -145,59 +176,75 @@ final class CheckoutService
         }
     }
 
+    /**
+     * @return array{0: Order, 1: ?string}
+     */
     private function placeOrder(
         User $user,
         Address $address,
         PaymentMethod $method,
         ?CardDetails $card,
         ?string $note,
-    ): Order {
-        return DB::transaction(function () use ($user, $address, $method, $card, $note): Order {
+    ): array {
+        return DB::transaction(function () use ($user, $address, $method, $card, $note): array {
             $order = $this->orders->placeFromCart($user, $this->cart, $address, $method, $note);
 
-            $payment = $this->payments->charge(
+            $attempt = $this->payments->charge(
                 $order,
                 $user,
                 $method,
                 Money::fromMinor($order->total_minor),
                 $card,
+                PayerDetails::fromCustomer($user, $address),
             );
 
-            return $this->orders->settle($order, $payment);
+            return [
+                $this->orders->settle($order, $attempt->payment),
+                $attempt->requiresRedirect() ? $attempt->redirectUrl : null,
+            ];
         });
     }
 
+    /**
+     * @return array{0: Subscription, 1: ?string}
+     */
     private function placeSubscription(
         User $user,
         SubscriptionDraft $draft,
         Address $address,
         PaymentMethod $method,
         ?CardDetails $card,
-    ): Subscription {
+    ): array {
         $plan = $this->plan($draft);
         $quote = $this->quote($plan, $draft);
 
-        return DB::transaction(function () use ($user, $plan, $quote, $draft, $address, $method, $card): Subscription {
+        return DB::transaction(function () use ($user, $plan, $quote, $draft, $address, $method, $card): array {
             $subscription = $this->subscriptions->createFromQuote(
                 $user,
                 $plan,
                 $quote,
-                $draft->mode,
                 $draft->startDate,
+                $draft->health,
                 $address,
                 $method,
                 $draft->mealSchedule,
             );
 
-            $payment = $this->payments->charge(
+            $this->profiles->rememberHealth($user, $draft->health);
+
+            $attempt = $this->payments->charge(
                 $subscription,
                 $user,
                 $method,
                 Money::fromMinor($subscription->total_minor),
                 $card,
+                PayerDetails::fromCustomer($user, $address),
             );
 
-            return $this->subscriptions->settle($subscription, $payment);
+            return [
+                $this->subscriptions->settle($subscription, $attempt->payment),
+                $attempt->requiresRedirect() ? $attempt->redirectUrl : null,
+            ];
         });
     }
 

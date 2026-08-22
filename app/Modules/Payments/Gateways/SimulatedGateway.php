@@ -40,6 +40,11 @@ final class SimulatedGateway implements PaymentGateway
         return 'simulated';
     }
 
+    public function usesHostedCheckout(): bool
+    {
+        return false;
+    }
+
     public function charge(ChargeRequest $request): ChargeResult
     {
         $reference = 'SIM_'.Str::upper(Str::random(16));

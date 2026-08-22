@@ -18,6 +18,10 @@ final class MealScheduleService
      */
     public function update(Subscription $subscription, array $submitted): Subscription
     {
+        if ($subscription->isPaused()) {
+            return $subscription;
+        }
+
         $current = MealSchedule::resolve(
             $subscription->meal_schedule,
             $subscription->start_date?->toDateString(),

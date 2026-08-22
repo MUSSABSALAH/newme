@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Modules\Notifications\Enums\MessageQueue;
+
 return [
 
     /*
@@ -16,6 +18,20 @@ return [
     */
 
     'default' => env('QUEUE_CONNECTION', 'database'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Message queues (priority is listen order)
+    |--------------------------------------------------------------------------
+    |
+    | OTP email and SMS sit on `otp`. Receipts, invoices, invitations and
+    | password resets sit on `mail`. Everything else uses `default`.
+    |
+    |   php artisan queue:work --queue=otp,mail,default
+    |
+    */
+
+    'messaging' => env('QUEUE_MESSAGING', MessageQueue::worker()),
 
     /*
     |--------------------------------------------------------------------------

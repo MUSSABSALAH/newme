@@ -23,6 +23,7 @@ final class PlanData extends Data
         public readonly array $features,
         public readonly ?string $imagePath,
         public readonly bool $requiresDaySelection,
+        public readonly bool $allowsPause,
         public readonly int $minDeliveryDaysPerWeek,
         public readonly int $deliveryFee,
         public readonly bool $isActive,
@@ -44,6 +45,7 @@ final class PlanData extends Data
             features: self::localeLists($attributes['features'] ?? []),
             imagePath: self::nullableString($attributes['image_path'] ?? null),
             requiresDaySelection: (bool) ($attributes['requires_day_selection'] ?? false),
+            allowsPause: (bool) ($attributes['allows_pause'] ?? true),
             minDeliveryDaysPerWeek: max(1, (int) ($attributes['min_delivery_days_per_week'] ?? 5)),
             deliveryFee: is_string($deliveryFee) && $deliveryFee !== ''
                 ? Money::fromMajor($deliveryFee)->toMinor()

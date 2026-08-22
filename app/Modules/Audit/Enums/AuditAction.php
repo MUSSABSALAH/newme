@@ -26,6 +26,12 @@ enum AuditAction: string
     case MealCreated = 'meal.created';
     case MealUpdated = 'meal.updated';
     case MealArchived = 'meal.archived';
+    case ArticleCreated = 'article.created';
+    case ArticleUpdated = 'article.updated';
+    case ArticleArchived = 'article.archived';
+    case RecipeCreated = 'recipe.created';
+    case RecipeUpdated = 'recipe.updated';
+    case RecipeArchived = 'recipe.archived';
     case CategoryCreated = 'category.created';
     case CategoryUpdated = 'category.updated';
     case CategoryArchived = 'category.archived';
@@ -38,6 +44,8 @@ enum AuditAction: string
     case OrderStatusUpdated = 'order.status_updated';
     case SubscriptionCreated = 'subscription.created';
     case SubscriptionHandlingUpdated = 'subscription.handling_updated';
+    case SubscriptionPaused = 'subscription.paused';
+    case SubscriptionResumed = 'subscription.resumed';
     case CouponCreated = 'coupon.created';
     case CouponUpdated = 'coupon.updated';
     case CouponArchived = 'coupon.archived';
@@ -47,6 +55,9 @@ enum AuditAction: string
     case PaymentDeclined = 'payment.declined';
     case PaymentConfirmed = 'payment.confirmed';
     case InvoiceIssued = 'invoice.issued';
+    case DeliveryStatusUpdated = 'delivery.status_updated';
+    case ConsultationCreated = 'consultation.created';
+    case ConsultationStatusUpdated = 'consultation.status_updated';
 
     /**
      * @return list<string>

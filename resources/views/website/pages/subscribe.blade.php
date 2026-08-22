@@ -18,8 +18,9 @@
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--bg);color:var(--body);line-height:1.75;font-size:15.5px;overflow-x:hidden;padding-bottom:calc(96px + var(--sab))}
+html{min-height:100%;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;font-family:var(--font);background:var(--bg);color:var(--body);line-height:1.75;font-size:15.5px;overflow-x:hidden;padding-bottom:calc(96px + var(--sab))}
+.announce,nav.main,.phead,.stepper{width:100%;flex-shrink:0}
 a{text-decoration:none;color:inherit}
 h1,h2,h3,h4{color:var(--navy);font-weight:900;line-height:1.2;letter-spacing:-.015em}
 button{font-family:var(--font);cursor:pointer}
@@ -70,9 +71,11 @@ nav.main .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;jus
 .sline{flex:1;height:2.5px;background:var(--gray-3);margin-top:-18px;min-width:14px}
 .sline.ok{background:var(--green)}
 .snode.lock{pointer-events:none}
+/* Seven nodes do not fit next to their labels on a phone; the step title carries the name there. */
+@media(max-width:600px){.stepper{padding:0 12px}.snode{padding:0 3px}.snode span:not(.c){display:none}}
 
 /* ===== wizard steps ===== */
-.wwrap{max-width:900px;margin:0 auto;padding:18px 20px 10px;position:relative}
+.wwrap{max-width:900px;width:100%;margin:0 auto;padding:18px 20px 10px;position:relative;flex:1 0 auto}
 .wstep{display:block}
 .js .wstep{display:none}
 .js .wstep.active{display:block;animation:stepIn .4s cubic-bezier(.2,.7,.2,1)}
@@ -167,26 +170,13 @@ nav.main .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;jus
 .sel-chip b{color:var(--navy)}
 .sel-chip .edit{margin-inline-start:auto;font-size:11.5px;font-weight:900;color:var(--orange-deep);border-bottom:1.5px solid var(--orange);cursor:pointer;white-space:nowrap}
 .buy-card{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(18,43,74,.1)}
-.buy-banner{background:#E8DCC3;color:var(--ink);font-size:12.5px;font-weight:900;text-align:center;padding:10px 14px;letter-spacing:.04em}
 .buy-body{padding:18px}
-.mode{border:2px solid var(--gray-2);border-radius:16px;padding:14px;margin-bottom:12px;cursor:pointer;transition:.2s;position:relative}
-.mode.on{border-color:var(--navy);box-shadow:0 0 0 3px rgba(18,43,74,.08)}
-.mode .top{display:flex;align-items:flex-start;gap:10px}
-.mode .radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--gray-3);flex-shrink:0;margin-top:2px;display:grid;place-items:center;transition:.2s}
-.mode.on .radio{border-color:var(--navy)}
-.mode.on .radio::after{content:"";width:11px;height:11px;border-radius:50%;background:var(--navy)}
-.mode h3{font-size:16.5px}
-.mode .meals-n{margin-inline-start:auto;font-size:12px;color:var(--muted);font-weight:800;white-space:nowrap}
-.mode .priceline{margin:6px 0 2px}
-.mode .now{display:inline-block;background:var(--green-soft);color:#1F7A4D;font-weight:900;font-size:15px;border-radius:8px;padding:3px 10px}
-.mode .was{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-top:3px}
-.mode .was s{color:#B33}
-.mode ul{list-style:none;margin-top:10px;display:grid;gap:6px}
-.mode li{display:flex;gap:8px;font-size:12.5px;font-weight:700;color:var(--ink)}
-.mode li .i{width:16px;height:16px;color:var(--green);flex-shrink:0;margin-top:3px}
-.deliver{margin:4px 0 14px}
-.deliver label{display:block;font-size:13px;font-weight:900;color:var(--navy);margin-bottom:7px}
-.deliver select{width:100%;font-family:var(--font);font-weight:800;font-size:14px;color:var(--ink);padding:13px 14px;border:2px solid var(--gray-2);border-radius:14px;background:#fff;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2312233B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center}
+.cycle{border:2px solid var(--navy);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 0 0 3px rgba(18,43,74,.08)}
+.cycle .top{display:flex;align-items:flex-start;gap:10px}
+.cycle h3{font-size:16.5px}
+.cycle .meals-n{margin-inline-start:auto;font-size:12px;color:var(--muted);font-weight:800;white-space:nowrap}
+.cycle .priceline{margin:6px 0 2px}
+.cycle .now{display:inline-block;background:var(--green-soft);color:#1F7A4D;font-weight:900;font-size:15px;border-radius:8px;padding:3px 10px}
 .cpn{margin:12px 0 2px}
 .cpn-form{display:flex;gap:7px;align-items:stretch}
 .cpn-form input{flex:1;min-width:0;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--navy);background:var(--tile);border:1.5px solid var(--gray-2);border-radius:10px;padding:9px 12px;letter-spacing:.06em;text-transform:uppercase}
@@ -232,13 +222,15 @@ nav.main .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;jus
 .wbar .back{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;font-size:18px;color:var(--navy);flex-shrink:0;transition:.2s}
 .wbar .back[disabled]{opacity:.3;pointer-events:none}
 .wbar .tot{flex:1;min-width:0}
-.wbar .tot b{display:block;font-size:15px;color:var(--navy);font-weight:900;font-family:var(--mono);line-height:1.3}
-.wbar .tot small{font-size:10.5px;color:var(--green);font-weight:800;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wbar .tot .wbar-amount{display:flex;align-items:baseline;gap:8px}
+.wbar .tot .wbar-label{font-size:12px;font-weight:800;color:var(--muted);font-family:var(--font);flex-shrink:0}
+.wbar .tot b{display:block;font-size:16px;color:var(--navy);font-weight:900;font-family:var(--mono);line-height:1.3}
 .wbar .btn{min-width:150px;min-height:48px;padding:12px 22px;font-size:14px}
 @media(min-width:700px){.wbar .btn{min-width:220px}}
 
 /* footer */
-footer{background:#0C1F38;color:#9FB4D2;padding:36px 20px 40px;text-align:center;margin-top:56px}
+footer.w-foot-full{width:100%;margin-top:auto}
+footer{background:#0C1F38;color:#9FB4D2;padding:36px 20px 40px;text-align:center;margin-top:auto}
 footer .flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;font-weight:800;color:#9FB4D2;margin-bottom:12px}
 footer .flinks a:hover{color:var(--orange-hi)}
 footer .legal{font-size:11px;font-weight:600;color:#6E84A5;line-height:2}
@@ -290,6 +282,20 @@ body.menu-open{overflow:hidden}
 .startdate input:focus{outline:none;border-color:var(--orange)}
 .startdate small{display:block;margin-top:8px;font-size:11.5px;font-weight:800;color:var(--muted)}
 .startdate small b{color:var(--orange-deep)}
+
+/* ===== health step ===== */
+.health{display:grid;gap:15px;max-width:520px;margin:0 auto}
+.hfield label{display:block;font-size:13px;font-weight:900;color:var(--navy);margin-bottom:7px}
+.hfield label i{font-style:normal;font-weight:800;color:var(--muted)}
+.hfield input,.hfield textarea{width:100%;font-family:var(--font);font-weight:800;font-size:14px;color:var(--ink);padding:13px 14px;border:2px solid var(--gray-2);border-radius:14px;background:#fff}
+.hfield textarea{resize:vertical;min-height:82px;line-height:1.7}
+.hfield input:focus,.hfield textarea:focus{outline:none;border-color:var(--orange)}
+.hfield input::placeholder,.hfield textarea::placeholder{color:var(--muted);font-weight:700}
+.hfield .hnote{display:block;margin-top:7px;font-size:11.5px;font-weight:800;color:var(--muted)}
+.hfield .hnote.err{color:#C33}
+.hfield .hnote b{color:var(--orange-deep)}
+.hprivacy{display:flex;gap:9px;align-items:flex-start;background:var(--tile);border-radius:14px;padding:12px 14px;font-size:12px;font-weight:700;color:var(--ink)}
+.hprivacy .i{width:17px;height:17px;color:var(--green);flex-shrink:0;margin-top:2px}
 @endverbatim
 </style>
 @endpush
@@ -346,13 +352,15 @@ body.menu-open{overflow:hidden}
   <div class="snode lock" data-go="5"><span class="c"><b>5</b></span><span>{{ __('website.subscribe.steps.5') }}</span></div>
   <div class="sline"></div>
   <div class="snode lock" data-go="6"><span class="c"><b>6</b></span><span>{{ __('website.subscribe.steps.6') }}</span></div>
+  <div class="sline"></div>
+  <div class="snode lock" data-go="7"><span class="c"><b>7</b></span><span>{{ __('website.subscribe.steps.7') }}</span></div>
 </div>
 
 <div class="wwrap" id="wwrap">
 
   <!-- STEP 1 -->
   <section class="wstep active" data-step="1">
-    <div class="step-h"><h2>{{ __('website.subscribe.step1.title') }}</h2><small>{{ __('website.subscribe.step1.sub') }}</small></div>
+    <div class="step-h"><h2>{{ __('website.subscribe.step1.title') }}</h2><small>{{ trans_choice('website.subscribe.step1.sub', count($plans)) }}</small></div>
     <div class="plans9" id="plans9">
       @foreach ($plans as $plan)
         <button class="p9" data-plan="{{ $plan['key'] }}" data-f="{{ $plan['f'] }}">
@@ -411,14 +419,35 @@ body.menu-open{overflow:hidden}
     <div class="hint">{{ __('website.subscribe.step4.hint') }}</div>
   </section>
 
-  <!-- STEP 5: DISHES PER DELIVERY DAY -->
+  <!-- STEP 5: HEALTH PROFILE -->
   <section class="wstep" data-step="5">
+    <div class="step-h"><h2>{{ __('website.subscribe.step_health.title') }}</h2><small>{{ __('website.subscribe.step_health.sub') }}</small></div>
+    <div class="health">
+      <div class="hfield">
+        <label for="hBirth">{{ __('website.subscribe.step_health.birth_date') }}</label>
+        <input type="date" id="hBirth" min="{{ $birthDateRange['min'] }}" max="{{ $birthDateRange['max'] }}">
+        <small class="hnote" id="hBirthNote">{{ __('website.subscribe.js.birth_note', $ageLimits) }}</small>
+      </div>
+      <div class="hfield">
+        <label for="hAllergies">{{ __('website.subscribe.step_health.allergies') }} <i>{{ __('website.subscribe.step_health.optional') }}</i></label>
+        <textarea id="hAllergies" rows="3" maxlength="500" placeholder="{{ __('website.subscribe.step_health.allergies_placeholder') }}"></textarea>
+      </div>
+      <div class="hfield">
+        <label for="hMeds">{{ __('website.subscribe.step_health.medications') }} <i>{{ __('website.subscribe.step_health.optional') }}</i></label>
+        <textarea id="hMeds" rows="3" maxlength="500" placeholder="{{ __('website.subscribe.step_health.medications_placeholder') }}"></textarea>
+      </div>
+      <p class="hprivacy"><svg class="i"><use href="#i-lock"/></svg> {{ __('website.subscribe.step_health.privacy') }}</p>
+    </div>
+  </section>
+
+  <!-- STEP 6: DISHES PER DELIVERY DAY -->
+  <section class="wstep" data-step="6">
     <div class="step-h"><h2>{{ __('website.subscribe.step_dishes.title') }}</h2><small>{{ __('website.subscribe.step_dishes.sub') }}</small></div>
     <div class="ddays" id="dayDishes"></div>
   </section>
 
-  <!-- STEP 6: REVIEW -->
-  <section class="wstep" data-step="6">
+  <!-- STEP 7: REVIEW -->
+  <section class="wstep" data-step="7">
     <div class="step-h"><h2>{{ __('website.subscribe.step5.title') }}</h2><small>{{ __('website.subscribe.step5.sub') }}</small></div>
     <div class="review">
       <div class="sel-chips">
@@ -426,42 +455,18 @@ body.menu-open{overflow:hidden}
         <div class="sel-chip"><svg class="i"><use href="#i-bowl"/></svg> <b id="chipDishes">—</b><span class="edit" data-go="2">{{ __('website.subscribe.edit') }}</span></div>
         <div class="sel-chip"><svg class="i"><use href="#i-bolt"/></svg> {{ __('website.subscribe.chip_duration') }} <b id="chipWeeks">—</b><span class="edit" data-go="3">{{ __('website.subscribe.edit') }}</span></div>
         <div class="sel-chip"><svg class="i"><use href="#i-cal"/></svg> <b id="chipDays">{{ __('website.subscribe.js.chip_days', ['n' => 5]) }}</b><span class="edit" data-go="4">{{ __('website.subscribe.edit') }}</span></div>
+        <div class="sel-chip"><svg class="i"><use href="#i-heart"/></svg> <b id="chipHealth">—</b><span class="edit" data-go="5">{{ __('website.subscribe.edit') }}</span></div>
       </div>
 
       <div class="buy-card">
-        <div class="buy-banner">{{ __('website.subscribe.buy_banner') }}</div>
         <div class="buy-body">
-          <div class="mode on" id="modeFlex" role="button" tabindex="0">
+          <div class="cycle">
             <div class="top">
-              <span class="radio"></span>
               <div style="flex:1">
-                <h3>{{ __('website.subscribe.flex_title') }}</h3>
-                <div class="priceline"><span class="now" id="flexPrice">—</span><span class="was">{{ __('website.subscribe.instead_of') }} <s id="flexWas">—</s></span></div>
+                <h3>{{ __('website.subscribe.cycle_title') }}</h3>
+                <div class="priceline"><span class="now" id="cyclePrice">—</span></div>
               </div>
-              <span class="meals-n" id="mealsN1">—</span>
-            </div>
-            <ul>
-              @foreach (__('website.subscribe.flex_features') as $feat)
-                <li><svg class="i"><use href="#i-check"/></svg> {{ $feat }}</li>
-              @endforeach
-            </ul>
-            <div class="deliver">
-              <label for="cycleSel">{{ __('website.subscribe.renews_every') }}</label>
-              <select id="cycleSel">
-                <option>{{ __('website.subscribe.cycle_2w') }}</option>
-                <option selected>{{ __('website.subscribe.cycle_4w') }}</option>
-                <option>{{ __('website.subscribe.cycle_8w') }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="mode" id="modeOnce" role="button" tabindex="0">
-            <div class="top">
-              <span class="radio"></span>
-              <div style="flex:1">
-                <h3>{{ __('website.subscribe.once_title') }}</h3>
-                <div class="priceline"><span class="now" style="background:var(--tile);color:var(--ink)" id="oncePrice">—</span></div>
-              </div>
-              <span class="meals-n" id="mealsN2">—</span>
+              <span class="meals-n" id="mealsN">—</span>
             </div>
           </div>
           <div class="cpn" id="couponBox">
@@ -481,7 +486,6 @@ body.menu-open{overflow:hidden}
             <div class="r"><span>{{ __('website.subscribe.sum_meals') }}</span><span id="sumMeals">—</span></div>
             <div class="r"><span>{{ __('website.subscribe.sum_base') }}</span><span id="sumGross">—</span></div>
             <div class="r save"><span>{{ __('website.subscribe.sum_duration') }}</span><span id="sumDur">—</span></div>
-            <div class="r save" id="rowFlexDisc"><span>{{ __('website.subscribe.sum_flex') }}</span><span id="sumFlex">—</span></div>
             <div class="r save" id="rowCoupon" hidden><span>{{ __('website.subscribe.sum_coupon') }}</span><span id="sumCoupon">—</span></div>
             <div class="r save"><span>{{ __('website.subscribe.sum_save') }}</span><span id="sumSave">—</span></div>
             <div class="r"><span>{{ __('website.subscribe.sum_tax') }}</span><span id="sumTax">—</span></div>
@@ -512,7 +516,12 @@ body.menu-open{overflow:hidden}
 <div class="wbar">
   <div class="inner">
     <button class="back" id="wBack" disabled aria-label="{{ __('website.subscribe.back_aria') }}">→</button>
-    <div class="tot"><b id="wTotal">—</b><small id="wSub">{{ __('website.subscribe.wbar_sub') }}</small></div>
+    <div class="tot">
+      <div class="wbar-amount">
+        <span class="wbar-label">{{ __('website.subscribe.sum_total') }}</span>
+        <b id="wTotal">—</b>
+      </div>
+    </div>
     <button class="btn" id="wNext">{{ __('website.subscribe.next') }}</button>
   </div>
 </div>
@@ -537,7 +546,11 @@ window.NM_PLANS = @json($plansData);
 window.NM_FINANCE = @json($finance);
 window.NM_OPS = @json($operations);
 window.NM_DAY_NAMES = @json(array_values(__('website.subscribe.days')));
+window.NM_CHECKOUT_MEAL_DAYS = {{ \App\Modules\Subscriptions\Support\MealSchedule::CHECKOUT_PICK_DAYS }};
 window.NM_PLAN_IDS = @json($planIds);
+window.NM_BIRTH_RANGE = @json($birthDateRange);
+window.NM_AGE_LIMITS = @json($ageLimits);
+window.NM_HEALTH = @json($healthProfile);
 window.NM_CHECKOUT_URL = @json(route('website.checkout.subscription'));
 window.NM_QUOTE_URL = @json(url('api/v1/plans/__PLAN__/quote'));
 window.NM_CSRF = @json(csrf_token());
@@ -578,6 +591,13 @@ document.querySelectorAll('#mealGrid .mt').forEach(function(b){
 });
 function mealName(k){return MEAL_LABELS[k]||k;}
 
+/* Health details already on the account, so a returning customer only confirms them. */
+function healthSeed(){
+  var saved=window.NM_HEALTH||{},seed={};
+  ['birth_date','allergies','medications'].forEach(function(k){if(saved[k])seed[k]=String(saved[k]);});
+  return seed;
+}
+
 var state={
   plan:DEFAULT_PLAN,
   mtypes:['lunch','dinner'],
@@ -585,12 +605,14 @@ var state={
   days:[0,1,2,3,4],
   startDate:null,
   dishSel:{},
-  mode:'flex',
+  health:Object.assign({birth_date:'',allergies:'',medications:''},healthSeed()),
   // Coupon rules live on the server; we only cache the amount it quoted back.
   coupon:null,
   couponDiscount:0
 };
-var cur=1, maxVisited=1, TOTAL=6;
+var cur=1, maxVisited=1, TOTAL=7;
+var BIRTH=window.NM_BIRTH_RANGE||{};
+var AGE_LIMITS=window.NM_AGE_LIMITS||{min:10,max:100};
 
 function planData(){return PLANS[state.plan]||{};}
 function minDays(){var m=planData().min_days;return (m&&m>0)?m:1;}
@@ -602,6 +624,19 @@ function selectedRule(){var o=durOptions();return (state.durIndex!=null&&o[state
 function mealsOk(){return state.mtypes.length>=1&&durOptions().length>0;}
 function durOk(){return selectedRule()!=null;}
 function daysOk(){return state.days.length>=minDays();}
+function birthDate(){return (state.health.birth_date||'').slice(0,10);}
+/* ISO dates compare correctly as plain strings, so the accepted window is a range check. */
+function ageOk(){
+  var d=birthDate();
+  return d.length===10&&(!BIRTH.min||d>=BIRTH.min)&&(!BIRTH.max||d<=BIRTH.max);
+}
+function age(){
+  var p=birthDate().split('-');
+  if(p.length!==3)return null;
+  var now=new Date(),years=now.getFullYear()-(+p[0]);
+  var beforeBirthday=(now.getMonth()+1)<(+p[1])||((now.getMonth()+1)===(+p[1])&&now.getDate()<(+p[2]));
+  return beforeBirthday?years-1:years;
+}
 
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function fmt1(n){return (Math.round(n*10)/10).toLocaleString('en-US');}
@@ -643,6 +678,11 @@ function deliveryDates(){
     d.setDate(d.getDate()+1);
   }
   return out;
+}
+function checkoutDishDates(){
+  var n=parseInt(window.NM_CHECKOUT_MEAL_DAYS,10);
+  if(!n||n<1)n=2;
+  return deliveryDates().slice(0,n);
 }
 
 function calcRule(rule,withCoupon){
@@ -699,7 +739,7 @@ function renderDurations(){
 function renderDayDishes(){
   var wrap=document.getElementById('dayDishes'); if(!wrap)return;
   wrap.innerHTML='';
-  var dates=deliveryDates(), p=planData();
+  var all=deliveryDates(), dates=checkoutDishDates(), p=planData();
   if(!dates.length){wrap.innerHTML='<div class="dur-empty">'+t('no_days')+'</div>';return;}
   dates.forEach(function(dt,idx){
     var card=document.createElement('div');
@@ -728,7 +768,7 @@ function renderDayDishes(){
   });
   var note=document.createElement('div');
   note.className='ddays-note';
-  note.innerHTML=t('dishes_note',{n:dates.length});
+  note.innerHTML=t('dishes_note',{n:all.length,picked:dates.length});
   wrap.appendChild(note);
 }
 
@@ -744,21 +784,24 @@ function render(){
   if(mn){var mOk=mealsOk();mn.innerHTML=mOk?t('meal_note_ok',{n:state.mtypes.length}):t('meal_note_err');mn.classList.toggle('err',!mOk);}
   var dn=document.getElementById('daysNote');
   if(dn){var dOk=daysOk();dn.innerHTML=t('days_note',{n:state.days.length});dn.classList.toggle('err',!dOk);}
+  setTxt('chipHealth',ageOk()?t('chip_age',{n:age()}):t('chip_age_missing'));
+  var bn=document.getElementById('hBirthNote');
+  if(bn){
+    var bOk=ageOk();
+    bn.innerHTML=bOk?t('birth_note_ok',{n:age()}):t('birth_note',AGE_LIMITS);
+    bn.classList.toggle('err',birthDate()!==''&&!bOk);
+  }
   updStartEnd();
 
   if(c){
     var mealWord=c.meals===1?t('meal'):t('meals');
-    setTxt('mealsN1',fmt(c.meals)+' '+mealWord);
-    setTxt('mealsN2',fmt(c.meals)+' '+mealWord);
+    setTxt('mealsN',fmt(c.meals)+' '+mealWord);
     var perMeal=c.meals?fmt1(c.total/c.meals):'0';
-    setHtml('flexPrice',money(c.total)+' | '+perMeal+SAR+' '+t('per_meal'));
-    setHtml('flexWas',money(c.total));
-    setHtml('oncePrice',money(c.total)+' | '+perMeal+SAR+' '+t('per_meal'));
+    setHtml('cyclePrice',money(c.total)+' | '+perMeal+SAR+' '+t('per_meal'));
     setTxt('sumMeals',fmt(c.meals)+' '+mealWord);
     setHtml('sumGross',money(c.subtotal));
     var discPct=rule?Math.round(parseFloat(rule.discount||'0')):0;
     setHtml('sumDur','− '+money(c.discount)+(discPct>0?' ('+discPct+'%)':''));
-    var rf=document.getElementById('rowFlexDisc'); if(rf)rf.style.display='none';
     var rc=document.getElementById('rowCoupon');
     if(rc)rc.hidden=!(c.coupon>0);
     setHtml('sumCoupon','− '+money(c.coupon));
@@ -767,18 +810,16 @@ function render(){
     setHtml('sumTotal',money(c.total));
     setTxt('perDay',fmt1(c.perDay));
     setHtml('wTotal',money(c.total));
-    setTxt('wSub',t('wsub',{meals:fmt(c.meals),plan:planName(state.plan)}));
   }else{
     setHtml('wTotal','—');
-    setTxt('wSub',t('wbar_sub'));
   }
 
   var next=document.getElementById('wNext');
   if(next){
-    if(cur===TOTAL&&c){next.innerHTML=(state.mode==='flex'?t('add_sub'):t('add_cart'))+money(c.total);}
+    if(cur===TOTAL&&c){next.innerHTML=t('add_sub')+money(c.total);}
     else{next.textContent=t('next');}
   }
-  next.disabled=(cur===2&&!mealsOk())||(cur===3&&!durOk())||(cur===4&&!daysOk())||(cur===5&&!c)||(cur===TOTAL&&!c);
+  next.disabled=(cur===2&&!mealsOk())||(cur===3&&!durOk())||(cur===4&&!daysOk())||(cur===5&&!ageOk())||(cur===6&&!c)||(cur===TOTAL&&!c);
   document.getElementById('wBack').disabled=(cur===1);
 }
 
@@ -863,6 +904,7 @@ function goStep(n){
     if(n>2&&!mealsOk())return;
     if(n>3&&!durOk())return;
     if(n>4&&!daysOk())return;
+    if(n>5&&!ageOk())return;
   }
   cur=n; if(n>maxVisited)maxVisited=n;
   document.querySelectorAll('.wstep').forEach(function(s){
@@ -876,7 +918,7 @@ function goStep(n){
   });
   document.querySelectorAll('#stepper .sline').forEach(function(l,i){l.classList.toggle('ok',i+1<cur);});
   if(n===3)renderDurations();
-  if(n===5)renderDayDishes();
+  if(n===6)renderDayDishes();
   window.scrollTo({top:0,behavior:'smooth'});
   render();
 }
@@ -904,7 +946,7 @@ document.querySelectorAll('#daysWrap .day').forEach(function(b){
     b.classList.toggle('on');
     state.days=Array.prototype.map.call(document.querySelectorAll('#daysWrap .day.on'),function(x){return parseInt(x.getAttribute('data-day'),10);});
     render();
-    if(cur===5)renderDayDishes();
+    if(cur===6)renderDayDishes();
   });
 });
 var startInput=document.getElementById('startDate');
@@ -917,9 +959,20 @@ if(startInput){
     state.startDate=startInput.value||minISO;
     if(state.startDate<minISO){state.startDate=minISO;startInput.value=minISO;}
     render();
-    if(cur===5)renderDayDishes();
+    if(cur===6)renderDayDishes();
   });
 }
+(function bindHealth(){
+  var fields={birth_date:'hBirth',allergies:'hAllergies',medications:'hMeds'};
+  Object.keys(fields).forEach(function(key){
+    var el=document.getElementById(fields[key]);
+    if(!el)return;
+    el.value=state.health[key];
+    ['input','change'].forEach(function(evt){
+      el.addEventListener(evt,function(){state.health[key]=el.value;render();});
+    });
+  });
+})();
 function updStartEnd(){
   var el=document.getElementById('startEnd'); if(!el)return;
   var dates=deliveryDates();
@@ -927,20 +980,9 @@ function updStartEnd(){
   var last=dates[dates.length-1];
   el.innerHTML=t('start_range',{start:toISO(startDateObj()),end:toISO(last),n:dates.length});
 }
-function setMode(m){
-  state.mode=m;
-  var f=document.getElementById('modeFlex'),o=document.getElementById('modeOnce');
-  if(f)f.classList.toggle('on',m==='flex');
-  if(o)o.classList.toggle('on',m==='once');
-  render();
-}
-var elFlex=document.getElementById('modeFlex'); if(elFlex)elFlex.addEventListener('click',function(){setMode('flex');});
-var elOnce=document.getElementById('modeOnce'); if(elOnce)elOnce.addEventListener('click',function(){setMode('once');});
-var elCyc=document.getElementById('cycleSel'); if(elCyc)elCyc.addEventListener('click',function(e){e.stopPropagation();});
-
 document.getElementById('wBack').addEventListener('click',function(){goStep(cur-1);});
 function mealSchedulePayload(){
-  var dates=deliveryDates(), out=[];
+  var dates=checkoutDishDates(), out=[];
   dates.forEach(function(dt,idx){
     var meals={};
     state.mtypes.forEach(function(mt){
@@ -962,9 +1004,13 @@ document.getElementById('wNext').addEventListener('click',function(){
     duration_unit:rule.unit,
     duration_length:rule.length,
     selected_days:state.days,
-    mode:state.mode,
     start_date:state.startDate,
     coupon_code:state.coupon,
+    health:{
+      birth_date:birthDate(),
+      allergies:(state.health.allergies||'').trim()||null,
+      medications:(state.health.medications||'').trim()||null
+    },
     meal_schedule:mealSchedulePayload()
   };
   // Park the selection and continue to checkout; guests are sent to sign in
@@ -1088,7 +1134,7 @@ if(window.gsap){
 
   /* springy punch on any selection */
   document.addEventListener('click',function(e){
-    var el=e.target.closest('.p9,.seg button,.day,.mode');
+    var el=e.target.closest('.p9,.seg button,.day');
     if(el)gsap.fromTo(el,{scale:.96},{scale:1,duration:.38,ease:'back.out(2.4)',clearProps:'transform',overwrite:true});
   },true);
 

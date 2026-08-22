@@ -50,6 +50,8 @@ return [
         'image' => 'Cover image',
         'requires_day_selection' => 'Require delivery day selection',
         'requires_day_selection_hint' => 'Customers must choose which weekdays they receive meals.',
+        'allows_pause' => 'Allow temporary pause',
+        'allows_pause_hint' => 'When off, subscribers on this plan cannot pause their subscription.',
         'min_delivery_days_per_week' => 'Minimum delivery days per week',
         'min_delivery_days_hint' => 'Between 1 and 7 days.',
         'delivery_fee' => 'Delivery fee',

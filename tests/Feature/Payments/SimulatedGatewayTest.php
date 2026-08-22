@@ -40,6 +40,7 @@ final class SimulatedGatewayTest extends TestCase
     public function test_the_container_resolves_the_configured_gateway(): void
     {
         $this->assertInstanceOf(SimulatedGateway::class, app(PaymentGateway::class));
+        $this->assertFalse(app(PaymentGateway::class)->usesHostedCheckout());
     }
 
     public function test_a_valid_card_is_approved_with_a_reference(): void

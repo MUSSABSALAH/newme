@@ -17,6 +17,7 @@ use App\Modules\Checkout\Exceptions\NothingToCheckoutException;
 use App\Modules\Checkout\Services\CheckoutDraftService;
 use App\Modules\Checkout\Services\CheckoutService;
 use App\Modules\Orders\Exceptions\EmptyCartException;
+use App\Modules\Payments\Contracts\PaymentGateway;
 use App\Modules\Payments\DTOs\CardDetails;
 use App\Modules\Payments\Enums\PaymentMethod;
 use App\Modules\Payments\Exceptions\PaymentDeclinedException;
@@ -39,6 +40,7 @@ final class CheckoutController extends Controller
         private readonly CheckoutService $checkout,
         private readonly CheckoutDraftService $drafts,
         private readonly AddressService $addresses,
+        private readonly PaymentGateway $gateway,
     ) {}
 
     /**
@@ -90,6 +92,7 @@ final class CheckoutController extends Controller
             'addresses' => $this->addresses->forUser($user),
             'selectedAddress' => $this->addresses->defaultFor($user),
             'methods' => $this->methods(),
+            'hostedCheckout' => $this->gateway->usesHostedCheckout(),
         ]);
     }
 
@@ -116,7 +119,9 @@ final class CheckoutController extends Controller
             ->firstOrFail();
 
         $method = $request->paymentMethod();
-        $card = $method->requiresCard() ? CardDetails::fromArray($request->card()) : null;
+        $card = $method->requiresCard() && ! $this->gateway->usesHostedCheckout()
+            ? CardDetails::fromArray($request->card())
+            : null;
 
         try {
             $placed = $this->checkout->place(
@@ -134,6 +139,10 @@ final class CheckoutController extends Controller
             return redirect()
                 ->route('website.cart')
                 ->with('error', $e->getMessage());
+        }
+
+        if ($url = $this->checkout->hostedRedirectUrl()) {
+            return redirect()->away($url);
         }
 
         return redirect($this->checkout->confirmationRoute($placed))

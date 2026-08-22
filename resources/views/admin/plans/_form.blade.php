@@ -96,6 +96,17 @@
                 </label>
             </div>
 
+            <div class="field field--full">
+                <label class="switch-row">
+                    <input type="hidden" name="allows_pause" value="0">
+                    <input type="checkbox" name="allows_pause" value="1" @checked(old('allows_pause', $plan?->allows_pause ?? true))>
+                    <span>
+                        <span class="switch-row__title">{{ __('plans.fields.allows_pause') }}</span>
+                        <span class="field__hint">{{ __('plans.fields.allows_pause_hint') }}</span>
+                    </span>
+                </label>
+            </div>
+
             <x-form.field :label="__('plans.fields.min_delivery_days_per_week')" name="min_delivery_days_per_week" :hint="__('plans.fields.min_delivery_days_hint')">
                 <x-form.input name="min_delivery_days_per_week" type="number" min="1" max="7" :value="old('min_delivery_days_per_week', $plan?->min_delivery_days_per_week ?? 5)" required />
             </x-form.field>

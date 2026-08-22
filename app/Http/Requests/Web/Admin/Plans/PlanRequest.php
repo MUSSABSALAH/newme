@@ -35,6 +35,7 @@ abstract class PlanRequest extends FormRequest
             'features.ar' => ['nullable', 'string', 'max:5000'],
             'features.en' => ['nullable', 'string', 'max:5000'],
             'requires_day_selection' => ['boolean'],
+            'allows_pause' => ['boolean'],
             'min_delivery_days_per_week' => ['required', 'integer', 'min:1', 'max:7'],
             'delivery_fee' => ['required', 'numeric', 'min:0'],
             'is_active' => ['boolean'],

@@ -10,6 +10,7 @@
   $chosen = old('address', $selectedAddress?->public_id);
   $chosenMethod = old('payment_method', $methods[0]->value ?? 'mada');
   $hasAddress = $addresses->isNotEmpty();
+  $hostedCheckout = $hostedCheckout ?? false;
 @endphp
 
 @push('styles')
@@ -300,7 +301,7 @@ body.menu-open{overflow:hidden}
 
         <div class="card">
           <h2><span class="n">3</span>{{ __('checkout.payment.heading') }}</h2>
-          <p class="hint">{{ __('checkout.payment.simulated_note') }}</p>
+          <p class="hint">{{ $hostedCheckout ? __('checkout.payment.hosted_note') : __('checkout.payment.simulated_note') }}</p>
 
           @error('payment_method')<div class="alert bad" style="margin-bottom:14px">{{ $message }}</div>@enderror
 
@@ -308,7 +309,7 @@ body.menu-open{overflow:hidden}
             @foreach ($methods as $method)
               <label class="pay {{ $chosenMethod === $method->value ? 'on' : '' }}" data-pay>
                 <input type="radio" name="payment_method" value="{{ $method->value }}"
-                       data-card="{{ $method->requiresCard() ? '1' : '0' }}"
+                       data-card="{{ (! $hostedCheckout && $method->requiresCard()) ? '1' : '0' }}"
                        @checked($chosenMethod === $method->value)>
                 <span class="body">
                   <b>{{ $method->label() }}</b>
@@ -318,6 +319,7 @@ body.menu-open{overflow:hidden}
             @endforeach
           </div>
 
+          @unless ($hostedCheckout)
           <div class="cardbox" data-cardbox>
             <div class="note-sim">
               <svg class="i"><use href="#i-info"/></svg>
@@ -355,6 +357,7 @@ body.menu-open{overflow:hidden}
               @error('card_cvv')<span class="err">{{ $message }}</span>@enderror
             </div>
           </div>
+          @endunless
         </div>
 
         <div class="card">
@@ -373,9 +376,9 @@ body.menu-open{overflow:hidden}
           </label>
           @error('terms')<div class="alert bad" style="margin-bottom:14px">{{ $message }}</div>@enderror
 
-          <button type="submit" class="btn" @disabled(! $hasAddress) data-submit data-busy="{{ __('checkout.review.placing') }}">
+          <button type="submit" class="btn" @disabled(! $hasAddress) data-submit data-busy="{{ $hostedCheckout ? __('checkout.review.redirecting') : __('checkout.review.placing') }}">
             <svg class="i"><use href="#i-lock"/></svg>
-            <span data-submit-label>{{ __('checkout.review.place') }}</span>
+            <span data-submit-label>{{ $hostedCheckout ? __('checkout.review.pay') : __('checkout.review.place') }}</span>
           </button>
         </div>
       </form>

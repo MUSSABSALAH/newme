@@ -17,7 +17,7 @@
                             $field = 'settings.' . $definition->fieldName();
                             $name = 'settings[' . $definition->fieldName() . ']';
                             $current = $values[$definition->key] ?? null;
-                            $isWide = in_array($definition->type, [SettingType::Text], true);
+                            $isWide = in_array($definition->type, [SettingType::Text, SettingType::MultiSelect], true);
                         @endphp
 
                         @if ($definition->type === SettingType::Boolean)
@@ -38,6 +38,35 @@
                                     </span>
                                 </label>
                             </div>
+                        @elseif ($definition->type === SettingType::MultiSelect)
+                            @php
+                                $selected = old($field, $current);
+                                $selected = is_array($selected) ? $selected : [];
+                            @endphp
+                            <x-form.field
+                                :label="__($definition->labelKey())"
+                                :name="$field"
+                                :hint="Lang::has($definition->hintKey()) ? __($definition->hintKey()) : null"
+                                class="field--full"
+                            >
+                                <div class="check-grid">
+                                    @foreach ($definition->options as $option)
+                                        <label class="check-grid__item">
+                                            <input
+                                                type="checkbox"
+                                                name="{{ $name }}[]"
+                                                value="{{ $option }}"
+                                                @checked(in_array($option, $selected, true))
+                                            >
+                                            <span>
+                                                {{ Lang::has('settings.options.' . $definition->key . '.' . $option)
+                                                    ? __('settings.options.' . $definition->key . '.' . $option)
+                                                    : $option }}
+                                            </span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </x-form.field>
                         @else
                             <x-form.field
                                 :label="__($definition->labelKey())"
@@ -60,8 +89,10 @@
                                 @else
                                     <x-form.input
                                         :name="$name"
-                                        :type="$definition->type === SettingType::Integer || $definition->type === SettingType::Decimal ? 'number' : 'text'"
-                                        :step="$definition->type === SettingType::Decimal ? '0.01' : null"
+                                        :type="$definition->type === SettingType::Integer || $definition->type === SettingType::Decimal
+                                            ? 'number'
+                                            : ($definition->type === SettingType::Time ? 'time' : 'text')"
+                                        :step="$definition->type === SettingType::Decimal ? '0.01' : ($definition->type === SettingType::Time ? '60' : null)"
                                         :value="old($field, $current)"
                                     />
                                 @endif

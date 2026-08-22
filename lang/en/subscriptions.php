@@ -15,6 +15,20 @@ return [
         'handling_updated' => 'Handling state updated.',
     ],
 
+    'mail' => [
+        'subject' => 'Welcome to :plan',
+        'greeting' => 'Hello :name,',
+        'intro' => 'Your subscription to :plan is confirmed. Here are the details:',
+        'reference' => 'Subscription reference: :reference',
+        'duration' => 'Duration: :days days',
+        'start' => 'Starts on: :date',
+        'total' => 'Total: :total :currency (:per_day :currency per day)',
+        'payment' => 'Payment method: :method',
+        'cash_on_delivery' => 'Please have the amount ready when your first delivery arrives.',
+        'action' => 'Manage your subscription',
+        'outro' => 'You can change your meals and pause your subscription any time from your account.',
+    ],
+
     // How far the team has got, kept separate from the subscription's own status.
     'handling' => [
         'title' => 'Handling',
@@ -52,9 +66,12 @@ return [
         'created_at' => 'Created',
         'meal_types' => 'Daily meals',
         'selected_days' => 'Delivery weekdays',
-        'mode' => 'Delivery pattern',
         'total_days' => 'Delivery days',
+        'health_birth_date' => 'Date of birth',
+        'health_allergies' => 'Allergies',
+        'health_medications' => 'Medications',
         'start_date' => 'Starts on',
+        'end_date' => 'Ends on',
         'per_day' => 'Per day',
         'subtotal' => 'Subtotal',
         'discount' => 'Plan discount',
@@ -63,23 +80,21 @@ return [
         'tax' => 'VAT',
     ],
 
-    'modes' => [
-        'flex' => 'Flexible (renews)',
-        'once' => 'One cycle',
-        'daily' => 'Daily',
-    ],
-
     'show' => [
         'subtitle' => 'Subscription details',
         'summary' => 'Summary',
         'customer' => 'Customer',
         'plan' => 'Plan',
         'meals' => 'Daily meal selection',
+        'health' => 'Health profile',
         'pricing' => 'Pricing',
         'delivery' => 'Delivery & payment',
         'no_address' => 'No delivery address recorded.',
         'no_meals' => 'No meal types recorded.',
         'no_days' => 'No weekdays selected.',
+        'no_health' => 'The customer did not share any health details.',
+        'none_reported' => 'None',
+        'age_years' => ':n years old',
     ],
 
     'schedule' => [
@@ -89,5 +104,18 @@ return [
         'chef_choice' => 'Chef’s pick',
         'empty' => 'No dish calendar was saved with this subscription.',
         'pdf_title' => 'Meal calendar — #:reference',
+        'pdf_report_title' => 'Meal prep & delivery report',
+        'pdf_summary' => 'Subscription summary for operations',
+        'pdf_days_title' => 'Delivery days to execute',
+        'pdf_ops_hint' => 'Required now: prepare and deliver :active active day(s). Days marked “Paused” (:paused) must not be fulfilled until the customer resumes.',
+        'pdf_active_days' => 'Active days',
+        'pdf_paused_days' => 'Paused days',
+        'pdf_legend_active' => 'Delivery required',
+        'pdf_legend_paused' => 'Paused / frozen',
+        'pdf_action_prepare' => 'Prepare',
+        'pdf_generated' => 'Generated: :at',
+        'pdf_page' => 'Page',
+        'paused_badge' => 'Paused',
+        'paused_banner' => 'Subscription paused since :date — :count delivery day(s) frozen until the customer resumes.',
     ],
 ];

@@ -70,12 +70,13 @@ enum PermissionName: string
     case SubscriptionsPause = 'subscriptions.pause';
     case SubscriptionsCancel = 'subscriptions.cancel';
 
-    // Appointments
-    case AppointmentsView = 'appointments.view';
-    case AppointmentsManage = 'appointments.manage';
+    // Consultations
+    case ConsultationsView = 'consultations.view';
+    case ConsultationsManage = 'consultations.manage';
 
     // Delivery
     case DeliveryView = 'delivery.view';
+    case DeliveryUpdate = 'delivery.update';
     case DeliveryAssign = 'delivery.assign';
 
     // CMS

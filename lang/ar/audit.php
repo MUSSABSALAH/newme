@@ -66,6 +66,16 @@ return [
             'updated' => 'تعديل وجبة',
             'archived' => 'أرشفة وجبة',
         ],
+        'article' => [
+            'created' => 'إنشاء مقال',
+            'updated' => 'تعديل مقال',
+            'archived' => 'أرشفة مقال',
+        ],
+        'recipe' => [
+            'created' => 'إنشاء وصفة',
+            'updated' => 'تعديل وصفة',
+            'archived' => 'أرشفة وصفة',
+        ],
         'category' => [
             'created' => 'إنشاء فئة',
             'updated' => 'تعديل فئة',
@@ -87,6 +97,8 @@ return [
         'subscription' => [
             'created' => 'إنشاء اشتراك',
             'handling_updated' => 'تحديث حالة معالجة اشتراك',
+            'paused' => 'إيقاف اشتراك مؤقتًا',
+            'resumed' => 'استئناف اشتراك',
         ],
         'coupon' => [
             'created' => 'إنشاء كود خصم',
@@ -98,6 +110,17 @@ return [
             'captured' => 'تحصيل دفعة',
             'pending' => 'دفعة معلّقة',
             'declined' => 'رفض دفعة',
+            'confirmed' => 'تأكيد دفعة',
+        ],
+        'invoice' => [
+            'issued' => 'إصدار فاتورة',
+        ],
+        'delivery' => [
+            'status_updated' => 'تحديث حالة تسليم',
+        ],
+        'consultation' => [
+            'created' => 'حجز استشارة',
+            'status_updated' => 'تحديث حالة استشارة',
         ],
     ],
 ];

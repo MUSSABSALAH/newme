@@ -28,12 +28,13 @@ final class SidebarNavTest extends TestCase
         $response->assertOk();
 
         // One rail entry per group, each expanding into a flyout.
-        $this->assertSame(4, substr_count($response->getContent(), 'data-nav-trigger'));
-        $this->assertSame(4, substr_count($response->getContent(), 'data-nav-flyout'));
+        $this->assertSame(5, substr_count($response->getContent(), 'data-nav-trigger'));
+        $this->assertSame(5, substr_count($response->getContent(), 'data-nav-flyout'));
 
         foreach ([
             __('messages.nav.groups.catalog'),
             __('messages.nav.groups.subscriptions'),
+            __('messages.nav.groups.cms'),
             __('messages.nav.groups.people'),
             __('messages.nav.groups.system'),
         ] as $label) {
@@ -48,7 +49,11 @@ final class SidebarNavTest extends TestCase
             'admin.subscriptions.index',
             'admin.plans.index',
             'admin.meals.index',
+            'admin.articles.index',
+            'admin.recipes.index',
+            'admin.deliveries.index',
             'admin.customers.index',
+            'admin.consultations.index',
             'admin.users.index',
             'admin.roles.index',
             'admin.invoices.index',

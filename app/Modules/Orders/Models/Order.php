@@ -38,6 +38,7 @@ use Illuminate\Support\Str;
  * @property PaymentStatus $payment_status
  * @property string|null $note
  * @property \Illuminate\Support\Carbon|null $placed_at
+ * @property \Illuminate\Support\Carbon|null $delivered_at
  */
 class Order extends Model
 {
@@ -63,6 +64,7 @@ class Order extends Model
         'payment_status',
         'note',
         'placed_at',
+        'delivered_at',
     ];
 
     protected static function booted(): void
@@ -93,6 +95,7 @@ class Order extends Model
             'discount_minor' => 'integer',
             'total_minor' => 'integer',
             'placed_at' => 'datetime',
+            'delivered_at' => 'datetime',
         ];
     }
 

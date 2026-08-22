@@ -16,12 +16,14 @@ enum NotificationEvent: string
 {
     case OrderPlaced = 'order.placed';
     case SubscriptionStarted = 'subscription.started';
+    case ConsultationBooked = 'consultation.booked';
 
     public function icon(): string
     {
         return match ($this) {
             self::OrderPlaced => 'package',
             self::SubscriptionStarted => 'repeat',
+            self::ConsultationBooked => 'calendar-check',
         };
     }
 
@@ -41,6 +43,7 @@ enum NotificationEvent: string
             'reference' => (string) ($payload['reference'] ?? '—'),
             'customer' => (string) ($payload['customer'] ?? __('notifications.unknown_customer')),
             'total' => is_numeric($totalMinor) ? Money::fromMinor((int) $totalMinor)->format() : '—',
+            'when' => (string) ($payload['when'] ?? '—'),
         ]);
     }
 
@@ -60,6 +63,7 @@ enum NotificationEvent: string
         return match ($this) {
             self::OrderPlaced => route('admin.orders.show', $publicId),
             self::SubscriptionStarted => route('admin.subscriptions.show', $publicId),
+            self::ConsultationBooked => route('admin.consultations.show', $publicId),
         };
     }
 }

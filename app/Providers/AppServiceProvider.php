@@ -7,15 +7,28 @@ namespace App\Providers;
 use App\Models\User;
 use App\Modules\Audit\Models\AuditLog;
 use App\Modules\Audit\Policies\AuditLogPolicy;
+use App\Modules\Cms\Models\Article;
+use App\Modules\Cms\Models\Recipe;
+use App\Modules\Cms\Policies\ArticlePolicy;
+use App\Modules\Cms\Policies\RecipePolicy;
+use App\Modules\Consultations\Models\Consultation;
+use App\Modules\Consultations\Policies\ConsultationPolicy;
+use App\Modules\Delivery\Models\SubscriptionDelivery;
+use App\Modules\Delivery\Policies\SubscriptionDeliveryPolicy;
+use App\Modules\Identity\Contracts\SmsSender;
 use App\Modules\Identity\Models\Role;
 use App\Modules\Identity\Policies\RolePolicy;
 use App\Modules\Identity\Policies\UserPolicy;
+use App\Modules\Identity\Support\LogSmsSender;
+use App\Modules\Identity\Support\RecordingSmsSender;
 use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Invoices\Policies\InvoicePolicy;
 use App\Modules\Notifications\Support\NotificationPresenter;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Policies\OrderPolicy;
 use App\Modules\Payments\Contracts\PaymentGateway;
+use App\Modules\Payments\Contracts\PayTabsClient;
+use App\Modules\Payments\Gateways\PayTabs\PayTabsSdkClient;
 use App\Modules\Plans\Models\Meal;
 use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Policies\MealPolicy;
@@ -45,6 +58,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(SmsSender::class, LogSmsSender::class);
+
+        if ($this->app->environment('testing')) {
+            $this->app->singleton(SmsSender::class, RecordingSmsSender::class);
+        }
+
+        $this->app->bind(PayTabsClient::class, PayTabsSdkClient::class);
+
         $this->app->bind(PaymentGateway::class, function (): PaymentGateway {
             $driver = (string) config('payments.driver', 'simulated');
             $gateway = config('payments.gateways.'.$driver);
@@ -68,12 +89,16 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Setting::class, SettingsPolicy::class);
         Gate::policy(Plan::class, PlanPolicy::class);
         Gate::policy(Meal::class, MealPolicy::class);
+        Gate::policy(Article::class, ArticlePolicy::class);
+        Gate::policy(Recipe::class, RecipePolicy::class);
+        Gate::policy(Consultation::class, ConsultationPolicy::class);
         Gate::policy(Category::class, CategoryPolicy::class);
         Gate::policy(Product::class, ProductPolicy::class);
         Gate::policy(Coupon::class, CouponPolicy::class);
         Gate::policy(Order::class, OrderPolicy::class);
         Gate::policy(Subscription::class, SubscriptionPolicy::class);
         Gate::policy(Invoice::class, InvoicePolicy::class);
+        Gate::policy(SubscriptionDelivery::class, SubscriptionDeliveryPolicy::class);
 
         // Expose the live cart count to the shared website navigation.
         View::composer('website.partials.nav', function ($view): void {

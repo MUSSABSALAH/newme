@@ -17,5 +17,10 @@ interface PaymentGateway
 {
     public function name(): string;
 
+    /**
+     * Hosted providers send the customer off-site instead of taking a card here.
+     */
+    public function usesHostedCheckout(): bool;
+
     public function charge(ChargeRequest $request): ChargeResult;
 }

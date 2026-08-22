@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Modules\Cms\Seeders\CmsContentSeeder;
 use App\Modules\Identity\Seeders\RolesAndPermissionsSeeder;
 use App\Modules\Identity\Seeders\SuperAdminSeeder;
 use App\Modules\Plans\Seeders\MealSeeder;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             MealSeeder::class,
             PlanSeeder::class,
             StoreCatalogSeeder::class,
+            CmsContentSeeder::class,
         ]);
     }
 }

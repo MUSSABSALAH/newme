@@ -48,7 +48,7 @@
     }
 
     function wrapperOf(input) {
-        return input.closest(".field") || input.parentElement;
+        return input.closest(".field, .f") || input.parentElement;
     }
 
     function showError(input, message) {

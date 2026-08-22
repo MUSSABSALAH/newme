@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table): void {
+            // Kept on the customer so the subscribe wizard can offer it back.
+            $table->date('birth_date')->nullable()->after('phone');
+            $table->text('allergies')->nullable()->after('birth_date');
+            $table->text('medications')->nullable()->after('allergies');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table): void {
+            $table->dropColumn(['birth_date', 'allergies', 'medications']);
+        });
+    }
+};

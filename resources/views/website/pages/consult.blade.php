@@ -23,7 +23,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--body);line-height:
 a{text-decoration:none;color:inherit}
 h1,h2,h3{color:var(--navy);font-weight:900;line-height:1.2;letter-spacing:-.015em}
 button{font-family:var(--font);cursor:pointer}
-img{display:block;width:100%;height:100%;object-fit:cover}
+img:not(.logo__img){display:block;width:100%;height:100%;object-fit:cover}
+.logo__img{display:block;height:40px;width:auto;max-width:160px;object-fit:contain}
 .aiimg{transition:opacity .9s ease}
 .js .aiimg{opacity:0}
 .js .aiimg.loaded{opacity:1}
@@ -37,14 +38,14 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .announce b{color:var(--orange-hi)}
 nav.main{position:sticky;top:0;z-index:90;background:rgba(247,245,241,.92);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--gray-2);padding-top:var(--sat)}
 nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;gap:12px}
-.logo{display:flex;align-items:center;gap:10px}
-.logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,var(--navy-3),var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
-.logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(255,255,255,.2) 36%, transparent 60%)}
-.logo b{font-size:18px;color:var(--navy);font-weight:900}
+.logo{display:inline-flex;align-items:center;gap:10px;line-height:0}
 .nav-links{display:none;gap:18px;font-weight:800;font-size:13px;color:var(--ink)}
 .nav-links a{padding:6px 0;border-bottom:2.5px solid transparent;white-space:nowrap}
 .nav-links a:hover,.nav-links a.on{border-color:var(--orange)}
 @media(min-width:960px){.nav-links{display:flex}}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-cta{font-size:12px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
+.nav-cta:hover{background:var(--ink);color:#fff}
 .burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-2);background:transparent;color:var(--navy);flex-shrink:0}
 .burger svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 @media(min-width:960px){.burger{display:none}}
@@ -79,22 +80,25 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 .f label i{font-style:normal;color:var(--red)}
 .f input,.f select{width:100%;font-family:var(--font);font-weight:700;font-size:14px;color:var(--ink);padding:13px 15px;border:2px solid var(--gray-2);border-radius:14px;background:#fff;transition:.2s;outline:none;appearance:none;-webkit-appearance:none}
 .f input:focus,.f select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(240,127,45,.12)}
+.f input[readonly]{background:var(--tile);color:var(--muted);cursor:default}
 .f input.bad{border-color:var(--red)}
 .f .err{display:none;font-size:11px;font-weight:800;color:var(--red);margin-top:5px}
 .f.bad .err{display:block}
 .f select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2312233B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 15px center}
 .frow{display:grid;gap:12px}
 @media(min-width:560px){.frow{grid-template-columns:1fr 1fr}}
-/* date chips */
-.dates{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.dates::-webkit-scrollbar{display:none}
+/* date chips — thin horizontal scroll for ~30 days */
+.dates{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:10px 2px 10px;margin:0 -2px;scrollbar-width:thin;scrollbar-color:var(--gray-3) transparent;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.dates::-webkit-scrollbar{height:4px;display:block}
+.dates::-webkit-scrollbar-track{background:transparent}
+.dates::-webkit-scrollbar-thumb{background:var(--gray-3);border-radius:999px}
+.dates::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 .dt{flex:0 0 74px;background:#fff;border:2px solid var(--gray-2);border-radius:15px;padding:10px 4px;text-align:center;transition:.2s;position:relative}
 .dt small{display:block;font-size:9px;color:var(--muted);font-weight:800;font-family:var(--mono)}
 .dt b{display:block;font-size:19px;color:var(--navy);font-family:var(--mono);font-weight:700;line-height:1.3}
 .dt span{display:block;font-size:9.5px;color:var(--muted);font-weight:900}
 .dt.on{border-color:var(--orange);background:var(--orange-soft)}
-.dt.off{opacity:.38;pointer-events:none}
-.dt.off::after{content:var(--off-label,"Off");position:absolute;top:-8px;inset-inline-start:50%;transform:translateX(50%);background:var(--gray-3);color:#fff;font-size:7.5px;font-weight:900;border-radius:999px;padding:1px 7px}
+.dt.off{opacity:.38;pointer-events:none;cursor:not-allowed}
 /* slots */
 .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 @media(min-width:560px){.slots{grid-template-columns:repeat(5,1fr)}}
@@ -107,6 +111,7 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 .sumline .i{color:var(--orange-deep);flex-shrink:0}
 .sumline b{color:var(--navy)}
 .book .btn{width:100%;border:none}
+.book .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;filter:none;transform:none}
 .privacy{margin-top:12px;font-size:10.5px;font-weight:700;color:var(--muted);text-align:center}
 .privacy a{color:var(--orange-deep);border-bottom:1px solid var(--orange)}
 /* success state */
@@ -147,7 +152,6 @@ body.mlock{overflow:hidden}
 @endpush
 
 @section('content')
-<style>:root{--off-label:"{{ __('website.consult.js.off') }}";}</style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17" stroke-linecap="round"/></symbol>
 </defs></svg>
@@ -178,12 +182,14 @@ body.mlock{overflow:hidden}
       <div class="frow">
         <div class="f" id="fName">
           <label>{{ __('website.consult.label_name') }} <i>*</i></label>
-          <input type="text" id="inName" placeholder="{{ __('website.consult.ph_name') }}" autocomplete="name">
+          <input type="text" id="inName" value="{{ $customer->name }}" readonly autocomplete="name">
           <div class="err">{{ __('website.consult.err_name') }}</div>
         </div>
         <div class="f" id="fMail">
           <label>{{ __('website.consult.label_email') }} <i>*</i></label>
-          <input type="email" id="inMail" placeholder="you@example.com" autocomplete="email" dir="ltr" style="text-align:end">
+          <input type="email" id="inMail" value="{{ $customer->email }}"
+                 placeholder="you@example.com" autocomplete="email" dir="ltr" style="text-align:end"
+                 @readonly(filled($customer->email))>
           <div class="err">{{ __('website.consult.err_email') }}</div>
         </div>
       </div>
@@ -208,7 +214,7 @@ body.mlock{overflow:hidden}
         <div class="err">{{ __('website.consult.err_slot') }}</div>
       </div>
       <div class="sumline"><svg class="i"><use href="#i-cal"/></svg><span id="sumTxt">{{ __('website.consult.sum_empty') }}</span></div>
-      <button class="btn" id="submit">{{ __('website.consult.submit') }}</button>
+      <button class="btn" id="submit" type="button" disabled>{{ __('website.consult.submit') }}</button>
       <div class="privacy">{!! __('website.consult.privacy', ['url' => route('website.terms')]) !!}</div>
     </div>
     <div class="done-view">
@@ -221,7 +227,6 @@ body.mlock{overflow:hidden}
         <div class="r"><span>{{ __('website.consult.done_when') }}</span><span id="dWhen">—</span></div>
       </div>
       <div class="done-acts">
-        <a class="btn navy" href="https://wa.me/966533360317">{{ __('website.consult.done_wa') }}</a>
         <a class="btn" href="{{ route('website.subscribe') }}">{{ __('website.consult.done_plans') }}</a>
       </div>
     </div>
@@ -237,6 +242,8 @@ body.mlock{overflow:hidden}
 @push('scripts')
 <script>
 window.NM_I18N = @json(__('website.consult.js'));
+window.NM_CONSULT = @json($consultationSchedule);
+window.NM_CONSULT_STORE = @json(route('website.consult.store'));
 </script>
 <script>
 @verbatim
@@ -251,35 +258,64 @@ try{
 var I18N=window.NM_I18N||{};
 var DAYS=I18N.days||[];
 var MONTHS=I18N.months||[];
+var CONSULT=window.NM_CONSULT||{};
+var WORK_DAYS=(CONSULT.working_days||['sun','mon','tue','wed','thu']).slice();
+var SLOT_DEFS=(CONSULT.slots&&CONSULT.slots.length)?CONSULT.slots.slice():(function(){
+  var starts=CONSULT.time_slots||['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+  var dur=CONSULT.duration_minutes||60;
+  return starts.map(function(s){
+    var p=s.split(':'); var m=(+p[0])*60+(+p[1]||0)+dur;
+    return {start:s,end:((m/60|0)<10?'0':'')+(m/60|0)+':'+((m%60)<10?'0':'')+(m%60)};
+  });
+})();
+var DAY_KEYS=['sun','mon','tue','wed','thu','fri','sat'];
+var DAY_SHORT=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+var DAYS_AHEAD=Math.max(1,parseInt(CONSULT.days_ahead,10)||30);
+var BOOKED=CONSULT.booked||{};
 function tpl(s,vars){return String(s||'').replace(/:([a-z_]+)/g,function(_,k){return vars[k]!=null?vars[k]:'';});}
-var pick={date:null,slot:''};
+function slotLabel(slot){return slot.start+' – '+slot.end;}
+function isoLocal(d){
+  var y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();
+  return y+'-'+(m<10?'0':'')+m+'-'+(day<10?'0':'')+day;
+}
+var pick={date:null,slot:'',starts_at:'',ends_at:''};
 
 var wrap=document.getElementById('dates'), today=new Date();
-for(var i=1;i<=8;i++){
-  var d=new Date(today); d.setDate(d.getDate()+i);
-  var fri=d.getDay()===5;
+today.setHours(0,0,0,0);
+for(var i=1;i<=DAYS_AHEAD;i++){
+  var d=new Date(today); d.setDate(today.getDate()+i);
+  var key=DAY_KEYS[d.getDay()];
+  var off=WORK_DAYS.indexOf(key)===-1;
   var b=document.createElement('button');
-  b.className='dt'+(fri?' off':'');
-  b.innerHTML='<small>'+['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()]+'</small><b>'+d.getDate()+'</b><span>'+DAYS[d.getDay()]+'</span>';
-  b.setAttribute('data-iso',d.toISOString().slice(0,10));
+  b.type='button';
+  b.className='dt'+(off?' off':'');
+  if(off)b.setAttribute('disabled','disabled');
+  b.innerHTML='<small>'+DAY_SHORT[d.getDay()]+'</small><b>'+d.getDate()+'</b><span>'+(DAYS[d.getDay()]||'')+'</span>';
+  b.setAttribute('data-iso',isoLocal(d));
   wrap.appendChild(b);
 }
 function fmtDate(iso){var d=new Date(iso+'T12:00:00');return DAYS[d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()];}
 
 function buildSlots(iso){
   var sw=document.getElementById('slots'); sw.innerHTML='';
-  var seed=iso.split('-').reduce(function(a,x){return a+ +x;},0);
+  var taken=BOOKED[iso]||[];
   var free=0;
-  for(var h=10;h<=19;h++){
-    var busy=((seed*7+h*13)%10)<3;
+  for(var i=0;i<SLOT_DEFS.length;i++){
+    var slot=SLOT_DEFS[i];
+    var busy=taken.indexOf(slot.start)!==-1;
     if(!busy)free++;
     var b=document.createElement('button');
+    b.type='button';
     b.className='slot'+(busy?' busy':'');
-    b.textContent=(h<10?'0':'')+h+':00';
+    b.textContent=slotLabel(slot);
+    b.setAttribute('data-start',slot.start);
+    b.setAttribute('data-end',slot.end);
+    if(busy)b.setAttribute('disabled','disabled');
     sw.appendChild(b);
   }
   document.getElementById('slotNote').textContent=tpl(I18N.slots_note,{n:free,date:fmtDate(iso)});
-  pick.slot=''; sum();
+  document.getElementById('slotNote').style.color='';
+  pick.slot=''; pick.starts_at=''; pick.ends_at=''; sum();
 }
 document.getElementById('dates').addEventListener('click',function(e){
   var b=e.target.closest('.dt'); if(!b||b.classList.contains('off'))return;
@@ -291,7 +327,10 @@ document.getElementById('dates').addEventListener('click',function(e){
 document.getElementById('slots').addEventListener('click',function(e){
   var b=e.target.closest('.slot'); if(!b||b.classList.contains('busy'))return;
   document.querySelectorAll('.slot').forEach(function(x){x.classList.remove('on');});
-  b.classList.add('on'); pick.slot=b.textContent;
+  b.classList.add('on');
+  pick.slot=slotLabel({start:b.getAttribute('data-start'),end:b.getAttribute('data-end')});
+  pick.starts_at=b.getAttribute('data-start');
+  pick.ends_at=b.getAttribute('data-end');
   document.getElementById('fSlot').classList.remove('bad');
   sum();
 });
@@ -300,22 +339,94 @@ function sum(){
   if(pick.date&&pick.slot)t.innerHTML=tpl(I18N.sum_full,{date:fmtDate(pick.date),time:pick.slot});
   else if(pick.date)t.textContent=tpl(I18N.sum_date,{date:fmtDate(pick.date)});
   else t.textContent=I18N.sum_empty||'';
+  syncSubmit();
 }
+function formReady(){
+  var name=document.getElementById('inName');
+  var mail=document.getElementById('inMail');
+  return name.value.trim().length>=2
+    && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail.value.trim())
+    && !!pick.date
+    && !!pick.starts_at
+    && !!pick.ends_at;
+}
+function syncSubmit(){
+  var btn=document.getElementById('submit');
+  if(!btn||btn.getAttribute('data-busy')==='1')return;
+  btn.disabled=!formReady();
+}
+function csrfToken(){
+  var m=document.querySelector('meta[name="csrf-token"]');
+  return m?m.getAttribute('content'):'';
+}
+function showBookError(msg){
+  var note=document.getElementById('slotNote');
+  if(note){note.textContent=msg||(I18N.book_error||''); note.style.color='#C0382B';}
+}
+['inName','inMail','inGoal'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.addEventListener('input',syncSubmit);
+  el.addEventListener('change',syncSubmit);
+});
 document.getElementById('submit').addEventListener('click',function(){
-  var ok=true;
+  var btn=document.getElementById('submit');
+  if(btn.disabled||btn.getAttribute('data-busy')==='1')return;
   var name=document.getElementById('inName'), mail=document.getElementById('inMail');
+  var goal=document.getElementById('inGoal');
+  var ok=true;
   function mark(f,cond){document.getElementById(f).classList.toggle('bad',!cond); if(!cond)ok=false;}
   mark('fName',name.value.trim().length>=2);
   mark('fMail',/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail.value.trim()));
   mark('fDate',!!pick.date);
-  mark('fSlot',!!pick.slot);
-  if(!ok)return;
-  document.getElementById('dName').textContent=name.value.trim();
-  document.getElementById('dMail').textContent=mail.value.trim();
-  document.getElementById('dWhen').textContent=fmtDate(pick.date)+' · '+pick.slot;
-  document.getElementById('book').classList.add('ok');
-  window.scrollTo({top:0,behavior:'smooth'});
+  mark('fSlot',!!pick.starts_at&&!!pick.ends_at);
+  if(!ok){syncSubmit(); return;}
+  btn.setAttribute('data-busy','1');
+  btn.disabled=true;
+  var prev=btn.textContent;
+  btn.textContent=I18N.booking||prev;
+  fetch(window.NM_CONSULT_STORE,{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'Accept':'application/json',
+      'X-CSRF-TOKEN':csrfToken(),
+      'X-Requested-With':'XMLHttpRequest'
+    },
+    body:JSON.stringify({
+      name:name.value.trim(),
+      email:mail.value.trim(),
+      goal:goal&&goal.value?goal.value:'',
+      date:pick.date,
+      starts_at:pick.starts_at,
+      ends_at:pick.ends_at
+    })
+  }).then(function(r){
+    return r.json().then(function(data){return {ok:r.ok,status:r.status,data:data};});
+  }).then(function(res){
+    if(!res.ok||!res.data||!res.data.ok){
+      btn.removeAttribute('data-busy');
+      btn.textContent=prev;
+      syncSubmit();
+      var msg=(res.data&&res.data.message)||(res.data&&res.data.errors&&Object.values(res.data.errors)[0]&&Object.values(res.data.errors)[0][0])||(I18N.book_error||'');
+      showBookError(msg);
+      return;
+    }
+    // Stay disabled after success to avoid duplicate bookings.
+    btn.textContent=prev;
+    document.getElementById('dName').textContent=name.value.trim();
+    document.getElementById('dMail').textContent=mail.value.trim();
+    document.getElementById('dWhen').textContent=res.data.when||(fmtDate(pick.date)+' · '+pick.slot);
+    document.getElementById('book').classList.add('ok');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }).catch(function(){
+    btn.removeAttribute('data-busy');
+    btn.textContent=prev;
+    syncSubmit();
+    showBookError(I18N.book_error||'');
+  });
 });
+syncSubmit();
 document.querySelectorAll('img.aiimg').forEach(function(img){
   img.loading='lazy';img.decoding='async';
   if(img.complete&&img.naturalWidth>0)img.classList.add('loaded');

@@ -38,5 +38,11 @@ return [
                 'body' => 'Subscription #:reference from :customer — :total SAR.',
             ],
         ],
+        'consultation' => [
+            'booked' => [
+                'title' => 'New consultation',
+                'body' => 'Consultation #:reference from :customer — :when.',
+            ],
+        ],
     ],
 ];

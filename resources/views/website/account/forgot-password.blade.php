@@ -2,6 +2,7 @@
 
 @section('title', __('account.passwords.request_title'))
 @section('theme', '#122B4A')
+@section('body_class', 'is-auth-page')
 
 @push('styles')
 @include('website.account._styles')

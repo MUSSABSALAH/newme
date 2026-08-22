@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Checkout\DTOs;
 
+use App\Modules\Identity\DTOs\HealthProfile;
 use App\Modules\Subscriptions\Support\MealSchedule;
 use App\Support\Dto\Data;
 
@@ -27,9 +28,9 @@ final class SubscriptionDraft extends Data
         public readonly string $durationUnit,
         public readonly int $durationLength,
         public readonly array $selectedDays,
-        public readonly string $mode,
         public readonly ?string $startDate,
         public readonly ?string $couponCode,
+        public readonly HealthProfile $health,
         public readonly array $mealSchedule = [],
     ) {}
 
@@ -40,9 +41,9 @@ final class SubscriptionDraft extends Data
     {
         $mealTypes = $attributes['meal_types'] ?? [];
         $selectedDays = $attributes['selected_days'] ?? [];
-        $mode = (string) ($attributes['mode'] ?? 'flex');
         $coupon = $attributes['coupon_code'] ?? null;
         $startDate = $attributes['start_date'] ?? null;
+        $health = $attributes['health'] ?? [];
 
         return new self(
             planPublicId: (string) ($attributes['plan_public_id'] ?? ''),
@@ -56,9 +57,9 @@ final class SubscriptionDraft extends Data
                 static fn ($value): int => (int) $value,
                 is_array($selectedDays) ? $selectedDays : [],
             )),
-            mode: $mode === 'once' ? 'once' : 'flex',
             startDate: is_string($startDate) && $startDate !== '' ? $startDate : null,
             couponCode: is_string($coupon) && trim($coupon) !== '' ? trim($coupon) : null,
+            health: HealthProfile::fromArray(is_array($health) ? $health : []),
             mealSchedule: MealSchedule::normalize($attributes['meal_schedule'] ?? []),
         );
     }
@@ -76,9 +77,9 @@ final class SubscriptionDraft extends Data
             'duration_unit' => $this->durationUnit,
             'duration_length' => $this->durationLength,
             'selected_days' => $this->selectedDays,
-            'mode' => $this->mode,
             'start_date' => $this->startDate,
             'coupon_code' => $this->couponCode,
+            'health' => $this->health->toArray(),
             'meal_schedule' => $this->mealSchedule,
         ];
     }

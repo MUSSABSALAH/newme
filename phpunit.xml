@@ -32,5 +32,9 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="PAYMENTS_DRIVER" value="simulated"/>
+        <env name="PAYTABS_ENDPOINT" value="SAU"/>
+        <env name="PAYTABS_PROFILE_ID" value="1"/>
+        <env name="PAYTABS_SERVER_KEY" value="test_key"/>
     </php>
 </phpunit>

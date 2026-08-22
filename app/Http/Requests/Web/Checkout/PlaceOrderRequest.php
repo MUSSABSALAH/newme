@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Web\Checkout;
 
+use App\Modules\Payments\Contracts\PaymentGateway;
 use App\Modules\Payments\Enums\PaymentMethod;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -105,6 +106,10 @@ final class PlaceOrderRequest extends FormRequest
      */
     private function cardRule(array $cardMethods): string
     {
+        if (app(PaymentGateway::class)->usesHostedCheckout()) {
+            return 'nullable';
+        }
+
         return 'required_if:payment_method,'.implode(',', $cardMethods);
     }
 }

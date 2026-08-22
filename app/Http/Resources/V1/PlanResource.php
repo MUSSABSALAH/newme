@@ -37,6 +37,7 @@ final class PlanResource extends JsonResource
             'features' => $plan->getTranslations('features'),
             'image_url' => $plan->image_path !== null ? asset('storage/'.$plan->image_path) : null,
             'requires_day_selection' => $plan->requires_day_selection,
+            'allows_pause' => $plan->allows_pause,
             'min_delivery_days_per_week' => $plan->min_delivery_days_per_week,
             'delivery_fee' => MoneyPresenter::toArray(Money::fromMinor($plan->delivery_fee)),
             'meals' => $this->meals($plan),

@@ -22,6 +22,36 @@
         </div>
     </x-ui.card>
 
+    <x-ui.card :title="__('customers.show.health')">
+        @if ($customer->birth_date === null && $customer->allergies === null && $customer->medications === null)
+            <div class="dropdown__empty">{{ __('customers.show.no_health') }}</div>
+        @else
+            <div class="stack" style="gap: 10px;">
+                <div class="row" style="justify-content: space-between;">
+                    <span class="text-muted">{{ __('customers.fields.birth_date') }}</span>
+                    <strong>
+                        @if ($customer->birth_date)
+                            {{ $customer->birth_date->translatedFormat('d M Y') }}
+                            <span class="text-muted">({{ __('customers.show.age_years', ['n' => $customer->birth_date->age]) }})</span>
+                        @else
+                            {{ __('customers.show.none_reported') }}
+                        @endif
+                    </strong>
+                </div>
+                <div class="row" style="justify-content: space-between;">
+                    <span class="text-muted">{{ __('customers.fields.allergies') }}</span>
+                    <strong>{{ $customer->allergies ?? __('customers.show.none_reported') }}</strong>
+                </div>
+                <div class="row" style="justify-content: space-between;">
+                    <span class="text-muted">{{ __('customers.fields.medications') }}</span>
+                    <strong>{{ $customer->medications ?? __('customers.show.none_reported') }}</strong>
+                </div>
+            </div>
+        @endif
+    </x-ui.card>
+
+    @include('admin.customers._measurements')
+
     <x-ui.card :title="__('customers.show.orders')">
         @if ($customer->orders->isEmpty())
             <div class="dropdown__empty">{{ __('customers.show.no_orders') }}</div>

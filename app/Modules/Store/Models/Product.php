@@ -139,9 +139,9 @@ class Product extends Model
     /**
      * Resolve the public URL for the product image.
      *
-     * Uploaded images live under the public storage disk (path contains a
-     * folder), while seeded static assets are bare filenames under
-     * public/assets/images.
+     * Uploaded / seeded images live under the public storage disk
+     * (paths contain a folder). Legacy bare filenames may still point at
+     * public/assets/images, but prefer a storage copy when one exists.
      */
     public function imageUrl(): ?string
     {
@@ -151,6 +151,14 @@ class Product extends Model
 
         if (str_contains($this->image_path, '/')) {
             return asset('storage/'.$this->image_path);
+        }
+
+        $stored = 'store/products/'.$this->image_path;
+        if (
+            is_file(storage_path('app/public/'.$stored))
+            || is_file(public_path('storage/'.$stored))
+        ) {
+            return asset('storage/'.$stored);
         }
 
         return asset('assets/images/'.$this->image_path);

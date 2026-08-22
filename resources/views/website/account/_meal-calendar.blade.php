@@ -8,6 +8,7 @@
     <div class="meal-cal-legend">
       <span class="meal-cal-legend__item"><i class="dot dot--open"></i>{{ __('account.subscription.legend_editable') }}</span>
       <span class="meal-cal-legend__item"><i class="dot dot--locked"></i>{{ __('account.subscription.legend_locked') }}</span>
+      <span class="meal-cal-legend__item"><i class="dot dot--paused"></i>{{ __('account.subscription.legend_paused') }}</span>
     </div>
 
     @foreach ($calendarMonths as $month)
@@ -29,10 +30,13 @@
               @else
                 @php $delivery = $cell['delivery']; @endphp
                 <button type="button"
-                        class="meal-cal-cell meal-cal-cell--delivery {{ $delivery['editable'] ? 'is-editable' : 'is-locked' }}"
+                        class="meal-cal-cell meal-cal-cell--delivery {{ ($delivery['paused'] ?? false) ? 'is-paused' : ($delivery['editable'] ? 'is-editable' : 'is-locked') }}"
                         data-day-index="{{ $delivery['index'] }}"
                         aria-label="{{ $delivery['label'] }}">
                   <span class="meal-cal-cell__num">{{ $cell['day'] }}</span>
+                  @if ($delivery['paused'] ?? false)
+                    <span class="meal-cal-cell__badge">{{ __('account.subscription.paused_badge') }}</span>
+                  @endif
                   <div class="meal-cal-cell__meals">
                     @foreach ($delivery['meals'] as $meal)
                       <span class="meal-cal-cell__meal {{ $meal['is_chef'] ? 'chef' : '' }}" title="{{ $meal['label'] }}: {{ $meal['dish'] }}">
@@ -41,7 +45,7 @@
                       </span>
                     @endforeach
                   </div>
-                  @if ($delivery['editable'])
+                  @if ($delivery['editable'] && ! ($delivery['paused'] ?? false))
                     <span class="meal-cal-cell__edit">{{ __('account.subscription.tap_to_edit') }}</span>
                   @endif
                 </button>
@@ -63,7 +67,7 @@
             <button type="button" class="meal-cal-editor__close" data-close-editor aria-label="{{ __('account.subscription.close_editor') }}">×</button>
           </div>
 
-          <input type="hidden" name="meal_schedule[{{ $index }}][date]" value="{{ $day['date'] }}">
+          <input type="hidden" name="meal_schedule[{{ $index }}][date]" value="{{ $day['date'] }}" @disabled($day['paused'] ?? false)>
 
           @if ($day['editable'])
             @foreach ($day['meals'] as $meal)
@@ -80,10 +84,15 @@
                 </select>
               </div>
             @endforeach
+            <button type="submit" class="w-btn meal-cal-drawer__save">{{ __('account.subscription.save_day') }}</button>
           @else
-            <p class="meal-cal-editor__locked-note">{{ __('account.subscription.schedule_locked') }}</p>
+            <p class="meal-cal-editor__locked-note">
+              {{ ($day['paused'] ?? false) ? __('account.subscription.schedule_paused_note') : __('account.subscription.schedule_locked') }}
+            </p>
             @foreach ($day['meals'] as $meal)
-              <input type="hidden" name="meal_schedule[{{ $index }}][meals][{{ $meal['type'] }}]" value="{{ $meal['dish_raw'] ?? '' }}">
+              @unless ($day['paused'] ?? false)
+                <input type="hidden" name="meal_schedule[{{ $index }}][meals][{{ $meal['type'] }}]" value="{{ $meal['dish_raw'] ?? '' }}">
+              @endunless
               <div class="meal-cal-editor__readonly">
                 <span>{{ $meal['label'] }}</span>
                 <b class="{{ $meal['is_chef'] ? 'chef' : '' }}">{{ $meal['dish'] }}</b>
@@ -98,9 +107,6 @@
       <div class="meal-cal-drawer__backdrop" data-close-editor></div>
       <div class="meal-cal-drawer__panel">
         <div id="mealCalDrawerBody"></div>
-        @if ($hasEditableDays)
-          <button type="submit" class="w-btn meal-cal-drawer__save">{{ __('account.subscription.save_day') }}</button>
-        @endif
       </div>
     </div>
   </form>

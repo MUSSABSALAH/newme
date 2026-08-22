@@ -19,13 +19,14 @@ final class SettingDefinition
 {
     /**
      * @param  list<string>  $rules  Laravel validation rules for the value.
-     * @param  list<string>  $options  Allowed values for a Select setting.
+     * @param  list<string>  $options  Allowed values for Select / MultiSelect settings.
+     * @param  string|int|bool|array<int, string>|null  $default
      */
     public function __construct(
         public readonly string $key,
         public readonly SettingGroup $group,
         public readonly SettingType $type,
-        public readonly string|int|bool|null $default = null,
+        public readonly string|int|bool|array|null $default = null,
         public readonly array $rules = [],
         public readonly array $options = [],
         public readonly bool $encrypted = false,

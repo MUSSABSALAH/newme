@@ -12,6 +12,7 @@ use App\Modules\Identity\Enums\RoleName;
 use App\Modules\Identity\Enums\UserStatus;
 use App\Modules\Identity\Enums\UserType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * Self-service registration for public store customers.
@@ -31,7 +32,7 @@ final class CustomerAuthService
             $user->name = $data->name;
             $user->email = $data->email;
             $user->phone = $data->phone;
-            $user->password = $data->password;
+            $user->password = $data->password ?? Str::password(32);
             $user->status = UserStatus::Active;
             $user->type = UserType::Customer;
             $user->save();
@@ -41,6 +42,7 @@ final class CustomerAuthService
             $this->audit->log(AuditAction::CustomerRegistered, $user, [], [
                 'name' => $data->name,
                 'email' => $data->email,
+                'phone' => $data->phone,
             ]);
 
             return $user;

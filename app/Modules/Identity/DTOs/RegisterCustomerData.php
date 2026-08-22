@@ -10,9 +10,9 @@ final class RegisterCustomerData extends Data
 {
     public function __construct(
         public readonly string $name,
-        public readonly string $email,
+        public readonly ?string $email,
         public readonly ?string $phone,
-        public readonly string $password,
+        public readonly ?string $password,
     ) {}
 
     /**
@@ -20,13 +20,20 @@ final class RegisterCustomerData extends Data
      */
     public static function fromArray(array $attributes): static
     {
-        $phone = $attributes['phone'] ?? null;
-
         return new self(
             name: (string) $attributes['name'],
-            email: (string) $attributes['email'],
-            phone: is_string($phone) && trim($phone) !== '' ? trim($phone) : null,
-            password: (string) $attributes['password'],
+            email: self::nullableString($attributes['email'] ?? null),
+            phone: self::nullableString($attributes['phone'] ?? null),
+            password: self::nullableString($attributes['password'] ?? null),
         );
+    }
+
+    private static function nullableString(mixed $value): ?string
+    {
+        if (! is_string($value) || trim($value) === '') {
+            return null;
+        }
+
+        return trim($value);
     }
 }

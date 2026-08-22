@@ -45,11 +45,19 @@ return Application::configure(basePath: dirname(__DIR__))
         // across logout and remain readable by the client.
         $middleware->encryptCookies(except: [SetWebLocale::COOKIE]);
 
+        $middleware->validateCsrfTokens(except: [
+            'payments/paytabs/return',
+        ]);
+
         // Guests are sent to the login screen for the area they requested:
         // the admin panel or the public store account.
         $middleware->redirectGuestsTo(function (Request $request): string {
             if ($request->routeIs('admin.*') || $request->is('admin', 'admin/*')) {
                 return route('admin.login');
+            }
+
+            if ($request->routeIs('website.consult', 'website.consult.store')) {
+                return route('website.login', ['next' => 'consult']);
             }
 
             return route('website.login');

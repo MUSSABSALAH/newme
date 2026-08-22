@@ -36,6 +36,7 @@ final class CustomerController extends Controller
         $customer->load([
             'orders' => fn ($query) => $query->withCount('items')->latest(),
             'subscriptions' => fn ($query) => $query->latest(),
+            'bodyMeasurements',
         ]);
 
         return view('admin.customers.show', [

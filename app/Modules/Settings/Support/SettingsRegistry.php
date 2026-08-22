@@ -82,6 +82,10 @@ final class SettingsRegistry
             new SettingDefinition('localization.default_locale', SettingGroup::Localization, SettingType::Select, 'ar', ['required', 'in:ar,en'], ['ar', 'en']),
             new SettingDefinition('localization.timezone', SettingGroup::Localization, SettingType::Select, 'Asia/Riyadh', ['required', 'timezone'], ['Asia/Riyadh', 'Asia/Dubai', 'UTC']),
 
+            // Authentication
+            new SettingDefinition('authentication.sms_otp', SettingGroup::Authentication, SettingType::Boolean, false, ['boolean']),
+            new SettingDefinition('authentication.email_otp', SettingGroup::Authentication, SettingType::Boolean, false, ['boolean']),
+
             // Finance
             new SettingDefinition('finance.currency', SettingGroup::Finance, SettingType::Select, 'SAR', ['required', 'in:SAR'], ['SAR']),
             new SettingDefinition('finance.tax_rate', SettingGroup::Finance, SettingType::Decimal, '15.00', ['required', 'numeric', 'min:0', 'max:100']),
@@ -92,6 +96,37 @@ final class SettingsRegistry
             new SettingDefinition('operations.payment_timeout_minutes', SettingGroup::Operations, SettingType::Integer, 30, ['required', 'integer', 'min:1', 'max:1440']),
             new SettingDefinition('operations.subscription_min_start_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
             new SettingDefinition('operations.meal_change_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
+            new SettingDefinition('operations.subscription_pause_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
+            new SettingDefinition('operations.subscription_resume_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
+            new SettingDefinition(
+                'operations.consultation_working_days',
+                SettingGroup::Operations,
+                SettingType::MultiSelect,
+                ['sun', 'mon', 'tue', 'wed', 'thu'],
+                ['required', 'array', 'min:1'],
+                ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+            ),
+            new SettingDefinition(
+                'operations.consultation_hours_start',
+                SettingGroup::Operations,
+                SettingType::Time,
+                '10:00',
+                ['required', 'date_format:H:i'],
+            ),
+            new SettingDefinition(
+                'operations.consultation_hours_end',
+                SettingGroup::Operations,
+                SettingType::Time,
+                '20:00',
+                ['required', 'date_format:H:i'],
+            ),
+            new SettingDefinition(
+                'operations.consultation_duration_minutes',
+                SettingGroup::Operations,
+                SettingType::Integer,
+                60,
+                ['required', 'integer', 'min:5', 'max:240'],
+            ),
 
             // Policies
             new SettingDefinition('policies.cancellation_ar', SettingGroup::Policies, SettingType::Text, null, ['nullable', 'string', 'max:5000']),
