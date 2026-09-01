@@ -51,17 +51,19 @@
         </div>
       </div>
 
-      <nav class="acc-nav" aria-label="{{ __('account.dashboard.title') }}">
-        @foreach ($tabs as $key => $tab)
-          <a href="{{ route('website.account', ['tab' => $key]) }}"
-             class="{{ $activeTab === $key ? 'on' : '' }}">
-            {{ $tab['label'] }}
-            @if ($tab['count'] !== null)
-              <span class="badge">{{ $tab['count'] }}</span>
-            @endif
-          </a>
-        @endforeach
-      </nav>
+      <div class="acc-nav-stick">
+        <nav class="acc-nav" aria-label="{{ __('account.dashboard.title') }}">
+          @foreach ($tabs as $key => $tab)
+            <a href="{{ route('website.account', ['tab' => $key]) }}"
+               class="{{ $activeTab === $key ? 'on' : '' }}">
+              {{ $tab['label'] }}
+              @if ($tab['count'] !== null)
+                <span class="badge">{{ $tab['count'] }}</span>
+              @endif
+            </a>
+          @endforeach
+        </nav>
+      </div>
 
       <div class="acc-side-foot">
         <form method="POST" action="{{ route('website.logout') }}">

@@ -43,6 +43,7 @@ img{display:block;max-width:100%}
 .acc-nav a.on{background:var(--orange-soft);color:var(--orange-deep);border-color:rgba(240,127,45,.28)}
 .acc-nav .badge{font-family:var(--mono);font-size:11px;font-weight:900;background:var(--tile);color:var(--muted);padding:2px 8px;border-radius:999px;min-width:24px;text-align:center}
 .acc-nav a.on .badge{background:#fff;color:var(--orange-deep)}
+.acc-nav-stick{min-width:0}
 
 .acc-side-foot{padding:10px 8px 4px;border-top:1.5px solid var(--gray-2);margin-top:8px}
 .acc-side-foot button{width:100%;border:none;background:none;color:var(--muted);font-size:12.5px;font-weight:800;text-decoration:underline;padding:8px 4px}
@@ -360,15 +361,99 @@ body.meal-cal-open{overflow:hidden}
 .meal-cal-editor__readonly b.chef{font-style:italic;color:var(--muted)}
 
 @media(max-width:959px){
-  .acc-side{position:static;padding:10px}
-  .acc-nav{flex-direction:row;flex-wrap:nowrap;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .cowrap{padding:18px 16px 96px}
+  .cohead{margin-bottom:14px}
+  .cohead h1{font-size:clamp(22px,6.5vw,28px);margin-bottom:4px}
+  .cohead p{display:none}
+  .co-back{margin-bottom:8px}
+
+  .acc-layout{gap:14px}
+  .acc-side{
+    position:static;padding:0;border:0;background:transparent;box-shadow:none;border-radius:0
+  }
+
+  .acc-user{
+    background:#fff;border:1.5px solid var(--gray-2);border-radius:16px;
+    padding:12px;margin-bottom:10px;gap:10px;
+    box-shadow:0 6px 18px rgba(18,43,74,.04)
+  }
+  .acc-user__av{width:40px;height:40px;font-size:15px}
+  .acc-user__meta{flex:1;min-width:0}
+  .acc-user__meta b{font-size:13.5px}
+  .acc-user__meta span{font-size:11px}
+
+  .acc-nav-stick{
+    background:#fff;border:1.5px solid var(--gray-2);border-radius:16px;
+    padding:8px;margin-bottom:10px;
+    box-shadow:0 6px 18px rgba(18,43,74,.04)
+  }
+  .acc-nav{
+    flex-direction:row;flex-wrap:nowrap;gap:6px;
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    margin:0;padding:0 2px
+  }
   .acc-nav::-webkit-scrollbar{display:none}
-  .acc-nav a{flex:0 0 auto;justify-content:center;padding:10px 14px;white-space:nowrap}
-  .acc-nav .badge{display:none}
-  .acc-user{padding-bottom:12px}
+  .acc-nav a{
+    flex:0 0 auto;justify-content:center;gap:6px;
+    padding:9px 14px;white-space:nowrap;font-size:13px;
+    border-radius:999px;background:var(--tile);border-color:transparent
+  }
+  .acc-nav a.on{border-color:rgba(240,127,45,.35)}
+  .acc-nav .badge{
+    display:inline-grid;place-items:center;min-width:20px;height:20px;
+    padding:0 6px;font-size:10px;line-height:1
+  }
+
+  .acc-side-foot{
+    margin:0 0 4px;padding:0;border:0;text-align:center
+  }
+  .acc-side-foot button{
+    width:auto;padding:8px 12px;font-size:12.5px;color:#C0392B
+  }
+
+  .card{padding:16px;border-radius:16px;margin-bottom:12px}
+  .card > h2,.card-head h2{font-size:15.5px}
+  .card > .hint,.card-head .hint{margin:0 0 14px 32px;font-size:12.5px}
+  html[dir="rtl"] .card > .hint,html[dir="rtl"] .card-head .hint{margin:0 32px 14px 0}
+
+  .f,.field{margin-bottom:11px}
+  .f input,.f select,.f textarea,.field input,.field select{padding:11px 12px;font-size:16px;border-radius:11px}
+  .btn,.card .w-btn,.acc-main .w-btn,.acc-wrap .w-btn,.cowrap > .w-btn{min-height:48px;padding:12px 18px;font-size:14.5px}
+
+  .pick-row{padding:14px;border-radius:14px;gap:10px}
+  .pick-row,.pick-row__main{flex-wrap:wrap}
+  .pick-row .side,.pick-row__main .side{
+    width:100%;flex-direction:row;align-items:center;justify-content:space-between;
+    text-align:start;padding-top:8px;border-top:1px dashed var(--gray-2)
+  }
+  .pick-row__actions{gap:8px}
+  .pick-row .body b{font-size:14px}
+  .pick-row .amt{font-size:13.5px}
+
+  .address-card__head{flex-direction:column;align-items:stretch;gap:8px}
+  .address-card__actions{gap:8px 12px}
+
+  .ms-summary{gap:10px}
+  .ms-stat{padding:12px 14px;border-radius:14px}
+  .ms-stat > b{font-size:20px}
+  .ms-grid{grid-template-columns:1fr 1fr;gap:8px}
+
+  .sub-overview{gap:12px;margin-bottom:20px}
+  .kv{font-size:13.5px;padding:8px 0}
+
+  .acc-modal{align-items:flex-end;padding:0}
+  .acc-modal__panel{
+    width:100%;max-height:min(90vh,720px);border-radius:20px 20px 0 0;
+    padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))
+  }
+
   .meal-cal-grid{gap:3px}
   .meal-cal-cell{min-height:68px;padding:4px}
   .meal-cal-cell__meal{font-size:8.5px}
+}
+
+@media(max-width:819.98px){
+  .acc-nav-stick{border-radius:14px}
 }
 @media(min-width:960px){
   .meal-cal-drawer{align-items:center}
