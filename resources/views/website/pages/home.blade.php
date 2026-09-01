@@ -2,6 +2,7 @@
 
 @section('title', __('website.home.title'))
 @section('theme', '#0A1B31')
+@section('hide_mobile_chrome', '1')
 
 @push('styles')
 <style>
@@ -73,6 +74,15 @@ img:not(.logo__img){display:block;width:100%;height:100%;object-fit:cover}
 .cd b{color:var(--ink)}
 .cd em{font-style:normal;color:var(--orange-hi)}
 @media(max-width:640px){.sat.s3,.sat.s4{display:none}.bigword span{font-size:34vw}}
+/* Mobile landing: hide shared mobile chrome only; keep landing tbar */
+@media(max-width:819.98px){
+  .nm-chrome{display:none!important}
+  .copy{bottom:calc(118px + var(--sab))}
+  .copy h1{font-size:clamp(28px,7.2vw,40px)}
+  .stage{transform:translateY(-4vh)}
+  .tbar{padding-top:calc(14px + var(--sat))}
+  .tbar .logo__img{height:40px;max-width:150px}
+}
 @media (prefers-reduced-motion: reduce){.ring,.arc,.orbit,.sat,.core img,.enter::before,.stars,.stars2{animation:none}}
 @endverbatim
 </style>

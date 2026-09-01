@@ -171,7 +171,13 @@ final class BodyMeasurementTest extends TestCase
             ->assertSee(__('measurements.account.current_weight'))
             ->assertSee('82.5')
             ->assertSee('3.5')
-            ->assertSee('94');
+            ->assertSee(__('measurements.fields.height_cm'))
+            ->assertDontSee(__('measurements.fields.waist_cm'))
+            ->assertDontSee(__('measurements.fields.hip_cm'))
+            ->assertDontSee(__('measurements.fields.chest_cm'))
+            ->assertDontSee(__('measurements.fields.arm_cm'))
+            ->assertDontSee(__('measurements.fields.neck_cm'))
+            ->assertDontSee(__('measurements.fields.body_fat_percent'));
     }
 
     public function test_the_account_page_charts_the_weight_once(): void

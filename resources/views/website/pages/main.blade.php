@@ -180,10 +180,10 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .op h4{font-size:14.5px;color:var(--navy);margin-bottom:6px}
 .op p{font-size:12px;font-weight:600;color:var(--muted);line-height:1.8}
 
-/* ===== PRODUCTS (spec-row pattern) ===== */
+/* ===== PRODUCTS (spec-row pattern) — desktop: one row ===== */
 .shop{background:#EFEBE3}
-.prod-grid{display:grid;gap:26px 16px;grid-template-columns:repeat(2,1fr);max-width:1260px;margin:0 auto;padding:0 20px}
-@media(min-width:1040px){.prod-grid{grid-template-columns:repeat(4,1fr);gap:30px 18px}}
+.prod-grid{display:flex;flex-wrap:nowrap;align-items:stretch;gap:18px;max-width:1260px;margin:0 auto;padding:0 20px}
+.prod-grid .prod{flex:1 1 0;min-width:0}
 .prod{display:flex;flex-direction:column}
 .prod-tile{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--tile);border-radius:18px;margin-bottom:14px}
 .prod-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.5px rgba(18,43,74,.06);pointer-events:none;z-index:2}
@@ -193,7 +193,7 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .prod:hover .prod-tile img{transform:scale(1.05)}
 .p-flag{position:absolute;top:12px;inset-inline-start:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:900;letter-spacing:.08em;color:var(--navy)}
 .p-flag .i{width:15px;height:15px;color:var(--orange-deep)}
-.prod h3{font-size:17px;font-weight:900;line-height:1.35}
+.prod h3{font-size:clamp(13px,1.2vw,17px);font-weight:900;line-height:1.35}
 .p-sub{font-size:13px;color:var(--body);font-weight:600;margin:2px 0 0}
 .p-specs{border-top:1.5px solid var(--gray-2);border-bottom:1.5px solid var(--gray-2);margin:13px 0;padding:11px 0;display:grid;gap:9px}
 .p-spec{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800;color:var(--ink)}
@@ -473,6 +473,7 @@ body.menu-open{overflow:hidden}
 @endpush
 
 @section('content')
+<div class="home-desktop">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H10L9 22l8.5-11.5H12L13 2z"/></symbol>
 <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M2 10h2v4H2v-4zm18 0h2v4h-2v-4zM5 7.5h3v9H5v-9zm11 0h3v9h-3v-9zM8 11h8v2H8v-2z"/></symbol>
@@ -654,30 +655,30 @@ body.menu-open{overflow:hidden}
   <div class="shop-cta"><a href="{{ route('website.store') }}" class="btn navy">{{ __('website.main.shop.all') }}</a></div>
 </section>
 
-<!-- DELIVERY APPS -->
+<!-- DELIVERY APPS data (mobile-only UI in mobile-home partial) -->
 @php
   $deliveryApps = [
       [
           'key' => 'jahez',
-          'url' => 'https://jahez.go.link/acZgN',
+          'url' => 'https://jahez.link/0xIec6fzk0b',
           'color' => '#E31C23',
           'logo' => 'assets/images/apps/jahez.svg',
       ],
       [
           'key' => 'hungerstation',
-          'url' => 'https://hungerstation.com/sa-ar/qc/95478/%D9%86%D9%8A%D9%88-%D9%85%D9%8A/branch/%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6~%D8%A7%D9%84%D9%85%D8%B9%D8%B0%D8%B1~169721',
+          'url' => 'https://hungerstation.go.link/?c=SA&s=c&v=95478&so=mls&adj_t=1sdhhuza_1spi9ypp&adj_og_title=New+Me&adj_og_image=https://images.deliveryhero.io/image/hungerstation/restaurant/logo/3137fcf35d12049ae676a5ae70e868e0.jpg',
           'color' => '#3D2314',
           'logo' => 'assets/images/apps/hungerstation.png',
       ],
       [
           'key' => 'chefz',
-          'url' => 'https://thechefzco.app.link/XMWn5xDtf5b',
+          'url' => 'https://thechefzco.app.link/ImyQFntM9Zb',
           'color' => '#522A48',
           'logo' => 'assets/images/apps/chefz.svg',
       ],
       [
           'key' => 'keeta',
-          'url' => 'https://url.mykeeta.com/i80cL48z',
+          'url' => 'https://url.mykeeta.com/taLCveLz',
           'color' => '#111111',
           'logo' => 'assets/images/apps/keeta.png',
       ],
@@ -689,31 +690,6 @@ body.menu-open{overflow:hidden}
       ],
   ];
 @endphp
-<section class="section apps" id="apps">
-  <div class="sec-head">
-    <span class="kick">{{ __('website.main.apps.kick') }}</span>
-    <h2>{!! __('website.main.apps.title') !!}</h2>
-    <p>{{ __('website.main.apps.sub') }}</p>
-  </div>
-  <div class="apps-grid">
-    @foreach ($deliveryApps as $app)
-      @php $copy = __('website.main.apps.items.'.$app['key']); @endphp
-      <a class="app-card rv" href="{{ $app['url'] }}" target="_blank" rel="noopener noreferrer" style="--app: {{ $app['color'] }}">
-        <div class="app-card__top">
-          <div class="app-card__name">
-            <b>{{ $copy['name_ar'] }}</b>
-            <span>{{ $copy['name_en'] }}</span>
-          </div>
-          <span class="app-card__logo">
-            <img src="{{ asset($app['logo']) }}" alt="{{ $copy['name_en'] }}" width="44" height="44" loading="lazy">
-          </span>
-        </div>
-        <p class="app-card__desc">{{ $copy['desc'] }}</p>
-        <span class="app-card__cta">{{ __('website.main.apps.cta') }}</span>
-      </a>
-    @endforeach
-  </div>
-</section>
 
 <!-- NUTRITION SPEC -->
 <section class="section" id="nutrition">
@@ -1103,6 +1079,10 @@ body.menu-open{overflow:hidden}
 
 @include('website.partials.mobile-menu')
 
+</div>{{-- /.home-desktop --}}
+
+@include('website.partials.mobile-home')
+
 @endsection
 
 @push('scripts')
@@ -1123,10 +1103,12 @@ try{
 var I18N=window.NM_I18N||{};
 
 /* announcement rotation */
-var msgs=Array.prototype.slice.call(document.querySelectorAll('#announce span')),ai=0;
-setInterval(function(){
-  msgs[ai].classList.remove('on'); ai=(ai+1)%msgs.length; msgs[ai].classList.add('on');
-},3500);
+var msgs=Array.prototype.slice.call(document.querySelectorAll('.home-desktop #announce span')),ai=0;
+if(msgs.length){
+  setInterval(function(){
+    msgs[ai].classList.remove('on'); ai=(ai+1)%msgs.length; msgs[ai].classList.add('on');
+  },3500);
+}
 
 /* AI images */
 document.querySelectorAll('img.aiimg').forEach(function(img){
@@ -1183,6 +1165,7 @@ if('IntersectionObserver' in window){
 
 /* billing toggle */
 var toggle=document.getElementById('billToggle'),pill=document.getElementById('togglePill');
+if(toggle&&pill){
 var tbtns=Array.prototype.slice.call(toggle.querySelectorAll('button'));
 function placePill(btn){
   if(!btn)return;
@@ -1196,13 +1179,13 @@ function activeBtn(){
 function setBill(mode){
   tbtns.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-bill')===mode);});
   placePill(activeBtn());
-  document.querySelectorAll('[data-m]').forEach(function(el){
+  document.querySelectorAll('.home-desktop [data-m]').forEach(function(el){
     el.textContent=el.getAttribute(mode==='m'?'data-m':'data-q');
   });
-  document.querySelectorAll('[data-pm-m]').forEach(function(el){
+  document.querySelectorAll('.home-desktop [data-pm-m]').forEach(function(el){
     el.textContent=el.getAttribute(mode==='m'?'data-pm-m':'data-pm-q');
   });
-  document.querySelectorAll('s[data-was-m]').forEach(function(el){
+  document.querySelectorAll('.home-desktop s[data-was-m]').forEach(function(el){
     el.innerHTML=el.getAttribute(mode==='m'?'data-was-m':'data-was-q')+' '+(I18N.sar||'<span class="icon-saudi-riyal" aria-hidden="true"></span>');
   });
   var sp=document.getElementById('stickyPrice');
@@ -1211,9 +1194,10 @@ function setBill(mode){
 tbtns.forEach(function(b){b.addEventListener('click',function(){setBill(b.getAttribute('data-bill'));});});
 setTimeout(function(){placePill(activeBtn());},60);
 window.addEventListener('resize',function(){placePill(activeBtn());});
+}
 
 /* video placeholders */
-document.querySelectorAll('.vid').forEach(function(v){
+document.querySelectorAll('.home-desktop .vid').forEach(function(v){
   v.addEventListener('click',function(){
     var src=(v.getAttribute('data-video')||'').trim();
     if(!src){
@@ -1237,14 +1221,16 @@ document.querySelectorAll('.vid').forEach(function(v){
   });
 });
 
-/* sticky mobile CTA */
-var sticky=document.getElementById('stickyCta'),heroEl=document.querySelector('.hero');
+/* sticky mobile CTA (desktop tree only; mobile-home has its own bar) */
+var sticky=document.getElementById('stickyCta'),heroEl=document.querySelector('.home-desktop .hero');
+if(sticky&&heroEl){
 if('IntersectionObserver' in window){
   new IntersectionObserver(function(es){
     es.forEach(function(e){sticky.classList.toggle('show',!e.isIntersecting&&e.boundingClientRect.top<0);});
   },{threshold:0}).observe(heroEl);
 }else{
   window.addEventListener('scroll',function(){sticky.classList.toggle('show',window.scrollY>600);},{passive:true});
+}
 }
 
 /* FAQ */

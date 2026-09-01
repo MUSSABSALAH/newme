@@ -70,12 +70,6 @@
     $cells = array_filter([
         'weight_kg' => $measurement->weight_kg,
         'height_cm' => $measurement->height_cm,
-        'waist_cm' => $measurement->waist_cm,
-        'hip_cm' => $measurement->hip_cm,
-        'chest_cm' => $measurement->chest_cm,
-        'arm_cm' => $measurement->arm_cm,
-        'neck_cm' => $measurement->neck_cm,
-        'body_fat_percent' => $measurement->body_fat_percent,
     ], static fn (?float $value): bool => $value !== null);
   @endphp
 
@@ -144,15 +138,14 @@
     </div>
 
     <div class="frow">
-      @foreach (['height_cm', 'waist_cm', 'hip_cm', 'chest_cm', 'arm_cm', 'neck_cm', 'body_fat_percent'] as $field)
-        <div class="f">
-          <label for="{{ $field }}">{{ __('measurements.fields.'.$field) }} <i>{{ $unit($field) }}</i></label>
-          <input type="number" id="{{ $field }}" name="{{ $field }}" step="0.1" dir="ltr"
-                 min="{{ $measurementRanges[$field][0] }}" max="{{ $measurementRanges[$field][1] }}"
-                 value="{{ old($field, $field === 'height_cm' ? $latest?->height_cm : null) }}">
-          @error($field)<div class="err">{{ $message }}</div>@enderror
-        </div>
-      @endforeach
+      <div class="f">
+        <label for="height_cm">{{ __('measurements.fields.height_cm') }} <i>{{ $unit('height_cm') }}</i></label>
+        <input type="number" id="height_cm" name="height_cm" step="0.1" dir="ltr"
+               min="{{ $measurementRanges['height_cm'][0] }}" max="{{ $measurementRanges['height_cm'][1] }}"
+               value="{{ old('height_cm', $latest?->height_cm) }}"
+               class="{{ $errors->has('height_cm') ? 'is-invalid' : '' }}">
+        @error('height_cm')<div class="err">{{ $message }}</div>@enderror
+      </div>
     </div>
 
     <div class="f">

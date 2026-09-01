@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>نيو مي — نسخة الجوال</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F1EA;--cream-2:#FAF7F2;--white:#fff;
+  --navy:#1B3055;--navy-2:#14294A;
+  --orange:#E07B39;--orange-2:#EF9152;--peach:#FDEBDC;
+  --muted:#7B8794;--line:rgba(27,48,85,.10);
+  --pad:20px;--pill:999px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:#D9D3C8;font-family:"Cairo",system-ui,sans-serif;color:var(--navy);line-height:1.7}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:800;line-height:1.5}
+
+.stage{display:flex;justify-content:center;min-height:100vh}
+.device{width:100%;max-width:420px;background:var(--cream);min-height:100vh;position:relative;overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,.28)}
+@media(min-width:820px){.stage{padding:24px 0}.device{border-radius:32px;min-height:calc(100vh - 48px)}}
+
+/* ===== الهيدر + عدّاد الدفعة الحيّ ===== */
+.topwrap{position:sticky;top:0;z-index:60}
+header{background:rgba(245,241,234,.97);backdrop-filter:blur(12px);
+  padding:11px var(--pad);display:flex;align-items:center;gap:9px}
+.brand{display:flex;align-items:center;gap:8px;margin-inline-end:auto}
+.brand .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(#E07B39,#63B34A,#2E86C8,#E07B39);
+  display:grid;place-items:center;color:#fff;font-weight:900;font-size:12px}
+.brand .txt{font-weight:900;font-size:18px;line-height:1.1}
+.brand .txt small{display:block;font-size:10px;font-weight:500;color:var(--muted)}
+.rnd{width:38px;height:38px;border-radius:50%;background:var(--white);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:15px;box-shadow:0 2px 6px rgba(27,48,85,.05)}
+
+.live{background:var(--navy-2);color:#E9F0F8;padding:7px var(--pad) 8px}
+.live .r{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600}
+.live .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pl 2.4s infinite}
+@keyframes pl{0%,100%{box-shadow:0 0 0 0 rgba(224,123,57,.55)}50%{box-shadow:0 0 0 7px rgba(224,123,57,0)}}
+.live b{color:var(--orange);font-weight:800}
+.live .next{margin-inline-start:auto;color:#9FB5CD;font-weight:500}
+.live .next span{color:#fff;font-weight:800;font-variant-numeric:tabular-nums}
+.track{height:3px;background:rgba(255,255,255,.14);border-radius:3px;margin-top:7px;overflow:hidden}
+.track i{display:block;height:100%;width:0;border-radius:3px;
+  background:linear-gradient(90deg,var(--orange-2),var(--orange));transition:width 1.2s ease}
+
+/* ===== الهيرو ===== */
+.hero{padding:26px var(--pad) 24px;text-align:center}
+.hero h1{font-size:29px;font-weight:900;line-height:1.45}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p{font-size:14.5px;color:#5C6B7C;margin:14px 0 0}
+.btn{display:block;text-align:center;border-radius:var(--pill);padding:15px 18px;font-weight:800;font-size:15px}
+.btn-o{background:linear-gradient(180deg,var(--orange-2),var(--orange));color:#fff;box-shadow:0 10px 24px rgba(224,123,57,.3)}
+.btn-w{background:var(--white);border:1.5px solid var(--navy);color:var(--navy)}
+.hero .btn{margin-top:13px}
+.hero-img{aspect-ratio:16/10;overflow:hidden}
+.hero-img img{width:100%;height:100%;object-fit:cover;animation:kb 22s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}
+
+/* ===== شارات المميزات: شريط واحد ===== */
+.badges{background:var(--white);padding:14px 0;border-bottom:1px solid var(--line)}
+.badge{display:flex;align-items:center;gap:9px;background:var(--cream);border-radius:var(--pill);padding:8px 14px 8px 8px}
+.badge u{width:30px;height:30px;border-radius:50%;background:var(--peach);color:var(--orange);
+  display:grid;place-items:center;text-decoration:none;font-size:14px}
+.badge b{font-size:13px;font-weight:800;white-space:nowrap}
+
+/* ===== شرائط أفقية ===== */
+.rail{display:flex;gap:10px;overflow-x:auto;padding:0 var(--pad) 6px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.railwrap{position:relative}
+.railwrap::after{content:"";position:absolute;top:0;bottom:6px;inset-inline-end:0;width:38px;pointer-events:none;
+  background:linear-gradient(to left,transparent,var(--fade,var(--cream)) 78%)}
+.railwrap.on-white::after{--fade:var(--white)}
+.swipe{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--muted)}
+.rail>*{scroll-snap-align:start;flex:0 0 auto}
+.end{width:2px}
+
+/* ===== أقسام ===== */
+section{padding:30px var(--pad) 0}
+section.bleed{padding-inline:0}
+.bleed .head{padding-inline:var(--pad)}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.kicker{font-size:11.5px;font-weight:700;color:var(--orange);letter-spacing:.05em;margin-bottom:2px}
+.kicker::before{content:"— "}
+.head h2{font-size:22px;font-weight:900}
+.head h2 em{font-style:normal;color:var(--orange)}
+.head a{font-size:12.5px;font-weight:700;white-space:nowrap}
+
+/* ظهور متدرج */
+.rise{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.rise.in{opacity:1;transform:none}
+
+/* ===== كروت المنتجات ===== */
+.card{width:170px;background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(27,48,85,.06)}
+.card .ph{aspect-ratio:1;background:#EFE9DE;position:relative}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:10px;inset-inline-start:10px;background:var(--orange);color:#fff;font-size:10.5px;
+  font-weight:800;padding:3px 10px;border-radius:var(--pill)}
+.card .b{padding:12px 13px 14px}
+.card h3{font-size:14.5px;font-weight:800}
+.chips{display:flex;gap:5px;margin:8px 0 11px}
+.chip{font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:var(--pill);background:var(--peach);color:var(--orange)}
+.chip.n{background:rgba(27,48,85,.06);color:var(--navy)}
+.pr{display:flex;align-items:center;justify-content:space-between}
+.pr .p{font-weight:900;font-size:16px}
+.pr .p small{font-size:11px;font-weight:500;color:var(--muted)}
+.add{background:var(--navy);color:#fff;font-weight:700;font-size:12.5px;padding:7px 15px;border-radius:var(--pill);transition:.2s}
+.add.done{background:var(--orange)}
+
+/* ===== تطبيقات التوصيل ===== */
+.apps{margin:0 var(--pad);background:var(--white);border-radius:22px;padding:15px 0 14px;box-shadow:0 4px 16px rgba(27,48,85,.06)}
+.apps .t{display:flex;justify-content:space-between;align-items:center;padding:0 16px 12px;font-size:12px;color:var(--muted)}
+.apps .t b{color:var(--navy);font-size:14.5px;font-weight:800}
+.app{display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);
+  border-radius:var(--pill);padding:8px 14px;font-size:12.5px;font-weight:700}
+.app u{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;text-decoration:none;
+  color:#fff;font-size:11px;font-weight:800;background:var(--orange)}
+
+/* ===== القيم + الفيديو ===== */
+.label{background:var(--white);border-radius:22px;overflow:hidden;box-shadow:0 4px 16px rgba(27,48,85,.06)}
+.label .top{display:flex}
+.label .media{flex:0 0 42%;position:relative;background:#E4DCCE}
+.label .media img{width:100%;height:100%;object-fit:cover;min-height:160px}
+.play{position:absolute;inset:0;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  background:linear-gradient(180deg,rgba(20,41,74,.05),rgba(20,41,74,.55));color:#fff}
+.play .ring{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--orange);display:grid;place-items:center;
+  font-size:14px;padding-inline-start:3px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.play small{font-size:10.5px;font-weight:700}
+.label .intro{padding:15px}
+.label .intro h3{font-size:16.5px;font-weight:800}
+.label .intro p{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.vals{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.v{padding:11px 15px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line)}
+.v:nth-child(odd){border-inline-end:1px solid var(--line)}
+.v:nth-last-child(-n+2){border-bottom:0}
+.v span{font-size:12.5px;color:var(--muted)}
+.v b{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+.v.hi b{color:var(--orange)}
+
+/* ===== محدد الهدف + الخطة ===== */
+.goalq{font-size:14.5px;font-weight:700;color:var(--muted);margin-bottom:10px}
+.seg{display:flex;background:var(--white);border-radius:var(--pill);padding:5px;margin-bottom:16px;
+  box-shadow:0 3px 12px rgba(27,48,85,.06)}
+.seg button{flex:1;padding:11px 4px;border-radius:var(--pill);font-weight:800;font-size:12.5px;color:var(--muted);transition:.25s}
+.seg button.on{background:var(--navy);color:#fff}
+.plan{background:var(--white);border-radius:24px;padding:22px;box-shadow:0 8px 26px rgba(27,48,85,.08);transition:opacity .25s}
+.plan.sw{opacity:.25}
+.plan .code{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.05em}
+.plan h3{font-size:21px;font-weight:900}
+.plan .goal{font-size:13px;color:var(--muted)}
+.price{display:flex;align-items:baseline;gap:9px;margin:14px 0 4px}
+.price b{font-size:36px;font-weight:900;line-height:1;color:var(--orange);font-variant-numeric:tabular-nums}
+.price i{font-style:normal;font-size:13px;color:var(--muted)}
+.price del{font-size:13.5px;color:var(--muted)}
+.save{display:inline-block;background:var(--peach);color:var(--orange);font-size:11.5px;font-weight:800;
+  padding:3px 11px;border-radius:var(--pill)}
+.feat-list{list-style:none;margin:16px 0 0;padding:0;font-size:14px}
+.feat-list li{padding:4px 0;display:flex;gap:9px}
+.feat-list li::before{content:"✓";color:var(--orange);font-weight:900}
+.more{font-size:12.5px;font-weight:800;border-bottom:1.5px dashed var(--orange);padding-bottom:2px;margin-top:14px;display:inline-block}
+.plan .btn{margin-top:18px}
+.note{text-align:center;font-size:12px;color:var(--muted);margin-top:14px}
+
+/* ===== التبويبات وكرت الكل والنقاط ===== */
+.tabs{display:flex;gap:8px;padding:0 var(--pad) 14px}
+.tabs button{border:1px solid var(--line);background:var(--white);border-radius:var(--pill);
+  padding:7px 16px;font-size:12.5px;font-weight:700;color:var(--muted);transition:.2s}
+.tabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.allcard{width:130px;background:var(--peach);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;text-align:center;padding:16px 12px;box-shadow:none}
+.allcard .ico{width:40px;height:40px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:16px}
+.allcard b{font-size:13.5px;font-weight:800;color:var(--navy)}
+.allcard small{font-size:11px;color:var(--orange);font-weight:700}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--line);transition:.25s}
+.dots i.on{background:var(--orange);width:18px;border-radius:var(--pill)}
+
+/* ===== كرت التقييم ===== */
+.quote{width:270px;background:var(--white);border-radius:22px;padding:20px;box-shadow:0 4px 16px rgba(27,48,85,.06)}
+.quote .s{color:var(--orange);font-size:13px;letter-spacing:1px}
+.quote p{font-size:15px;font-weight:800;margin:8px 0 0;line-height:1.6}
+.quote span{font-size:12px;color:var(--muted);display:block;margin-top:8px}
+
+/* ===== القصة ===== */
+.story{background:var(--navy-2);color:#fff;border-radius:24px;padding:24px;position:relative;overflow:hidden}
+.story::before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;bottom:-120px;inset-inline-end:-80px;
+  background:radial-gradient(circle,rgba(224,123,57,.28),transparent 66%)}
+.story .kicker{color:var(--orange)}
+.story h2{font-size:21px;font-weight:900;color:#fff;position:relative}
+.story h2 em{font-style:normal;color:var(--orange)}
+.story p{font-size:14px;color:#BFCEDF;margin:10px 0 0;position:relative}
+.mini{display:flex;gap:9px;margin-top:18px;position:relative}
+.mini div{flex:1;text-align:center;background:rgba(255,255,255,.08);border-radius:14px;padding:11px 6px}
+.mini b{display:block;font-size:16px;font-weight:900;color:var(--orange)}
+.mini span{font-size:10.5px;color:#A9BCD1}
+.story .btn{margin-top:18px;position:relative;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.3);color:#fff}
+
+/* ===== الختام ===== */
+.final{margin:30px var(--pad) 0;border-radius:24px;overflow:hidden;position:relative;color:#fff;text-align:center}
+.final img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.final .in{position:relative;background:linear-gradient(180deg,rgba(20,41,74,.55),rgba(20,41,74,.92));padding:28px 20px}
+.final h2{font-size:23px;font-weight:900;color:#fff}
+.final h2 em{font-style:normal;color:var(--orange)}
+.final p{font-size:13.5px;color:#C6D4E4;margin:9px 0 18px}
+footer{background:var(--navy-2);color:#93A9C0;margin-top:30px;padding:26px var(--pad) 112px;font-size:12.5px}
+footer .fl{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+footer .fl a,footer .fl button{background:rgba(255,255,255,.08);padding:8px 13px;border-radius:var(--pill);
+  color:#E2EAF3;font-size:12px;font-weight:700}
+footer .cr{font-size:11px;color:#6E8299;margin-top:14px;line-height:1.9}
+
+/* ===== الشريط الثابت ===== */
+.sticky{position:fixed;bottom:0;opacity:0;pointer-events:none;transform:translateX(50%) translateY(110%);inset-inline-start:50%;transform:translateX(50%);width:100%;max-width:420px;z-index:70;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-top:1px solid var(--line);
+  padding:11px var(--pad) calc(11px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;transition:opacity .28s ease,transform .32s cubic-bezier(.3,.8,.3,1)}
+.sticky.show{opacity:1;pointer-events:auto;transform:translateX(50%) translateY(0)}
+.sticky.hide{opacity:0!important;pointer-events:none!important}
+.sticky .i{flex:1;min-width:0}
+.sticky .i b{display:block;font-size:13.5px;font-weight:800}
+.sticky .i span{font-size:11px;color:var(--muted)}
+.sticky a{background:linear-gradient(180deg,var(--orange-2),var(--orange));color:#fff;font-weight:800;font-size:13.5px;
+  padding:12px 20px;border-radius:var(--pill);white-space:nowrap;box-shadow:0 6px 16px rgba(224,123,57,.28)}
+
+/* ===== القائمة والنوافذ ===== */
+.scrim{position:fixed;inset:0;background:rgba(20,41,74,.55);z-index:90;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;inset-inline-end:0;height:100%;width:80%;max-width:320px;background:var(--cream-2);z-index:100;
+  transform:translateX(-105%);transition:transform .3s cubic-bezier(.3,.8,.3,1);padding:22px 20px;overflow-y:auto}
+.drawer.on{transform:translateX(0)}
+.drawer h4{font-size:11.5px;color:var(--orange);letter-spacing:.08em;margin:22px 0 4px;font-weight:800}
+.drawer nav a{display:block;padding:12px 0;border-bottom:1px solid var(--line);font-weight:800;font-size:15px}
+.drawer .x{position:absolute;top:18px;inset-inline-start:18px;font-size:19px}
+.sheet{position:fixed;bottom:0;inset-inline-start:50%;transform:translate(50%,105%);width:100%;max-width:420px;z-index:100;
+  background:var(--cream);border-radius:26px 26px 0 0;padding:20px var(--pad) calc(26px + env(safe-area-inset-bottom));
+  transition:transform .32s cubic-bezier(.3,.8,.3,1);max-height:84vh;overflow-y:auto}
+.sheet.on{transform:translate(50%,0)}
+.grab{width:44px;height:4px;border-radius:4px;background:var(--line);margin:0 auto 16px}
+.sheet h3{font-size:19px;font-weight:900}
+.sheet .code{font-size:11.5px;color:var(--muted);font-weight:700}
+.vid{aspect-ratio:16/9;border-radius:18px;overflow:hidden;margin:14px 0;background:#E4DCCE}
+.vid img{width:100%;height:100%;object-fit:cover}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;padding:14px 0;font-weight:800;font-size:14.5px;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--orange);font-size:19px}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:0 0 14px;font-size:13.5px;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rise{opacity:1;transform:none}}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="stage"><div class="device">
+
+  <div class="topwrap">
+    <header>
+      <div class="brand"><span class="mark">nm</span><span class="txt">new me<small>نيو مي</small></span></div>
+      <a class="rnd" href="https://newme.learningova.com/cart" aria-label="السلة">🛒</a>
+      <button class="rnd" id="menuBtn" aria-label="القائمة">☰</button>
+    </header>
+    <!-- عدّاد الدفعة الحيّ -->
+    <div class="live">
+      <div class="r">
+        <span class="dot"></span> دفعة <b>NM-26</b> · خُبزت 07:00
+        <span class="next">الدفعة القادمة بعد <span id="cd">—</span></span>
+      </div>
+      <div class="track"><i id="prog"></i></div>
+    </div>
+  </div>
+
+  <!-- الهيرو -->
+  <div class="hero">
+    <h1>غذاؤك اليومي،<br><em>بمعايير لا تقبل المساومة.</em></h1>
+    <p>وجبات صحية متكاملة من دقيق نيو مي الفاخر — ترمس أسترالي وكتان هندي، بسعرات موثّقة، تصلك طازجة خلال 48 ساعة.</p>
+    <a class="btn btn-o" href="#plans">ابدأ اشتراكك — وفّر 20%</a>
+    <a class="btn btn-w" href="#shop">تسوق مرة واحدة</a>
+  </div>
+
+  <div class="hero-img"><img src="https://newme.learningova.com/assets/images/p81_1000x1150.jpg" alt="خبز الترمس وبذور الكتان"></div>
+
+  <!-- شارات المميزات: شريط واحد -->
+  <div class="badges">
+    <div class="rail">
+      <div class="badge"><u>🏋</u><b>40% بروتين</b></div>
+      <div class="badge"><u>💧</u><b>أوميغا-3 نقي</b></div>
+      <div class="badge"><u>🔥</u><b>سعرات موثّقة</b></div>
+      <div class="badge"><u>⏱</u><b>طازج خلال 48 ساعة</b></div>
+      <div class="end"></div>
+    </div>
+  </div>
+
+  <!-- المنتجات -->
+  <section id="shop" class="bleed rise">
+    <div class="head">
+      <div><div class="kicker">المتجر · دفعة اليوم</div><h2>اطلب <em>الآن</em></h2></div>
+      <span class="swipe">اسحب ‹‹</span>
+    </div>
+    <div class="tabs">
+      <button class="on" data-cat="all">الكل</button>
+      <button data-cat="bread">خبز</button>
+      <button data-cat="crumbs">بقسماط</button>
+    </div>
+    <div class="railwrap"><div class="rail" id="prodRail">
+      <article class="card" data-cat="bread">
+        <div class="ph"><span class="tag">الأكثر مبيعاً</span><img src="https://newme.learningova.com/storage/store/products/p142_560x580.jpg" alt="خبز متعدد البذور"></div>
+        <div class="b"><h3>خبز متعدد البذور</h3>
+          <div class="chips"><span class="chip">12.1g بروتين</span><span class="chip n">119 kcal</span></div>
+          <div class="pr"><div class="p">23 <small>ر.س</small></div><button class="add">أضف</button></div></div>
+      </article>
+      <article class="card" data-cat="crumbs">
+        <div class="ph"><img src="https://newme.learningova.com/storage/store/products/p121_560x580.jpg" alt="بقسماط سادة"></div>
+        <div class="b"><h3>بقسماط سادة</h3>
+          <div class="chips"><span class="chip">3g بروتين</span><span class="chip n">105 kcal</span></div>
+          <div class="pr"><div class="p">15 <small>ر.س</small></div><button class="add">أضف</button></div></div>
+      </article>
+      <article class="card" data-cat="crumbs">
+        <div class="ph"><img src="https://newme.learningova.com/storage/store/products/p122_560x580.jpg" alt="بقسماط بالأعشاب"></div>
+        <div class="b"><h3>بقسماط بالأعشاب</h3>
+          <div class="chips"><span class="chip">1.5g بروتين</span><span class="chip n">45 kcal</span></div>
+          <div class="pr"><div class="p">15 <small>ر.س</small></div><button class="add">أضف</button></div></div>
+      </article>
+      <article class="card" data-cat="crumbs">
+        <div class="ph"><img src="https://newme.learningova.com/storage/store/products/p123_560x580.jpg" alt="بقسماط بالثوم"></div>
+        <div class="b"><h3>بقسماط بالثوم</h3>
+          <div class="chips"><span class="chip">1.5g بروتين</span><span class="chip n">48 kcal</span></div>
+          <div class="pr"><div class="p">15 <small>ر.س</small></div><button class="add">أضف</button></div></div>
+      </article>
+      <a class="card allcard" href="https://newme.learningova.com/store">
+        <span class="ico">←</span>
+        <b>شاهد كل المنتجات</b>
+        <small>+24 منتج في المتجر</small>
+      </a>
+      <div class="end"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- تطبيقات التوصيل -->
+  <section class="bleed rise">
+    <div class="apps">
+      <div class="t"><b>اطلب من تطبيقك المفضل</b><span class="swipe">اسحب ‹‹</span></div>
+      <div class="railwrap on-white"><div class="rail" style="padding-inline:16px">
+        <a class="app" href="https://jahez.go.link/acZgN"><u>ج</u> جاهز</a>
+        <a class="app" href="https://hungerstation.com/sa-ar"><u>هـ</u> هنقرستيشن</a>
+        <a class="app" href="https://thechefzco.app.link/XMWn5xDtf5b"><u>ش</u> ذا شيفز</a>
+        <a class="app" href="https://url.mykeeta.com/i80cL48z"><u>ك</u> كيتا</a>
+        <a class="app" href="https://ninja.go.link/restaurants"><u>ن</u> نينجا</a>
+        <div class="end"></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- القيم الغذائية + الفيديو -->
+  <section class="rise">
+    <div class="head"><div><div class="kicker">القيم الغذائية · لكل 100 جرام</div><h2>أرقام <em>مخبرية</em>، لا وعود</h2></div></div>
+    <div class="label">
+      <div class="top">
+        <div class="media">
+          <img src="https://newme.learningova.com/assets/images/p13_1100x900.jpg" alt="داخل مطبخ نيو مي">
+          <button class="play" id="vidBtn"><span class="ring">▶</span><small>جولة 60 ثانية</small></button>
+        </div>
+        <div class="intro">
+          <h3>خبز الترمس بالبروتين</h3>
+          <p>محسوبة من أخصائي تغذية مرخّص ومطبوعة على العلبة مع رقم الدفعة.</p>
+        </div>
+      </div>
+      <div class="vals" id="vals">
+        <div class="v hi"><span>بروتين</span><b data-to="40" data-suf=" g">0 g</b></div>
+        <div class="v"><span>طاقة</span><b data-to="233" data-suf=" kcal">0 kcal</b></div>
+        <div class="v hi"><span>ألياف</span><b data-to="12" data-suf=" g">0 g</b></div>
+        <div class="v"><span>كربوهيدرات</span><b data-to="15" data-suf=" g">0 g</b></div>
+        <div class="v hi"><span>أوميغا-3</span><b data-to="3.8" data-dec="1" data-suf=" g">0 g</b></div>
+        <div class="v"><span>سكر مضاف</span><b>0 g</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- محدد الهدف + الخطة -->
+  <section id="plans" class="rise">
+    <div class="head"><div><div class="kicker">الاشتراكات · التوصيل واستشارة مجانية مشمولة</div><h2>وش <em>هدفك</em>؟</h2></div></div>
+    <div class="goalq">اختر هدفك ونختار لك الخطة المناسبة.</div>
+    <div class="seg">
+      <button data-p="starter">خسارة وزن</button>
+      <button data-p="balance" class="on">توازن</button>
+      <button data-p="pro">بناء عضل</button>
+    </div>
+    <article class="plan" id="planCard">
+      <div class="code" id="pCode">NM-02 · BALANCED</div>
+      <h3 id="pName">خطة التوازن</h3>
+      <div class="goal" id="pGoal">أكل صحي متوازن يومياً</div>
+      <div class="price"><b id="pPrice">549</b><i>ر.س / شهرياً</i><del id="pOld">610</del></div>
+      <span class="save" id="pSave">1,150 سعرة يومياً · ≈ 9 ر.س للوجبة</span>
+      <ul class="feat-list" id="pFeat"></ul>
+      <button class="more" id="pMore">بقية التفاصيل ↓</button>
+      <a class="btn btn-o" id="pCta" href="https://newme.learningova.com/subscribe#plan=balance">اشترك الآن</a>
+    </article>
+    <div class="note">ضمان الطزاجة · إلغاء أو إيقاف في أي وقت</div>
+  </section>
+
+  <!-- التقييمات -->
+  <section class="bleed rise">
+    <div class="head"><div><div class="kicker">تقييمات موثّقة · 4.9 من 5</div><h2>+2,300 <em>تقييم</em></h2></div>
+      <span class="swipe">اسحب ‹‹</span></div>
+    <div class="railwrap"><div class="rail" id="revRail">
+      <article class="quote">
+        <div class="s">★★★★★</div>
+        <p>“أعرف بالضبط وش آكل — السعرات والبروتين على كل منتج. أول علامة سعودية بهذي الشفافية.”</p>
+        <span>فهد د. · الرياض · ✓ شراء موثّق</span>
+      </article>
+      <article class="quote">
+        <div class="s">★★★★★</div>
+        <p>“طاقة حقيقية لفطوري — شبع أطول، ويوصل بوقته دائماً.”</p>
+        <span>نورة أ. · الرياض · ✓ شراء موثّق</span>
+      </article>
+      <article class="quote">
+        <div class="s">★★★★★</div>
+        <p>“خطة بروتين+ مع متابعة أخصائي ضبطت الماكروز عندي بالكامل.”</p>
+        <span>سارة ق. · الخبر · ✓ شراء موثّق</span>
+      </article>
+      <div class="end"></div>
+    </div></div>
+    <div class="dots" id="revDots"><i class="on"></i><i></i><i></i></div>
+  </section>
+
+  <!-- القصة -->
+  <section class="rise">
+    <div class="story">
+      <div class="kicker">القصة والمنظومة التشغيلية</div>
+      <h2>بدأت من مطبخ بيت في الرياض — <em>واليوم في كل بيت</em></h2>
+      <p>أم واجهت تشخيص ابنتها بالسكري في سوق بلا بدائل موثوقة، فصنعت الحل بنفسها.</p>
+      <div class="mini">
+        <div><b>22+</b><span>سنة خبرة</span></div>
+        <div><b>5</b><span>معايير تشغيل</span></div>
+        <div><b>100%</b><span>شفافية مخبرية</span></div>
+      </div>
+      <a class="btn" href="https://newme.learningova.com/main#about">اقرأ القصة كاملة ←</a>
+    </div>
+  </section>
+
+  <!-- الختام -->
+  <div class="final">
+    <img src="https://newme.learningova.com/assets/images/p77_1600x800.jpg" alt="">
+    <div class="in">
+      <h2>جدّد طاقتك. <em>جدّد حياتك.</em></h2>
+      <p>أول دفعة بضمان استرجاع كامل — والتوصيل الأول مجاني.</p>
+      <a class="btn btn-o" href="https://newme.learningova.com/subscribe">ابدأ اشتراكك الآن ←</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="brand" style="color:#fff"><span class="mark">nm</span><span class="txt">new me<small style="color:#93A9C0">نيو مي</small></span></div>
+    <div style="margin-top:8px">وجبات ومنتجات صحية بقيم غذائية موثّقة.</div>
+    <div class="fl">
+      <a href="https://newme.learningova.com/store">المتجر</a>
+      <a href="https://newme.learningova.com/subscribe">الاشتراكات</a>
+      <a href="https://wa.me/966533360317">واتساب</a>
+      <button id="faqBtn">الأسئلة الشائعة</button>
+    </div>
+    <div class="cr">© 2026 نيو مي · الرقم الضريبي 312782087600003<br>مدى · Apple Pay · Visa</div>
+  </footer>
+
+  <div class="sticky" id="bar">
+    <div class="i"><b id="barName">خطة التوازن — 549 ر.س</b><span id="barSub">1,150 سعرة يومياً · إلغاء في أي وقت</span></div>
+    <a href="https://newme.learningova.com/subscribe">اشترك</a>
+  </div>
+</div></div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <button class="x" id="xDrawer" aria-label="إغلاق">✕</button>
+  <div class="kicker">نيو مي · القائمة</div>
+  <nav>
+    <h4>التسوق</h4>
+    <a href="https://newme.learningova.com/store">المتجر</a>
+    <a href="https://newme.learningova.com/subscribe">الاشتراكات</a>
+    <a href="https://newme.learningova.com/menu">المنيو اليومي</a>
+    <a href="https://newme.learningova.com/consult">الاستشارات</a>
+    <h4>اقرأ أكثر</h4>
+    <a href="https://newme.learningova.com/blog#articles">المقالات الصحية</a>
+    <a href="https://newme.learningova.com/blog#recipes">الوصفات</a>
+    <a href="https://newme.learningova.com/main#about">عن نيو مي</a>
+    <h4>الحساب</h4>
+    <a href="https://newme.learningova.com/login">تسجيل الدخول</a>
+    <a href="https://newme.learningova.com/locale/en">EN · English</a>
+  </nav>
+</aside>
+
+<div class="sheet" id="sheet">
+  <div class="grab"></div>
+  <div class="code" id="sCode"></div>
+  <h3 id="sTitle"></h3>
+  <ul class="feat-list" id="sList"></ul>
+  <a class="btn btn-o" id="sCta" style="margin-top:18px">اشترك الآن</a>
+</div>
+
+<div class="sheet" id="vsheet">
+  <div class="grab"></div>
+  <h3>دقيقة داخل مطبخ نيو مي · دفعة NM-26</h3>
+  <div class="vid"><img src="https://newme.learningova.com/assets/images/p91_1600x900.jpg" alt="فيلم الدفعة"></div>
+  <p style="font-size:13px;color:var(--muted);margin:0">من طحن الترمس فجراً إلى تجهيز الوجبة وإغلاق العلبة — ترجمة عربية، بدون موسيقى عالية.</p>
+</div>
+
+<div class="sheet" id="fsheet">
+  <div class="grab"></div>
+  <h3>الأسئلة الشائعة</h3>
+  <div class="faq" style="margin-top:10px">
+    <details open><summary>التوصيل يشمل مدينتي؟</summary><p>أسطولنا يوصل داخل الرياض مباشرة، وبقية المملكة عبر شركائنا: جاهز، هنقرستيشن، كيتا، ذا شيفز، ونينجا.</p></details>
+    <details><summary>كيف تُحسب السعرات؟</summary><p>فريق تغذية مرخّص يعاير كل وصفة، والقيم تظهر على كل منتج وعلى العلبة مع رقم الدفعة.</p></details>
+    <details><summary>أقدر ألغي أو أغيّر خطتي؟</summary><p>نعم — إلغاء أو إيقاف أو ترقية في أي وقت من حسابك بضغطة واحدة، بدون رسوم.</p></details>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const scrim=$('#scrim'),drawer=$('#drawer'),sheet=$('#sheet'),vsheet=$('#vsheet'),fsheet=$('#fsheet'),bar=$('#bar');
+const open=el=>{el.classList.add('on');scrim.classList.add('on');bar.classList.add('hide')};
+const closeAll=()=>{[drawer,sheet,vsheet,fsheet].forEach(e=>e.classList.remove('on'));scrim.classList.remove('on');bar.classList.remove('hide')};
+$('#menuBtn').onclick=()=>open(drawer); $('#xDrawer').onclick=closeAll; scrim.onclick=closeAll;
+$('#vidBtn').onclick=()=>open(vsheet); $('#faqBtn').onclick=()=>open(fsheet);
+addEventListener('keydown',e=>e.key==='Escape'&&closeAll());
+
+/* 1) عدّاد الدفعة الحيّ */
+function tick(){
+  const now=new Date();
+  const bake=new Date(now); bake.setHours(7,0,0,0);
+  if(now<bake) bake.setDate(bake.getDate()-1);
+  const next=new Date(bake); next.setDate(next.getDate()+1);
+  const left=next-now, h=Math.floor(left/36e5), m=Math.floor(left%36e5/6e4), s=Math.floor(left%6e4/1e3);
+  $('#cd').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const pct=Math.min(100,((now-bake)/(48*36e5))*100);
+  $('#prog').style.width=pct.toFixed(1)+'%';
+}
+tick(); setInterval(tick,1000);
+
+/* 2) الأرقام تعدّ تصاعدياً + ظهور متدرج */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  e.target.classList.add('in');
+  if(e.target.id==='vals') e.target.querySelectorAll('b[data-to]').forEach(count);
+  io.unobserve(e.target);
+}),{threshold:.25});
+$$('.rise').forEach(el=>io.observe(el)); io.observe($('#vals'));
+function count(el){
+  const to=+el.dataset.to, dec=+(el.dataset.dec||0), suf=el.dataset.suf||'', dur=1100, t0=performance.now();
+  (function f(t){
+    const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3);
+    el.textContent=(to*e).toFixed(dec)+suf;
+    if(k<1)requestAnimationFrame(f);
+  })(t0);
+}
+
+/* 3) محدد الهدف → الخطة */
+const P={
+ starter:{code:'NM-01 · BASIC',name:'خطة البداية',goal:'بداية صحية وخسارة وزن',price:'299',old:'332',
+  save:'630 سعرة يومياً · ≈ 10 ر.س للوجبة',
+  top:['وجبة متوازنة يومياً بسعرات محسوبة','منيو أسبوعي متجدد','توصيل مجاني'],
+  all:['استشارة تغذية شهرية','تخصيص الماكروز حسب هدفك','تبديل الوجبات قبل 24 ساعة','إيقاف أو إلغاء في أي وقت'],
+  href:'https://newme.learningova.com/subscribe#plan=loss'},
+ balance:{code:'NM-02 · BALANCED',name:'خطة التوازن',goal:'أكل صحي متوازن يومياً',price:'549',old:'610',
+  save:'1,150 سعرة يومياً · ≈ 9 ر.س للوجبة',
+  top:['وجبتان + سناك يومياً','تخصيص السعرات والماكروز','توصيل مجاني بأولوية'],
+  all:['استشارة تغذية شهرية مجانية','تبديل الوجبات في أي وقت','منيو أسبوعي متجدد'],
+  href:'https://newme.learningova.com/subscribe#plan=balance'},
+ pro:{code:'NM-03 · PRO',name:'خطة بروتين+',goal:'بناء عضل والرياضيين',price:'749',old:'832',
+  save:'1,850 سعرة يومياً · ≈ 8 ر.س للوجبة',
+  top:['ثلاث وجبات + سناك عالي البروتين','متابعة أسبوعية مع أخصائي','أولوية قصوى في التوصيل'],
+  all:['تتبع دقيق للماكروز (140g+ بروتين)','خصم 10% على المتجر','تبديل الوجبات في أي وقت'],
+  href:'https://newme.learningova.com/subscribe#plan=muscle'}
+};
+let cur='balance';
+function paint(k){
+  const p=P[k];cur=k;
+  $('#pCode').textContent=p.code;$('#pName').textContent=p.name;$('#pGoal').textContent=p.goal;
+  $('#pPrice').textContent=p.price;$('#pOld').textContent=p.old;$('#pSave').textContent=p.save;
+  $('#pFeat').innerHTML=p.top.map(x=>`<li>${x}</li>`).join('');
+  $('#pCta').href=p.href;
+  $('#barName').textContent=`${p.name} — ${p.price} ر.س`;
+  $('#barSub').textContent=p.save.split('·')[0]+'· إلغاء في أي وقت';
+}
+$$('.seg button').forEach(b=>b.onclick=()=>{
+  $$('.seg button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  const card=$('#planCard'); card.classList.add('sw');
+  setTimeout(()=>{paint(b.dataset.p);card.classList.remove('sw')},180);
+});
+$('#pMore').onclick=()=>{
+  const p=P[cur];
+  $('#sCode').textContent=p.code;$('#sTitle').textContent=p.name+' — التفاصيل الكاملة';
+  $('#sList').innerHTML=[...p.top,...p.all].map(x=>`<li>${x}</li>`).join('');
+  $('#sCta').href=p.href;open(sheet);
+};
+paint('balance');
+
+/* الشريط السفلي يظهر بعد تجاوز أزرار الهيرو */
+const heroBtns=document.querySelector('.hero .btn-w');
+new IntersectionObserver(([e])=>{
+  bar.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top<0);
+},{threshold:0}).observe(heroBtns);
+
+/* تبويبات المنتجات */
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  const c=b.dataset.cat;
+  document.querySelectorAll('#prodRail .card[data-cat]').forEach(card=>{
+    card.style.display=(c==='all'||card.dataset.cat===c)?'':'none';
+  });
+  document.querySelector('#prodRail').scrollTo({left:0,behavior:'smooth'});
+});
+
+/* نقاط التقييمات */
+const rev=document.querySelector('#revRail'),dots=document.querySelectorAll('#revDots i');
+rev.addEventListener('scroll',()=>{
+  const i=Math.round(Math.abs(rev.scrollLeft)/281);
+  dots.forEach((d,n)=>d.classList.toggle('on',n===Math.min(i,dots.length-1)));
+},{passive:true});
+
+/* زر أضف */
+$$('.add').forEach(b=>b.onclick=()=>{
+  b.textContent='✓ أُضيف'; b.classList.add('done');
+  if(navigator.vibrate)navigator.vibrate(12);
+  setTimeout(()=>{b.textContent='أضف';b.classList.remove('done')},1600);
+});
+</script>
+</body>
+</html>

@@ -16,6 +16,9 @@
 @stack('styles')
 </head>
 <body class="@yield('body_class')">
+@if (trim($__env->yieldContent('hide_mobile_chrome')) === '')
+  @include('website.partials.mobile-chrome')
+@endif
 @yield('content')
 <script src="{{ asset('assets/js/website.js') }}" defer></script>
 @stack('scripts')

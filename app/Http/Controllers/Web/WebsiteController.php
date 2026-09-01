@@ -400,7 +400,7 @@ class WebsiteController extends Controller
      *
      * @return list<array<string, mixed>>
      */
-    private function websiteShopPreview(int $limit = 4): array
+    private function websiteShopPreview(int $limit = 6): array
     {
         $flagIcons = [
             'bestseller' => '#i-flame',
@@ -420,10 +420,13 @@ class WebsiteController extends Controller
             $protein = $this->trimDecimal($product->protein_g);
             $kcal = (int) $product->calories;
             $flag = $product->flag?->value;
+            $category = $product->category;
+            $parent = $category->parent;
+            $catSlug = $parent !== null ? $parent->slug : $category->slug;
 
             $description = (string) $product->getTranslation('description', app()->getLocale(), false);
             if ($description === '') {
-                $description = $product->category->label();
+                $description = $category->label();
             }
 
             return [
@@ -434,6 +437,8 @@ class WebsiteController extends Controller
                 'flag' => $product->flag?->label(),
                 'flag_icon' => $flagIcons[$flag] ?? null,
                 'flag_style' => $flag === 'sale' ? 'color:var(--green)' : '',
+                'cat' => $catSlug,
+                'cat_label' => $parent !== null ? $parent->label() : $category->label(),
                 'protein' => $protein !== ''
                     ? __('website.main.shop.protein', ['value' => $protein])
                     : null,
