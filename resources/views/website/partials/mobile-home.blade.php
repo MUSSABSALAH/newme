@@ -7,10 +7,10 @@
   $mPlans = __('website.main.subs.plans');
   $mFaqs = __('website.main.faq.items');
   $deliveryApps = $deliveryApps ?? [
-      ['key' => 'jahez', 'url' => 'https://jahez.link/0xIec6fzk0b', 'logo' => 'assets/images/apps/jahez.svg', 'letter' => 'ج'],
-      ['key' => 'hungerstation', 'url' => 'https://hungerstation.go.link/?c=SA&s=c&v=95478&so=mls&adj_t=1sdhhuza_1spi9ypp&adj_og_title=New+Me&adj_og_image=https://images.deliveryhero.io/image/hungerstation/restaurant/logo/3137fcf35d12049ae676a5ae70e868e0.jpg', 'logo' => 'assets/images/apps/hungerstation.png', 'letter' => 'هـ'],
-      ['key' => 'chefz', 'url' => 'https://thechefzco.app.link/ImyQFntM9Zb', 'logo' => 'assets/images/apps/chefz.svg', 'letter' => 'ش'],
-      ['key' => 'keeta', 'url' => 'https://url.mykeeta.com/taLCveLz', 'logo' => 'assets/images/apps/keeta.png', 'letter' => 'ك'],
+      ['key' => 'jahez', 'url' => 'https://jahez.go.link/aRQ2e', 'logo' => 'assets/images/apps/jahez.svg', 'letter' => 'ج'],
+      ['key' => 'hungerstation', 'url' => 'https://hungerstation.go.link/?c=SA&s=c&v=95478&so=mls&adj_t=1sdhhuza_1spi9ypp&adj_og_title=%D9%86%D9%8A%D9%88+%D9%85%D9%8A&adj_og_image=https://images.deliveryhero.io/image/hungerstation/restaurant/logo_ar/3137fcf35d12049ae676a5ae70e868e0.jpg', 'logo' => 'assets/images/apps/hungerstation.png', 'letter' => 'هـ'],
+      ['key' => 'chefz', 'url' => 'https://thechefzco.app.link/r2NV4MwR45b', 'logo' => 'assets/images/apps/chefz.svg', 'letter' => 'ش'],
+      ['key' => 'keeta', 'url' => 'https://url.mykeeta.com/qRgdI46z', 'logo' => 'assets/images/apps/keeta.png', 'letter' => 'ك'],
       ['key' => 'ninja', 'url' => 'https://ninja.go.link/restaurants?branchId=49004', 'logo' => 'assets/images/apps/ninja.png', 'letter' => 'ن'],
   ];
   $mCats = collect($shopProducts)

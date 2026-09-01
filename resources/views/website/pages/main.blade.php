@@ -660,25 +660,25 @@ body.menu-open{overflow:hidden}
   $deliveryApps = [
       [
           'key' => 'jahez',
-          'url' => 'https://jahez.link/0xIec6fzk0b',
+          'url' => 'https://jahez.go.link/aRQ2e',
           'color' => '#E31C23',
           'logo' => 'assets/images/apps/jahez.svg',
       ],
       [
           'key' => 'hungerstation',
-          'url' => 'https://hungerstation.go.link/?c=SA&s=c&v=95478&so=mls&adj_t=1sdhhuza_1spi9ypp&adj_og_title=New+Me&adj_og_image=https://images.deliveryhero.io/image/hungerstation/restaurant/logo/3137fcf35d12049ae676a5ae70e868e0.jpg',
+          'url' => 'https://hungerstation.go.link/?c=SA&s=c&v=95478&so=mls&adj_t=1sdhhuza_1spi9ypp&adj_og_title=%D9%86%D9%8A%D9%88+%D9%85%D9%8A&adj_og_image=https://images.deliveryhero.io/image/hungerstation/restaurant/logo_ar/3137fcf35d12049ae676a5ae70e868e0.jpg',
           'color' => '#3D2314',
           'logo' => 'assets/images/apps/hungerstation.png',
       ],
       [
           'key' => 'chefz',
-          'url' => 'https://thechefzco.app.link/ImyQFntM9Zb',
+          'url' => 'https://thechefzco.app.link/r2NV4MwR45b',
           'color' => '#522A48',
           'logo' => 'assets/images/apps/chefz.svg',
       ],
       [
           'key' => 'keeta',
-          'url' => 'https://url.mykeeta.com/taLCveLz',
+          'url' => 'https://url.mykeeta.com/qRgdI46z',
           'color' => '#111111',
           'logo' => 'assets/images/apps/keeta.png',
       ],
