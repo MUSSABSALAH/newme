@@ -29,6 +29,7 @@ return [
         'legal' => '© 2026 New Me — All rights reserved · VAT 312782087600003<br>Health content is for guidance only and does not replace professional advice.',
         'newsletter_title' => 'Join the New Me list',
         'newsletter_text' => 'Exclusive offers, recipes and weekly articles from our nutritionists — no spam.',
+        'about' => 'New Me was born from a real challenge: a mother whose daughter was diagnosed with diabetes in a market without reliable fresh alternatives — so she built the solution herself.',
         'email_placeholder' => 'Your email',
         'subscribe_btn' => 'Subscribe',
         'sections_title' => 'Sections',

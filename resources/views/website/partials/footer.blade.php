@@ -4,12 +4,7 @@
   <div class="f-grid">
     <div class="f-news">
       <div style="margin-bottom:14px">@include('website.partials.logo', ['tone' => 'light'])</div>
-      <h3>{{ __('website.footer.newsletter_title') }}</h3>
-      <p>{{ __('website.footer.newsletter_text') }}</p>
-      <div class="f-form">
-        <input type="email" placeholder="{{ __('website.footer.email_placeholder') }}" aria-label="{{ __('website.footer.email_placeholder') }}">
-        <button type="button">{{ __('website.footer.subscribe_btn') }}</button>
-      </div>
+      <p class="f-about">{!! __('website.footer.about') !!}</p>
     </div>
     <div class="f-col">
       <h4>{{ __('website.footer.sections_title') }}</h4>

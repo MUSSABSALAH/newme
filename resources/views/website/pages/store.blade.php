@@ -92,8 +92,9 @@ nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;jus
 .tilelink .quick{position:absolute;bottom:14px;inset-inline:14px;z-index:2;background:rgba(16,38,63,.92);color:#fff;text-align:center;font-size:12px;font-weight:900;letter-spacing:.06em;border-radius:999px;padding:12px;opacity:0;transform:translateY(10px);transition:.3s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .card:hover .quick{opacity:1;transform:none}
 @media(hover:none){.tilelink .quick{display:none}}
-.flag{position:absolute;top:12px;inset-inline-start:12px;z-index:2;background:#fff;border-radius:2px;padding:5px 12px;font-size:9px;font-weight:900;color:var(--ink);letter-spacing:.16em;text-transform:uppercase;box-shadow:0 4px 14px rgba(16,38,63,.12)}
+.flag{position:absolute;top:12px;inset-inline-start:12px;z-index:2;background:#fff;border-radius:2px;padding:5px 12px;font-size:9px;font-weight:900;color:var(--ink);letter-spacing:.16em;text-transform:uppercase;box-shadow:0 4px 14px rgba(16,38,63,.12);display:inline-flex;align-items:center;gap:6px}
 .flag.sale{background:var(--green);color:#fff}
+.flag .flame{color:var(--orange-deep);font-size:11px;line-height:1}
 .kchip{position:absolute;top:12px;inset-inline-end:12px;z-index:2;border:1.5px solid rgba(16,38,63,.75);color:var(--ink);background:rgba(248,246,241,.85);border-radius:2px;padding:3px 9px;font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:.08em;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .meta{padding-top:14px;display:flex;flex-direction:column;flex:1}
 .meta .cat{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-family:var(--mono);margin-bottom:5px}
@@ -103,6 +104,27 @@ nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;jus
 .meta .pr small{font-size:10px;color:var(--muted);font-family:var(--font);font-weight:800}
 .meta .arrow{font-size:15px;font-weight:900;color:var(--orange-deep);transition:transform .25s}
 .card:hover .meta .arrow{transform:translateX(-5px)}
+.meta .p-specs,.meta .p-view{display:none}
+.kcal-box{display:inline-grid;place-items:center;min-width:38px;height:22px;border:1.8px solid var(--ink);border-radius:6px;font-family:var(--mono);font-size:9.5px;font-weight:700;color:var(--ink);padding:0 5px;flex-shrink:0}
+
+/* Mobile store: full product cards (image + details + CTA) */
+@media(max-width:819.98px){
+  .shop-wrap{padding:22px 16px 72px}
+  .grid{grid-template-columns:1fr 1fr;gap:16px 12px}
+  .card,.card.feat:not(.hide){grid-column:auto;background:#F3EEE6;border-radius:18px;overflow:hidden;padding:0 0 12px;box-shadow:0 4px 16px rgba(16,38,63,.06)}
+  .card.feat .tilelink{aspect-ratio:1/1;height:auto;min-height:0}
+  .tilelink{border-radius:18px 18px 0 0;aspect-ratio:1/1}
+  .kchip,.nut-toggle,.nutov,.tilelink .quick,.meta .pline .arrow{display:none!important}
+  .flag{top:10px;inset-inline-start:10px;background:rgba(255,255,255,.95);border-radius:999px;padding:5px 10px;font-size:10px;letter-spacing:0;text-transform:none;font-weight:800}
+  .meta{padding:12px 12px 0;gap:0}
+  .meta h3{font-size:14px;font-weight:900;color:var(--ink);order:1;margin:0}
+  .meta .cat{order:2;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;font-family:var(--font);color:var(--body);margin:4px 0 0}
+  .meta .p-specs{display:grid;gap:8px;order:3;margin:12px 0;padding:11px 0;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+  .meta .p-spec{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12.5px;font-weight:800;color:var(--ink)}
+  .meta .pline{order:4;border:0;padding:0;margin:0 0 10px}
+  .meta .pr{font-family:var(--font);font-size:18px;font-weight:900}
+  .meta .p-view{display:flex;order:5;justify-content:center;align-items:center;background:var(--navy);color:#fff;font-weight:800;font-size:13px;border-radius:999px;padding:12px;min-height:44px;margin-top:2px}
+}
 
 /* ===== transparent nutrition rollover ===== */
 .nutov{position:absolute;inset:0;z-index:3;background:rgba(248,246,241,.82);backdrop-filter:blur(12px) saturate(1.1);-webkit-backdrop-filter:blur(12px) saturate(1.1);display:flex;flex-direction:column;justify-content:center;padding:20px 18px 62px;opacity:0;transition:opacity .35s ease;pointer-events:none}
@@ -203,7 +225,12 @@ body.menu-open{overflow:hidden}
       @endphp
       <article class="card{{ !empty($p['feat']) ? ' feat' : '' }}" data-cat="{{ $p['cat'] }}" data-sub="{{ $p['sub'] }}">
         <a class="tilelink" href="{{ $p['href'] }}">
-          @if ($flagText)<span class="{{ $flagClass }}">{{ $flagText }}</span>@endif
+          @if ($flagText)
+            <span class="{{ $flagClass }}">
+              @if (($p['flag'] ?? null) === 'bestseller')<span class="flame" aria-hidden="true">🔥</span>@endif
+              {{ $flagText }}
+            </span>
+          @endif
           <span class="kchip">{{ $p['kcal'] }} kcal</span>
           @if ($p['image_url'])<img class="aiimg" src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif
           <span class="nutov" aria-hidden="true">
@@ -218,12 +245,27 @@ body.menu-open{overflow:hidden}
         </a>
         <button class="nut-toggle" aria-label="{{ __('website.store.nutrition_aria') }}">i</button>
         <div class="meta">
-          <span class="cat">{{ $p['cat_label'] }}</span>
           <h3>{{ $p['name'] }}</h3>
+          <span class="cat">{{ $p['cat_label'] }}</span>
+          <div class="p-specs">
+            @if ($p['protein'] !== '' && $p['protein'] !== null)
+              <div class="p-spec">
+                <span>{{ __('website.main.shop.protein', ['value' => $p['protein']]) }}</span>
+                <span aria-hidden="true">〰</span>
+              </div>
+            @endif
+            @if ((int) $p['kcal'] > 0)
+              <div class="p-spec">
+                <span>{{ __('website.main.shop.kcal', ['value' => $p['kcal']]) }}</span>
+                <span class="kcal-box">kcal</span>
+              </div>
+            @endif
+          </div>
           <div class="pline">
             <span class="pr">{{ $p['price'] }} <x-ui.sar /></span>
             <a class="arrow" href="{{ $p['href'] }}">←</a>
           </div>
+          <a class="p-view" href="{{ $p['href'] }}">{{ __('website.store.view_product') }}</a>
         </div>
       </article>
     @endforeach

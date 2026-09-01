@@ -400,7 +400,7 @@ class WebsiteController extends Controller
      *
      * @return list<array<string, mixed>>
      */
-    private function websiteShopPreview(int $limit = 6): array
+    private function websiteShopPreview(int $limit = 5): array
     {
         $flagIcons = [
             'bestseller' => '#i-flame',

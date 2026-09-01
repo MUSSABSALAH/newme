@@ -102,10 +102,8 @@ footer.w-foot-full{background:var(--w-navy);color:#9FB4D2;padding:56px 24px calc
 footer.w-foot-full .f-grid{max-width:1160px;margin:0 auto;display:grid;gap:34px;grid-template-columns:1fr}
 @media(min-width:820px){footer.w-foot-full .f-grid{grid-template-columns:1.6fr 1fr 1fr 1fr}}
 footer.w-foot-full .f-news h3{color:#fff;font-size:18px;margin:6px 0 8px}
-footer.w-foot-full .f-news p{font-size:13px;font-weight:600;max-width:320px;margin-bottom:14px}
-footer.w-foot-full .f-form{display:flex;gap:8px;max-width:340px}
-footer.w-foot-full .f-form input{flex:1;min-width:0;font-family:var(--w-font);font-size:13px;font-weight:700;padding:12px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff}
-footer.w-foot-full .f-form button{font-family:var(--w-font);font-weight:900;font-size:13px;color:#fff;background:var(--w-grad);border:none;border-radius:999px;padding:12px 22px}
+footer.w-foot-full .f-news p,
+footer.w-foot-full .f-news .f-about{font-size:13px;font-weight:600;max-width:360px;margin:0;line-height:1.85;color:#9FB4D2}
 footer.w-foot-full .f-col h4{color:#fff;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-family:var(--w-mono);margin-bottom:12px}
 footer.w-foot-full .f-col a{display:block;font-size:13px;font-weight:700;padding:4px 0}
 footer.w-foot-full .f-col a:hover{color:var(--w-orange-hi)}

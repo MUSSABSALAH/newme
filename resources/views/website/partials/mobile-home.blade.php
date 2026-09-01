@@ -106,12 +106,16 @@ html[dir="rtl"] .nm-m .drawer{transform:translateX(-105%)}
 .nm-m .hero-img{aspect-ratio:16/10;overflow:hidden}
 .nm-m .hero-img img{width:100%;height:100%;object-fit:cover;animation:kb 22s ease-in-out infinite alternate}
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}
-.nm-m .badges{background:var(--white);padding:12px var(--pad);border-bottom:1px solid var(--line);max-width:100%}
-.nm-m .badges .row{display:flex;align-items:stretch;gap:8px;width:100%}
-.nm-m .badge{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--cream);border-radius:var(--pill);padding:8px 6px;flex:1 1 0;min-width:0}
-.nm-m .badge u{width:26px;height:26px;border-radius:50%;background:var(--peach);color:var(--orange);
-  display:grid;place-items:center;text-decoration:none;font-size:12px;flex-shrink:0}
-.nm-m .badge b{font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.nm-m .badges{background:var(--white);padding:14px 0;border-bottom:1px solid var(--line);max-width:100%;overflow:hidden}
+.nm-m .badges .railwrap{max-width:100%;min-width:0;overflow:hidden}
+.nm-m .badges .rail{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;width:100%;max-width:100%;min-width:0;padding:0 var(--pad) 4px;scroll-snap-type:x mandatory}
+.nm-m .badges .rail::-webkit-scrollbar{display:none}
+.nm-m .badge{display:flex;align-items:flex-start;gap:10px;background:var(--cream);border-radius:18px;padding:12px 14px;flex:0 0 min(78vw,280px);scroll-snap-align:start;min-width:0}
+.nm-m .badge u{width:34px;height:34px;border-radius:50%;background:var(--peach);color:var(--orange);
+  display:grid;place-items:center;text-decoration:none;font-size:15px;flex-shrink:0;margin-top:1px}
+.nm-m .badge .txt{min-width:0;flex:1}
+.nm-m .badge b{display:block;font-size:13.5px;font-weight:800;line-height:1.3;color:var(--navy)}
+.nm-m .badge small{display:block;font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.45;margin-top:4px}
 .nm-m .rail{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;padding:0 var(--pad) 6px;scroll-snap-type:x mandatory;scrollbar-width:none;max-width:100%;width:100%;min-width:0}
 .nm-m .rail::-webkit-scrollbar{display:none}
 .nm-m .railwrap{position:relative;max-width:100%;min-width:0;overflow:hidden}
@@ -321,10 +325,19 @@ html[dir="rtl"] .nm-m .drawer{transform:translateX(-105%)}
   </div>
 
   <div class="badges">
-    <div class="row">
-      @foreach (array_slice($mUsps, 0, 3) as $i => $usp)
-      <div class="badge"><u>{{ $mUspIcons[$i] ?? '✦' }}</u><b>{{ $usp['title'] }}</b></div>
-      @endforeach
+    <div class="railwrap on-white">
+      <div class="rail" id="nmBadgesRail">
+        @foreach ($mUsps as $i => $usp)
+        <div class="badge">
+          <u>{{ $mUspIcons[$i] ?? '✦' }}</u>
+          <div class="txt">
+            <b>{{ $usp['title'] }}</b>
+            <small>{{ $usp['sub'] }}</small>
+          </div>
+        </div>
+        @endforeach
+        <div class="end"></div>
+      </div>
     </div>
   </div>
 
