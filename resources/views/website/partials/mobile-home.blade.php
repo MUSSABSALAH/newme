@@ -136,25 +136,24 @@ html[dir="rtl"] .nm-m .drawer{transform:translateX(-105%)}
 .nm-m .head a{font-size:12.5px;font-weight:700;white-space:nowrap}
 .nm-m .rise{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
 .nm-m .rise.in{opacity:1;transform:none}
-.nm-m .card{width:170px;flex:0 0 auto;scroll-snap-align:start;background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(27,48,85,.06)}
-.nm-m .card .ph{aspect-ratio:1;background:#EFE9DE;position:relative}
-.nm-m .card .ph img{width:100%;height:100%;object-fit:cover}
-.nm-m .tag{position:absolute;top:10px;inset-inline-start:10px;background:var(--orange);color:#fff;font-size:10.5px;
-  font-weight:800;padding:3px 10px;border-radius:var(--pill);z-index:1}
-.nm-m .card .b{padding:12px 13px 14px}
-.nm-m .card h3{font-size:14.5px;font-weight:800}
-.nm-m .chips{display:flex;gap:5px;margin:8px 0 11px;flex-wrap:wrap}
-.nm-m .chip{font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:var(--pill);background:var(--peach);color:var(--orange)}
-.nm-m .chip.n{background:rgba(27,48,85,.06);color:var(--navy)}
-.nm-m .pr{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.nm-m .pr .p{font-weight:900;font-size:16px}
-.nm-m .pr .p small{font-size:11px;font-weight:500;color:var(--muted)}
-.nm-m .add{background:var(--navy);color:#fff;font-weight:700;font-size:12.5px;padding:7px 15px;border-radius:var(--pill);transition:.2s;flex-shrink:0}
-.nm-m .add.done{background:var(--orange)}
+.nm-m .tag{position:absolute;top:10px;inset-inline-start:10px;background:rgba(255,255,255,.95);color:var(--navy);font-size:10px;
+  font-weight:800;padding:5px 10px;border-radius:var(--pill);z-index:1}
 .nm-m #nmShop{overflow:hidden;max-width:100%}
 .nm-m #nmShop .railwrap{max-width:100%;min-width:0;overflow:hidden}
-.nm-m #nmProdRail{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;width:100%;max-width:100%;min-width:0;padding:0 var(--pad) 8px;scroll-snap-type:x mandatory}
+.nm-m #nmProdRail{display:flex;gap:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;width:100%;max-width:100%;min-width:0;padding:0 var(--pad) 8px;scroll-snap-type:x mandatory}
 .nm-m #nmProdRail::-webkit-scrollbar{display:none}
+.nm-m #nmProdRail .card{width:min(72vw,232px);flex:0 0 auto;scroll-snap-align:start;display:flex;flex-direction:column;background:#F3EEE6;border-radius:18px;overflow:hidden;padding:0 0 12px;box-shadow:0 4px 16px rgba(16,38,63,.06)}
+.nm-m #nmProdRail .card .ph{display:block;aspect-ratio:1;background:#E8E1D6;position:relative;border-radius:18px 18px 0 0;overflow:hidden}
+.nm-m #nmProdRail .card .ph img{width:100%;height:100%;object-fit:cover}
+.nm-m #nmProdRail .card .b{padding:12px 12px 0;display:flex;flex-direction:column;flex:1}
+.nm-m #nmProdRail .card h3{font-size:14px;font-weight:900;line-height:1.35;color:var(--navy);margin:0}
+.nm-m #nmProdRail .card .cat{font-size:12px;font-weight:700;color:var(--muted);margin:4px 0 0}
+.nm-m #nmProdRail .card .p-specs{display:grid;gap:8px;margin:12px 0;padding:11px 0;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+.nm-m #nmProdRail .card .p-spec{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12.5px;font-weight:800;color:var(--navy)}
+.nm-m #nmProdRail .card .kcal-box{display:inline-grid;place-items:center;min-width:38px;height:22px;border:1.8px solid var(--navy);border-radius:6px;font-size:9.5px;font-weight:700;padding:0 5px;flex-shrink:0}
+.nm-m #nmProdRail .card .pr{margin:0 0 10px}
+.nm-m #nmProdRail .card .pr .p{font-weight:900;font-size:18px;color:var(--navy)}
+.nm-m #nmProdRail .card .p-view{display:flex;justify-content:center;align-items:center;background:var(--navy);color:#fff;font-weight:800;font-size:13px;border-radius:999px;padding:12px;min-height:44px;margin-top:auto}
 .nm-m .apps{margin:0 var(--pad);background:var(--white);border-radius:22px;padding:15px 0 14px;box-shadow:0 4px 16px rgba(27,48,85,.06);overflow:hidden;max-width:100%}
 .nm-m .apps .t{display:flex;justify-content:space-between;align-items:center;padding:0 16px 12px;font-size:12px;color:var(--muted)}
 .nm-m .apps .t b{color:var(--navy);font-size:14.5px;font-weight:800}
@@ -210,8 +209,8 @@ html[dir="rtl"] .nm-m .drawer{transform:translateX(-105%)}
 .nm-m .tabs button{border:1px solid var(--line);background:var(--white);border-radius:var(--pill);
   padding:7px 16px;font-size:12.5px;font-weight:700;color:var(--muted);transition:.2s}
 .nm-m .tabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}
-.nm-m .allcard{width:130px;flex:0 0 auto;background:var(--peach);display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:6px;text-align:center;padding:16px 12px;box-shadow:none;color:inherit}
+.nm-m .allcard{width:130px!important;min-height:220px;flex:0 0 auto;background:var(--peach)!important;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;text-align:center;padding:16px 12px!important;box-shadow:none;color:inherit;border-radius:18px}
 .nm-m .allcard .ico{width:40px;height:40px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:16px}
 .nm-m .allcard b{font-size:13.5px;font-weight:800;color:var(--navy)}
 .nm-m .allcard small{font-size:11px;color:var(--orange);font-weight:700;opacity:1}
@@ -371,14 +370,29 @@ html[dir="rtl"] .nm-m .drawer{transform:translateX(-105%)}
           </a>
           <div class="b">
             <h3>{{ $p['name'] }}</h3>
-            <div class="chips">
-              @if (!empty($p['protein']))<span class="chip">{{ $p['protein'] }}</span>@endif
-              @if (!empty($p['kcal']))<span class="chip n">{{ $p['kcal'] }}</span>@endif
+            @if (!empty($p['cat_label']) || !empty($p['sub']))
+            <span class="cat">{{ $p['cat_label'] ?? $p['sub'] }}</span>
+            @endif
+            @if (!empty($p['protein']) || !empty($p['kcal']))
+            <div class="p-specs">
+              @if (!empty($p['protein']))
+              <div class="p-spec">
+                <span>{{ $p['protein'] }}</span>
+                <span aria-hidden="true">〰</span>
+              </div>
+              @endif
+              @if (!empty($p['kcal']))
+              <div class="p-spec">
+                <span>{{ $p['kcal'] }}</span>
+                <span class="kcal-box">kcal</span>
+              </div>
+              @endif
             </div>
+            @endif
             <div class="pr">
-              <div class="p">{{ $p['price'] }} <small><x-ui.sar /></small></div>
-              <a class="add" href="{{ $p['url'] }}">{{ app()->getLocale() === 'ar' ? 'أضف' : 'Add' }}</a>
+              <div class="p">{{ $p['price'] }} <x-ui.sar /></div>
             </div>
+            <a class="p-view" href="{{ $p['url'] }}">{{ __('website.store.view_product') }}</a>
           </div>
         </article>
         @endforeach
