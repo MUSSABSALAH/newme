@@ -140,10 +140,6 @@ body.mlock{overflow:hidden}
 <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4c.5 8-2.5 15-10 15-3 0-5-1.5-6-3.5C8 16 10 15 12 13c-2 .5-4 .5-6 2 .5-6 5-11 14-11z"/></symbol>
 </defs></svg>
 
-<div class="announce">{!! __('website.menu_page.announce') !!}</div>
-
-@include('website.partials.nav', ['active' => 'menu', 'showCart' => false])
-
 <header class="phead">
   <h1>{{ __('website.menu_page.h1_prefix') }} <em id="hPlan"></em></h1>
   <p>{{ __('website.menu_page.sub') }}</p>
@@ -164,9 +160,7 @@ body.mlock{overflow:hidden}
   </div>
 </div>
 
-@include('website.partials.footer', ['variant' => 'simple'])
 
-@include('website.partials.mobile-menu')
 
 @endsection
 

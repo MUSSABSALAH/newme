@@ -149,8 +149,10 @@ class Product extends Model
             return null;
         }
 
+        // Root-relative so phones hitting a LAN/Herd host still load images
+        // even when APP_URL is localhost.
         if (str_contains($this->image_path, '/')) {
-            return asset('storage/'.$this->image_path);
+            return '/storage/'.$this->image_path;
         }
 
         $stored = 'store/products/'.$this->image_path;
@@ -158,9 +160,9 @@ class Product extends Model
             is_file(storage_path('app/public/'.$stored))
             || is_file(public_path('storage/'.$stored))
         ) {
-            return asset('storage/'.$stored);
+            return '/storage/'.$stored;
         }
 
-        return asset('assets/images/'.$this->image_path);
+        return '/assets/images/'.$this->image_path;
     }
 }

@@ -57,9 +57,14 @@ Route::name('website.')->group(function () {
     Route::get('/', [WebsiteController::class, 'home'])->name('home');
     Route::get('/main', [WebsiteController::class, 'main'])->name('main');
     Route::get('/store', [WebsiteController::class, 'store'])->name('store');
+    Route::get('/make', [WebsiteController::class, 'make'])->name('make');
+    Route::get('/about', [WebsiteController::class, 'about'])->name('about');
+    Route::get('/help', [WebsiteController::class, 'help'])->name('help');
     Route::get('/subscribe', [WebsiteController::class, 'subscribe'])->name('subscribe');
     Route::get('/menu', [WebsiteController::class, 'menu'])->name('menu');
     Route::get('/blog', [WebsiteController::class, 'blog'])->name('blog');
+    Route::get('/blog/articles/{article:slug}', [WebsiteController::class, 'article'])->name('article');
+    Route::get('/blog/recipes/{recipe:slug}', [WebsiteController::class, 'recipe'])->name('recipe');
     Route::get('/product', [WebsiteController::class, 'product'])->name('product');
     Route::get('/product/{product:slug}', [WebsiteController::class, 'productShow'])->name('product.show');
 
@@ -114,6 +119,9 @@ Route::name('website.')->group(function () {
         Route::get('account', [AccountController::class, 'index'])->name('account');
         Route::put('account/profile', [AccountController::class, 'updateProfile'])->name('account.profile');
 
+        Route::get('account/addresses/lookup', [CustomerAddressController::class, 'lookup'])
+            ->middleware('throttle:30,1')
+            ->name('account.addresses.lookup');
         Route::post('account/addresses', [CustomerAddressController::class, 'store'])->name('account.addresses.store');
         Route::put('account/addresses/{address}', [CustomerAddressController::class, 'update'])->name('account.addresses.update');
         Route::delete('account/addresses/{address}', [CustomerAddressController::class, 'destroy'])->name('account.addresses.destroy');

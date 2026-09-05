@@ -20,10 +20,7 @@
   $initial = mb_strtoupper(mb_substr($user->name, 0, 1));
 @endphp
 
-<div class="announce">{!! __('website.store.announce') !!}</div>
-@include('website.partials.nav', ['active' => null, 'showCart' => true])
-
-<div class="cowrap">
+<div class="cowrap acc-dash">
   <div class="cohead">
     <div class="kick">{{ __('account.nav.account') }}</div>
     <h1>{{ __('account.dashboard.greeting', ['name' => $user->name]) }}</h1>
@@ -42,6 +39,7 @@
 
   <div class="acc-layout">
     <aside class="acc-side">
+      <div class="acc-side-head">
       <div class="acc-user">
         <div class="acc-user__av" aria-hidden="true">{{ $initial }}</div>
         <div class="acc-user__meta">
@@ -49,6 +47,10 @@
           <span>{{ $user->email }}</span>
           @if ($user->phone)<span dir="ltr">{{ $user->phone }}</span>@endif
         </div>
+        <form method="POST" action="{{ route('website.logout') }}" class="acc-user__out">
+          @csrf
+          <button type="submit">{{ __('account.dashboard.logout') }}</button>
+        </form>
       </div>
 
       <div class="acc-nav-stick">
@@ -56,13 +58,36 @@
           @foreach ($tabs as $key => $tab)
             <a href="{{ route('website.account', ['tab' => $key]) }}"
                class="{{ $activeTab === $key ? 'on' : '' }}">
-              {{ $tab['label'] }}
-              @if ($tab['count'] !== null)
+              <span class="acc-nav__ico" aria-hidden="true">
+                @switch($key)
+                  @case('profile')
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    @break
+                  @case('measurements')
+                    <svg viewBox="0 0 24 24"><path d="M4 14.5 9.5 9l3.5 3.5L20 6"/><path d="M14 6h6v6"/></svg>
+                    @break
+                  @case('addresses')
+                    <svg viewBox="0 0 24 24"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
+                    @break
+                  @case('subscriptions')
+                    <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                    @break
+                  @case('orders')
+                    <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+                    @break
+                  @case('consultations')
+                    <svg viewBox="0 0 24 24"><path d="M8 18.5 4.5 21V7.5A2.5 2.5 0 0 1 7 5h10a2.5 2.5 0 0 1 2.5 2.5v8A2.5 2.5 0 0 1 17 18H8z"/></svg>
+                    @break
+                @endswitch
+              </span>
+              <span class="acc-nav__lbl">{{ $tab['label'] }}</span>
+              @if (($tab['count'] ?? 0) > 0)
                 <span class="badge">{{ $tab['count'] }}</span>
               @endif
             </a>
           @endforeach
         </nav>
+      </div>
       </div>
 
       <div class="acc-side-foot">
@@ -183,7 +208,7 @@
               </div>
             @endif
 
-            <button type="submit" class="w-btn">{{ __('account.dashboard.save_profile') }}</button>
+            <button type="submit" class="w-btn acc-save">{{ __('account.dashboard.save_profile') }}</button>
           </form>
         </div>
       </section>
@@ -351,8 +376,6 @@
   </div>
 </div>
 
-@include('website.partials.footer', ['variant' => 'full'])
-@include('website.partials.mobile-menu')
 
 @php
   $canPauseAny = $subscriptions->contains(
@@ -438,7 +461,10 @@
 document.querySelectorAll('[data-edit-address]').forEach(function(btn){
   btn.addEventListener('click',function(){
     var form=document.getElementById('edit-'+btn.getAttribute('data-edit-address'));
-    if(form)form.hidden=!form.hidden;
+    if(form){
+      form.hidden=!form.hidden;
+      if(!form.hidden && window.nmAddrMaps) window.nmAddrMaps.resize(form);
+    }
   });
 });
 

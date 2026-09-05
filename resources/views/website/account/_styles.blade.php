@@ -36,6 +36,7 @@ img{display:block;max-width:100%}
 .acc-user__meta b{display:block;font-size:14px;color:var(--navy);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acc-user__meta span{display:block;font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acc-user__meta span[dir=ltr]{font-family:var(--mono)}
+.acc-user__out{display:none}
 
 .acc-nav{display:flex;flex-direction:column;gap:4px}
 .acc-nav a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-radius:13px;font-weight:800;font-size:13.5px;color:var(--body);border:1.5px solid transparent;transition:.15s}
@@ -43,6 +44,8 @@ img{display:block;max-width:100%}
 .acc-nav a.on{background:var(--orange-soft);color:var(--orange-deep);border-color:rgba(240,127,45,.28)}
 .acc-nav .badge{font-family:var(--mono);font-size:11px;font-weight:900;background:var(--tile);color:var(--muted);padding:2px 8px;border-radius:999px;min-width:24px;text-align:center}
 .acc-nav a.on .badge{background:#fff;color:var(--orange-deep)}
+.acc-nav__ico{display:none}
+.acc-nav__lbl{flex:1;min-width:0}
 .acc-nav-stick{min-width:0}
 
 .acc-side-foot{padding:10px 8px 4px;border-top:1.5px solid var(--gray-2);margin-top:8px}
@@ -453,7 +456,66 @@ body.meal-cal-open{overflow:hidden}
 }
 
 @media(max-width:819.98px){
-  .acc-nav-stick{border-radius:14px}
+  body:has(.cowrap) footer.w-foot-full{display:none!important}
+  .cowrap{padding:14px 16px calc(28px + var(--ip-tabbar, 70px))}
+
+  .acc-dash .cohead{display:none}
+  .acc-dash .acc-side{display:contents}
+  .acc-dash .acc-side-head{
+    order:0;background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;
+    box-shadow:0 8px 22px rgba(18,43,74,.05);overflow:hidden;margin-bottom:14px
+  }
+  .acc-dash .acc-user{
+    align-items:center;border:0;box-shadow:none;border-radius:0;margin:0;
+    padding:14px 14px 12px;border-bottom:1.5px solid var(--gray-2)
+  }
+  .acc-dash .acc-user__out{display:block;margin-inline-start:auto;flex-shrink:0}
+  .acc-dash .acc-user__out button{
+    border:0;background:var(--tile);color:#C0392B;
+    font-size:12px;font-weight:800;border-radius:999px;padding:8px 12px
+  }
+  .acc-dash .acc-side-foot{display:none}
+
+  .acc-dash .acc-nav-stick{
+    position:static;margin:0;padding:10px;border:0;border-radius:0;
+    box-shadow:none;background:transparent;backdrop-filter:none
+  }
+  .acc-dash .acc-nav{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;overflow:visible;flex-wrap:unset
+  }
+  .acc-dash .acc-nav a{
+    position:relative;flex:unset;flex-direction:column;justify-content:center;
+    align-items:center;gap:5px;min-height:74px;padding:12px 4px 10px;
+    white-space:normal;text-align:center;font-size:11.5px;line-height:1.25;
+    border-radius:14px;background:var(--tile);border-color:transparent;color:var(--navy)
+  }
+  .acc-dash .acc-nav a.on{background:var(--orange-soft);color:var(--orange-deep);border-color:transparent}
+  .acc-dash .acc-nav__ico{
+    display:grid;place-items:center;width:22px;height:22px;flex-shrink:0;color:inherit
+  }
+  .acc-dash .acc-nav__ico svg{
+    width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;
+    stroke-linecap:round;stroke-linejoin:round
+  }
+  .acc-dash .acc-nav__lbl{flex:none}
+  .acc-dash .acc-nav .badge{
+    position:absolute;top:6px;inset-inline-end:6px;min-width:16px;height:16px;
+    padding:0 4px;font-size:9px;background:#fff;color:var(--orange-deep)
+  }
+  .acc-dash .acc-main{order:2}
+
+  .acc-dash .card{padding:18px 16px 20px;border-radius:18px}
+  .acc-dash .card > h2 .n{display:none}
+  .acc-dash .card > h2{font-size:20px;margin-bottom:6px}
+  .acc-dash .card > .hint,
+  html[dir="rtl"] .acc-dash .card > .hint{margin:0 0 16px;font-size:13px;line-height:1.7}
+  .acc-dash .frow{grid-template-columns:1fr}
+  .acc-dash .divider-label{font-size:12px;line-height:1.7;padding-top:14px}
+  .acc-dash .acc-save{
+    position:sticky;bottom:calc(var(--ip-tabbar, 70px) + 8px);z-index:70;
+    margin-top:12px;box-shadow:0 10px 24px rgba(240,127,45,.35)
+  }
 }
 @media(min-width:960px){
   .meal-cal-drawer{align-items:center}

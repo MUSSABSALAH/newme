@@ -14,9 +14,6 @@
       ->implode(' · ');
 @endphp
 
-<div class="announce">{!! __('website.store.announce') !!}</div>
-@include('website.partials.nav', ['active' => null, 'showCart' => true])
-
 <div class="cowrap">
   <div class="cohead">
     <a href="{{ route('website.account', ['tab' => 'subscriptions']) }}" class="co-back">← {{ __('account.back') }}</a>
@@ -168,6 +165,4 @@
   </section>
 </div>
 
-@include('website.partials.footer', ['variant' => 'full'])
-@include('website.partials.mobile-menu')
 @endsection

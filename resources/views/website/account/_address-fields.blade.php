@@ -3,6 +3,13 @@
   $prefix = $address?->public_id ?? 'new';
 @endphp
 
+@include('website.account._address-map', [
+  'cityId' => 'city-'.$prefix,
+  'districtId' => 'district-'.$prefix,
+  'streetId' => 'street-'.$prefix,
+  'nationalId' => 'national_address-'.$prefix,
+])
+
 <div class="addr-grid">
   <div class="field">
     <label for="label-{{ $prefix }}">{{ __('addresses.fields.label') }}</label>

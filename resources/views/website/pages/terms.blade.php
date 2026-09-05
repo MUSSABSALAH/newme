@@ -115,10 +115,6 @@ body.mlock{overflow:hidden}
 @section('content')
 <div class="progress"><i id="pbar"></i></div>
 
-<div class="announce">{!! __('website.terms.announce') !!}</div>
-
-@include('website.partials.nav', ['active' => 'terms', 'showCart' => false])
-
 <header class="thero">
   <div class="in">
     <span class="kick">{{ __('website.terms.kick') }}</span>
@@ -148,9 +144,7 @@ body.mlock{overflow:hidden}
 
 <button class="toTop" id="toTop" aria-label="{{ __('website.terms.to_top') }}">↑</button>
 
-@include('website.partials.footer', ['variant' => 'simple'])
 
-@include('website.partials.mobile-menu')
 
 @endsection
 

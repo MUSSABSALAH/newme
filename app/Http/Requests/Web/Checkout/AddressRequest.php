@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Web\Checkout;
 
+use App\Rules\DeliverableInRiyadh;
 use Illuminate\Foundation\Http\FormRequest;
 
 final class AddressRequest extends FormRequest
@@ -22,7 +23,7 @@ final class AddressRequest extends FormRequest
             'label' => ['required', 'string', 'max:60'],
             'recipient_name' => ['required', 'string', 'max:120'],
             'phone' => ['required', 'string', 'max:32'],
-            'city' => ['required', 'string', 'max:80'],
+            'city' => ['required', 'string', 'max:80', new DeliverableInRiyadh],
             'district' => ['required', 'string', 'max:120'],
             'street' => ['required', 'string', 'max:180'],
             'national_address' => ['required', 'string', 'max:32'],

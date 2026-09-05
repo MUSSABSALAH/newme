@@ -1,0 +1,219 @@
+@extends('website.layouts.app')
+
+@section('title', app()->getLocale() === 'ar' ? 'عن نيومي — نيومي' : 'About — New Me')
+@section('theme', '#122B4A')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
+<style>
+@media (max-width: 819.98px) {
+  .v30-page { padding: 20px 16px 48px; }
+  .v30-page .sec-head { margin-bottom: 20px; }
+  .v30-page h1, .v30-page h2 { font-size: 1.6rem; }
+  .v30-page .section { padding: 48px 0; }
+  .v30-page .split { display: grid; gap: 20px; }
+  .v30-page .steps, .v30-page .stats, .v30-page .grid { display: grid; gap: 14px; }
+  .v30-page .tcard, .v30-page .stat, .v30-page .ecard { background: #fff; border: 1px solid #E8E4DC; border-radius: 16px; padding: 16px; }
+  .v30-page .hubtabs { flex-wrap: wrap; gap: 8px; }
+}
+</style>
+@endpush
+
+@section('content')
+@include('website.partials.v30-icons')
+
+<div class="v30-page nm-ip">
+  <section class="section alt" id="about">
+    <div class="sec-head rv">
+      <span class="kick">قصتنا</span>
+      <h2>بدأت من مطبخ <em>في الرياض</em></h2>
+    </div>
+    <div class="split">
+      <div class="copy rv">
+        <div class="quote">
+          <p>«انطلقت نيومي من قناعة مفادها أن الغذاء الصحي ينبغي أن يكون خياراً متاحاً ومستساغاً، لا التزاماً شاقاً يفرض على الفرد التخلي عن أصناف أساسية في نمطه الغذائي اليومي… من هذه الملاحظة تحدّدت وجهتنا: أن نبدأ من المكوّن الأساس لا من المنتج النهائي.»</p>
+          <p class="sig">ميساء كردي — المؤسِّسة<span>Certified Health Coach (Berg Method, 2019)</span></p>
+        </div>
+      </div>
+      <div class="media-card rv">
+        <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-about-team.jpg') }}" alt="المؤسِّسة وفريق نيومي في المخبز" onerror="this.remove()">
+        <span class="cap">من مطبخنا في الرياض</span>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat rv"><span class="sic"><svg class="i"><use href="#i-calendar"/></svg></span>
+        <b>2020</b><span>سنة التأسيس في مدينة الرياض</span></div>
+      <div class="stat rv"><span class="sic"><svg class="i"><use href="#i-flask"/></svg></span>
+        <b>مكوّن خاص</b><span>دقيق صحي منخفض النشويات مطوَّر داخلياً</span></div>
+      <div class="stat rv"><span class="sic"><svg class="i"><use href="#i-layers"/></svg></span>
+        <b>3</b><span>خطوط أعمال بمعيار غذائي واحد</span></div>
+    </div>
+  </section>
+
+  <section class="band" id="vision" style="margin-top:0">
+    <div class="band-bg">
+      <img class="aiimg" loading="lazy" decoding="async" width="2400" height="1000"
+           src="{{ asset('assets/images/v30-vision.jpg') }}"
+           alt="عائلة سعودية تجتمع على مائدة من وجبات نيومي الصحية">
+    </div>
+    <div class="inner">
+      <span class="kick">الرؤية الوطنية</span>
+      <h3>شريك في الطب الوقائي والتغذية العلاجية</h3>
+      <p>نعمل ضمن تحوّل وطني من العلاج إلى الوقاية. فارتفاع معدلات السمنة والسكري في المملكة يجعل الغذاء اليومي خط الدفاع الصحي الأول — وعند هذه النقطة تحديداً تلتقي مستهدفات رؤية المملكة 2030 التي نسهم في تحقيقها.</p>
+      <div class="kpis">
+        <div class="kpi rv">
+          <div class="kfig">
+            <i class="from">510</i>
+            <i class="arrow">←</i>
+            <i class="to" data-from="510" data-to="324">510</i>
+            <small>الحالي</small>
+            <small></small>
+            <small>المستهدف</small>
+          </div>
+          <span class="klabel">خفض وفيات الأمراض المزمنة لكل 100 ألف نسمة</span></div>
+        <div class="kpi rv">
+          <div class="kfig">
+            <i class="from">74</i>
+            <i class="arrow">←</i>
+            <i class="to" data-from="74" data-to="80">74</i>
+            <small>الحالي</small>
+            <small></small>
+            <small>المستهدف</small>
+          </div>
+          <span class="klabel">رفع متوسط العمر المتوقع بالأعوام</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="rule"><i></i></div>
+
+  <section class="section alt" id="company">
+    <div class="sec-head rv">
+      <span class="kick">عن نيومي</span>
+      <h2>شركة سعودية للأطعمة الصحية الجاهزة <em>والمخبوزات المتميزة</em></h2>
+    </div>
+
+    <div class="hubtabs" id="hubtabs">
+      <button class="tab on" data-t="t1">نبذة والمسيرة</button>
+      <button class="tab" data-t="t2">عوامل التميّز</button>
+      <button class="tab" data-t="t3">القيم المؤسسية</button>
+      <button class="tab" data-t="t4">الرؤية والرسالة</button>
+    </div>
+
+    <div class="hubpanel on" id="t1">
+      <p class="about-lead rv">تأسست نيومي في مدينة الرياض عام 2020م، وتعمل في إنتاج المخبوزات الصحية والوجبات الجاهزة والمنتجات الغذائية الداعمة، بتخصص واضح في تلبية الاحتياجات الغذائية لمرضى السكري والسمنة ومتّبعي الأنظمة منخفضة النشويات. وتحرص الشركة على انتقاء مكوّنات طبيعية وعضوية عالية الجودة في جميع منتجاتها، وتبني عليها تشكيلاتها كافة بما يضمن اتساق المعيار الغذائي عبر خطوط الإنتاج جميعها.</p>
+      <div class="steps">
+        <div class="tcard rv"><span class="n">01</span><h4>مرحلة التأسيس</h4>
+          <p>انطلقت الشركة برؤية واضحة: توفير خبز ومخبوزات ووجبات صحية جاهزة لكل منزل، بمكوّنات طبيعية وعضوية، ودون تنازل عن الجودة أو النكهة.</p></div>
+        <div class="tcard rv"><span class="n">02</span><h4>مرحلة التخصص</h4>
+          <p>توسّع الحضور التشغيلي ليشمل مدينة الرياض وشبكة موزّعين في جدة والمنطقة الشرقية، إلى جانب إبرام شراكات مع جهات صحية وغذائية رائدة في المملكة.</p></div>
+        <div class="tcard rv"><span class="n">03</span><h4>اكتمال المنظومة</h4>
+          <p>إضافة خدمات الاشتراكات الغذائية المحسوبة القيم، ثم المنتجات الداعمة، لتكتمل منظومة تغذية يومية تغطي مختلف أوقات الوجبات بمعيار موحّد.</p></div>
+        <div class="tcard rv"><span class="n">04</span><h4>المرحلة الراهنة</h4>
+          <p>التعمّق في التخصص بدلاً من التوسع الأفقي: تطوير الدقيق الصحي الخاص منخفض النشويات، وتأسيس تشكيلة متكاملة من المخبوزات عليه.</p></div>
+      </div>
+    </div>
+
+    <div class="hubpanel" id="t2">
+      <div class="edge">
+        <article class="edge-hero rv">
+          <div class="eh-media">
+            <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+            <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-about-flour.jpg') }}" alt="الدقيق الصحي والبذور ومريلة نيومي" onerror="this.remove()">
+            <span class="eh-stamp"><b>01</b><small>العامل الأول</small></span>
+          </div>
+          <div class="eh-copy">
+            <span class="eh-kick">المكوّن الأساس</span>
+            <h3>تطوير المكوّن الأساس داخلياً</h3>
+            <p>الدقيق الصحي الخاص، المصنوع من بذور الترمس والكتان العضوية، مملوك للشركة ويصعب استنساخه. ولا يقتصر التميّز على الوصفة النهائية، بل يمتد إلى تركيبة المادة الخام ذاتها.</p>
+            <div class="eh-chips"><span>ترمس أسترالي</span><span>كتان عضوي</span><span>تحليل مخبري معتمد</span></div>
+          </div>
+        </article>
+
+        <div class="edge-grid">
+          <article class="ecard rv"><span class="ghost">02</span>
+            <div class="ethumb">
+              <div class="ph"><svg><use href="#i-clipboard"/></svg></div>
+              <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-value-review.jpg') }}" alt="مراجعة القيم الغذائية بإشراف خبير التغذية" onerror="this.remove()">
+            </div>
+            <div class="ebody">
+            <h4>توثيق القيم بإشراف خبير التغذية</h4>
+            <p>تعتمد الشركة على إشراف خبير تغذية متخصص لحساب ومراجعة القيم الغذائية لجميع منتجاتها، بما يمنح العميل والشريك التجاري بيانات دقيقة وموثوقة.</p></div></article>
+          <article class="ecard rv"><span class="ghost">03</span>
+            <div class="ethumb">
+              <div class="ph"><svg><use href="#i-target"/></svg></div>
+              <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-value-health.jpg') }}" alt="تخصص موجَّه للحالات الصحية — منتجات منخفضة الكربوهيدرات" onerror="this.remove()">
+              <span class="ethumb-n">03</span>
+            </div>
+            <div class="ebody">
+            <h4>تخصص موجَّه للحالات الصحية</h4>
+            <p>صُمّمت المنتجات في المقام الأول لمرضى السكري والسمنة، ثم لعموم الباحثين عن نمط غذائي متوازن — وهو ترتيب يفرض انضباطاً أعلى في اختيار المكوّنات وضبط التركيبة.</p></div></article>
+          <article class="ecard rv"><span class="ghost">04</span>
+            <div class="ethumb">
+              <div class="ph"><svg><use href="#i-layers"/></svg></div>
+              <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-value-system.jpg') }}" alt="منظومة غذائية متكاملة — تشكيلة نيومي كاملة" onerror="this.remove()">
+              <span class="ethumb-n">04</span>
+            </div>
+            <div class="ebody">
+            <h4>منظومة غذائية متكاملة</h4>
+            <p>تغطي التشكيلة مختلف الوجبات — من المخبوزات اليومية إلى الوجبات الرئيسية إلى المنتجات الداعمة — من مصدر واحد وبمعيار غذائي موحّد.</p></div></article>
+          <article class="ecard rv"><span class="ghost">05</span>
+            <div class="ethumb">
+              <div class="ph"><svg><use href="#i-shield"/></svg></div>
+              <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-value-ip.jpg') }}" alt="ملكية فكرية محمية — علامة نيومي المسجَّلة" onerror="this.remove()">
+              <span class="ethumb-n">05</span>
+            </div>
+            <div class="ebody">
+            <h4>ملكية فكرية محمية</h4>
+            <p>تمتلك الشركة علامة تجارية مسجَّلة هي «نيو مي — New Me».</p></div></article>
+        </div>
+      </div>
+    </div>
+
+    <div class="hubpanel" id="t3">
+      <div class="grid g3">
+        <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-check"/></svg></span>
+          <h4>الإحسان</h4><p>إتقان الصنعة والعناية بالمنتج بالمستوى ذاته الذي نقدّمه لأسرنا.</p></div>
+        <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span>
+          <h4>الإتقان</h4><p>الالتزام بأعلى معايير الدقة في كل مرحلة، من اختيار المكوّن إلى تسليم المنتج النهائي.</p></div>
+        <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-bolt"/></svg></span>
+          <h4>الابتكار</h4><p>تطوير وصفات جديدة تجمع بين النكهات الشرقية الأصيلة والقيمة الغذائية العالية.</p></div>
+        <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-leaf"/></svg></span>
+          <h4>الاستدامة</h4><p>اعتماد ممارسات صديقة للبيئة في مختلف جوانب العمل، من اختيار المكوّنات حتى تعبئة المنتجات.</p></div>
+        <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-clipboard"/></svg></span>
+          <h4>المصداقية</h4><p>الشفافية الكاملة في الإفصاح عن المكوّنات وطرق التحضير والقيم الغذائية.</p></div>
+      </div>
+    </div>
+
+    <div class="hubpanel" id="t4">
+      <div class="diptych">
+        <article class="dpanel photo rv">
+          <div class="ph"><svg><use href="#i-target"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-expert.jpg') }}" alt="أخصائية تغذية تراجع القيم الغذائية" onerror="this.remove()">
+          <div class="dp-in">
+            <span class="dp-kick">الرؤية</span>
+            <p>أن نكون الروّاد في تقديم المخبوزات والوجبات الصحية الجاهزة والمنتجات الداعمة للنظام الصحي، محلياً وعالمياً.</p>
+          </div>
+        </article>
+        <article class="dpanel navy rv">
+          <div class="dp-in">
+            <span class="dp-kick">الرسالة</span>
+            <p>توفير خيارات غذائية صحية من المخبوزات والوجبات والمنتجات الداعمة تلبي احتياجات جميع العملاء، مع التركيز على الخدمات المخصصة لمرضى السكري والسمنة، والالتزام بأعلى معايير الجودة والإتقان والنظافة.</p>
+          </div>
+        </article>
+      </div>
+      <div class="goalstrip">
+        <div class="gitem rv"><b>01</b><span>تقديم منتجات عالية الجودة قائمة على مكوّنات طبيعية وطازجة، بقيم غذائية معلومة وموثَّقة.</span></div>
+        <div class="gitem rv"><b>02</b><span>تلبية الاحتياجات الغذائية المتنوعة عبر تشكيلة تناسب مختلف الأنظمة، وفي مقدمتها الأنظمة منخفضة الكربوهيدرات.</span></div>
+        <div class="gitem rv"><b>03</b><span>الإسهام في تحسين صحة المجتمع من خلال حضور يومي في النمط الغذائي للعميل.</span></div>
+        <div class="gitem rv"><b>04</b><span>نشر الوعي بالتغذية السليمة عبر ورش العمل والبرامج التوعوية والمبادرات المجتمعية.</span></div>
+        <div class="gitem rv"><b>05</b><span>الاستثمار في الابتكار المستمر لتطوير منتجات ونكهات تواكب تطلعات العملاء المتغيرة.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="v30-desk">
+    @include('website.partials.v30-closing')
+  </div>
+</div>
+@endsection

@@ -9,9 +9,6 @@
 @endpush
 
 @section('content')
-<div class="announce">{!! __('website.store.announce') !!}</div>
-@include('website.partials.nav', ['active' => null, 'showCart' => true])
-
 <div class="acc-wrap narrow">
   <div class="acc-head" style="text-align:center">
     <div class="kick" style="margin-bottom:8px">{{ __('account.nav.login') }}</div>
@@ -89,8 +86,6 @@
   <p class="aside-note">{{ __('account.login.no_account') }} <a href="{{ route('website.register', request('next') ? ['next' => request('next')] : []) }}">{{ __('account.login.register_link') }}</a></p>
 </div>
 
-@include('website.partials.footer', ['variant' => 'full'])
-@include('website.partials.mobile-menu')
 @endsection
 
 @push('scripts')

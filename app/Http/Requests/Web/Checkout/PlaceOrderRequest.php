@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Web\Checkout;
 
+use App\Modules\Addresses\Models\Address;
 use App\Modules\Payments\Contracts\PaymentGateway;
 use App\Modules\Payments\Enums\PaymentMethod;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -79,6 +81,30 @@ final class PlaceOrderRequest extends FormRequest
     {
         return [
             'terms.accepted' => (string) __('checkout.errors.terms'),
+        ];
+    }
+
+    /**
+     * @return list<callable>
+     */
+    public function after(): array
+    {
+        return [
+            function (Validator $validator): void {
+                $publicId = $this->input('address');
+                if (! is_string($publicId) || $publicId === '') {
+                    return;
+                }
+
+                $address = Address::query()
+                    ->where('user_id', $this->user()?->getKey())
+                    ->where('public_id', $publicId)
+                    ->first();
+
+                if ($address instanceof Address && ! $address->isDeliverable()) {
+                    $validator->errors()->add('address', (string) __('addresses.errors.outside_riyadh'));
+                }
+            },
         ];
     }
 

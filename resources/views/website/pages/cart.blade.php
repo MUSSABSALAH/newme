@@ -133,10 +133,6 @@ body.menu-open{overflow:hidden}
 <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h6V8a3 3 0 0 0-6 0v2z"/></symbol>
 </defs></svg>
 
-<div class="announce">{!! __('website.store.announce') !!}</div>
-
-@include('website.partials.nav', ['active' => 'store', 'showCart' => true])
-
 <div class="cwrap">
   <h1>{{ __('website.cart.heading') }}</h1>
 
@@ -211,9 +207,7 @@ body.menu-open{overflow:hidden}
   @endif
 </div>
 
-@include('website.partials.footer', ['variant' => 'simple'])
 
-@include('website.partials.mobile-menu')
 @endsection
 
 @push('scripts')

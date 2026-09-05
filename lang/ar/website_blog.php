@@ -16,4 +16,9 @@ return [
     'recipes_h2' => 'الوصفات',
     'ingredients' => 'المكونات',
     'method' => 'الطريقة',
+    'read_article' => 'اقرأ المقال ←',
+    'view_recipe' => 'شاهد الوصفة ←',
+    'back' => 'العودة إلى مطبخنا',
+    'empty_articles' => 'لا مقالات حالياً.',
+    'empty_recipes' => 'لا وصفات حالياً.',
 ];

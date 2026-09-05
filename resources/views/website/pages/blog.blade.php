@@ -4,6 +4,7 @@
 @section('theme', '#122B4A')
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
 <style>
 @verbatim
 :root{
@@ -26,20 +27,20 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .wrap{max-width:780px;margin:0 auto;padding:0 24px}
 .kick{font-size:10.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--orange-deep);font-family:var(--mono)}
 .i{width:1em;height:1em;fill:currentColor;vertical-align:-0.12em;display:inline-block}
-.announce{background:var(--navy);color:#EAF1FA;text-align:center;padding:calc(9px + var(--sat)) 14px 9px;font-size:12px;font-weight:700}
-.announce b{color:var(--orange-hi)}
-nav.main{position:sticky;top:0;z-index:90;background:rgba(248,246,241,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 24px;gap:12px}
-.logo{display:flex;align-items:center;gap:10px}
-.logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,#24487A,var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
-.logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.9),rgba(255,255,255,.2) 36%,transparent 60%)}
-.logo b{font-size:18px;color:var(--ink);font-weight:900}
-.nav-links{display:none;gap:24px;font-weight:800;font-size:13px;color:var(--ink)}
-.nav-links a{padding:6px 0;border-bottom:2px solid transparent;white-space:nowrap}
-.nav-links a:hover,.nav-links a.on{border-color:var(--orange)}
-@media(min-width:960px){.nav-links{display:flex}}
-.nav-cta{font-size:12px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
-.nav-cta:hover{background:var(--ink);color:#fff}
+.v30-mob-only .announce{background:var(--navy);color:#EAF1FA;text-align:center;padding:calc(9px + var(--sat)) 14px 9px;font-size:12px;font-weight:700}
+.v30-mob-only .announce b{color:var(--orange-hi)}
+.v30-mob-only nav.main{position:sticky;top:0;z-index:90;background:rgba(248,246,241,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.v30-mob-only nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 24px;gap:12px}
+.v30-mob-only .logo{display:flex;align-items:center;gap:10px}
+.v30-mob-only .logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,#24487A,var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
+.v30-mob-only .logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.9),rgba(255,255,255,.2) 36%,transparent 60%)}
+.v30-mob-only .logo b{font-size:18px;color:var(--ink);font-weight:900}
+.v30-mob-only .nav-links{display:none;gap:24px;font-weight:800;font-size:13px;color:var(--ink)}
+.v30-mob-only .nav-links a{padding:6px 0;border-bottom:2px solid transparent;white-space:nowrap;border-radius:0;background:transparent;box-shadow:none;min-height:0;transform:none}
+.v30-mob-only .nav-links a:hover,.v30-mob-only .nav-links a.on{border-color:var(--orange);background:transparent;color:inherit;box-shadow:none}
+@media(min-width:960px){.v30-mob-only .nav-links{display:flex}}
+.v30-mob-only .nav-cta{font-size:12px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
+.v30-mob-only .nav-cta:hover{background:var(--ink);color:#fff}
 .phead{padding:56px 24px 30px;text-align:center}
 .phead h1{font-size:clamp(34px,8vw,64px);margin:8px 0 10px}
 .phead h1 em{font-style:normal;color:var(--orange-deep)}
@@ -62,6 +63,8 @@ nav.main .bar{max-width:1280px;margin:0 auto;display:flex;align-items:center;jus
 .post p{margin-bottom:14px;font-weight:600;font-size:15px}
 .post .hl{background:#fff;border:1px solid var(--line);border-inline-start:3px solid var(--orange);border-radius:4px;padding:14px 18px;font-size:13.5px;font-weight:700;color:var(--ink);margin:18px 0}
 .post .back{font-size:12.5px;font-weight:900;color:var(--orange-deep);border-bottom:1.5px solid var(--orange);padding-bottom:2px}
+.post.teaser{display:block;color:inherit}
+.post.teaser .back{display:inline-block}
 .rmeta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .rmeta span{border:1.5px solid var(--line-2);border-radius:999px;padding:5px 14px;font-size:11px;font-weight:800;color:var(--ink);font-family:var(--mono)}
 .rcols{display:grid;gap:22px;margin:18px 0}
@@ -101,68 +104,65 @@ body.menu-open{overflow:hidden}
   $blogArticles = $articles ?? collect();
   $blogRecipes = $recipes ?? collect();
 @endphp
-<div class="announce">{!! __('website.blog.announce') !!}</div>
+@include('website.partials.v30-icons')
 
-@include('website.partials.nav', ['active' => 'blog', 'showCart' => false])
+<div class="v30-desk">
+  @include('website.partials.v30-kitchen')
+  @include('website.partials.v30-closing')
+</div>
 
-<header class="phead">
-  <span class="kick">{{ __('website.blog.kick') }}</span>
-  <h1>{!! __('website.blog.h1') !!}</h1>
-  <p>{{ __('website.blog.sub') }}</p>
-  <div class="toc"><a href="#articles">{{ __('website.blog.toc_articles') }}</a><a href="#recipes">{{ __('website.blog.toc_recipes') }}</a></div>
-</header>
-
-<div class="sec-rule" id="articles"><div class="line"></div><span class="kick">{{ __('website.blog.articles_kick') }}</span><h2>{{ __('website.blog.articles_h2') }}</h2></div>
-
-@foreach ($blogArticles as $a)
-<article class="post" id="{{ $a->anchorId() }}">
-  @if ($a->imageUrl())
-  <div class="pimg"><img class="aiimg" src="{{ $a->imageUrl() }}" alt="" onerror="this.remove()"></div>
-  @endif
-  <div class="meta"><span><b>{{ $a->translated('category') }}</b></span><span>{{ $a->translated('read_time') }}</span><span>{{ $a->translated('author') }}</span></div>
-  <h3>{{ $a->translated('title') }}</h3>
-  @if ($a->translated('body_1') !== '')<p>{{ $a->translated('body_1') }}</p>@endif
-  @if ($a->translated('body_2') !== '')<p>{{ $a->translated('body_2') }}</p>@endif
-  @if ($a->translated('highlight') !== '')<div class="hl">{{ $a->translated('highlight') }}</div>@endif
-  @if ($a->translated('body_3') !== '')<p>{{ $a->translated('body_3') }}</p>@endif
-  @if ($a->translated('cta_label') !== '' && $a->cta_url)
-  <a class="back" href="{{ $a->cta_url }}">{{ $a->translated('cta_label') }}</a>
-  @endif
-</article>
-@endforeach
-
-<div class="sec-rule" id="recipes"><div class="line"></div><span class="kick">{{ __('website.blog.recipes_kick') }}</span><h2>{{ __('website.blog.recipes_h2') }}</h2></div>
-
-@foreach ($blogRecipes as $r)
-<article class="post" id="{{ $r->anchorId() }}">
-  @if ($r->imageUrl())
-  <div class="pimg"><img class="aiimg" src="{{ $r->imageUrl() }}" alt="" onerror="this.remove()"></div>
-  @endif
-  <div class="meta"><span><b>{{ $r->translated('category') }}</b></span><span>{{ $r->translated('meta_title') }}</span></div>
-  <h3>{{ $r->translated('title') }}</h3>
-  <div class="rmeta">
-    @if ($r->translated('time_label') !== '')<span>{{ $r->translated('time_label') }}</span>@endif
-    @if ($r->translated('kcal_label') !== '')<span>{{ $r->translated('kcal_label') }}</span>@endif
-    @if ($r->translated('protein_label') !== '')<span>{{ $r->translated('protein_label') }}</span>@endif
-    @if ($r->translated('servings_label') !== '')<span>{{ $r->translated('servings_label') }}</span>@endif
+<div class="v30-mob-only nm-ip">
+  <div class="ltitle">
+    <h1>{{ app()->getLocale() === 'ar' ? 'مطبخنا' : __('website.blog.kick') }}</h1>
+    <p>{{ __('website.blog.sub') }}</p>
   </div>
-  <div class="rcols">
-    <div class="rbox"><h4>{{ __('website.blog.ingredients') }}</h4><ul>
-      @foreach ($r->listFor('ingredients') as $ing)<li>{{ $ing }}</li>@endforeach
-    </ul></div>
-    <div class="rbox"><h4>{{ __('website.blog.method') }}</h4><ol>
-      @foreach ($r->listFor('steps') as $step)<li>{{ $step }}</li>@endforeach
-    </ol></div>
+  <div class="sec wrap">
+    <span class="kick">{{ __('website.blog.kick') }}</span>
+    <h2>{!! app()->getLocale() === 'ar' ? 'مقالات <em>ووصفات</em>' : __('website.blog.h1') !!}</h2>
+    <p class="lead">{{ __('website.blog.sub') }}</p>
+    <div class="chips" id="kchips" style="padding:0;margin-top:14px">
+      <button type="button" class="chip on" data-k="k1">{{ __('website.blog.toc_articles') }}</button>
+      <button type="button" class="chip" data-k="k2">{{ __('website.blog.toc_recipes') }}</button>
+    </div>
+
+    <div class="acards" id="k1">
+      @forelse ($blogArticles as $a)
+        <a class="ac" href="{{ route('website.article', ['article' => $a->slug]) }}">
+          <div class="media">
+            <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+            @if ($a->imageUrl())<img src="{{ $a->imageUrl() }}" alt="{{ $a->translated('title') }}" onerror="this.remove()">@endif
+          </div>
+          <div class="bd">
+            <p class="meta">{{ $a->translated('category') }}@if ($a->translated('read_time') !== '') · {{ $a->translated('read_time') }}@endif</p>
+            <h4>{{ $a->translated('title') }}</h4>
+            @php $articleLead = $a->translated('excerpt') !== '' ? $a->translated('excerpt') : $a->translated('body_1'); @endphp
+            @if ($articleLead !== '')<p>{{ \Illuminate\Support\Str::limit($articleLead, 90) }}</p>@endif
+          </div>
+        </a>
+      @empty
+        <p>{{ __('website.blog.empty_articles') }}</p>
+      @endforelse
+    </div>
+
+    <div class="acards" id="k2" style="display:none">
+      @forelse ($blogRecipes as $r)
+        <a class="ac" href="{{ route('website.recipe', ['recipe' => $r->slug]) }}">
+          <div class="media">
+            <div class="ph"><svg><use href="#i-bread"/></svg></div>
+            @if ($r->imageUrl())<img src="{{ $r->imageUrl() }}" alt="{{ $r->translated('title') }}" onerror="this.remove()">@endif
+          </div>
+          <div class="bd">
+            <p class="meta">{{ $r->translated('category') }}@if ($r->translated('time_label') !== '') · {{ $r->translated('time_label') }}@endif</p>
+            <h4>{{ $r->translated('title') }}</h4>
+            @if ($r->translated('excerpt') !== '')<p>{{ \Illuminate\Support\Str::limit($r->translated('excerpt'), 90) }}</p>@endif
+          </div>
+        </a>
+      @empty
+        <p>{{ __('website.blog.empty_recipes') }}</p>
+      @endforelse
+    </div>
   </div>
-  @if ($r->translated('cta_label') !== '' && $r->cta_url)
-  <a class="back" href="{{ $r->cta_url }}">{{ $r->translated('cta_label') }}</a>
-  @endif
-</article>
-@endforeach
-
-@include('website.partials.footer', ['variant' => 'simple'])
-
-@include('website.partials.mobile-menu')
+</div>
 
 @endsection
 
@@ -184,13 +184,15 @@ document.querySelectorAll('img.aiimg').forEach(function(img){
 @verbatim
 
 try{(function(){
-var b=document.getElementById('mBurger'),m=document.getElementById('mmenu');
-if(!b||!m)return;
-function open(){m.classList.add('open');document.body.classList.add('menu-open');}
-function close(){m.classList.remove('open');document.body.classList.remove('menu-open');}
-b.addEventListener('click',open);
-m.querySelector('.mclose').addEventListener('click',close);
-m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+var bar=document.getElementById('kchips');
+if(!bar)return;
+bar.addEventListener('click',function(e){
+  var b=e.target.closest('.chip'); if(!b)return;
+  [].forEach.call(bar.querySelectorAll('.chip'),function(x){x.classList.toggle('on',x===b);});
+  var k1=document.getElementById('k1'), k2=document.getElementById('k2');
+  if(k1) k1.style.display = b.getAttribute('data-k')==='k1' ? '' : 'none';
+  if(k2) k2.style.display = b.getAttribute('data-k')==='k2' ? '' : 'none';
+});
 })();}catch(_){}
 
 @endverbatim

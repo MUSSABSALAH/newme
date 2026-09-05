@@ -16,10 +16,17 @@
 @stack('styles')
 </head>
 <body class="@yield('body_class')">
-@if (trim($__env->yieldContent('hide_mobile_chrome')) === '')
-  @include('website.partials.mobile-chrome')
+@if (trim($__env->yieldContent('hide_site_header')) === '' && trim($__env->yieldContent('hide_mobile_chrome')) === '')
+  @include('website.partials.site-header')
 @endif
 @yield('content')
+@if (
+  trim($__env->yieldContent('hide_site_header')) === ''
+  && trim($__env->yieldContent('hide_mobile_chrome')) === ''
+  && trim($__env->yieldContent('hide_site_footer')) === ''
+)
+  @include('website.partials.footer', ['variant' => 'full'])
+@endif
 <script src="{{ asset('assets/js/website.js') }}" defer></script>
 @stack('scripts')
 </body>

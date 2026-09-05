@@ -269,12 +269,6 @@ body.menu-open{overflow:hidden}
 <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2.5 6h11v10h-11zM13.5 9.5H18l3 3.5v3h-7.5z"/><circle cx="7" cy="18" r="1.7" fill="currentColor" stroke="none"/><circle cx="17" cy="18" r="1.7" fill="currentColor" stroke="none"/></symbol>
 </defs></svg>
 
-<!-- ANNOUNCEMENT -->
-<div class="announce">{!! __('website.product.announce') !!}</div>
-
-<!-- NAV -->
-@include('website.partials.nav', ['active' => '', 'showCart' => true])
-
 <div class="crumb"><a href="{{ route('website.main') }}">{{ __('website.product.crumb_home') }}</a> / <a href="{{ route('website.store') }}">{{ __('website.product.crumb_store') }}</a> / {{ __('website.product.crumb_bakes') }} / <b id="crumbName">{{ __('website.product.name') }}</b></div>
 
 <!-- ===== PDP ===== -->
@@ -473,7 +467,6 @@ body.menu-open{overflow:hidden}
 </section>
 
 <!-- FOOTER -->
-@include('website.partials.footer', ['variant' => 'simple'])
 
 <!-- STICKY MOBILE -->
 <div class="sticky-cta">
@@ -481,7 +474,6 @@ body.menu-open{overflow:hidden}
   <button class="btn" id="stickyBuy">{{ __('website.product.js.add_cart_short') }}</button>
 </div>
 
-@include('website.partials.mobile-menu')
 
 @endsection
 

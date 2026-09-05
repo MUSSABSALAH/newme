@@ -90,7 +90,7 @@ final class CheckoutController extends Controller
             'user' => $user,
             'summary' => $summary,
             'addresses' => $this->addresses->forUser($user),
-            'selectedAddress' => $this->addresses->defaultFor($user),
+            'selectedAddress' => $this->addresses->defaultDeliverableFor($user),
             'methods' => $this->methods(),
             'hostedCheckout' => $this->gateway->usesHostedCheckout(),
         ]);

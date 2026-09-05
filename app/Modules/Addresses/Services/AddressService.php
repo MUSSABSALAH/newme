@@ -104,6 +104,18 @@ final class AddressService
             ->first();
     }
 
+    public function defaultDeliverableFor(User $user): ?Address
+    {
+        $addresses = $this->forUser($user);
+        $preferred = $addresses->firstWhere('is_default', true) ?? $addresses->first();
+
+        if ($preferred instanceof Address && $preferred->isDeliverable()) {
+            return $preferred;
+        }
+
+        return $addresses->first(fn (Address $address): bool => $address->isDeliverable());
+    }
+
     private function fill(Address $address, AddressData $data): void
     {
         $address->label = $data->label;

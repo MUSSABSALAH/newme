@@ -98,6 +98,19 @@ final class CmsContentSeeder extends Seeder
     {
         $target = $folder.'/'.$filename;
         $source = public_path('assets/images/'.$filename);
+        if (! is_file($source)) {
+            $fallbacks = [
+                'p92_1200x640.jpg' => 'v30-article-1.jpg',
+                'p93_1200x640.jpg' => 'v30-article-2.jpg',
+                'p94_1200x640.jpg' => 'v30-article-3.jpg',
+                'p95_1200x640.jpg' => 'v30-recipe-1.jpg',
+                'p96_1200x640.jpg' => 'v30-recipe-2.jpg',
+                'p97_1200x640.jpg' => 'v30-recipe-3.jpg',
+            ];
+            if (isset($fallbacks[$filename])) {
+                $source = public_path('assets/images/'.$fallbacks[$filename]);
+            }
+        }
 
         if (is_file($source)) {
             Storage::disk('public')->put($target, (string) file_get_contents($source));

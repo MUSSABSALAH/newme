@@ -26,4 +26,14 @@ return [
         'details' => 'Floor, apartment, landmark…',
     ],
 
+    'map' => [
+        'pick' => 'Choose on the map',
+        'hint' => 'Move the pin inside Riyadh city to fill the address and national address.',
+        'locating' => 'Finding your location…',
+    ],
+
+    'errors' => [
+        'outside_riyadh' => 'We cannot deliver your order',
+    ],
+
 ];

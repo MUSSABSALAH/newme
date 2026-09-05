@@ -156,10 +156,6 @@ body.mlock{overflow:hidden}
 <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17" stroke-linecap="round"/></symbol>
 </defs></svg>
 
-<div class="announce">{!! __('website.consult.announce') !!}</div>
-
-@include('website.partials.nav', ['active' => 'consult', 'showCart' => false])
-
 <div class="wrap">
   <div class="copy rv">
     <span class="kick">{{ __('website.consult.kick') }}</span>
@@ -233,9 +229,7 @@ body.mlock{overflow:hidden}
   </div>
 </div>
 
-@include('website.partials.footer', ['variant' => 'simple'])
 
-@include('website.partials.mobile-menu')
 
 @endsection
 

@@ -77,6 +77,21 @@ class WebsiteController extends Controller
         return view('website.pages.store', $this->websiteStore());
     }
 
+    public function make(): View
+    {
+        return view('website.pages.make');
+    }
+
+    public function about(): View
+    {
+        return view('website.pages.about');
+    }
+
+    public function help(): View
+    {
+        return view('website.pages.help');
+    }
+
     public function subscribe(): View
     {
         $plans = $this->websitePlans();
@@ -119,6 +134,24 @@ class WebsiteController extends Controller
                 ->orderBy('sort_order')
                 ->orderBy('id')
                 ->get(),
+        ]);
+    }
+
+    public function article(Article $article): View
+    {
+        abort_unless($article->is_active, 404);
+
+        return view('website.pages.article', [
+            'article' => $article,
+        ]);
+    }
+
+    public function recipe(Recipe $recipe): View
+    {
+        abort_unless($recipe->is_active, 404);
+
+        return view('website.pages.recipe', [
+            'recipe' => $recipe,
         ]);
     }
 

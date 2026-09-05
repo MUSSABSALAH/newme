@@ -37,4 +37,9 @@ return [
         ],
     ],
 
+    'saudi_address' => [
+        'key' => env('SNA_API_KEY'),
+        'url' => env('SNA_API_URL', 'https://apina.address.gov.sa/NationalAddress/v3.1'),
+    ],
+
 ];

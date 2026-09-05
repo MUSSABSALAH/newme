@@ -9,7 +9,7 @@
   $isSubscription = $summary->source === CheckoutSource::Subscription;
   $chosen = old('address', $selectedAddress?->public_id);
   $chosenMethod = old('payment_method', $methods[0]->value ?? 'mada');
-  $hasAddress = $addresses->isNotEmpty();
+  $hasAddress = $addresses->contains(fn ($address) => $address->isDeliverable());
   $hostedCheckout = $hostedCheckout ?? false;
 @endphp
 
@@ -86,6 +86,8 @@ html[dir="rtl"] .card > .hint{margin:0 33px 16px 0}
 .pick .body p{font-size:12.5px;font-weight:700;color:var(--body);line-height:1.6}
 .pick .body .tel{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .pick .flag{font-size:10.5px;font-weight:800;color:var(--green-ink);background:var(--green-soft);border-radius:999px;padding:2px 9px;flex-shrink:0}
+.pick.is-blocked{opacity:.72;cursor:not-allowed;background:var(--tile)}
+.pick.is-blocked .flag.bad{background:#FDECEA;color:#C0392B}
 
 .addnew{border:1.5px dashed var(--gray-3);border-radius:14px;background:transparent;color:var(--navy);font-weight:800;font-size:13.5px;padding:12px;width:100%}
 .addnew:hover{border-color:var(--orange);color:var(--orange-deep)}
@@ -165,10 +167,6 @@ body.menu-open{overflow:hidden}
 <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"/></symbol>
 </defs></svg>
 
-<div class="announce">{!! __('website.store.announce') !!}</div>
-
-@include('website.partials.nav', ['active' => $isSubscription ? 'subscribe' : 'store', 'showCart' => ! $isSubscription])
-
 <div class="cowrap">
   <div class="cohead">
     <div class="kick">{{ $summary->source->label() }}</div>
@@ -221,18 +219,21 @@ body.menu-open{overflow:hidden}
 
         @error('address')<div class="alert bad" style="margin-bottom:14px">{{ $message }}</div>@enderror
 
-        @if ($hasAddress)
+        @if ($addresses->isNotEmpty())
           <div class="addr">
             @foreach ($addresses as $address)
-              <label class="pick {{ $chosen === $address->public_id ? 'on' : '' }}" data-pick>
+              @php $deliverable = $address->isDeliverable(); @endphp
+              <label class="pick {{ $chosen === $address->public_id && $deliverable ? 'on' : '' }} {{ $deliverable ? '' : 'is-blocked' }}" @if ($deliverable) data-pick @endif>
                 <input type="radio" name="address" value="{{ $address->public_id }}" form="placeOrder"
-                       @checked($chosen === $address->public_id)>
+                       @checked($chosen === $address->public_id && $deliverable)
+                       @disabled(! $deliverable)>
                 <span class="body">
                   <b>{{ $address->label }}</b>
                   <p>{{ $address->recipient_name }} — {{ $address->summary() }}@if ($address->national_address) · {{ __('addresses.fields.national_address') }}: <span dir="ltr">{{ $address->national_address }}</span>@endif @if ($address->details) · {{ $address->details }}@endif</p>
                   <span class="tel" dir="ltr">{{ $address->phone }}</span>
                 </span>
-                @if ($address->is_default)<span class="flag">{{ __('addresses.default') }}</span>@endif
+                @if ($deliverable && $address->is_default)<span class="flag">{{ __('addresses.default') }}</span>@endif
+                @unless ($deliverable)<span class="flag bad">{{ __('addresses.errors.outside_riyadh') }}</span>@endunless
               </label>
             @endforeach
           </div>
@@ -245,6 +246,12 @@ body.menu-open{overflow:hidden}
         <form class="aform" method="POST" action="{{ route('website.checkout.address.store') }}"
               data-address-form @if ($hasAddress && ! $errors->has('street')) hidden @endif>
           @csrf
+          @include('website.account._address-map', [
+            'cityId' => 'city',
+            'districtId' => 'district',
+            'streetId' => 'street',
+            'nationalId' => 'national_address',
+          ])
           <div class="grid2">
             <div class="f">
               <label for="label">{{ __('addresses.fields.label') }}</label>
@@ -423,8 +430,6 @@ body.menu-open{overflow:hidden}
   </div>
 </div>
 
-@include('website.partials.footer', ['variant' => 'simple'])
-@include('website.partials.mobile-menu')
 @endsection
 
 @push('scripts')
@@ -470,6 +475,7 @@ try{
       if(!aform.hidden){
         var first=aform.querySelector('input');
         if(first)first.focus();
+        if(window.nmAddrMaps) window.nmAddrMaps.resize(aform);
       }
     });
   }

@@ -1,117 +1,116 @@
-{{-- Shared mobile site header (logo + cart + menu + live batch). Desktop unchanged. --}}
+{{-- Shared mobile chrome: top bar, dark drawer, tab bar. --}}
 @php
   $nmChromeLogo = app()->getLocale() === 'ar' ? 'logo_ar.png' : 'logo_en.png';
   $nmShowCart = $showCart ?? true;
+  $nmTab = $active ?? ($nmTab ?? null);
+  $isAr = app()->getLocale() === 'ar';
+  $wa = 'https://wa.me/966539603302';
+  $nmLangTarget = $isAr ? 'en' : 'ar';
+  $nmItems = [
+    ['href' => route('website.main'), 'icon' => 't-home', 'title' => $isAr ? 'الرئيسة' : 'Home', 'sub' => $isAr ? 'الواجهة ولماذا نيومي' : 'The site and why New Me'],
+    ['href' => route('website.store'), 'icon' => 't-shop', 'title' => __('website.nav.store'), 'sub' => $isAr ? 'المنتجات والقيم الغذائية' : 'Products and nutrition'],
+    ['href' => route('website.subscribe'), 'icon' => 't-card', 'title' => $isAr ? 'الاشتراكات' : __('website.nav.subscribe'), 'sub' => $isAr ? 'ثلاث باقات حسب المدة' : 'Three packs by duration'],
+    ['href' => route('website.make'), 'icon' => 't-craft', 'title' => $isAr ? 'صناعتنا' : 'Our craft', 'sub' => $isAr ? 'كيف نخبز ولماذا يفرق' : 'How we bake and why it matters'],
+    ['href' => route('website.about'), 'icon' => 't-about', 'title' => __('website.nav.about'), 'sub' => $isAr ? 'قصتنا ورؤيتنا' : 'Our story and vision'],
+    ['href' => route('website.blog'), 'icon' => 't-kitchen', 'title' => $isAr ? 'مطبخنا' : __('website.nav.articles'), 'sub' => $isAr ? 'مقالات ووصفات' : 'Articles and recipes'],
+    ['href' => route('website.help'), 'icon' => 't-help', 'title' => $isAr ? 'الأسئلة' : 'FAQ', 'sub' => $isAr ? 'الدعم والاستشارة' : 'Help and consults'],
+    ['href' => route('website.terms'), 'icon' => 't-doc', 'title' => __('website.nav.terms'), 'sub' => $isAr ? 'الشروط والسياسات' : 'Terms and policies'],
+  ];
+  if (auth()->check() && auth()->user()->isCustomer()) {
+    $nmItems[] = ['href' => route('website.account'), 'icon' => 't-user', 'title' => __('account.nav.account'), 'sub' => $isAr ? 'طلباتك واشتراكك' : 'Orders and subscription'];
+  } else {
+    $nmItems[] = ['href' => route('website.login'), 'icon' => 't-user', 'title' => __('account.nav.login'), 'sub' => $isAr ? 'دخول حسابك' : 'Sign in to your account'];
+  }
+  $nmItems[] = ['href' => route('locale.switch', $nmLangTarget), 'icon' => 't-lang', 'title' => $nmLangTarget === 'en' ? 'EN · English' : 'AR · العربية', 'sub' => $isAr ? 'تغيير لغة الموقع' : 'Switch site language', 'hreflang' => $nmLangTarget];
 @endphp
 
-<style>
-.nm-chrome{--cream:#F5F1EA;--cream-2:#FAF7F2;--white:#fff;--navy:#1B3055;--navy-2:#14294A;--orange:#E07B39;--orange-2:#EF9152;--muted:#7B8794;--line:rgba(27,48,85,.10);--pad:20px;--pill:999px;display:none}
-@media(max-width:819.98px){
-  .nm-chrome{display:block;position:sticky;top:0;z-index:220;font-family:"Cairo",system-ui,sans-serif;color:var(--navy)}
-  /* Hide desktop chrome on mobile sitewide (main page already wraps its own) */
-  body:not(:has(.home-mobile)) .announce,
-  body:not(:has(.home-mobile)) nav.main,
-  body:not(:has(.home-mobile)) #mmenu,
-  body:not(:has(.home-mobile)) .burger{display:none!important}
-  body:not(:has(.home-mobile)){padding-top:0}
-}
-.nm-chrome .topwrap{position:relative;z-index:1}
-.nm-chrome header{background:rgba(245,241,234,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  padding:11px var(--pad);display:flex;align-items:center;gap:9px}
-.nm-chrome .brand{display:flex;align-items:center;margin-inline-end:auto;line-height:0}
-.nm-chrome .brand img{height:36px;width:auto;max-width:140px;object-fit:contain;display:block}
-.nm-chrome .rnd{width:38px;height:38px;border-radius:50%;background:var(--white);border:1px solid var(--line);
-  display:grid;place-items:center;font-size:15px;box-shadow:0 2px 6px rgba(27,48,85,.05);color:inherit;text-decoration:none;flex-shrink:0;padding:0;cursor:pointer}
-.nm-chrome .live{background:var(--navy-2);color:#E9F0F8;padding:7px var(--pad) 8px}
-.nm-chrome .live .r{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;flex-wrap:nowrap;white-space:nowrap;min-width:0}
-.nm-chrome .live .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:nmChromePl 2.4s infinite;flex-shrink:0}
-@keyframes nmChromePl{0%,100%{box-shadow:0 0 0 0 rgba(224,123,57,.55)}50%{box-shadow:0 0 0 7px rgba(224,123,57,0)}}
-.nm-chrome .live .batch{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
-.nm-chrome .live b{color:var(--orange);font-weight:800}
-.nm-chrome .live .next{margin-inline-start:auto;color:#9FB5CD;font-weight:500;flex-shrink:0}
-.nm-chrome .live .next span{color:#fff;font-weight:800;font-variant-numeric:tabular-nums}
-.nm-chrome .track{height:3px;background:rgba(255,255,255,.14);border-radius:3px;margin-top:7px;overflow:hidden}
-.nm-chrome .track .prog{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--orange-2),var(--orange));transition:width 1.2s ease}
-.nm-chrome .scrim{position:fixed;inset:0;background:rgba(20,41,74,.55);z-index:230;opacity:0;pointer-events:none;transition:opacity .25s}
-.nm-chrome .scrim.on{opacity:1;pointer-events:auto}
-.nm-chrome .drawer{position:fixed;top:0;inset-inline-end:0;height:100%;width:80%;max-width:320px;background:var(--cream-2);z-index:240;
-  transform:translateX(105%);transition:transform .3s cubic-bezier(.3,.8,.3,1);padding:22px 20px;overflow-y:auto}
-html[dir="rtl"] .nm-chrome .drawer{transform:translateX(-105%)}
-.nm-chrome .drawer.on,html[dir="rtl"] .nm-chrome .drawer.on{transform:translateX(0)}
-.nm-chrome .drawer h4{font-size:11.5px;color:var(--orange);letter-spacing:.08em;margin:22px 0 4px;font-weight:800}
-.nm-chrome .drawer nav a{display:block;padding:12px 0;border-bottom:1px solid var(--line);font-weight:800;font-size:15px;color:var(--navy);text-decoration:none}
-.nm-chrome .drawer .x{position:absolute;top:18px;inset-inline-start:18px;font-size:19px;border:0;background:none;cursor:pointer;color:var(--navy)}
-.nm-chrome .drawer .kicker{font-size:11.5px;font-weight:700;color:var(--orange);letter-spacing:.05em;margin-bottom:8px}
-.nm-chrome .drawer .kicker::before{content:"— "}
-/* Main mobile home already has its own header — hide the sitewide one there */
-body:has(.home-mobile) .nm-chrome{display:none!important}
-</style>
+<link rel="stylesheet" href="{{ asset('assets/css/website-iphone.css') }}">
+
+<svg style="display:none" aria-hidden="true"><defs>
+  <symbol id="t-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="t-shop" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+  <symbol id="t-subs" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="t-card" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2.5"/><path d="M8 12h8M8 15h5"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="t-kitchen" viewBox="0 0 24 24"><path d="M5 4v7a3 3 0 0 0 6 0V4M8 11v9"/><path d="M17 4c-1.5 1.5-2 4-2 6.5 0 1.4.7 2.5 2 2.5V20"/></symbol>
+  <symbol id="t-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="t-craft" viewBox="0 0 24 24"><path d="M12 3c2.2 3.4 3.2 6.2 3.2 8.6A3.2 3.2 0 0 1 12 15V21"/><path d="M12 3C9.8 6.4 8.8 9.2 8.8 11.6A3.2 3.2 0 0 0 12 15"/></symbol>
+  <symbol id="t-about" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19.2c1.2-3.2 3.4-4.8 6.5-4.8s5.3 1.6 6.5 4.8"/></symbol>
+  <symbol id="t-help" viewBox="0 0 24 24"><path d="M8.2 8.4a4 4 0 1 1 5.4 3.7c-.8.4-1.6 1.2-1.6 2.1V15"/><circle cx="12" cy="18.2" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="t-doc" viewBox="0 0 24 24"><path d="M7 4.5h7l4 4V19.5a1.5 1.5 0 0 1-1.5 1.5h-9.5A1.5 1.5 0 0 1 5.5 19.5v-13A2 2 0 0 1 7 4.5z"/><path d="M14 4.5V9h4.5M8.5 13h7M8.5 16.5h5"/></symbol>
+  <symbol id="t-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5.2 19c1.3-3.1 3.6-4.6 6.8-4.6s5.5 1.5 6.8 4.6"/></symbol>
+  <symbol id="t-lang" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M4.5 12h15M12 3.8c2.2 2.2 3.4 5 3.4 8.2S14.2 18 12 20.2C9.8 18 8.6 15.2 8.6 12S9.8 6 12 3.8z"/></symbol>
+</defs></svg>
 
 <div class="nm-chrome" id="nmChrome">
   <div class="topwrap">
-    <header>
+    <header class="ip-topbar">
       <a class="brand" href="{{ route('website.main') }}">
         <img src="{{ asset('assets/images/logos/'.$nmChromeLogo) }}" alt="{{ __('website.brand') }}" width="140" height="40">
       </a>
-      @if ($nmShowCart)
-      <a class="rnd" href="{{ route('website.cart') }}" aria-label="{{ __('website.nav.cart') }}">🛒</a>
-      @endif
-      <button class="rnd" type="button" id="nmChromeMenuBtn" aria-label="{{ __('website.nav.menu') }}">☰</button>
-    </header>
-    <div class="live">
-      <div class="r">
-        <span class="dot"></span>
-        <span class="batch">
-          @if (app()->getLocale() === 'ar')
-            دفعة <b>NM-26</b> · خُبزت 07:00
-          @else
-            Batch <b>NM-26</b> · baked 07:00
-          @endif
-        </span>
-        <span class="next">
-          {{ app()->getLocale() === 'ar' ? 'الدفعة القادمة بعد' : 'Next batch in' }}
-          <span id="nmChromeCd">—</span>
-        </span>
+      <div class="tb-acts">
+        <button class="tb-act" type="button" id="nmChromeMenuBtn" aria-label="{{ __('website.nav.menu') }}">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        @if (auth()->check() && auth()->user()->isCustomer())
+        <a class="tb-act {{ request()->routeIs('website.account*') ? 'on' : '' }}" href="{{ route('website.account') }}" aria-label="{{ __('account.nav.account') }}">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        @else
+        <a class="tb-act {{ request()->routeIs('website.login', 'website.register') ? 'on' : '' }}" href="{{ route('website.login') }}" aria-label="{{ __('account.nav.login') }}">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        @endif
+        @if ($nmShowCart)
+        <a class="tb-act" href="{{ route('website.cart') }}" aria-label="{{ __('website.nav.cart') }}">
+          <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        </a>
+        @endif
+        <a class="tb-act" href="{{ $wa }}" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M20.5 11.5a8.5 8.5 0 1 1-4.3-7.4"/><path d="M4 20l1.4-4"/></svg>
+        </a>
       </div>
-      <div class="track"><span class="prog" id="nmChromeProg"></span></div>
-    </div>
+    </header>
   </div>
 
   <div class="scrim" id="nmChromeScrim"></div>
   <aside class="drawer" id="nmChromeDrawer">
-    <button class="x" type="button" id="nmChromeX" aria-label="{{ app()->getLocale() === 'ar' ? 'إغلاق' : 'Close' }}">✕</button>
-    <div class="kicker">{{ app()->getLocale() === 'ar' ? 'نيو مي · القائمة' : 'New Me · Menu' }}</div>
+    <div class="hd">
+      <h3>{{ $isAr ? 'القائمة' : 'Menu' }}</h3>
+      <button class="x" type="button" id="nmChromeX" aria-label="{{ $isAr ? 'إغلاق' : 'Close' }}">×</button>
+    </div>
     <nav>
-      <h4>{{ app()->getLocale() === 'ar' ? 'التسوق' : 'Shop' }}</h4>
-      <a href="{{ route('website.store') }}">{{ __('website.nav.store') }}</a>
-      <a href="{{ route('website.subscribe') }}">{{ __('website.nav.subscribe') }}</a>
-      <a href="{{ route('website.consult') }}">{{ __('website.nav.consult') }}</a>
-      <h4>{{ app()->getLocale() === 'ar' ? 'اقرأ أكثر' : 'Learn more' }}</h4>
-      <a href="{{ route('website.blog') }}#articles">{{ __('website.nav.articles') }}</a>
-      <a href="{{ route('website.blog') }}#recipes">{{ __('website.main.recipes.kick') }}</a>
-      <a href="{{ route('website.main') }}#about">{{ __('website.nav.about') }}</a>
-      <a href="{{ route('website.terms') }}">{{ __('website.nav.terms') }}</a>
-      <h4>{{ app()->getLocale() === 'ar' ? 'الحساب' : 'Account' }}</h4>
-      @auth
-        @if (auth()->user()->isCustomer())
-          <a href="{{ route('website.account') }}">{{ __('account.nav.account') }}</a>
-        @endif
-      @else
-        <a href="{{ route('website.login') }}">{{ __('account.nav.login') }}</a>
-      @endauth
-      @php($nmLangTarget = app()->getLocale() === 'ar' ? 'en' : 'ar')
-      <a href="{{ route('locale.switch', $nmLangTarget) }}" hreflang="{{ $nmLangTarget }}">
-        {{ $nmLangTarget === 'en' ? 'EN · English' : 'AR · العربية' }}
-      </a>
+      @foreach ($nmItems as $item)
+        <a class="mitem" href="{{ $item['href'] }}" @if(!empty($item['hreflang'])) hreflang="{{ $item['hreflang'] }}" @endif>
+          <span class="ico"><svg><use href="#{{ $item['icon'] }}"/></svg></span>
+          <span class="txt"><b>{{ $item['title'] }}</b><small>{{ $item['sub'] }}</small></span>
+          <span class="arr" aria-hidden="true">{{ $isAr ? '←' : '→' }}</span>
+        </a>
+      @endforeach
     </nav>
   </aside>
 </div>
 
+<nav class="nm-tabbar" id="nmTabbar" aria-label="{{ $isAr ? 'التنقل' : 'Navigation' }}">
+  <a class="tab {{ request()->routeIs('website.main') ? 'on' : '' }}" href="{{ route('website.main') }}">
+    <svg><use href="#t-home"/></svg>{{ $isAr ? 'الرئيسة' : 'Home' }}
+  </a>
+  <a class="tab {{ ($nmTab === 'store' || request()->routeIs('website.store', 'website.product', 'website.product.show')) ? 'on' : '' }}" href="{{ route('website.store') }}">
+    <svg><use href="#t-shop"/></svg>{{ __('website.nav.store') }}
+  </a>
+  <a class="tab {{ ($nmTab === 'subscribe' || request()->routeIs('website.subscribe')) ? 'on' : '' }}" href="{{ route('website.subscribe') }}">
+    <svg><use href="#t-subs"/></svg>{{ $isAr ? 'الاشتراكات' : __('website.nav.subscribe') }}
+  </a>
+  <a class="tab {{ ($nmTab === 'blog' || request()->routeIs('website.blog', 'website.article', 'website.recipe')) ? 'on' : '' }}" href="{{ route('website.blog') }}">
+    <svg><use href="#t-kitchen"/></svg>{{ $isAr ? 'مطبخنا' : __('website.nav.articles') }}
+  </a>
+  <a class="tab {{ ($nmTab === 'about' || request()->routeIs('website.about')) ? 'on' : '' }}" href="{{ route('website.about') }}">
+    <svg><use href="#t-more"/></svg>{{ $isAr ? 'عن نيومي' : __('website.nav.about') }}
+  </a>
+</nav>
+
 <script>
 (function(){
   if(!window.matchMedia || !matchMedia('(max-width:819.98px)').matches) return;
-  if(document.querySelector('.home-mobile')) return;
-  var root=document.getElementById('nmChrome'); if(!root) return;
   var scrim=document.getElementById('nmChromeScrim');
   var drawer=document.getElementById('nmChromeDrawer');
   var open=function(){if(drawer)drawer.classList.add('on');if(scrim)scrim.classList.add('on');document.body.style.overflow='hidden'};
@@ -123,19 +122,5 @@ body:has(.home-mobile) .nm-chrome{display:none!important}
   if(scrim) scrim.addEventListener('click', close);
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
   drawer && drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
-
-  function tick(){
-    var now=new Date();
-    var bake=new Date(now); bake.setHours(7,0,0,0);
-    if(now<bake) bake.setDate(bake.getDate()-1);
-    var next=new Date(bake); next.setDate(next.getDate()+1);
-    var left=next-now, h=Math.floor(left/36e5), m=Math.floor(left%36e5/6e4), s=Math.floor(left%6e4/1e3);
-    var cd=document.getElementById('nmChromeCd');
-    if(cd) cd.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-    var pct=Math.min(100,((now-bake)/(48*36e5))*100);
-    var prog=document.getElementById('nmChromeProg');
-    if(prog) prog.style.width=pct.toFixed(1)+'%';
-  }
-  tick(); setInterval(tick,1000);
 })();
 </script>

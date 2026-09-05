@@ -9,9 +9,6 @@
 @endpush
 
 @section('content')
-<div class="announce">{!! __('website.store.announce') !!}</div>
-@include('website.partials.nav', ['active' => null, 'showCart' => true])
-
 <div class="acc-wrap narrow">
   <div class="acc-head" style="text-align:center">
     <div class="kick">{{ __('account.passwords.request_title') }}</div>
@@ -36,6 +33,4 @@
   <p class="aside-note"><a href="{{ route('website.login') }}">{{ __('account.passwords.back_to_login') }}</a></p>
 </div>
 
-@include('website.partials.footer', ['variant' => 'full'])
-@include('website.partials.mobile-menu')
 @endsection

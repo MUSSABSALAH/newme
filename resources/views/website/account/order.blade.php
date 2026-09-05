@@ -15,9 +15,6 @@
   $waText = rawurlencode($waRef."\n".implode("\n", $waLines));
 @endphp
 
-<div class="announce">{!! __('website.store.announce') !!}</div>
-@include('website.partials.nav', ['active' => null, 'showCart' => true])
-
 <div class="cowrap">
   <div class="cohead">
     <a href="{{ route('website.account', ['tab' => 'orders']) }}" class="co-back">← {{ __('account.back') }}</a>
@@ -72,6 +69,4 @@
   <a class="w-btn" style="margin-top:4px" href="https://wa.me/966533360317?text={{ $waText }}" target="_blank" rel="noopener">{{ __('account.order.whatsapp') }}</a>
 </div>
 
-@include('website.partials.footer', ['variant' => 'full'])
-@include('website.partials.mobile-menu')
 @endsection

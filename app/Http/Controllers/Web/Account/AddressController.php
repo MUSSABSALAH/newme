@@ -10,12 +10,28 @@ use App\Models\User;
 use App\Modules\Addresses\DTOs\AddressData;
 use App\Modules\Addresses\Models\Address;
 use App\Modules\Addresses\Services\AddressService;
+use App\Modules\Addresses\Services\MapGeocoder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 final class AddressController extends Controller
 {
-    public function __construct(private readonly AddressService $addresses) {}
+    public function __construct(
+        private readonly AddressService $addresses,
+        private readonly MapGeocoder $geocoder,
+    ) {}
+
+    public function lookup(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'lat' => ['required', 'numeric', 'between:-90,90'],
+            'lng' => ['required', 'numeric', 'between:-180,180'],
+        ]);
+
+        return response()->json($this->geocoder->lookup((float) $data['lat'], (float) $data['lng']));
+    }
 
     public function store(AddressRequest $request): RedirectResponse
     {

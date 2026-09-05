@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Addresses\Models;
 
 use App\Models\User;
+use App\Modules\Addresses\Support\RiyadhDelivery;
 use Database\Factories\AddressFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -100,6 +101,11 @@ class Address extends Model
             $this->district,
             $this->street,
         ]));
+    }
+
+    public function isDeliverable(): bool
+    {
+        return RiyadhDelivery::isRiyadhCity($this->city);
     }
 
     /**

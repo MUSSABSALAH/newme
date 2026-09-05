@@ -129,11 +129,27 @@ final class AccountAreaTest extends TestCase
                 'details' => 'Apt 4',
                 'is_default' => '1',
             ])
+            ->assertSessionHasErrors('city');
+
+        $this->assertSame('Riyadh', $address->refresh()->city);
+
+        $this->actingAs($customer)
+            ->put(route('website.account.addresses.update', $address), [
+                'label' => 'Work',
+                'recipient_name' => 'Sara',
+                'phone' => '0501234567',
+                'city' => 'الرياض',
+                'district' => 'العليا',
+                'street' => 'Street 1',
+                'national_address' => 'RRRD3000',
+                'details' => 'Apt 4',
+                'is_default' => '1',
+            ])
             ->assertRedirect(route('website.account', ['tab' => 'addresses']));
 
         $this->assertSame('Work', $address->refresh()->label);
-        $this->assertSame('Jeddah', $address->city);
-        $this->assertSame('JEDD1234', $address->national_address);
+        $this->assertSame('الرياض', $address->city);
+        $this->assertSame('RRRD3000', $address->national_address);
     }
 
     public function test_account_hub_lists_orders_subscriptions_and_addresses(): void

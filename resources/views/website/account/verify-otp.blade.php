@@ -9,9 +9,6 @@
 @endpush
 
 @section('content')
-<div class="announce">{!! __('website.store.announce') !!}</div>
-@include('website.partials.nav', ['active' => null, 'showCart' => true])
-
 <div class="acc-wrap narrow">
   <div class="acc-head" style="text-align:center">
     <div class="kick">{{ __('account.otp.kick') }}</div>
@@ -76,8 +73,6 @@
   </form>
 </div>
 
-@include('website.partials.footer', ['variant' => 'full'])
-@include('website.partials.mobile-menu')
 @endsection
 
 @push('scripts')

@@ -4,15 +4,15 @@
   <div class="bar">
     @include('website.partials.logo')
     <div class="nav-links">
-      <a href="{{ route('website.main') }}#about">{{ __('website.nav.about') }}</a>
-      <a href="{{ route('website.main') }}#journey">{{ __('website.nav.journey') }}</a>
+      <a href="{{ route('website.about') }}" class="{{ $active === 'about' ? 'on' : '' }}">{{ __('website.nav.about') }}</a>
+      <a href="{{ route('website.make') }}" class="{{ $active === 'make' ? 'on' : '' }}">{{ app()->getLocale() === 'ar' ? 'صناعتنا' : 'Our craft' }}</a>
       <a href="{{ route('website.store') }}" class="{{ $active === 'store' ? 'on' : '' }}">{{ __('website.nav.store') }}</a>
       <a href="{{ route('website.subscribe') }}" class="{{ $active === 'subscribe' ? 'on' : '' }}">{{ __('website.nav.subscribe') }}</a>
       @if (false)
         <a href="{{ route('website.menu') }}" class="{{ $active === 'menu' ? 'on' : '' }}">{{ __('website.nav.menu') }}</a>
       @endif
-      <a href="{{ route('website.blog') }}#articles" class="{{ $active === 'blog' ? 'on' : '' }}">{{ __('website.nav.articles') }}</a>
-      <a href="{{ route('website.consult') }}" class="{{ $active === 'consult' ? 'on' : '' }}">{{ __('website.nav.consult') }}</a>
+      <a href="{{ route('website.blog') }}" class="{{ $active === 'blog' ? 'on' : '' }}">{{ app()->getLocale() === 'ar' ? 'مطبخنا' : __('website.nav.articles') }}</a>
+      <a href="{{ route('website.help') }}" class="{{ $active === 'help' ? 'on' : '' }}">{{ app()->getLocale() === 'ar' ? 'الأسئلة' : 'FAQ' }}</a>
       <a href="{{ route('website.terms') }}" class="{{ $active === 'terms' ? 'on' : '' }}">{{ __('website.nav.terms') }}</a>
     </div>
     <button class="burger" id="mBurger" aria-label="{{ __('website.nav.menu') }}"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>

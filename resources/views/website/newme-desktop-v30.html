@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="نيومي — مخبوزات ووجبات صحية جاهزة من دقيقنا الصحي الخاص، بقيم غذائية مطبوعة كاملة على كل عبوة.">
+<meta name="theme-color" content="#122B4A">
+<title>نيومي — جدّد حياتك</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#122B4A; --navy-2:#1B3A61; --navy-3:#24487A;
+  --bg:#F7F5F1; --tile:#F0EDE6; --gray-2:#E8E4DC; --gray-3:#D5D0C6;
+  --ink:#12233B; --body:#43536A; --muted:#7C8799;
+  --orange:#F07F2D; --orange-deep:#DD6516; --orange-hi:#FFA05C; --orange-soft:#FFF0E1;
+  --green:#39B478;
+  --grad:linear-gradient(105deg,var(--orange-hi),var(--orange) 55%,var(--orange-deep));
+  --font:'Cairo',-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  --mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --max:1260px;
+  --gutter:max(20px,calc((100vw - var(--max))/2 + 20px));
+  --sat:env(safe-area-inset-top,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:96px}
+body{font-family:var(--font);background:var(--bg);color:var(--body);
+  line-height:1.75;font-size:15.5px;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--font);cursor:pointer}
+img{display:block;width:100%;height:100%;object-fit:cover}
+h1,h2,h3,h4{color:var(--navy);font-weight:900;line-height:1.18;letter-spacing:-.015em}
+.container{max-width:var(--max);margin:0 auto;padding:0 20px}
+.section{padding:76px 0}
+.section.alt{background:#fff;border-block:1px solid var(--gray-2)}
+.section.tile{background:#EFEBE3}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(22px);
+  transition:opacity .65s cubic-bezier(.2,.7,.2,1),transform .65s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}}
+
+/* icons + placeholders */
+.i{width:1.05em;height:1.05em;fill:currentColor;vertical-align:-.14em;display:inline-block}
+.ph{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden}
+.ph svg{width:54px;height:54px;color:var(--gray-3);fill:currentColor}
+.ph::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,transparent 32%,rgba(255,255,255,.28) 50%,transparent 68%);
+  transform:translateX(-100%);animation:shimmer 2.4s ease infinite;pointer-events:none}
+@keyframes shimmer{to{transform:translateX(100%)}}
+.aiimg{transition:opacity .9s ease}
+.js .aiimg{opacity:0}
+.js .aiimg.loaded{opacity:1}
+
+/* type helpers */
+.kick{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--orange-deep)}
+.mono{font-family:var(--mono);letter-spacing:.12em}
+.sec-head{max-width:820px;margin:0 auto 44px;text-align:center;padding:0 20px}
+.sec-head h2{font-size:clamp(28px,5.4vw,46px);margin:10px 0 12px}
+.sec-head h2 em{font-style:normal;color:var(--orange-deep)}
+.sec-head p{font-size:15px;font-weight:600;color:var(--muted)}
+.sec-head .kick{display:inline-flex;align-items:center;gap:10px}
+.sec-head .kick::before,.sec-head .kick::after{content:"";width:26px;height:2px;
+  border-radius:2px;background:var(--orange)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;
+  font-size:15px;border-radius:999px;padding:16px 32px;min-height:54px;border:2px solid var(--orange);
+  background:var(--grad);color:#fff;transition:.2s;box-shadow:0 12px 28px rgba(240,127,45,.35)}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:scale(.97)}
+.btn.navy{background:var(--navy);border-color:var(--navy);box-shadow:0 12px 28px rgba(18,43,74,.3)}
+.btn.navy:hover{background:var(--navy-2)}
+.btn.inv{background:#fff;border-color:var(--navy);color:var(--navy);box-shadow:none}
+.btn.inv:hover{background:var(--navy);color:#fff}
+.btn.ghost{background:transparent;border-color:rgba(255,255,255,.42);color:#fff;box-shadow:none}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+.btn.white{background:#fff;border-color:#fff;color:var(--orange-deep);box-shadow:0 12px 28px rgba(0,0,0,.18)}
+.btn.sm{padding:12px 22px;min-height:46px;font-size:13.5px}
+.btn.full{width:100%}
+
+/* fuel bars */
+.fuel{--v:0%}
+.fuel-bar{height:9px;background:rgba(18,43,74,.1);border-radius:99px;overflow:hidden;position:relative}
+.fuel-bar i{position:absolute;inset-block:0;inset-inline-start:0;width:var(--v);
+  background:var(--grad);border-radius:99px;box-shadow:0 0 12px rgba(240,127,45,.55);
+  transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+
+/* ========== 01 · INTRO ========== */
+.intro{background:var(--navy);color:#fff;min-height:100svh;display:grid;place-items:center;
+  padding:calc(78px + var(--sat)) 20px 48px;text-align:center;position:relative;overflow:hidden}
+.intro.hide{display:none}
+
+
+.intro-skip:hover{background:rgba(255,255,255,.1);color:#fff}
+.beats{display:flex;justify-content:center;gap:0;margin-bottom:34px}
+.beats span{font-size:14px;font-weight:900;color:#5F7797;padding:0 18px;position:relative}
+.beats span+span::before{content:"";position:absolute;inset-inline-end:0;top:50%;
+  width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transform:translate(50%,-50%)}
+.beats span.on{color:var(--orange-hi)}
+.disc{width:min(220px,52vw);aspect-ratio:1/1;border-radius:50%;margin:0 auto 38px;position:relative;
+  background:linear-gradient(150deg,#C9A97E,#8A6B45);
+  box-shadow:0 0 0 14px rgba(255,255,255,.05),0 0 0 30px rgba(255,255,255,.03)}
+
+
+.disc-badge{position:absolute;top:-8px;inset-inline-end:-42px;background:var(--navy-2);
+  border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 18px;z-index:3;
+  box-shadow:0 14px 32px rgba(0,0,0,.45)}
+
+
+
+
+
+
+
+/* ========== 02 · ANNOUNCE / NAV / HERO / USP ========== */
+.announce{background:var(--navy);color:#fff;text-align:center;padding:9px 14px;font-size:12.5px;
+  font-weight:700;position:relative;overflow:hidden;min-height:calc(38px + var(--sat));
+  padding-top:calc(9px + var(--sat))}
+.announce b{color:var(--orange-hi)}
+.announce span{position:absolute;inset-inline:14px;top:calc(9px + var(--sat));opacity:0;transition:opacity .45s}
+.announce span.on{opacity:1}
+
+nav.main{position:sticky;top:0;z-index:90;background:rgba(247,245,241,.9);
+  backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);
+  border-bottom:1px solid var(--gray-2)}
+nav.main .bar{max-width:var(--max);margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;height:66px;padding:0 20px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .mark{width:36px;height:36px;border-radius:50%;flex-shrink:0;position:relative;
+  background:conic-gradient(from 210deg,var(--navy-3),var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi))}
+.logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.9),rgba(255,255,255,.2) 36%,transparent 60%)}
+.logo b{font-size:19px;color:var(--navy);font-weight:900}
+.logo small{display:block;font-size:9px;color:var(--muted);font-weight:800;letter-spacing:.1em;line-height:1}
+.nav-links{display:none;gap:20px;font-weight:800;font-size:13.5px;color:var(--ink)}
+.nav-links a{padding:6px 0;border-bottom:2.5px solid transparent;white-space:nowrap}
+.nav-links a:hover{border-color:var(--orange)}
+@media(min-width:1080px){.nav-links{display:flex}}
+.nav-right{display:flex;align-items:center;gap:10px}
+.burger{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;
+  display:grid;place-items:center}
+@media(min-width:1080px){.burger{display:none}}
+.burger svg{width:20px;height:20px;stroke:var(--navy);stroke-width:2.2;fill:none;stroke-linecap:round}
+.mmenu{position:fixed;inset:0;background:rgba(18,43,74,.97);z-index:120;display:none;
+  flex-direction:column;justify-content:center;gap:6px;padding:24px}
+.mmenu.open{display:flex}
+.mmenu a{color:#fff;font-size:19px;font-weight:800;padding:12px 4px;
+  border-bottom:1px solid rgba(255,255,255,.1)}
+.mclose{position:absolute;top:24px;inset-inline-start:24px;background:none;border:0;
+  color:#fff;font-size:30px;line-height:1}
+
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--gray-2);display:grid}
+@media(min-width:920px){.hero{grid-template-columns:1fr 1fr;min-height:72vh}}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:64px 20px 56px}
+@media(min-width:920px){.hero-copy{padding:80px 56px 80px var(--gutter);padding-inline-start:var(--gutter);padding-inline-end:56px}}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--gray-2);
+  border-radius:999px;padding:9px 18px;font-size:12px;font-weight:900;color:var(--navy);
+  box-shadow:0 10px 26px rgba(18,43,74,.08);margin-bottom:24px}
+.hero-pill b{color:var(--orange-deep);font-family:var(--mono);letter-spacing:.1em}
+.hero h1{font-size:clamp(36px,6.4vw,68px);line-height:1.12;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--orange-deep)}
+.hero p.lead{font-size:17px;max-width:540px;margin:0 0 30px;font-weight:700;color:var(--ink)}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-note{margin-top:28px;display:flex;align-items:center;gap:9px;font-size:13px;
+  font-weight:800;color:var(--ink)}
+.hero-note .i{width:18px;height:18px;color:var(--orange-deep)}
+.hero-media{position:relative;min-height:380px;background:var(--tile)}
+@media(min-width:920px){.hero-media{min-height:0}}
+.hero-media img{position:absolute;inset:0}
+
+.usp-strip{border-bottom:1px solid var(--gray-2);background:#fff}
+.usp-grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(2,1fr)}
+@media(min-width:920px){.usp-grid{grid-template-columns:repeat(4,1fr)}}
+.usp{padding:26px 18px;text-align:center;border-inline-start:1px solid var(--gray-2)}
+.usp:first-child,.usp:nth-child(3){border-inline-start:none}
+@media(min-width:920px){.usp:nth-child(3){border-inline-start:1px solid var(--gray-2)}}
+.usp .ic{width:48px;height:48px;border-radius:14px;background:var(--orange-soft);
+  color:var(--orange-deep);display:grid;place-items:center;margin:0 auto 10px}
+.usp .ic .i{width:23px;height:23px}
+.usp b{display:block;font-size:15px;color:var(--navy);font-weight:900}
+.usp small{font-size:12px;color:var(--muted);font-weight:700;line-height:1.8;display:block;margin-top:4px}
+
+/* ========== 03 · WHY / SHOP ========== */
+.split{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:26px;align-items:stretch}
+@media(min-width:920px){.split{gap:48px}}
+.split .copy{align-self:center}
+.media-card{position:relative;border-radius:22px;overflow:hidden;background:var(--tile);
+  min-height:340px;height:100%;box-shadow:0 24px 54px rgba(18,43,74,.14)}
+.media-card img{position:absolute;inset:0}
+.media-card .cap{position:absolute;bottom:14px;inset-inline-start:14px;z-index:3;
+  background:rgba(18,43,74,.86);color:#fff;font-size:11.5px;font-weight:800;
+  border-radius:999px;padding:8px 16px}
+.pillars{display:grid;gap:12px;margin-top:24px}
+.pillar{background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:18px 20px;
+  display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;transition:.2s}
+.pillar:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(18,43,74,.1)}
+.pillar .ic{width:44px;height:44px;border-radius:13px;background:var(--orange-soft);
+  color:var(--orange-deep);display:grid;place-items:center}
+.pillar .ic .i{width:21px;height:21px}
+.pillar b{display:block;font-size:15px;color:var(--navy);font-weight:900;margin-bottom:3px}
+.pillar span{font-size:12.5px;color:var(--muted);font-weight:700;line-height:1.85}
+.lead-p{font-size:15.5px;font-weight:700;color:var(--ink);line-height:2}
+
+.tabs{max-width:var(--max);margin:0 auto 26px;padding:0 20px;display:flex;gap:9px;
+  flex-wrap:wrap;justify-content:center}
+.tab{font-size:13px;font-weight:800;color:var(--body);background:#fff;border:1.5px solid var(--gray-2);
+  border-radius:999px;padding:10px 22px;transition:.18s}
+.tab:hover{border-color:var(--navy);color:var(--navy)}
+.tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.rail-outer{position:relative;max-width:var(--max);margin:0 auto;padding:0 20px}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*18px)/4);gap:18px;
+  overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;
+  overscroll-behavior-x:contain;padding-bottom:8px}
+.rail::-webkit-scrollbar{display:none}
+@media(max-width:1039px){.rail{grid-auto-columns:calc((100% - 2*16px)/2.4);gap:16px}}
+@media(max-width:600px){.rail{grid-auto-columns:80%}}
+.prod{display:flex;flex-direction:column;scroll-snap-align:start;min-width:0}
+.prod-tile{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--tile);
+  border-radius:18px;margin-bottom:14px}
+.prod-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;
+  box-shadow:inset 0 0 0 1.5px rgba(18,43,74,.06);pointer-events:none;z-index:2}
+.prod-tile img{position:absolute;inset:0;transition:transform .45s ease}
+.prod:hover .prod-tile img{transform:scale(1.05)}
+.p-flag{position:absolute;top:12px;inset-inline-start:12px;z-index:3;display:inline-flex;
+  align-items:center;gap:6px;font-size:10.5px;font-weight:900;letter-spacing:.06em;color:var(--navy);
+  background:#fff;border-radius:999px;padding:6px 12px;box-shadow:0 6px 16px rgba(18,43,74,.12)}
+.p-flag .i{width:14px;height:14px;color:var(--orange-deep)}
+.prod h3{font-size:17px;font-weight:900;line-height:1.35}
+.p-sub{font-size:12.5px;color:var(--orange-deep);font-weight:800;margin:5px 0 0;min-height:2.9em;line-height:1.65}
+.p-specs{border-top:1.5px solid var(--gray-2);border-bottom:1.5px solid var(--gray-2);
+  margin:13px 0;padding:11px 0;display:grid;gap:9px}
+.p-spec{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800;color:var(--ink)}
+.p-spec .i{width:19px;height:19px;color:var(--navy);flex-shrink:0}
+.kcal-box{display:inline-grid;place-items:center;min-width:38px;height:22px;
+  border:1.8px solid var(--navy);border-radius:6px;font-family:var(--mono);font-size:9.5px;
+  font-weight:700;color:var(--navy);padding:0 5px;flex-shrink:0}
+.p-price{font-weight:900;font-size:19px;color:var(--navy);margin-top:auto}
+.p-price small{display:block;font-size:12px;color:var(--muted);font-weight:700}
+.p-view{margin-top:13px;display:flex;justify-content:center;align-items:center;background:var(--navy);
+  color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:13px;min-height:48px;transition:.2s}
+.p-view:hover{background:var(--orange-deep)}
+.rail-nav{position:absolute;top:0;bottom:0;width:56px;display:none;align-items:flex-start;
+  justify-content:center;pointer-events:none;z-index:6}
+@media(min-width:760px){.rail-nav{display:flex}}
+.rail-nav.prev{inset-inline-end:-8px}
+.rail-nav.next{inset-inline-start:-8px}
+.rail-btn{pointer-events:auto;margin-top:18%;width:48px;height:48px;border-radius:50%;
+  border:1.5px solid var(--gray-3);background:#fff;color:var(--navy);display:grid;place-items:center;
+  box-shadow:0 10px 26px rgba(18,43,74,.16);transition:.18s}
+.rail-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);transform:scale(1.07)}
+.rail-btn:disabled{opacity:.28;transform:none;background:#fff;color:var(--navy);cursor:default}
+.rail-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;
+  stroke-linecap:round;stroke-linejoin:round}
+.dots{display:flex;justify-content:center;gap:7px;margin-top:20px}
+.dots i{width:22px;height:3px;border-radius:3px;background:var(--gray-3);transition:.25s}
+.dots i.on{background:var(--orange);width:34px}
+@media(min-width:760px){.dots{display:none}}
+.deliv{max-width:var(--max);margin:38px auto 0;padding:22px 24px;background:#fff;
+  border:1.5px solid var(--gray-2);border-radius:20px;text-align:center}
+.deliv b{display:block;font-size:16px;color:var(--navy);font-weight:900;margin-bottom:6px}
+.deliv span{font-size:13px;color:var(--muted);font-weight:700;line-height:1.95}
+
+/* ========== 04 · NUTRITION / PLANS ========== */
+.spec-card{background:var(--navy);border-radius:22px;padding:28px 26px;color:#fff;
+  box-shadow:0 24px 54px rgba(18,43,74,.3);height:100%;display:flex;flex-direction:column;justify-content:center}
+.spec-card h3{color:#fff;font-size:22px;margin-bottom:4px}
+.spec-card .sub{font-size:12px;color:#9FB4D2;font-weight:800;margin-bottom:18px}
+.spec-card .fuel-bar{background:rgba(255,255,255,.14)}
+.spec-row{display:grid;grid-template-columns:1.1fr 2fr auto;gap:12px;align-items:center;
+  padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px;font-weight:800}
+.spec-row:first-of-type{border-top:none}
+.spec-row .n{color:#C7D6EC}
+.spec-row .n.sub2{padding-inline-start:12px;color:#8FA4C4;font-weight:700;font-size:12px}
+.spec-row .v{font-family:var(--mono);color:#fff;font-size:13px;min-width:66px;text-align:left}
+.spec-row .v em{font-style:normal;color:var(--orange-hi)}
+.spec-note{margin-top:16px;font-size:11px;color:#8FA4C4;font-weight:700}
+
+.subs{background:var(--navy);padding:76px 0;position:relative;overflow:hidden}
+.subs::before{content:"";position:absolute;top:-150px;inset-inline-end:10%;width:420px;height:420px;
+  border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.22),transparent 66%)}
+.subs .inner{position:relative;z-index:2}
+.subs .sec-head h2{color:#fff}
+.subs .sec-head p{color:#B9C9E2}
+.subs .sec-head .kick{color:var(--orange-hi)}
+.sub-grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;align-items:stretch}
+@media(min-width:920px){.sub-grid{grid-template-columns:repeat(3,1fr)}}
+.splan{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:22px;
+  padding:28px 24px;display:flex;flex-direction:column;position:relative;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:transform .25s}
+.splan:hover{transform:translateY(-6px)}
+.splan.pop{background:linear-gradient(165deg,rgba(240,127,45,.16),rgba(255,255,255,.05));
+  border:2px solid var(--orange);box-shadow:0 0 0 6px rgba(240,127,45,.12),0 34px 70px rgba(0,0,0,.45)}
+.splan .tag{position:absolute;top:-13px;inset-inline-start:50%;transform:translateX(50%);
+  background:var(--grad);color:#fff;font-size:11.5px;font-weight:900;padding:6px 16px;border-radius:999px;
+  white-space:nowrap;box-shadow:0 10px 22px rgba(240,127,45,.4)}
+.splan h3{color:#fff;font-size:22px}
+.splan .goal{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#9FB4D2;
+  font-weight:800;margin-top:6px}
+.splan .goal .i{width:16px;height:16px;color:var(--orange-hi)}
+.pline{display:flex;align-items:baseline;gap:7px;margin-top:18px}
+.pline b{font-family:var(--mono);font-size:44px;font-weight:900;color:#fff;line-height:1}
+.pline small{font-size:15px;color:#C7D6EC;font-weight:800}
+.per{display:inline-flex;align-self:flex-start;background:rgba(255,255,255,.1);color:#DCE7F5;
+  font-size:11.5px;font-weight:800;padding:7px 14px;border-radius:999px;margin-top:12px;line-height:1.6}
+.plan-fuel{margin-top:18px;background:rgba(255,255,255,.05);border-radius:14px;padding:14px}
+.plan-fuel .hd{display:flex;justify-content:space-between;align-items:center;
+  font-size:11.5px;font-weight:800;color:#C7D6EC;margin-bottom:9px}
+.plan-fuel .hd b{font-family:var(--mono);color:var(--orange-hi);font-size:12.5px}
+.meals{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
+.meals span{font-size:10.5px;font-weight:800;color:#7E93B0;background:rgba(255,255,255,.06);
+  border-radius:999px;padding:4px 11px}
+.meals span.on{color:#fff;background:rgba(240,127,45,.3)}
+.splan ul{list-style:none;margin:18px 0 0}
+.splan li{font-size:13px;color:#C7D6EC;font-weight:700;padding:6px 22px 6px 0;position:relative}
+.splan li::before{content:"✓";position:absolute;right:0;color:var(--green);font-weight:900}
+.splan .btn{margin-top:22px}
+.sub-guarantee{max-width:var(--max);margin:26px auto 0;padding:0 20px;text-align:center;
+  color:#C7D6EC;font-size:13.5px;font-weight:800;display:flex;align-items:center;
+  justify-content:center;gap:9px;flex-wrap:wrap}
+.sub-guarantee .i{width:19px;height:19px;color:var(--green)}
+.sub-trust{max-width:var(--max);margin:18px auto 0;padding:0 20px;display:flex;
+  justify-content:center;gap:10px 26px;flex-wrap:wrap;font-size:12.5px;color:#8FA4C4;font-weight:700}
+.sub-trust b{color:var(--green)}
+
+/* ========== 05 · CARDS / FAQ ========== */
+.card-grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;
+  grid-template-columns:1fr;align-items:stretch}
+@media(min-width:760px){.card-grid{grid-template-columns:repeat(3,1fr)}}
+.acard{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.acard:hover{transform:translateY(-4px);box-shadow:0 22px 46px rgba(18,43,74,.12)}
+.acard .media{aspect-ratio:16/10;position:relative;overflow:hidden;background:var(--tile)}
+.acard .media img{position:absolute;inset:0;transition:transform .45s ease}
+.acard:hover .media img{transform:scale(1.05)}
+.acard .cat{position:absolute;top:12px;inset-inline-start:12px;z-index:3;background:#fff;
+  color:var(--navy);font-size:11px;font-weight:900;border-radius:999px;padding:5px 13px}
+.acard .body{padding:20px;display:flex;flex-direction:column;flex:1}
+.acard .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);font-weight:800}
+.acard .meta .i{width:15px;height:15px;color:var(--orange-deep)}
+.acard h3{font-size:17px;margin:10px 0 8px;line-height:1.45}
+.acard p.ex{font-size:13px;color:var(--muted);font-weight:600;line-height:1.9}
+.acard .go{margin-top:auto;padding-top:16px;font-size:13.5px;font-weight:900;color:var(--orange-deep)}
+
+.faq-wrap{max-width:900px;margin:0 auto;padding:0 20px}
+.fitem{border-bottom:1.5px solid var(--gray-2)}
+.fq{width:100%;background:none;border:0;font-size:16px;font-weight:900;color:var(--navy);
+  text-align:start;padding:22px 2px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.fq .x{color:var(--orange-deep);font-size:24px;font-weight:900;flex:none;transition:.25s;line-height:1}
+.fitem.open .fq .x{transform:rotate(45deg)}
+.fa{max-height:0;overflow:hidden;transition:max-height .32s ease}
+.fitem.open .fa{max-height:440px}
+.fa p{font-size:14px;color:var(--body);font-weight:600;line-height:2.05;padding:0 2px 22px}
+
+/* ========== 06 · STORY / VISION / CLOSING / FOOTER ========== */
+.quote{background:#fff;border:1.5px solid var(--gray-2);border-inline-end:4px solid var(--orange);
+  border-radius:20px;padding:28px}
+.quote p{font-size:15px;color:var(--ink);font-weight:600;line-height:2.15}
+.sig{margin-top:18px;font-size:16px;font-weight:900;color:var(--navy)}
+.sig span{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-top:4px;
+  direction:ltr;text-align:right;font-family:var(--mono);letter-spacing:.04em}
+.stats{max-width:var(--max);margin:34px auto 0;padding:0 20px;display:grid;gap:16px;
+  grid-template-columns:1fr}
+@media(min-width:700px){.stats{grid-template-columns:repeat(3,1fr)}}
+.stat{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:24px;text-align:center;
+  transition:.2s}
+.stat:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(18,43,74,.1)}
+.stat b{display:block;font-family:var(--mono);font-size:26px;font-weight:900;color:var(--navy)}
+.stat span{display:block;font-size:12.5px;color:var(--muted);font-weight:700;margin-top:6px;line-height:1.8}
+
+.band{background:var(--navy);color:#fff;padding:76px 0;position:relative;overflow:hidden}
+.band::before{content:"";position:absolute;top:-140px;inset-inline-start:15%;width:400px;height:400px;
+  border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.25),transparent 65%)}
+.band .inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 20px}
+.band .kick{color:var(--orange-hi)}
+.band h3{color:#fff;font-size:clamp(24px,4.6vw,38px);margin:12px 0 14px;max-width:22ch}
+.band p{font-size:15px;color:#B9C9E2;font-weight:600;max-width:74ch;line-height:2.05}
+.kpis{display:grid;gap:18px;margin-top:32px;grid-template-columns:1fr}
+@media(min-width:760px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:24px}
+.kpi b{display:block;font-family:var(--mono);font-size:26px;font-weight:900;color:#fff}
+.kpi span{display:block;font-size:13px;color:#9FB4D2;font-weight:700;margin-top:9px;line-height:1.8}
+
+.closing{position:relative;background:var(--grad);color:#fff;padding:46px 20px;text-align:center;
+  overflow:hidden}
+.closing::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.18),transparent 55%)}
+.closing .in{position:relative;z-index:2;max-width:760px;margin:0 auto}
+.closing h2{color:#fff;font-size:clamp(26px,4.4vw,38px)}
+.closing .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.28em;margin-top:7px;
+  color:rgba(255,255,255,.86);font-weight:800;direction:ltr}
+.closing p.k{font-size:14px;margin-top:12px;color:rgba(255,255,255,.96);font-weight:700}
+.closing .fine{font-size:11.5px;margin-top:10px;color:rgba(255,255,255,.8);font-weight:700}
+
+footer{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
+.f-grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:30px;grid-template-columns:1fr}
+@media(min-width:760px){.f-grid{grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:26px}}
+.f-brand b{display:block;font-size:19px;font-weight:900;color:#fff;margin-top:14px}
+.f-brand p{font-size:13px;margin-top:10px;line-height:1.95;color:#8296B2;font-weight:600;max-width:38ch}
+.f-col h4{font-size:13.5px;color:#fff;font-weight:900;margin-bottom:13px}
+.f-col a{display:block;font-size:13px;color:#8296B2;padding:5px 0;font-weight:600}
+.f-col a:hover{color:#fff}
+.f-bottom{max-width:var(--max);margin:36px auto 0;padding:22px 20px 0;
+  border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;font-size:12.5px;color:#7A8DA8;font-weight:700}
+
+.sticky-cta{position:fixed;inset-inline:12px;bottom:12px;z-index:80;background:var(--navy);
+  border-radius:18px;padding:12px 16px;display:none;align-items:center;justify-content:space-between;
+  gap:12px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.sticky-cta.show{display:flex}
+@media(min-width:920px){.sticky-cta{display:none!important}}
+.sticky-cta .info b{display:block;color:#fff;font-size:14px;font-weight:900}
+.sticky-cta .info small{display:block;color:#9FB4D2;font-size:11px;font-weight:700}
+
+/* ===== added sections ===== */
+.grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;align-items:stretch}
+.g2{grid-template-columns:1fr}
+.g3{grid-template-columns:1fr}
+.g4{grid-template-columns:repeat(2,1fr)}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1020px){.g4{grid-template-columns:repeat(4,1fr)}}
+.tcard{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:26px 22px;
+  position:relative;transition:transform .2s,box-shadow .2s}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 22px 46px rgba(18,43,74,.1)}
+.tcard .n{position:absolute;top:16px;inset-inline-start:20px;font-family:var(--mono);
+  font-size:12px;font-weight:800;color:var(--orange-deep);letter-spacing:.12em}
+.tcard .ic{width:52px;height:52px;border-radius:15px;background:var(--orange-soft);
+  color:var(--orange-deep);display:grid;place-items:center;margin-bottom:14px}
+.tcard .ic .i{width:25px;height:25px}
+.tcard h4{font-size:16.5px;color:var(--navy);margin-bottom:8px}
+.tcard p{font-size:13px;color:var(--muted);font-weight:600;line-height:1.9}
+.tcard .tags{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
+.tcard .tags span{font-size:11px;font-weight:800;color:var(--navy);background:var(--tile);
+  border-radius:999px;padding:5px 12px}
+.steps{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:1020px){.steps{grid-template-columns:repeat(4,1fr)}
+  .steps .tcard:not(:last-child)::after{content:"";position:absolute;top:44px;inset-inline-end:-16px;
+    width:16px;border-top:2px dashed var(--gray-3)}}
+.flour{max-width:var(--max);margin:0 auto;padding:0 20px}
+.frow{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;background:#fff;
+  border:1.5px solid var(--gray-2);border-radius:18px;padding:18px 20px;margin-bottom:12px}
+.frow .n{font-family:var(--mono);font-size:13px;font-weight:800;color:var(--orange-deep);
+  min-width:30px;padding-top:2px}
+.frow b{display:block;font-size:15.5px;color:var(--navy);font-weight:900;margin-bottom:4px}
+.frow span{font-size:13px;color:var(--muted);font-weight:600;line-height:1.9}
+.note{max-width:var(--max);margin:22px auto 0;padding:16px 22px;background:var(--orange-soft);
+  border:1.5px dashed #F0C39A;border-radius:16px;font-size:12.5px;color:#A65E23;
+  font-weight:700;line-height:1.9}
+.about-lead{max-width:860px;margin:0 auto 34px;padding:0 20px;text-align:center;
+  font-size:16px;color:var(--ink);font-weight:700;line-height:2.05}
+.mission{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:760px){.mission{grid-template-columns:1fr 1fr}}
+.mblock{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:26px;
+  border-inline-end:4px solid var(--orange)}
+.mblock.navy{border-inline-end-color:var(--navy-3)}
+.mblock h4{font-size:17px;margin-bottom:10px}
+.mblock p{font-size:14px;color:var(--body);font-weight:600;line-height:2.05}
+.goals{max-width:var(--max);margin:18px auto 0;padding:0 20px}
+.goals ul{list-style:none;background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:22px 26px}
+.goals li{font-size:13.5px;color:var(--body);font-weight:600;padding:9px 26px 9px 0;position:relative;
+  line-height:1.9;border-bottom:1px solid var(--gray-2)}
+.goals li:last-child{border-bottom:none}
+.goals li::before{content:"";position:absolute;right:6px;top:20px;width:8px;height:8px;
+  border-radius:50%;background:var(--orange)}
+.plogos{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:760px){.plogos{grid-template-columns:1fr 1fr}}
+.pbox{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:26px;text-align:center}
+.pbox h4{font-size:14px;color:var(--muted);letter-spacing:.1em;margin-bottom:16px;font-weight:800}
+.pbox .row{display:flex;flex-wrap:wrap;gap:10px 14px;justify-content:center}
+.pbox .row b{font-size:14.5px;font-weight:900;color:var(--navy);background:var(--tile);
+  border-radius:999px;padding:10px 18px}
+.consult{background:var(--navy);padding:56px 0;position:relative;overflow:hidden}
+.consult::before{content:"";position:absolute;top:-120px;inset-inline-start:-60px;width:340px;height:340px;
+  border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.26),transparent 65%)}
+.consult .in{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}
+.consult .kick{color:var(--orange-hi)}
+.consult h3{color:#fff;font-size:clamp(21px,4.4vw,30px);margin:8px 0 6px}
+.consult p{color:#B9C9E2;font-size:13.5px;font-weight:700;margin:0;max-width:60ch}
+
+
+/* ===== navigation & wayfinding ===== */
+.progress{position:fixed;top:0;inset-inline:0;height:3px;z-index:120;background:transparent}
+.progress i{display:block;height:100%;width:0;background:var(--grad);transition:width .1s linear}
+.nav-links a.active{border-color:var(--orange);color:var(--navy)}
+.chapter{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;
+  font-weight:800;letter-spacing:.16em;color:var(--muted);margin-bottom:6px}
+.chapter b{color:var(--orange-deep)}
+.sec-head .chapter::before{content:"";width:22px;height:2px;background:var(--gray-3);border-radius:2px}
+.mgroup{font-size:11px;font-weight:800;letter-spacing:.16em;color:#6E86A8;margin:16px 0 4px}
+.mmenu a{font-size:17px;padding:10px 4px}
+.mmenu .in{width:100%;max-width:420px;margin:0 auto;overflow-y:auto;max-height:82vh}
+.totop{position:fixed;inset-inline-start:16px;bottom:16px;z-index:75;width:46px;height:46px;
+  border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;color:var(--navy);
+  display:none;place-items:center;box-shadow:0 10px 26px rgba(18,43,74,.18);transition:.2s}
+.totop.show{display:grid}
+.totop:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.totop svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+:where(a,button,input):focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:8px}
+.chips-on-photo{position:absolute;bottom:14px;inset-inline-end:14px;z-index:3;display:flex;
+  gap:7px;flex-wrap:wrap;max-width:70%;justify-content:flex-end}
+.chips-on-photo span{background:rgba(255,255,255,.94);color:var(--navy);font-size:11px;
+  font-weight:900;border-radius:999px;padding:6px 13px;box-shadow:0 6px 16px rgba(0,0,0,.14)}
+.rule{max-width:var(--max);margin:0 auto;padding:0 20px}
+.rule i{display:block;height:1px;background:var(--gray-2);position:relative}
+.rule i::after{content:"";position:absolute;top:-3px;inset-inline-start:50%;width:7px;height:7px;
+  border-radius:50%;background:var(--orange);transform:translateX(50%)}
+
+
+/* ===== shop navigation ===== */
+.shop-bar{max-width:var(--max);margin:0 auto 22px;padding:0 20px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap}
+.tabs{margin:0;padding:0;justify-content:flex-start;flex:1}
+.tab{display:inline-flex;align-items:center;gap:8px}
+.tab i{font-style:normal;font-family:var(--mono);font-size:11px;font-weight:800;
+  background:var(--tile);color:var(--muted);border-radius:999px;padding:2px 8px;transition:.18s}
+.tab.on i{background:rgba(255,255,255,.18);color:#fff}
+.rail-ctrl{display:none;gap:8px}
+@media(min-width:760px){.rail-ctrl{display:flex}}
+.rail-ctrl .rail-btn{margin-top:0}
+.rail{cursor:grab;scroll-padding-inline:0}
+.rail.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
+.rail:focus-visible{outline:3px solid var(--orange);outline-offset:6px;border-radius:20px}
+.railbar{max-width:var(--max);margin:22px auto 0;height:4px;border-radius:99px;
+  background:var(--gray-2);overflow:hidden;position:relative}
+.railbar i{position:absolute;inset-block:0;inset-inline-start:0;width:30%;border-radius:99px;
+  background:var(--grad);transition:width .15s linear,transform .15s linear}
+.rail-hint{text-align:center;font-size:12px;color:var(--muted);font-weight:700;margin-top:12px}
+@media(min-width:760px){.rail-hint{display:none}}
+.dots{display:none}
+.prod.hide{display:none}
+.shop-cta{text-align:center;margin-top:32px}
+
+
+/* ===== story stats with icons ===== */
+.stat .sic{width:54px;height:54px;border-radius:16px;background:var(--orange-soft);
+  color:var(--orange-deep);display:grid;place-items:center;margin:0 auto 14px}
+.stat .sic .i{width:26px;height:26px}
+
+/* ===== business lines: image rail ===== */
+.lines-rail{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-auto-flow:column;
+  grid-auto-columns:82%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  scrollbar-width:none;overscroll-behavior-x:contain;padding-bottom:6px}
+.lines-rail::-webkit-scrollbar{display:none}
+@media(min-width:760px){.lines-rail{grid-auto-flow:row;grid-template-columns:repeat(3,1fr);
+  grid-auto-columns:auto;overflow:visible;gap:18px}}
+.lcard{background:#fff;border:1.5px solid var(--gray-2);border-radius:22px;overflow:hidden;
+  scroll-snap-align:start;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s}
+.lcard:hover{transform:translateY(-5px);box-shadow:0 26px 54px rgba(18,43,74,.13)}
+.lcard .media{aspect-ratio:16/11;position:relative;overflow:hidden;background:var(--tile)}
+.lcard .media img{position:absolute;inset:0;transition:transform .5s ease}
+.lcard:hover .media img{transform:scale(1.06)}
+.lcard .media .n{position:absolute;top:14px;inset-inline-start:14px;z-index:3;font-family:var(--mono);
+  font-size:12px;font-weight:900;color:#fff;background:rgba(18,43,74,.82);border-radius:999px;padding:6px 13px}
+.lcard .bd{padding:22px;display:flex;flex-direction:column;flex:1}
+.lcard h4{font-size:18px;margin-bottom:8px}
+.lcard p{font-size:13px;color:var(--muted);font-weight:600;line-height:1.9}
+.lcard .tags{margin-top:auto;padding-top:14px;display:flex;gap:6px;flex-wrap:wrap}
+.lcard .tags span{font-size:11px;font-weight:800;color:var(--navy);background:var(--tile);
+  border-radius:999px;padding:5px 12px}
+.lines-hint{text-align:center;font-size:12px;color:var(--muted);font-weight:700;margin-top:16px}
+@media(min-width:760px){.lines-hint{display:none}}
+
+
+/* ===== wide banner ===== */
+.wide-hero{position:relative;max-width:var(--max);margin:0 auto 36px;padding:0;
+  height:clamp(220px,34vw,400px);border-radius:24px;overflow:hidden;background:var(--navy-2);
+  box-shadow:0 30px 66px rgba(18,43,74,.24)}
+
+.wide-hero img{position:absolute;inset:0}
+.wide-hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,22,40,.88),rgba(10,22,40,.15) 55%,transparent);z-index:2}
+.wh-in{position:absolute;inset-inline:0;bottom:0;z-index:3;padding:28px 30px}
+.wh-kick{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:800;
+  letter-spacing:.18em;color:var(--orange-hi);margin-bottom:8px}
+.wh-in b{display:block;color:#fff;font-size:clamp(19px,3.4vw,30px);font-weight:900;letter-spacing:-.015em}
+
+
+/* ===== ابتكار نيومي · showcase ===== */
+.flourshow{background:var(--navy);color:#fff;padding:64px 0;position:relative;overflow:hidden}
+.flourshow::before{content:"";position:absolute;top:-200px;inset-inline-end:-100px;width:620px;height:620px;
+  border-radius:50%;background:radial-gradient(circle,rgba(240,127,45,.24),transparent 66%);pointer-events:none}
+.flourshow::after{content:"";position:absolute;bottom:-260px;inset-inline-start:-140px;width:520px;height:520px;
+  border-radius:50%;background:radial-gradient(circle,rgba(36,72,122,.55),transparent 68%);pointer-events:none}
+.fs-in{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 20px;
+  display:grid;gap:34px;align-items:center}
+@media(min-width:920px){.fs-in{grid-template-columns:1.02fr .98fr;gap:56px}}
+.fs-copy .kick{color:var(--orange-hi)}
+.fs-copy h2{color:#fff;font-size:clamp(30px,5.6vw,52px);margin:10px 0 16px}
+.fs-copy h2 em{font-style:normal;color:var(--orange-hi)}
+.fs-lead{font-size:16px;color:#B9C9E2;font-weight:600;line-height:2.05;max-width:52ch}
+.fs-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+.fs-kpis>div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:16px 12px;text-align:center}
+.fs-kpis b{display:block;font-family:var(--mono);font-size:17px;font-weight:900;color:var(--orange-hi)}
+.fs-kpis span{display:block;font-size:11.5px;color:#9FB4D2;font-weight:700;margin-top:5px;line-height:1.6}
+.fs-media{position:relative;aspect-ratio:1/1;border-radius:50%;overflow:visible;
+  background:linear-gradient(150deg,#C9A97E,#6E5638);
+  box-shadow:0 0 0 16px rgba(255,255,255,.04),0 0 0 34px rgba(255,255,255,.025),
+             0 40px 90px rgba(0,0,0,.5);max-width:460px;margin-inline:auto}
+.fs-media .ph,.fs-media img{border-radius:50%}
+.fs-media img{position:absolute;inset:0}
+.fs-tag{position:absolute;bottom:6%;inset-inline-start:-6%;z-index:4;background:#fff;color:var(--navy);
+  border-radius:18px;padding:14px 20px;box-shadow:0 18px 40px rgba(0,0,0,.35);text-align:center}
+.fs-tag b{display:block;font-size:15px;font-weight:900}
+.fs-tag small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:3px}
+/* ===== عوامل التميّز ===== */
+.edge{max-width:var(--max);margin:0 auto;padding:0 20px}
+.edge-hero{display:grid;gap:0;background:#fff;border:1.5px solid var(--gray-2);border-radius:26px;
+  overflow:hidden;box-shadow:0 26px 60px rgba(18,43,74,.1)}
+@media(min-width:920px){.edge-hero{grid-template-columns:.92fr 1.08fr}}
+.eh-media{position:relative;min-height:300px;background:var(--tile)}
+.eh-media img{position:absolute;inset:0}
+.eh-stamp{position:absolute;top:20px;inset-inline-start:20px;z-index:3;background:var(--grad);color:#fff;
+  border-radius:18px;padding:12px 18px;text-align:center;box-shadow:0 14px 32px rgba(240,127,45,.4)}
+.eh-stamp b{display:block;font-family:var(--mono);font-size:22px;font-weight:900;line-height:1}
+.eh-stamp small{display:block;font-size:10.5px;font-weight:800;margin-top:4px;opacity:.9}
+.eh-copy{padding:34px 32px;display:flex;flex-direction:column;justify-content:center}
+.eh-kick{font-family:var(--mono);font-size:11.5px;font-weight:800;letter-spacing:.16em;color:var(--orange-deep)}
+.eh-copy h3{font-size:clamp(21px,3.4vw,30px);margin:10px 0 14px;line-height:1.3}
+.eh-copy p{font-size:15px;color:var(--body);font-weight:600;line-height:2.05}
+.eh-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.eh-chips span{font-size:12px;font-weight:800;color:var(--navy);background:var(--tile);
+  border-radius:999px;padding:8px 15px}
+.edge-grid{display:grid;gap:16px;grid-template-columns:1fr;margin-top:16px}
+@media(min-width:760px){.edge-grid{grid-template-columns:repeat(2,1fr)}}
+.ecard{position:relative;background:#fff;border:1.5px solid var(--gray-2);border-radius:22px;
+  padding:28px 26px;overflow:hidden;transition:transform .22s,box-shadow .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:0 24px 50px rgba(18,43,74,.12)}
+.ecard .ghost{position:absolute;top:-14px;inset-inline-start:14px;font-family:var(--mono);
+  font-size:86px;font-weight:900;color:rgba(18,43,74,.055);line-height:1;pointer-events:none}
+.ecard .ic{width:50px;height:50px;border-radius:15px;background:var(--orange-soft);
+  color:var(--orange-deep);display:grid;place-items:center;margin-bottom:14px;position:relative;z-index:2}
+.ecard .ic .i{width:24px;height:24px}
+.ecard h4{font-size:17px;margin-bottom:9px;position:relative;z-index:2;line-height:1.4}
+.ecard p{font-size:13.5px;color:var(--muted);font-weight:600;line-height:1.95;position:relative;z-index:2}
+
+/* ===== القيم المؤسسية · photo band ===== */
+.valuesband{position:relative;padding:84px 0;overflow:hidden;background:var(--navy)}
+.valuesband .vb-bg{position:absolute;inset:0;opacity:.22;filter:grayscale(.4)}
+.valuesband::after{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(120deg,rgba(10,22,40,.94),rgba(18,43,74,.82))}
+.vb-in{position:relative;z-index:2}
+.valuesband .sec-head h2{color:#fff}
+.valuesband .sec-head h2 em{color:var(--orange-hi)}
+.valuesband .kick{color:var(--orange-hi)}
+.vb-grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:0;grid-template-columns:1fr}
+@media(min-width:700px){.vb-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1080px){.vb-grid{grid-template-columns:repeat(5,1fr)}}
+.vcell{padding:26px 22px;border-top:1px solid rgba(255,255,255,.14);transition:background .22s}
+@media(min-width:1080px){.vcell{border-top:0;border-inline-start:1px solid rgba(255,255,255,.14)}
+  .vcell:first-child{border-inline-start:0}}
+.vcell:hover{background:rgba(255,255,255,.05)}
+.vcell b{display:block;font-size:clamp(22px,3.2vw,28px);font-weight:900;color:#fff;
+  letter-spacing:-.02em;margin-bottom:12px}
+.vcell span{display:block;font-size:13px;color:#9FB4D2;font-weight:600;line-height:1.95}
+
+/* ===== الرؤية والرسالة · diptych ===== */
+.diptych{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:920px){.diptych{grid-template-columns:1fr 1fr}}
+.dpanel{position:relative;border-radius:24px;overflow:hidden;min-height:340px;display:flex;
+  align-items:flex-end;box-shadow:0 24px 54px rgba(18,43,74,.14)}
+.dpanel.photo{background:var(--tile)}
+.dpanel.photo img{position:absolute;inset:0}
+.dpanel.photo::after{content:"";position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to top,rgba(10,22,40,.92),rgba(10,22,40,.35) 55%,rgba(10,22,40,.1))}
+.dpanel.navy{background:linear-gradient(150deg,var(--navy-2),var(--navy))}
+.dp-in{position:relative;z-index:3;padding:34px 32px;width:100%}
+.dp-kick{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:800;
+  letter-spacing:.18em;color:var(--orange-hi);margin-bottom:12px}
+.dpanel p{font-size:16px;color:#fff;font-weight:600;line-height:2.05;max-width:46ch}
+.dpanel.navy p{color:#DCE7F5}
+
+/* ===== الأهداف ===== */
+.goalstrip{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:760px){.goalstrip{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1080px){.goalstrip{grid-template-columns:repeat(5,1fr);gap:0}}
+.gitem{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:24px 22px;
+  transition:transform .22s,box-shadow .22s}
+@media(min-width:1080px){.gitem{border-radius:0;border-inline-start:0}
+  .gitem:first-child{border-start-start-radius:20px;border-end-start-radius:20px;
+    border-inline-start:1.5px solid var(--gray-2)}
+  .gitem:last-child{border-start-end-radius:20px;border-end-end-radius:20px}}
+.gitem:hover{transform:translateY(-5px);box-shadow:0 22px 46px rgba(18,43,74,.12);z-index:2;position:relative}
+.gitem b{display:block;font-family:var(--mono);font-size:26px;font-weight:900;color:var(--orange-deep);
+  line-height:1;margin-bottom:12px}
+.gitem span{display:block;font-size:13px;color:var(--body);font-weight:600;line-height:1.95}
+
+
+/* ===== animated KPI counters ===== */
+.kfig{display:flex;align-items:center;gap:18px}
+.kside{display:flex;flex-direction:column;align-items:center;gap:6px}
+.kside i{font-style:normal;font-family:var(--mono);font-weight:900;line-height:1;
+  font-variant-numeric:tabular-nums}
+.kside small{font-size:10.5px;font-weight:800;letter-spacing:.08em;color:#8FA4C4}
+.kfig .from{font-size:26px;color:rgba(255,255,255,.5)}
+.kfig .to{font-size:38px;color:#fff}
+.kpi.in .kfig .to{text-shadow:0 0 26px rgba(240,127,45,.45)}
+.kfig .arrow{font-style:normal;font-size:22px;color:var(--orange-hi);align-self:flex-start;
+  margin-top:6px;transform:translateX(6px);opacity:0;
+  transition:transform .5s ease .3s,opacity .5s ease .3s}
+.kpi.in .kfig .arrow{transform:none;opacity:1}
+.klabel{display:block;font-size:13px;color:#9FB4D2;font-weight:700;margin-top:14px;line-height:1.8}
+@media (prefers-reduced-motion:reduce){.kfig .arrow{transform:none;opacity:1;transition:none}}
+
+
+/* ===== عوامل التميّز · thumbs ===== */
+.ecard{display:grid;grid-template-columns:1fr;gap:0;padding:0}
+@media(min-width:520px){.ecard{grid-template-columns:150px 1fr}}
+.ethumb{position:relative;overflow:hidden;background:var(--tile);aspect-ratio:16/10}
+@media(min-width:520px){.ethumb{aspect-ratio:auto;height:100%;min-height:190px}}
+.ethumb img{position:absolute;inset:0;transition:transform .5s ease}
+.ecard:hover .ethumb img{transform:scale(1.07)}
+.ethumb-n{position:absolute;top:12px;inset-inline-start:12px;z-index:3;font-family:var(--mono);
+  font-size:12px;font-weight:900;color:#fff;background:rgba(18,43,74,.82);
+  border-radius:999px;padding:5px 12px}
+.ebody{padding:26px 24px;position:relative;z-index:2}
+.ecard .ghost{display:none}
+.ecard h4{margin-bottom:9px}
+
+
+/* ===== alignment fixes ===== */
+/* 1 · vision & mission: identical height */
+.diptych{align-items:stretch}
+.dpanel{height:100%}
+
+/* 2 · closing bar: tighter */
+.closing{padding:30px 20px!important}
+.closing h2{font-size:clamp(22px,3.4vw,30px)!important}
+.closing .tag{margin-top:5px!important;font-size:11px!important}
+.closing p.k{margin-top:9px!important;font-size:13px!important}
+.closing .fine{margin-top:8px!important;font-size:11px!important}
+
+/* 3 · featured factor image edge = start of the second column below it */
+@media(min-width:920px){
+  .edge-hero{grid-template-columns:calc((100% + 16px)/2) 1fr}
+}
+
+/* 5 · story quote matches the photo height */
+#about .split .copy{align-self:stretch;display:flex}
+#about .quote{height:100%;display:flex;flex-direction:column;justify-content:center;width:100%}
+
+/* 6 · KPI spacing */
+.kfig{gap:26px;align-items:flex-start}
+.kside{gap:9px}
+.kside small{letter-spacing:.06em;white-space:nowrap}
+.kfig .arrow{margin-top:10px}
+.klabel{margin-top:20px}
+.kpi{padding:26px 24px}
+
+
+/* ===== ابتكار نيومي · wide banner layout ===== */
+.fs-banner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;
+  height:clamp(360px,46vw,520px);border-radius:26px;overflow:hidden;background:var(--navy-2);
+  box-shadow:0 34px 76px rgba(0,0,0,.42)}
+
+.fs-banner img{position:absolute;inset:0}
+.fs-banner::after{content:"";position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to left,rgba(10,22,40,.94) 0%,rgba(10,22,40,.78) 42%,rgba(10,22,40,.18) 100%)}
+.fsb-in{position:absolute;inset-block:0;inset-inline-start:0;z-index:3;width:min(600px,86%);
+  padding:40px;display:flex;flex-direction:column;justify-content:center}
+.fsb-in .kick{color:var(--orange-hi)}
+.fsb-in h2{color:#fff;font-size:clamp(30px,5vw,50px);margin:10px 0 14px}
+.fsb-in h2 em{font-style:normal;color:var(--orange-hi)}
+.fsb-in p{font-size:15px;color:#C7D6EC;font-weight:600;line-height:2.05}
+.fsb-stamp{align-self:flex-start;margin-top:22px;background:#fff;color:var(--navy);
+  border-radius:16px;padding:12px 20px;box-shadow:0 16px 36px rgba(0,0,0,.4)}
+.fsb-stamp b{display:block;font-size:14.5px;font-weight:900}
+.fsb-stamp small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}
+.fs-kpis{position:relative;z-index:2;max-width:var(--max);margin:22px auto 0;padding:0 20px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:560px){.fs-kpis{grid-template-columns:1fr}}
+
+
+/* ===== KPI: one baseline for both figures ===== */
+.kfig{display:grid!important;grid-template-columns:auto auto auto;
+  column-gap:20px;row-gap:8px;justify-content:flex-start;justify-items:center;
+  align-items:baseline!important}
+.kfig i{font-style:normal;font-family:var(--mono);font-weight:900;line-height:1;
+  font-variant-numeric:tabular-nums}
+.kfig .from{font-size:30px;color:rgba(255,255,255,.5)}
+.kfig .to{font-size:38px;color:#fff}
+.kfig .arrow{font-size:22px;color:var(--orange-hi);margin-top:0;
+  transform:translateX(6px);opacity:0;transition:transform .5s ease .3s,opacity .5s ease .3s}
+.kpi.in .kfig .arrow{transform:none;opacity:1}
+.kfig small{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#8FA4C4;white-space:nowrap}
+
+/* ===== every image block snaps to the same 1260px container ===== */
+.split{padding-inline:20px}
+@media(min-width:920px){.split{grid-template-columns:1fr 1fr}}
+.wide-hero{max-width:var(--max);margin-inline:auto;margin-bottom:36px}
+@media(max-width:1299px){.wide-hero{margin-inline:20px}}
+.fs-banner{margin-bottom:0}
+@media(max-width:1299px){.fs-banner{margin-inline:20px}}
+
+
+/* last alignment sweep: blocks that sit directly in a section need the same 20px inset */
+.deliv{margin-inline:auto}
+@media(max-width:1299px){.deliv{margin-inline:20px}}
+.railbar{width:100%;max-width:none}
+
+
+/* ===== الرؤية والرسالة: same box, same first line ===== */
+.diptych{align-items:stretch}
+.dpanel{display:block!important;height:100%;min-height:360px;position:relative}
+.dpanel.photo::after{background:linear-gradient(to bottom,rgba(10,22,40,.9),rgba(10,22,40,.72) 45%,rgba(10,22,40,.86))!important}
+.dp-in{position:absolute!important;inset:0;z-index:3;padding:36px 34px!important;
+  display:flex;flex-direction:column;justify-content:center}
+.dp-kick{display:block;margin-bottom:14px;min-height:18px}
+.dpanel p{font-size:16px;line-height:2.05;max-width:44ch;margin:0}
+
+/* ===== KPI figures: identical size ===== */
+.kfig .from,.kfig .to{font-size:34px!important}
+.kfig .from{color:rgba(255,255,255,.55)!important}
+
+
+/* ================= 01 · INTRO · مدار الطاقة ================= */
+.intro{position:relative;overflow:hidden;min-height:100svh;display:grid;place-items:center;
+  padding:calc(84px + var(--sat)) 20px 96px;text-align:center;
+  background:radial-gradient(ellipse 90% 70% at 50% 30%,#12304F 0%,#0A1B31 60%)}
+.intro.hide{display:none}
+.intro *{--dim:#8FA6C6;--iline:rgba(255,255,255,.14)}
+
+.io-stars,.io-stars2{position:absolute;inset:0;pointer-events:none;background-repeat:repeat;opacity:.5;z-index:1}
+.io-stars{background-image:radial-gradient(1.4px 1.4px at 30px 40px,rgba(255,255,255,.7),transparent),
+  radial-gradient(1px 1px at 120px 90px,rgba(255,255,255,.5),transparent),
+  radial-gradient(1.2px 1.2px at 200px 160px,rgba(255,160,92,.7),transparent),
+  radial-gradient(1px 1px at 70px 200px,rgba(255,255,255,.4),transparent);
+  background-size:260px 260px;animation:iotw 5s ease-in-out infinite alternate}
+.io-stars2{background-image:radial-gradient(1px 1px at 60px 120px,rgba(255,255,255,.5),transparent),
+  radial-gradient(1.3px 1.3px at 180px 40px,rgba(255,255,255,.6),transparent),
+  radial-gradient(1px 1px at 240px 210px,rgba(255,160,92,.6),transparent);
+  background-size:300px 300px;animation:iotw 7s ease-in-out infinite alternate-reverse}
+@keyframes iotw{to{opacity:.15}}
+
+.io-bigword{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:1}
+.io-bigword span{font-weight:900;font-size:clamp(120px,26vw,340px);color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.07);letter-spacing:-.02em;white-space:nowrap}
+
+.io-top{position:absolute;top:0;inset-inline:0;z-index:20;display:flex;justify-content:space-between;
+  align-items:center;padding:calc(20px + var(--sat)) 26px 0}
+.io-logo{display:flex;align-items:center;gap:10px}
+.io-logo .mark{width:32px;height:32px;border-radius:50%;
+  background:conic-gradient(from 210deg,#24487A,#122B4A 140deg,var(--orange) 270deg,var(--orange-hi))}
+.io-logo b{font-size:17px;color:#EAF1FA;font-weight:900}
+.intro-skip{background:transparent;border:1px solid rgba(255,255,255,.14);color:#8FA6C6;
+  font-family:var(--font);font-size:11.5px;font-weight:800;border-radius:999px;padding:9px 18px;
+  cursor:pointer;transition:.25s;opacity:0;pointer-events:none}
+.intro-skip.ready{opacity:1;pointer-events:auto}
+.intro-skip:hover{color:#fff;border-color:var(--orange)}
+
+/* orbit stage */
+.io-stage{--R:min(30vw,236px);position:relative;z-index:5;
+  width:calc(var(--R)*2);height:calc(var(--R)*2);display:grid;place-items:center;margin-bottom:26px}
+.io-ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(255,255,255,.18);
+  animation:iospin 40s linear infinite}
+.io-ring.r2{inset:-11%;border:1px solid rgba(255,255,255,.08);animation-duration:70s;animation-direction:reverse}
+.io-arc{position:absolute;inset:-4.5%;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--orange-hi),var(--orange) 24%,transparent 26%);
+  -webkit-mask:radial-gradient(circle,transparent 68%,#000 69%);
+  mask:radial-gradient(circle,transparent 68%,#000 69%);
+  animation:iospin 9s linear infinite;filter:drop-shadow(0 0 14px rgba(240,127,45,.6))}
+@keyframes iospin{to{transform:rotate(360deg)}}
+.io-core{width:80%;height:80%;border-radius:50%;overflow:hidden;position:relative;background:#122B4A;
+  box-shadow:0 40px 110px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.14)}
+.io-core img{position:absolute;inset:0;animation:iokb 16s ease-in-out infinite alternate;transform:scale(1.12)}
+@keyframes iokb{to{transform:scale(1.02)}}
+.io-core::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.22),transparent 45%)}
+.io-copy{position:relative;z-index:10;max-width:640px}
+.beats{display:flex;justify-content:center;gap:0;margin-bottom:16px}
+.beats span{font-size:13px;font-weight:900;color:#5F7797;padding:0 16px;position:relative;
+  transition:color .45s ease,transform .45s ease,opacity .45s ease;transform:translateY(4px);opacity:.5}
+.beats span+span::before{content:"";position:absolute;inset-inline-end:0;top:50%;width:5px;height:5px;
+  border-radius:50%;background:rgba(255,255,255,.2);transform:translate(50%,-50%)}
+.beats span.on{color:var(--orange-hi);transform:none;opacity:1}
+.beats span.done{color:#8CA0BC;transform:none;opacity:1}
+.io-copy h1{color:#EAF1FA;font-weight:900;font-size:clamp(32px,6.4vw,60px);letter-spacing:-.03em;line-height:1.14}
+.io-copy h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;
+  background-clip:text;color:transparent}
+.io-copy p{font-size:13.5px;font-weight:600;color:#8FA6C6;margin:12px auto 0;max-width:52ch;line-height:1.95}
+.io-ctas{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.io-enter{position:relative;display:inline-flex;align-items:center;justify-content:center;
+  background:var(--grad);color:#fff;font-weight:900;font-size:15px;border-radius:999px;
+  padding:15px 34px;min-width:186px;box-shadow:0 18px 46px rgba(240,127,45,.4);overflow:hidden}
+.io-enter::before{content:"";position:absolute;top:0;bottom:0;width:60px;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);
+  inset-inline-start:-80px;animation:ioshine 3.4s ease-in-out infinite}
+@keyframes ioshine{0%,60%{inset-inline-start:-80px}100%{inset-inline-start:120%}}
+.io-ghost{display:inline-flex;align-items:center;justify-content:center;color:#EAF1FA;font-weight:800;
+  font-size:13.5px;border:1.5px solid rgba(255,255,255,.14);border-radius:999px;padding:14px 26px;
+  min-width:186px;transition:.25s}
+.io-ghost:hover{border-color:var(--orange);color:var(--orange-hi)}
+.io-strip{position:absolute;bottom:0;inset-inline:0;z-index:10;text-align:center;
+  border-top:1px solid rgba(255,255,255,.14);background:rgba(10,27,49,.75);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
+  font-size:11.5px;font-weight:700;color:#8FA6C6;line-height:1.7}
+.io-strip b{color:#EAF1FA}
+@media(max-width:640px){.io-bigword span{font-size:34vw}
+  .io-stage{--R:min(34vw,190px)}}
+@media (prefers-reduced-motion:reduce){
+  .io-ring,.io-arc,.io-core img,.io-enter::before,.io-stars,.io-stars2{animation:none}}
+
+
+
+/* nav shrink */
+nav.main{transition:box-shadow .3s ease}
+nav.main .bar{transition:height .3s cubic-bezier(.2,.7,.2,1)}
+nav.main .mark{transition:width .3s ease,height .3s ease}
+nav.main.shrunk .bar{height:54px}
+nav.main.shrunk .mark{width:30px;height:30px}
+nav.main.shrunk{box-shadow:0 8px 24px rgba(18,43,74,.08)}
+
+
+/* ===== tabbed hubs: shorter page, same content ===== */
+.hubtabs{max-width:var(--max);margin:0 auto 30px;padding:0 20px;display:flex;gap:9px;
+  flex-wrap:wrap;justify-content:center}
+.hubpanel{display:none;animation:hubin .45s cubic-bezier(.2,.7,.2,1)}
+.hubpanel.on{display:block}
+@keyframes hubin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hubpanel .sec-head{margin-top:0!important}
+.hubpanel .steps,.hubpanel .grid,.hubpanel .diptych,.hubpanel .goalstrip,.hubpanel .card-grid{margin-top:0}
+.hubpanel .goalstrip{margin-top:22px}
+@media (prefers-reduced-motion:reduce){.hubpanel{animation:none}}
+
+
+/* ===== ابتكار نيومي · شريط مواصفات مضغوط ===== */
+.specstrip{position:relative;z-index:2;max-width:var(--max);margin:30px auto 0;padding:0 20px;
+  display:grid;gap:0;grid-template-columns:1fr}
+@media(min-width:700px){.specstrip{grid-template-columns:repeat(3,1fr)}}
+.spec{padding:22px 20px;border-top:1px solid rgba(255,255,255,.14);transition:background .22s}
+.spec:first-child{border-top:0}
+@media(min-width:700px){
+  .spec{border-top:0;border-inline-start:1px solid rgba(255,255,255,.14)}
+  .spec:nth-child(3n+1){border-inline-start:0}
+  .spec:nth-child(n+4){border-top:1px solid rgba(255,255,255,.14)}
+}
+.spec:hover{background:rgba(255,255,255,.05)}
+.spec .ic{width:42px;height:42px;border-radius:12px;background:rgba(240,127,45,.18);
+  color:var(--orange-hi);display:grid;place-items:center;margin-bottom:11px}
+.spec .ic .i{width:20px;height:20px}
+.spec b{display:block;font-size:14.5px;color:#fff;font-weight:900;margin-bottom:5px}
+.spec span{display:block;font-size:12px;color:#9FB4D2;font-weight:600;line-height:1.85}
+
+
+/* ================= wayfinding ================= */
+/* 1 · anchor offset matches the shrunken nav */
+html{scroll-padding-top:78px}
+
+/* 2 · one heading scale for every section */
+.sec-head h2{font-size:clamp(26px,4.2vw,40px)}
+
+/* 3 · soft entry into the dark sections instead of a hard edge */
+.subs::after,.flourshow::after,.band::after,.consult::after,.valuesband .vb-in::before{content:"";
+  position:absolute;top:0;inset-inline:0;height:120px;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(255,255,255,.06),transparent)}
+
+/* 4 · section index in the nav */
+.idx-btn{display:none;align-items:center;gap:7px;background:#fff;border:1.5px solid var(--gray-2);
+  color:var(--navy);font-size:12.5px;font-weight:800;border-radius:999px;padding:9px 16px;transition:.2s}
+@media(min-width:1080px){.idx-btn{display:inline-flex}}
+.idx-btn:hover{border-color:var(--navy)}
+.idx-btn i{font-style:normal;font-size:10px;transition:transform .25s}
+.idx-btn.open i{transform:rotate(180deg)}
+.idx-panel{position:absolute;top:calc(100% + 10px);inset-inline-end:20px;z-index:95;
+  background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:18px;
+  box-shadow:0 26px 60px rgba(18,43,74,.16);display:none;min-width:520px}
+.idx-panel.open{display:grid;grid-template-columns:1fr 1fr;gap:6px 26px}
+.idx-panel h5{grid-column:1/-1;font-size:11px;font-weight:800;letter-spacing:.14em;
+  color:var(--muted);margin-bottom:4px}
+.idx-panel a{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:700;
+  color:var(--body);padding:8px 10px;border-radius:11px;transition:.18s}
+.idx-panel a:hover{background:var(--bg);color:var(--navy)}
+.idx-panel a b{font-family:var(--mono);font-size:11px;color:var(--orange-deep);font-weight:800}
+
+/* 5 · chapter rail */
+.rail-dots{position:fixed;inset-inline-end:18px;top:50%;transform:translateY(-50%);z-index:70;
+  display:none;flex-direction:column;gap:12px;opacity:0;transition:opacity .35s ease}
+@media(min-width:1280px){.rail-dots{display:flex}}
+.rail-dots.show{opacity:1}
+.rdot{position:relative;width:9px;height:9px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:rgba(18,43,74,.22);transition:.25s}
+.rdot:hover{background:rgba(18,43,74,.5);transform:scale(1.25)}
+.rdot.on{background:var(--orange);box-shadow:0 0 0 5px rgba(240,127,45,.16)}
+.rdot span{position:absolute;top:50%;inset-inline-start:20px;transform:translateY(-50%) translateX(-6px);
+  background:var(--navy);color:#fff;font-size:11.5px;font-weight:800;white-space:nowrap;
+  border-radius:9px;padding:6px 12px;opacity:0;pointer-events:none;transition:.22s}
+.rdot:hover span{opacity:1;transform:translateY(-50%)}
+.rail-dots.ondark .rdot{background:rgba(255,255,255,.28)}
+.rail-dots.ondark .rdot:hover{background:rgba(255,255,255,.6)}
+.rail-dots.ondark .rdot.on{background:var(--orange-hi)}
+.rail-dots.ondark .rdot span{background:#fff;color:var(--navy)}
+
+
+/* ================= legal drawer ================= */
+.lg-back{position:fixed;inset:0;z-index:200;background:rgba(8,16,28,.6);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity .35s ease}
+.lg-back.open{opacity:1;pointer-events:auto}
+.lg{position:fixed;top:0;bottom:0;inset-inline-start:0;z-index:210;width:min(620px,100%);
+  background:var(--bg);display:flex;flex-direction:column;
+  transform:translateX(-102%);transition:transform .42s cubic-bezier(.2,.75,.2,1);
+  box-shadow:0 0 80px rgba(0,0,0,.4)}
+[dir="rtl"] .lg{transform:translateX(102%)}
+.lg.open{transform:none!important}
+.lg-head{padding:22px 26px 0;border-bottom:1.5px solid var(--gray-2);background:#fff}
+.lg-head .top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.lg-head h3{font-size:20px}
+.lg-close{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gray-2);background:#fff;
+  color:var(--navy);font-size:22px;line-height:1;display:grid;place-items:center;transition:.2s}
+.lg-close:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.lg-tabs{display:flex;gap:4px;margin-top:16px;overflow-x:auto;scrollbar-width:none}
+.lg-tabs::-webkit-scrollbar{display:none}
+.lg-tab{background:none;border:0;border-bottom:2.5px solid transparent;color:var(--muted);
+  font-family:var(--font);font-size:13.5px;font-weight:800;padding:10px 14px;white-space:nowrap;transition:.2s}
+.lg-tab:hover{color:var(--navy)}
+.lg-tab.on{color:var(--navy);border-color:var(--orange)}
+.lg-body{flex:1;overflow-y:auto;padding:26px;overscroll-behavior:contain}
+.lg-pane{display:none}
+.lg-pane.on{display:block}
+.lg-pane h4{font-size:15.5px;margin:22px 0 8px;display:flex;align-items:baseline;gap:9px}
+.lg-pane h4:first-child{margin-top:0}
+.lg-pane h4 b{font-family:var(--mono);font-size:12px;color:var(--orange-deep);font-weight:800}
+.lg-pane p{font-size:13.5px;color:var(--body);font-weight:600;line-height:2.05;margin-bottom:8px}
+.lg-pane ul{list-style:none;margin:4px 0 8px}
+.lg-pane li{font-size:13.5px;color:var(--body);font-weight:600;line-height:2;
+  padding:3px 18px 3px 0;position:relative}
+.lg-pane li::before{content:"";position:absolute;right:2px;top:16px;width:6px;height:6px;
+  border-radius:50%;background:var(--orange)}
+.lg-meta{margin-top:24px;padding-top:18px;border-top:1.5px solid var(--gray-2);
+  font-size:12px;color:var(--muted);font-weight:700;line-height:1.9}
+.lg-foot{padding:16px 26px;border-top:1.5px solid var(--gray-2);background:#fff;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.lg-foot span{font-size:12px;color:var(--muted);font-weight:700}
+body.lg-lock{overflow:hidden}
+
+
+/* ================= view router ================= */
+#views{min-height:52vh}
+.view{display:none}
+.view.on{display:block;animation:viewin .5s cubic-bezier(.2,.75,.2,1)}
+@keyframes viewin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.view.on{animation:none}}
+.nav-links{display:none}
+@media(min-width:1180px){.nav-links{display:flex;gap:4px}}
+.nav-links a{padding:9px 13px;border-radius:999px;border-bottom:0;font-size:13px;
+  color:var(--body);transition:.2s;white-space:nowrap}
+.nav-links a:hover{background:var(--tile);color:var(--navy)}
+.nav-links a.active{background:var(--navy);color:#fff}
+.idx-btn{display:none!important}
+.idx-panel{display:none!important}
+.rail-dots{display:none!important}
+.viewbar{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:12px 20px;
+  border-bottom:1px solid var(--gray-2);background:var(--bg);position:sticky;top:66px;z-index:60}
+.viewbar::-webkit-scrollbar{display:none}
+@media(min-width:1180px){.viewbar{display:none}}
+nav.main.shrunk + .viewbar{top:54px}
+.viewbar a{flex:none;font-size:12.5px;font-weight:800;color:var(--body);background:#fff;
+  border:1.5px solid var(--gray-2);border-radius:999px;padding:9px 16px;white-space:nowrap}
+.viewbar a.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+
+/* ================= hub + wayfinding ================= */
+/* next-step strip */
+/* current-view label */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+
+/* cross-view transition (Chrome) */
+@media (prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:vtout .28s cubic-bezier(.4,0,1,1) both}
+  ::view-transition-new(root){animation:vtin .42s cubic-bezier(.2,.75,.2,1) both}
+}
+@keyframes vtout{to{opacity:0;transform:translateY(-10px)}}
+@keyframes vtin{from{opacity:0;transform:translateY(14px)}}
+
+
+/* ===== الشهادات والملكية الفكرية ===== */
+
+/* ===== plan cards: every row aligned across the three ===== */
+.splan{padding-top:34px}
+.splan h3{min-height:1.2em}
+.splan .goal{min-height:3.4em;align-items:flex-start}
+.splan .pline{margin-top:16px;min-height:52px;align-items:baseline}
+.splan .per{min-height:3.4em;display:flex;align-items:center;text-align:start;white-space:normal}
+.splan .plan-fuel{min-height:132px;display:flex;flex-direction:column;justify-content:center}
+.splan .meals{min-height:26px}
+.splan ul{margin-top:18px}
+.splan .btn{margin-top:22px;align-self:stretch}
+
+@supports (grid-template-rows: subgrid){
+  @media(min-width:920px){
+    .sub-grid{grid-template-rows:repeat(7,auto);row-gap:0;column-gap:18px}
+    .splan{display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0;align-content:start}
+    .splan > *{margin-top:0}
+    .splan .goal{padding-top:8px;align-self:start}
+    .splan .pline{padding-top:16px;align-self:end}
+    .splan .per{padding-top:12px;align-self:start}
+    .splan .plan-fuel{margin-top:18px;align-self:stretch}
+    .splan ul{padding-top:18px;align-self:start}
+    .splan .btn{margin-top:22px;align-self:end}
+    .splan .goal,.splan .per,.splan .plan-fuel,.splan ul,.splan h3{min-height:0}
+  }
+}
+
+
+/* eight nav items now: tighten and set the terms link apart */
+@media(min-width:1180px){
+  .nav-links a{padding:9px 11px;font-size:12.5px}
+  .nav-links a[data-legal]{color:var(--muted);border-inline-start:1px solid var(--gray-2);
+    margin-inline-start:6px;padding-inline-start:14px;border-radius:0}
+  .nav-links a[data-legal]:hover{background:transparent;color:var(--navy)}
+}
+.viewbar a[data-legal]{color:var(--muted)}
+
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"نيومي","alternateName":"New Me",
+"url":"https://newmeksa.com","foundingDate":"2020",
+"telephone":["+966539603302","+966532406566"],
+"address":{"@type":"PostalAddress","streetAddress":"شارع الرياض، حي المعذر الشمالي","addressLocality":"الرياض","addressCountry":"SA"},
+"description":"شركة سعودية للمخبوزات والوجبات الصحية الجاهزة والمنتجات الغذائية الداعمة، بتخصص في احتياجات مرضى السكري والسمنة."}
+</script>
+</head>
+<body>
+<div class="progress"><i id="prog"></i></div>
+
+<svg style="display:none" aria-hidden="true"><defs>
+<symbol id="i-wheat" viewBox="0 0 24 24"><path d="M12 2c1.6 1.6 1.6 4.2 0 5.8C10.4 6.2 10.4 3.6 12 2zm0 6.6c1.6 1.6 1.6 4.2 0 5.8-1.6-1.6-1.6-4.2 0-5.8zM6.8 5.4c2.2.4 3.7 2.5 3.3 4.7-2.2-.4-3.7-2.5-3.3-4.7zm10.4 0c.4 2.2-1.1 4.3-3.3 4.7-.4-2.2 1.1-4.3 3.3-4.7zM6.8 11.4c2.2.4 3.7 2.5 3.3 4.7-2.2-.4-3.7-2.5-3.3-4.7zm10.4 0c.4 2.2-1.1 4.3-3.3 4.7-.4-2.2 1.1-4.3 3.3-4.7zM11 17h2v5h-2z"/></symbol>
+<symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 3h6v4H9z" fill="currentColor" stroke="none"/><path d="M9 12h6M9 16h4" stroke-linecap="round"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6.2c0 4.8-3.3 8.3-8 10.8-4.7-2.5-8-6-8-10.8V5l8-3zm-1.2 13.4 5.4-5.4-1.4-1.4-4 4-1.8-1.8-1.4 1.4 3.2 3.2z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></symbol>
+<symbol id="i-protein" viewBox="0 0 24 24"><path d="M4 9h2V7a2 2 0 0 1 4 0v10a2 2 0 0 0 4 0v-2h2V9h-2V7a2 2 0 0 0-4 0v10a2 2 0 0 1-4 0v-2H4z"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4c.5 8-2.5 15-10 15-3 0-5-1.5-6-3.5C8 16 10 15 12 13c-2 .5-4 .5-6 2 .5-6 5-11 14-11z"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8.5 4.2v9.1L12 21l-8.5-4.7V7.2L12 3z"/><path d="M3.5 7.2 12 11.5l8.5-4.3M12 11.5V21"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12L20.1 5.6z"/></symbol>
+<symbol id="i-bread" viewBox="0 0 24 24"><path d="M5 8c0-2.2 3.1-4 7-4s7 1.8 7 4c0 1.2-.9 2.2-2.3 2.8V19a1 1 0 0 1-1 1H8.3a1 1 0 0 1-1-1v-8.2C5.9 10.2 5 9.2 5 8z"/></symbol>
+<symbol id="i-cookie" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 4 4 0 0 1-5-5 4 4 0 0 1-4-4zm-2.5 7a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6zm5 4a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6zm-4 2a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2.6C8.4 7 6 10.2 6 13.4A6 6 0 0 0 18 13.4C18 10.2 15.6 7 12 2.6z"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke-linecap="round"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9.5 3h5M10.5 3v6.2L5.4 18a2 2 0 0 0 1.7 3h9.8a2 2 0 0 0 1.7-3l-5.1-8.8V3"/><path d="M7.6 14.5h8.8" stroke-linecap="round"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 3 7.5 12 12l9-4.5L12 3z"/><path d="m3 12.5 9 4.5 9-4.5M3 17l9 4.5 9-4.5"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</defs></svg>
+
+<!-- ============ 01 · INTRO · مدار الطاقة ============ -->
+<section class="intro" id="intro">
+  <div class="io-stars"></div><div class="io-stars2"></div>
+  <div class="io-bigword"><span>NEWME</span></div>
+
+  <div class="io-top">
+    <a class="io-logo" href="#top"><span class="mark"></span><b>نيومي</b></a>
+    <button class="intro-skip" id="skip">تخطّ المقدمة ←</button>
+  </div>
+
+  <div class="io-stage" id="ioStage">
+    <div class="io-ring"></div>
+    <div class="io-ring r2"></div>
+    <div class="io-arc"></div>
+    <div class="io-core">
+      <div class="ph"><svg><use href="#i-bread"/></svg></div>
+      <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p142_560x580.jpg" alt="خبز نيومي" onerror="this.remove()">
+    </div>
+  </div>
+
+  <div class="io-copy">
+    <div class="beats" id="beats"><span data-b="1">حضّر</span><span data-b="2">كُل</span><span data-b="3">جدّد</span></div>
+    <h1>جدّد <em>حياتك</em></h1>
+    <p>حضّر · كُل · جدّد — مخبوزات ووجبات صحية تصلك طازجة، بقيم غذائية مطبوعة كاملة على كل عبوة.</p>
+    <div class="io-ctas">
+      <a href="#top" class="io-enter enter">ابدأ من هنا ←</a>
+      <a href="#subs" class="io-ghost enter">الباقات والأسعار</a>
+    </div>
+  </div>
+
+  <div class="io-strip">شريك لمستشفى الملك فيصل التخصصي ومركز الأبحاث · <b>دايت سنتر</b> · Daily Mealz</div>
+</section>
+
+<div id="top"></div>
+<!-- ============ 02 · ANNOUNCE / NAV / HERO / USP ============ -->
+<div class="announce" id="announce">
+  <span class="on">شريك لمستشفى الملك فيصل التخصصي ومركز الأبحاث · <b>دايت سنتر</b> · Daily Mealz</span>
+  <span>توصيل مجاني للطلبات فوق <b>150 ر.س</b></span>
+  <span>استشارة تغذية أولى <b>مجانية</b> مع أي اشتراك</span>
+</div>
+
+<nav class="main">
+  <div class="bar">
+    <a class="logo" href="#top"><span class="mark"></span><span><b>نيومي</b><small>NEW ME</small></span></a>
+        <div class="nav-links" id="navlinks">
+      <a href="#v-home">الرئيسة</a>
+      <a href="#v-shop">المتجر</a>
+      <a href="#v-make">صناعتنا</a>
+      <a href="#v-subs">الاشتراكات</a>
+      <a href="#v-about">عن نيومي</a>
+      <a href="#v-kitchen">مطبخنا</a>
+      <a href="#v-help">الأسئلة</a>
+      <a href="#" data-legal="p1">الشروط</a>
+    </div>
+    <div class="nav-right">
+      <button class="idx-btn" id="idxBtn" aria-expanded="false">الأقسام <i>▾</i></button>
+      <a href="#subs" class="btn sm">ابدأ اشتراكك</a>
+      <button class="burger" id="burger" aria-label="القائمة"><svg><use href="#i-menu"/></svg></button>
+    </div>
+    <div class="idx-panel" id="idxPanel">
+      <h5>محتويات الصفحة</h5>
+      <a href="#why"><b>01</b> لماذا نيومي</a>
+      <a href="#journey"><b>07</b> صناعتنا</a>
+      <a href="#about"><b>02</b> قصتنا</a>
+      <a href="#flour"><b>08</b> ابتكار نيومي</a>
+      <a href="#vision"><b>03</b> الرؤية الوطنية</a>
+      <a href="#subs"><b>09</b> الاشتراكات</a>
+      <a href="#lines"><b>04</b> خطوط الأعمال</a>
+      <a href="#company"><b>10</b> عن نيومي</a>
+      <a href="#shop"><b>05</b> المتجر</a>
+      <a href="#articles"><b>11</b> مطبخنا</a>
+      <a href="#nutrition"><b>06</b> القيم الغذائية</a>
+      <a href="#faq"><b>12</b> الأسئلة الشائعة</a>
+    </div>
+  </div>
+</nav>
+
+<div class="mmenu" id="mmenu">
+  <button class="mclose" id="mclose" aria-label="إغلاق">×</button>
+    <div class="in">
+    <p class="mgroup">تصفّح</p>
+    <a href="#v-home">الرئيسة</a><a href="#v-shop">المتجر</a><a href="#v-make">صناعتنا</a>
+    <a href="#v-subs">الاشتراكات</a>
+    <p class="mgroup">اعرفنا</p>
+    <a href="#v-about">عن نيومي</a><a href="#why">لماذا نيومي</a><a href="#vision">الرؤية الوطنية</a>
+    <p class="mgroup">محتوى ومساعدة</p>
+    <a href="#v-kitchen">مطبخنا</a><a href="#v-help">الأسئلة والاستشارة</a>
+    <a href="#" data-legal="p1">الشروط والسياسات</a>
+  </div>
+</div>
+
+
+<div class="viewbar" id="viewbar">
+  <a href="#v-home">الرئيسة</a><a href="#v-shop">المتجر</a><a href="#v-make">صناعتنا</a>
+  <a href="#v-subs">الاشتراكات</a><a href="#v-about">عن نيومي</a><a href="#v-kitchen">مطبخنا</a>
+  <a href="#v-help">الأسئلة</a><a href="#" data-legal="p1">الشروط</a>
+</div>
+
+<p class="sr" id="live" aria-live="polite"></p>
+<main id="views">
+<div class="view" id="v-home" data-label="الرئيسة">
+<header class="hero">
+  <div class="hero-copy">
+    <span class="hero-pill">جدّد حياتك · <b>PREP — EAT — RENEW</b></span>
+    <h1>التجديد يبدأ<br><em>من طبقك.</em></h1>
+    <p class="lead">مخبوزات ووجبات جاهزة من الدقيق الصحي الخاص بنيومي — مكوّنات عضوية، وقيم غذائية مطبوعة كاملة على كل عبوة، تصلك طازجة إلى بابك.</p>
+    <div class="hero-ctas">
+      <a href="#subs" class="btn">ابدأ اشتراكك</a>
+      <a href="#shop" class="btn inv">تسوّق مرة واحدة</a>
+    </div>
+    <div class="hero-note"><svg class="i"><use href="#i-clipboard"/></svg> قيم غذائية مطبوعة على كل عبوة · بإشراف خبير تغذية معتمد</div>
+  </div>
+  <div class="hero-media">
+    <div class="ph"><svg><use href="#i-bread"/></svg></div>
+    <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p81_1000x1150.jpg" alt="خبز نيومي وبذور الترمس" onerror="this.remove()">
+  </div>
+</header>
+
+<div class="usp-strip">
+  <div class="usp-grid">
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-wheat"/></svg></span><b>دقيقنا من تطويرنا</b><small>ترمس أسترالي وكتان عضوي — مكوّن لا يُشترى جاهزاً</small></div>
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-clipboard"/></svg></span><b>كل قيمة مطبوعة</b><small>سعرات وبروتين ودهون وألياف وأوميغا-٣</small></div>
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><b>مراجعة خبير التغذية</b><small>تُعاير كل وصفة قبل اعتمادها في الإنتاج</small></div>
+    <div class="usp"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><b>يُخبز في يومه</b><small>رقم التشغيلة وتاريخ الإنتاج على كل صندوق</small></div>
+  </div>
+</div>
+
+<!-- ============ 03 · WHY ============ -->
+<section class="section" id="why">
+  <div class="sec-head rv">
+    <span class="chapter">الفصل <b>01</b> · من نحن</span>
+    <span class="kick">لماذا نيومي</span>
+    <h2>يبدأ الفرق من <em>المكوّن</em>، لا من الوصفة</h2>
+  </div>
+  <div class="split">
+    <div class="copy rv">
+      <p class="lead-p">يبدأ منتجنا قبل الوصفة بخطوة: عند المكوّن نفسه. طوّرنا دقيقنا الصحي من بذور الترمس والكتان العضوية، وأخضعناه لتحليل مخبري معتمد قبل أن يدخل في أول رغيف.</p>
+      <p class="lead-p" style="margin-top:14px">ولأننا نصنع المادة الخام بأنفسنا، نعرف مصدر كل رقم على العبوة — فنطبعه بثقة.</p>
+      <div class="pillars">
+        <div class="pillar">
+          <span class="ic"><svg class="i"><use href="#i-target"/></svg></span>
+          <div><b>صُمِّم للحالة الصحية أولاً</b><span>انطلقنا من احتياجات مرضى السكري والسمنة، ثم امتددنا إلى كل باحث عن نظام متوازن.</span></div>
+        </div>
+        <div class="pillar">
+          <span class="ic"><svg class="i"><use href="#i-box"/></svg></span>
+          <div><b>معيار غذائي واحد</b><span>من خبز الصباح إلى وجبة الغداء إلى المنتج الداعم، القاعدة الغذائية ذاتها.</span></div>
+        </div>
+        <div class="pillar">
+          <span class="ic"><svg class="i"><use href="#i-shield"/></svg></span>
+          <div><b>ملكية فكرية محمية</b><span>علامة «نيو مي — New Me» مسجَّلة.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="media-card rv">
+      <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+      <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p76_1100x900.jpg" alt="بذور الترمس والكتان" onerror="this.remove()">
+      <span class="cap">مكوّناتنا الأساسية</span>
+      <span class="chips-on-photo"><span>ترمس أسترالي</span><span>كتان عضوي</span><span>تحليل مخبري معتمد</span></span>
+    </div>
+  </div>
+</section>
+
+</div>
+<div class="view" id="v-shop" data-label="المتجر">
+<!-- ============ خطوط الأعمال ============ -->
+<section class="section tile" id="lines">
+  <div class="sec-head rv">
+    <span class="chapter">الفصل <b>02</b> · ماذا نقدّم</span>
+    <span class="kick">خطوط أعمالنا</span>
+    <h2>ثلاثة خطوط، <em>معيار غذائي واحد</em></h2>
+  </div>
+  <div class="lines-rail" id="linesRail">
+    <article class="lcard rv">
+      <div class="media"><span class="n">01</span>
+        <div class="ph"><svg><use href="#i-bread"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p142_560x580.jpg" alt="المخبوزات الصحية" onerror="this.remove()"></div>
+      <div class="bd">
+        <h4>المخبوزات الصحية</h4>
+        <p>تشكيلة خبز ومخبوزات يومية منخفضة النشويات، مبنية على الدقيق الصحي الخاص بالشركة.</p>
+        <div class="tags"><span>خبز عربي</span><span>توست نيومي</span><span>باجيت</span><span>صامولي</span><span>خبز برجر</span><span>سميط</span><span>مالتي سيد</span></div>
+      </div>
+    </article>
+    <article class="lcard rv">
+      <div class="media"><span class="n">02</span>
+        <div class="ph"><svg><use href="#i-cookie"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p124_560x580.jpg" alt="المنتجات الداعمة" onerror="this.remove()"></div>
+      <div class="bd">
+        <h4>المنتجات الداعمة</h4>
+        <p>حلويات ومعجنات ومنتجات غذائية مكمّلة تقدّم قيمة غذائية عالية دون تأثير سلبي على مستويات السكر في الدم.</p>
+        <div class="tags"><span>الحلويات الشرقية</span><span>الكيك والكوكيز</span><span>الفطور والمعجنات</span><span>المنتجات التكميلية</span></div>
+      </div>
+    </article>
+    <article class="lcard rv">
+      <div class="media"><span class="n">03</span>
+        <div class="ph"><svg><use href="#i-box"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p77_1600x800.jpg" alt="الاشتراكات الغذائية" onerror="this.remove()"></div>
+      <div class="bd">
+        <h4>الاشتراكات الغذائية</h4>
+        <p>باقات وجبات صحية جاهزة يومية وأسبوعية وشهرية، محسوبة القيم الغذائية، تُوصَّل إلى المنزل أو مقر العمل.</p>
+        <div class="tags"><span>يومية</span><span>أسبوعية</span><span>شهرية</span></div>
+      </div>
+    </article>
+  </div>
+  <p class="lines-hint">اسحب لعرض بقية الخطوط</p>
+</section>
+
+<!-- ============ 03b · SHOP ============ -->
+<section class="section" id="shop">
+  <div class="sec-head rv">
+    <span class="kick">المتجر</span>
+    <h2>منتجات <em>اليوم</em></h2>
+    <p>كل صنف ببطاقته الغذائية الكاملة — اختر ما يناسب يومك.</p>
+  </div>
+
+  <div class="shop-bar">
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-cat="all">الكل <i>6</i></button>
+      <button class="tab" data-cat="bakery">المخبوزات <i>2</i></button>
+      <button class="tab" data-cat="breakfast">الفطور والمعجنات <i>1</i></button>
+      <button class="tab" data-cat="extra">المنتجات التكميلية <i>3</i></button>
+    </div>
+    <div class="rail-ctrl">
+      <button class="rail-btn" id="prev" aria-label="المنتجات السابقة"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      <button class="rail-btn" id="next" aria-label="المنتجات التالية"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    </div>
+  </div>
+
+  <div class="rail-outer">
+    <div class="rail" id="rail" tabindex="0" role="region" aria-label="منتجات اليوم">
+
+      <article class="prod rv" data-cat="bakery">
+        <div class="prod-tile">
+          <span class="p-flag"><svg class="i"><use href="#i-bolt"/></svg> الأكثر مبيعاً</span>
+          <div class="ph"><svg><use href="#i-bread"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p142_560x580.jpg" alt="خبز البذور المتعدد" onerror="this.remove()">
+        </div>
+        <h3>خبز البذور المتعدد</h3>
+        <p class="p-sub">للفطور اليومي — أعلى نسبة بروتين في التشكيلة</p>
+        <div class="p-specs">
+          <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 12.1غ بروتين</div>
+          <div class="p-spec"><span class="kcal-box">kcal</span> 119 سعرة</div>
+        </div>
+        <div class="p-price">23 ر.س <small>/ رغيف</small></div>
+        <a href="#" class="p-view">عرض المنتج</a>
+      </article>
+
+      <article class="prod rv" data-cat="extra">
+        <div class="prod-tile">
+          <div class="ph"><svg><use href="#i-cookie"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p121_560x580.jpg" alt="بقسماط مطحون سادة" onerror="this.remove()">
+        </div>
+        <h3>بقسماط مطحون سادة</h3>
+        <p class="p-sub">لتغطية الأصناف المقلية دون نشويات زائدة</p>
+        <div class="p-specs">
+          <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 3غ بروتين</div>
+          <div class="p-spec"><span class="kcal-box">kcal</span> 105 سعرة</div>
+        </div>
+        <div class="p-price">15 ر.س <small>/ عبوة</small></div>
+        <a href="#" class="p-view">عرض المنتج</a>
+      </article>
+
+      <article class="prod rv" data-cat="extra">
+        <div class="prod-tile">
+          <div class="ph"><svg><use href="#i-cookie"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p122_560x580.jpg" alt="بقسماط بالأعشاب الإيطالية" onerror="this.remove()">
+        </div>
+        <h3>بقسماط بالأعشاب الإيطالية</h3>
+        <p class="p-sub">لسلطات العشاء — 45 سعرة للحصة</p>
+        <div class="p-specs">
+          <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 1.5غ بروتين</div>
+          <div class="p-spec"><span class="kcal-box">kcal</span> 45 سعرة</div>
+        </div>
+        <div class="p-price">15 ر.س <small>/ عبوة</small></div>
+        <a href="#" class="p-view">عرض المنتج</a>
+      </article>
+
+      <article class="prod rv" data-cat="extra">
+        <div class="prod-tile">
+          <div class="ph"><svg><use href="#i-cookie"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p123_560x580.jpg" alt="بقسماط بالثوم" onerror="this.remove()">
+        </div>
+        <h3>بقسماط بالثوم</h3>
+        <p class="p-sub">وجبة خفيفة — 48 سعرة للقطعة</p>
+        <div class="p-specs">
+          <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 1.5غ بروتين</div>
+          <div class="p-spec"><span class="kcal-box">kcal</span> 48 سعرة</div>
+        </div>
+        <div class="p-price">15 ر.س <small>/ عبوة</small></div>
+        <a href="#" class="p-view">عرض المنتج</a>
+      </article>
+
+      <article class="prod rv" data-cat="breakfast">
+        <div class="prod-tile">
+          <span class="p-flag"><svg class="i" style="color:var(--green)"><use href="#i-leaf"/></svg> نباتي</span>
+          <div class="ph"><svg><use href="#i-cookie"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p124_560x580.jpg" alt="قرشلة الزعتر" onerror="this.remove()">
+        </div>
+        <h3>قرشلة الزعتر</h3>
+        <p class="p-sub">لقهوة العصر — أخفّ بديل عن المعجنات</p>
+        <div class="p-specs">
+          <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 3غ بروتين</div>
+          <div class="p-spec"><span class="kcal-box">kcal</span> 90 سعرة</div>
+        </div>
+        <div class="p-price">9 ر.س <small>/ عبوة</small></div>
+        <a href="#" class="p-view">عرض المنتج</a>
+      </article>
+
+      <article class="prod rv" data-cat="bakery">
+        <div class="prod-tile">
+          <div class="ph"><svg><use href="#i-bread"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p82_1000x850.jpg" alt="خبز نيومي البروتيني" onerror="this.remove()">
+        </div>
+        <h3>خبز نيومي البروتيني</h3>
+        <p class="p-sub">للأنظمة منخفضة النشويات — رغيف كامل</p>
+        <div class="p-specs">
+          <div class="p-spec"><svg class="i"><use href="#i-protein"/></svg> 40غ بروتين / 100غ</div>
+          <div class="p-spec"><span class="kcal-box">kcal</span> 233 سعرة</div>
+        </div>
+        <div class="p-price">14 ر.س <small>/ رغيف</small></div>
+        <a href="#" class="p-view">عرض المنتج</a>
+      </article>
+
+    </div>
+    <div class="railbar"><i id="railbar"></i></div>
+    <p class="rail-hint">اسحب أو استخدم الأسهم للتنقّل بين المنتجات</p>
+  </div>
+  <div class="shop-cta"><a href="#" class="btn inv">عرض كل المنتجات</a></div>
+
+</section>
+
+<!-- ============ 04a · NUTRITION ============ -->
+<section class="section alt" id="nutrition">
+  <div class="sec-head rv">
+    <span class="kick">القيم الغذائية</span>
+    <h2>بطاقة <em>الهوية الغذائية</em></h2>
+    <p>هذا ما يمنحه جسمك في كل 100 غرام — محسوبة ومراجَعة بإشراف خبير تغذية معتمد.</p>
+  </div>
+  <div class="split">
+    <div class="media-card rv">
+      <div class="ph"><svg><use href="#i-bread"/></svg></div>
+      <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p13_1100x900.jpg" alt="مقطع من خبز نيومي" onerror="this.remove()">
+      <span class="cap">كيف نصنع رغيفكم · 60 ثانية</span>
+    </div>
+    <div class="spec-card rv">
+      <h3>خبز نيومي</h3>
+      <div class="sub">القيم لكل 100غ · بإشراف خبير تغذية معتمد</div>
+      <div class="spec-row"><span class="n">الطاقة</span><span class="fuel-bar fuel" data-v="46"><i></i></span><span class="v"><em>233</em> kcal</span></div>
+      <div class="spec-row"><span class="n">البروتين</span><span class="fuel-bar fuel" data-v="95"><i></i></span><span class="v"><em>40</em> g</span></div>
+      <div class="spec-row"><span class="n">الدهون الكلية</span><span class="fuel-bar fuel" data-v="22"><i></i></span><span class="v">7 g</span></div>
+      <div class="spec-row"><span class="n sub2">— منها أوميغا-3</span><span class="fuel-bar fuel" data-v="78"><i></i></span><span class="v"><em>3.8</em> g</span></div>
+      <div class="spec-row"><span class="n">الكربوهيدرات</span><span class="fuel-bar fuel" data-v="30"><i></i></span><span class="v">15 g</span></div>
+      <div class="spec-row"><span class="n sub2">— منها ألياف</span><span class="fuel-bar fuel" data-v="60"><i></i></span><span class="v"><em>12</em> g</span></div>
+      <div class="spec-row"><span class="n">السكر المضاف</span><span class="fuel-bar fuel" data-v="0"><i></i></span><span class="v">0 g</span></div>
+      <div class="spec-note">* تُعتمد القيم النهائية من المختبر قبل الطباعة على العبوة.</div>
+    </div>
+  </div>
+</section>
+<div class="rule"><i></i></div>
+</div>
+<div class="view" id="v-make" data-label="صناعتنا">
+<!-- ============ كيف نصنع منتجاتنا ============ -->
+<section class="section tile" id="journey">
+  <div class="sec-head rv">
+    <span class="chapter">الفصل <b>03</b> · صناعتنا</span>
+    <span class="kick">صناعتنا</span>
+    <h2>من المكوّن — <em>إلى بابك</em></h2>
+    <p>أربع مراحل موثّقة تمرّ بها كل تشغيلة قبل أن تصلك.</p>
+  </div>
+  <div class="wide-hero rv">
+    <div class="ph"><svg><use href="#i-bread"/></svg></div>
+    <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p91_1600x900.jpg" alt="داخل مخبز نيومي" onerror="this.remove()">
+    <div class="wh-in">
+      <span class="wh-kick">من المكوّن إلى بابك</span>
+      <b>أربع مراحل · تشغيلة واحدة · معيار لا يتغيّر</b>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="tcard rv"><span class="n">01</span>
+      <span class="ic"><svg class="i"><use href="#i-wheat"/></svg></span>
+      <h4>المكوّن</h4>
+      <p>بذور الترمس المستوردة من أستراليا وبذور الكتان العضوية، تُطحن لإنتاج الدقيق الصحي الخاص بالشركة.</p>
+    </div>
+    <div class="tcard rv"><span class="n">02</span>
+      <span class="ic"><svg class="i"><use href="#i-bread"/></svg></span>
+      <h4>الخَبز والتحضير</h4>
+      <p>تُخبز المنتجات وتُحضَّر الوجبات يومياً وفق وصفات ثابتة ومعايير إنتاج منضبطة، ويحمل كل صندوق رقم تشغيلته وتاريخ إنتاجه.</p>
+    </div>
+    <div class="tcard rv"><span class="n">03</span>
+      <span class="ic"><svg class="i"><use href="#i-clipboard"/></svg></span>
+      <h4>المعايرة والتوثيق</h4>
+      <p>تُراجَع القيم الغذائية لكل وصفة بإشراف خبير التغذية، وتُطبع على بطاقة المنتج قبل خروجه من المصنع.</p>
+    </div>
+    <div class="tcard rv"><span class="n">04</span>
+      <span class="ic"><svg class="i"><use href="#i-box"/></svg></span>
+      <h4>التوصيل</h4>
+      <p>تُوصَّل الطلبات مبرَّدة عبر شبكة شركاء التوصيل، بسلسلة تبريد متكاملة وتتبّع لحظي للطلب.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ ابتكار نيومي ============ -->
+<section class="flourshow" id="flour">
+  <div class="fs-banner rv">
+    <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+    <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p82_1000x850.jpg" alt="مقطع من خبز نيومي" onerror="this.remove()">
+    <div class="fsb-in">
+      <span class="kick">الدقيق الصحي</span>
+      <h2>ابتكار <em>نيومي</em></h2>
+      <p>دقيق صحي مبتكر منخفض النشويات، مصنوع من بذور الترمس وبذور الكتان العضوية — يجمع بين القيمة الغذائية العالية والطعم المتوازن. هو المكوّن الذي تُبنى عليه تشكيلاتنا كافة.</p>
+      <span class="fsb-stamp"><b>ملكية خاصة</b><small>مطوَّر داخل الشركة</small></span>
+    </div>
+  </div>
+
+  <div class="fs-kpis rv">
+    <div><b>منخفض</b><span>النشويات</span></div>
+    <div><b>عالي</b><span>البروتين والألياف</span></div>
+    <div><b>أوميغا-3</b><span>من الكتان العضوي</span></div>
+  </div>
+
+  <div class="specstrip rv">
+    <div class="spec"><span class="ic"><svg class="i"><use href="#i-wheat"/></svg></span>
+      <b>بذور الترمس الأسترالية</b><span>من أغنى المصادر النباتية بالبروتين والألياف، وتسهم في دعم صحة القلب وتنظيم مستوى السكر في الدم.</span></div>
+    <div class="spec"><span class="ic"><svg class="i"><use href="#i-drop"/></svg></span>
+      <b>بذور الكتان العضوية</b><span>من أفضل المصادر النباتية لأوميغا-3، وتسهم في دعم صحة القلب وتقليل الالتهابات.</span></div>
+    <div class="spec"><span class="ic"><svg class="i"><use href="#i-protein"/></svg></span>
+      <b>بروتين مرتفع</b><span>داعم للرياضيين ولكل من يسعى إلى زيادة مدخوله البروتيني.</span></div>
+    <div class="spec"><span class="ic"><svg class="i"><use href="#i-leaf"/></svg></span>
+      <b>ألياف مرتفعة</b><span>تسهم في تحسين الهضم ودعم حركة الأمعاء.</span></div>
+    <div class="spec"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span>
+      <b>مضادات الأكسدة</b><span>تسهم في حماية الخلايا من الإجهاد التأكسدي.</span></div>
+    <div class="spec"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span>
+      <b>شبع أطول</b><span>يساعد على التحكم في الشهية وتنظيم مستويات السكر في الدم.</span></div>
+  </div>
+</section>
+</div>
+<div class="view" id="v-subs" data-label="الاشتراكات">
+<!-- ============ 04b · SUBSCRIPTIONS ============ -->
+<section class="subs" id="subs" style="border-top:1px solid rgba(255,255,255,.12)">
+  <div class="inner">
+    <div class="sec-head rv">
+      <span class="kick">الاشتراكات</span>
+      <h2>اختر <em style="color:var(--orange-hi)">مدة اشتراكك</em></h2>
+      <p>خدمات اشتراك يومية وأسبوعية وشهرية توصّل إليك وجبات صحية جاهزة ومتنوعة إلى المنزل أو مقر العمل. ويُصمَّم كل اشتراك بما يتوافق مع احتياجك الغذائي، سواء لمتّبعي النظام منخفض النشويات (الكيتو) أو النظام الصحي العام أو مرضى السكري.</p>
+    </div>
+    <div class="sub-grid">
+
+      <div class="splan rv">
+        <h3>الباقة التعريفية</h3>
+        <div class="goal"><svg class="i"><use href="#i-target"/></svg> تجربة أولى للتعرّف على تنوّع الوجبات ومستوى الجودة</div>
+        <div class="pline"><b>5</b><small>أيام</small></div>
+        <span class="per">مثالية للتجربة قبل الالتزام</span>
+        <div class="plan-fuel">
+          <div class="hd"><span>مدة الاشتراك</span><b>5 DAYS</b></div>
+          <div class="fuel-bar fuel" data-v="17"><i></i></div>
+          <div class="meals"><span class="on">إفطار</span><span class="on">غداء</span><span>سناك</span><span>عشاء</span></div>
+        </div>
+        <ul>
+          <li>وجبات صحية جاهزة ومتنوعة</li>
+          <li>قيم غذائية محسوبة بدقة</li>
+          <li>توصيل إلى المنزل أو مقر العمل</li>
+          <li>استشارة تغذية أولى مجانية</li>
+        </ul>
+        <a href="#" class="btn navy full">ابدأ بالتعريفية</a>
+      </div>
+
+      <div class="splan pop rv">
+        <span class="tag">★ الأكثر اختياراً</span>
+        <h3>باقة أيام العمل</h3>
+        <div class="goal"><svg class="i"><use href="#i-target"/></svg> التزام شهري يغطي أيام العمل الرسمية</div>
+        <div class="pline"><b>20</b><small>يوماً</small></div>
+        <span class="per">تغطية أيام الدوام دون عطلات نهاية الأسبوع</span>
+        <div class="plan-fuel">
+          <div class="hd"><span>مدة الاشتراك</span><b>20 DAYS</b></div>
+          <div class="fuel-bar fuel" data-v="67"><i></i></div>
+          <div class="meals"><span class="on">إفطار</span><span class="on">غداء</span><span class="on">سناك</span><span>عشاء</span></div>
+        </div>
+        <ul>
+          <li>وجبات يومية طوال أيام العمل</li>
+          <li>تخصيص السعرات والقيم الغذائية</li>
+          <li>يناسب النظام منخفض النشويات (الكيتو) والنظام الصحي العام</li>
+          <li>استشارة تغذية شهرية مجانية</li>
+          <li>أولوية في التوصيل</li>
+        </ul>
+        <a href="#" class="btn full">ابدأ بأيام العمل</a>
+      </div>
+
+      <div class="splan rv">
+        <h3>الباقة الشاملة</h3>
+        <div class="goal"><svg class="i"><use href="#i-target"/></svg> تغطية غذائية كاملة على مدار الشهر</div>
+        <div class="pline"><b>30</b><small>يوماً</small></div>
+        <span class="per">الخيار الأمثل لمرضى السكري ومتّبعي الأنظمة الدقيقة</span>
+        <div class="plan-fuel">
+          <div class="hd"><span>مدة الاشتراك</span><b>30 DAYS</b></div>
+          <div class="fuel-bar fuel" data-v="100"><i></i></div>
+          <div class="meals"><span class="on">إفطار</span><span class="on">غداء</span><span class="on">سناك</span><span class="on">عشاء</span></div>
+        </div>
+        <ul>
+          <li>تغطية غذائية كاملة كل أيام الشهر</li>
+          <li>طهي احترافي محسوب بدقة بالقيم الغذائية</li>
+          <li>متابعة دورية مع أخصائي التغذية</li>
+          <li>ضبط دقيق للسعرات حسب الحالة</li>
+          <li>أولوية توصيل قصوى</li>
+        </ul>
+        <a href="#" class="btn navy full">ابدأ بالشاملة</a>
+      </div>
+
+    </div>
+    <div class="sub-guarantee"><svg class="i"><use href="#i-shield"/></svg> ضماننا: طلبك الأول على مسؤوليتنا — إن لم يحُز رضاك، نعيد إليك المبلغ كاملاً دون استفسار.</div>
+    <div class="sub-trust">
+      <span><b>✓</b> إلغاء أو إيقاف في أي وقت</span>
+      <span><b>✓</b> تبديل الباقة بضغطة</span>
+      <span><b>✓</b> دفع آمن — مدى · Apple Pay · فيزا</span>
+    </div>
+  </div>
+</section>
+</div>
+<div class="view" id="v-about" data-label="عن نيومي">
+<!-- ============ 06a · STORY ============ -->
+<section class="section alt" id="about">
+  <div class="sec-head rv">
+    <span class="kick">قصتنا</span>
+    <h2>بدأت من مطبخ <em>في الرياض</em></h2>
+  </div>
+  <div class="split">
+    <div class="copy rv">
+      <div class="quote">
+        <p>«انطلقت نيومي من قناعة مفادها أن الغذاء الصحي ينبغي أن يكون خياراً متاحاً ومستساغاً، لا التزاماً شاقاً يفرض على الفرد التخلي عن أصناف أساسية في نمطه الغذائي اليومي… من هذه الملاحظة تحدّدت وجهتنا: أن نبدأ من المكوّن الأساس لا من المنتج النهائي.»</p>
+        <p class="sig">ميساء كردي — المؤسِّسة<span>Certified Health Coach (Berg Method, 2019)</span></p>
+      </div>
+    </div>
+    <div class="media-card rv">
+      <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+      <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p98_1000x850.jpg" alt="فريق نيومي" onerror="this.remove()">
+      <span class="cap">من مطبخنا في الرياض</span>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat rv"><span class="sic"><svg class="i"><use href="#i-calendar"/></svg></span>
+      <b>2020</b><span>سنة التأسيس في مدينة الرياض</span></div>
+    <div class="stat rv"><span class="sic"><svg class="i"><use href="#i-flask"/></svg></span>
+      <b>مكوّن خاص</b><span>دقيق صحي منخفض النشويات مطوَّر داخلياً</span></div>
+    <div class="stat rv"><span class="sic"><svg class="i"><use href="#i-layers"/></svg></span>
+      <b>3</b><span>خطوط أعمال بمعيار غذائي واحد</span></div>
+  </div>
+</section>
+
+<!-- ============ 06b · NATIONAL VISION ============ -->
+<section class="band" id="vision" style="margin-top:0">
+  <div class="inner">
+    <span class="kick">الرؤية الوطنية</span>
+    <h3>شريك في الطب الوقائي والتغذية العلاجية</h3>
+    <p>نعمل ضمن تحوّل وطني من العلاج إلى الوقاية. فارتفاع معدلات السمنة والسكري في المملكة يجعل الغذاء اليومي خط الدفاع الصحي الأول — وعند هذه النقطة تحديداً تلتقي مستهدفات رؤية المملكة 2030 التي نسهم في تحقيقها.</p>
+    <div class="kpis">
+      <div class="kpi rv">
+        <div class="kfig">
+          <i class="from">510</i>
+          <i class="arrow">←</i>
+          <i class="to" data-from="510" data-to="324">510</i>
+          <small>الحالي</small>
+          <small></small>
+          <small>المستهدف</small>
+        </div>
+        <span class="klabel">خفض وفيات الأمراض المزمنة لكل 100 ألف نسمة</span></div>
+      <div class="kpi rv">
+        <div class="kfig">
+          <i class="from">74</i>
+          <i class="arrow">←</i>
+          <i class="to" data-from="74" data-to="80">74</i>
+          <small>الحالي</small>
+          <small></small>
+          <small>المستهدف</small>
+        </div>
+        <span class="klabel">رفع متوسط العمر المتوقع بالأعوام</span></div>
+    </div>
+  </div>
+</section>
+<div class="rule"><i></i></div>
+
+<!-- ============ عن نيومي · لوحة موحّدة ============ -->
+<section class="section alt" id="company">
+  <div class="sec-head rv">
+    <span class="kick">عن نيومي</span>
+    <h2>شركة سعودية للأطعمة الصحية الجاهزة <em>والمخبوزات المتميزة</em></h2>
+  </div>
+
+  <div class="hubtabs" id="hubtabs">
+    <button class="tab on" data-t="t1">نبذة والمسيرة</button>
+    <button class="tab" data-t="t2">عوامل التميّز</button>
+    <button class="tab" data-t="t3">القيم المؤسسية</button>
+    <button class="tab" data-t="t4">الرؤية والرسالة</button>
+  </div>
+
+  <div class="hubpanel on" id="t1">
+<p class="about-lead rv">تأسست نيومي في مدينة الرياض عام 2020م، وتعمل في إنتاج المخبوزات الصحية والوجبات الجاهزة والمنتجات الغذائية الداعمة، بتخصص واضح في تلبية الاحتياجات الغذائية لمرضى السكري والسمنة ومتّبعي الأنظمة منخفضة النشويات. وتحرص الشركة على انتقاء مكوّنات طبيعية وعضوية عالية الجودة في جميع منتجاتها، وتبني عليها تشكيلاتها كافة بما يضمن اتساق المعيار الغذائي عبر خطوط الإنتاج جميعها.</p>
+<div class="steps">
+    <div class="tcard rv"><span class="n">01</span><h4>مرحلة التأسيس</h4>
+      <p>انطلقت الشركة برؤية واضحة: توفير خبز ومخبوزات ووجبات صحية جاهزة لكل منزل، بمكوّنات طبيعية وعضوية، ودون تنازل عن الجودة أو النكهة.</p></div>
+    <div class="tcard rv"><span class="n">02</span><h4>مرحلة التخصص</h4>
+      <p>توسّع الحضور التشغيلي ليشمل مدينة الرياض وشبكة موزّعين في جدة والمنطقة الشرقية، إلى جانب إبرام شراكات مع جهات صحية وغذائية رائدة في المملكة.</p></div>
+    <div class="tcard rv"><span class="n">03</span><h4>اكتمال المنظومة</h4>
+      <p>إضافة خدمات الاشتراكات الغذائية المحسوبة القيم، ثم المنتجات الداعمة، لتكتمل منظومة تغذية يومية تغطي مختلف أوقات الوجبات بمعيار موحّد.</p></div>
+    <div class="tcard rv"><span class="n">04</span><h4>المرحلة الراهنة</h4>
+      <p>التعمّق في التخصص بدلاً من التوسع الأفقي: تطوير الدقيق الصحي الخاص منخفض النشويات، وتأسيس تشكيلة متكاملة من المخبوزات عليه.</p></div>
+  </div>
+  </div>
+
+  <div class="hubpanel" id="t2">
+<div class="edge">
+    <article class="edge-hero rv">
+      <div class="eh-media">
+        <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p76_1100x900.jpg" alt="بذور الترمس والكتان" onerror="this.remove()">
+        <span class="eh-stamp"><b>01</b><small>العامل الأول</small></span>
+      </div>
+      <div class="eh-copy">
+        <span class="eh-kick">المكوّن الأساس</span>
+        <h3>تطوير المكوّن الأساس داخلياً</h3>
+        <p>الدقيق الصحي الخاص، المصنوع من بذور الترمس والكتان العضوية، مملوك للشركة ويصعب استنساخه. ولا يقتصر التميّز على الوصفة النهائية، بل يمتد إلى تركيبة المادة الخام ذاتها.</p>
+        <div class="eh-chips"><span>ترمس أسترالي</span><span>كتان عضوي</span><span>تحليل مخبري معتمد</span></div>
+      </div>
+    </article>
+
+    <div class="edge-grid">
+      <article class="ecard rv"><span class="ghost">02</span>
+        <div class="ethumb">
+          <div class="ph"><svg><use href="#i-clipboard"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p41_1100x900.jpg" alt="" onerror="this.remove()">
+          <span class="ethumb-n">02</span>
+        </div>
+        <div class="ebody">
+        <h4>توثيق القيم بإشراف خبير التغذية</h4>
+        <p>تعتمد الشركة على إشراف خبير تغذية متخصص لحساب ومراجعة القيم الغذائية لجميع منتجاتها، بما يمنح العميل والشريك التجاري بيانات دقيقة وموثوقة.</p></div></article>
+      <article class="ecard rv"><span class="ghost">03</span>
+        <div class="ethumb">
+          <div class="ph"><svg><use href="#i-target"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p82_1000x850.jpg" alt="" onerror="this.remove()">
+          <span class="ethumb-n">03</span>
+        </div>
+        <div class="ebody">
+        <h4>تخصص موجَّه للحالات الصحية</h4>
+        <p>صُمّمت المنتجات في المقام الأول لمرضى السكري والسمنة، ثم لعموم الباحثين عن نمط غذائي متوازن — وهو ترتيب يفرض انضباطاً أعلى في اختيار المكوّنات وضبط التركيبة.</p></div></article>
+      <article class="ecard rv"><span class="ghost">04</span>
+        <div class="ethumb">
+          <div class="ph"><svg><use href="#i-layers"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p77_1600x800.jpg" alt="" onerror="this.remove()">
+          <span class="ethumb-n">04</span>
+        </div>
+        <div class="ebody">
+        <h4>منظومة غذائية متكاملة</h4>
+        <p>تغطي التشكيلة مختلف الوجبات — من المخبوزات اليومية إلى الوجبات الرئيسية إلى المنتجات الداعمة — من مصدر واحد وبمعيار غذائي موحّد.</p></div></article>
+      <article class="ecard rv"><span class="ghost">05</span>
+        <div class="ethumb">
+          <div class="ph"><svg><use href="#i-shield"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/store/products/p142_560x580.jpg" alt="" onerror="this.remove()">
+          <span class="ethumb-n">05</span>
+        </div>
+        <div class="ebody">
+        <h4>ملكية فكرية محمية</h4>
+        <p>تمتلك الشركة علامة تجارية مسجَّلة هي «نيو مي — New Me».</p></div></article>
+    </div>
+  </div>
+  </div>
+
+  <div class="hubpanel" id="t3">
+    <div class="grid g3">
+    <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-check"/></svg></span>
+      <h4>الإحسان</h4><p>إتقان الصنعة والعناية بالمنتج بالمستوى ذاته الذي نقدّمه لأسرنا.</p></div>
+    <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span>
+      <h4>الإتقان</h4><p>الالتزام بأعلى معايير الدقة في كل مرحلة، من اختيار المكوّن إلى تسليم المنتج النهائي.</p></div>
+    <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-bolt"/></svg></span>
+      <h4>الابتكار</h4><p>تطوير وصفات جديدة تجمع بين النكهات الشرقية الأصيلة والقيمة الغذائية العالية.</p></div>
+    <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-leaf"/></svg></span>
+      <h4>الاستدامة</h4><p>اعتماد ممارسات صديقة للبيئة في مختلف جوانب العمل، من اختيار المكوّنات حتى تعبئة المنتجات.</p></div>
+    <div class="tcard rv"><span class="ic"><svg class="i"><use href="#i-clipboard"/></svg></span>
+      <h4>المصداقية</h4><p>الشفافية الكاملة في الإفصاح عن المكوّنات وطرق التحضير والقيم الغذائية.</p></div>
+    </div>
+  </div>
+
+  <div class="hubpanel" id="t4">
+<div class="diptych">
+    <article class="dpanel photo rv">
+      <div class="ph"><svg><use href="#i-target"/></svg></div>
+      <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/assets/images/p41_1100x900.jpg" alt="" onerror="this.remove()">
+      <div class="dp-in">
+        <span class="dp-kick">الرؤية</span>
+        <p>أن نكون الروّاد في تقديم المخبوزات والوجبات الصحية الجاهزة والمنتجات الداعمة للنظام الصحي، محلياً وعالمياً.</p>
+      </div>
+    </article>
+    <article class="dpanel navy rv">
+      <div class="dp-in">
+        <span class="dp-kick">الرسالة</span>
+        <p>توفير خيارات غذائية صحية من المخبوزات والوجبات والمنتجات الداعمة تلبي احتياجات جميع العملاء، مع التركيز على الخدمات المخصصة لمرضى السكري والسمنة، والالتزام بأعلى معايير الجودة والإتقان والنظافة.</p>
+      </div>
+    </article>
+  </div>
+<div class="goalstrip">
+    <div class="gitem rv"><b>01</b><span>تقديم منتجات عالية الجودة قائمة على مكوّنات طبيعية وطازجة، بقيم غذائية معلومة وموثَّقة.</span></div>
+    <div class="gitem rv"><b>02</b><span>تلبية الاحتياجات الغذائية المتنوعة عبر تشكيلة تناسب مختلف الأنظمة، وفي مقدمتها الأنظمة منخفضة الكربوهيدرات.</span></div>
+    <div class="gitem rv"><b>03</b><span>الإسهام في تحسين صحة المجتمع من خلال حضور يومي في النمط الغذائي للعميل.</span></div>
+    <div class="gitem rv"><b>04</b><span>نشر الوعي بالتغذية السليمة عبر ورش العمل والبرامج التوعوية والمبادرات المجتمعية.</span></div>
+    <div class="gitem rv"><b>05</b><span>الاستثمار في الابتكار المستمر لتطوير منتجات ونكهات تواكب تطلعات العملاء المتغيرة.</span></div>
+  </div>
+  </div>
+</section>
+
+</div>
+<div class="view" id="v-kitchen" data-label="مطبخنا">
+<!-- ============ مطبخنا · مقالات ووصفات ============ -->
+<section class="section tile" id="articles">
+  <div class="sec-head rv">
+    <span class="chapter">الفصل <b>04</b> · تعلّم واطبخ</span>
+    <span class="kick">مطبخنا</span>
+    <h2>مقالات <em>ووصفات</em></h2>
+    <p>علم مبسّط بإشراف خبير التغذية، ووصفات سريعة بقيم غذائية محسوبة.</p>
+  </div>
+  <div class="hubtabs" id="kittabs">
+    <button class="tab on" data-t="k1">مقالات التغذية</button>
+    <button class="tab" data-t="k2">وصفات من مطبخنا</button>
+  </div>
+  <div class="hubpanel on" id="k1">
+<div class="card-grid">
+    <article class="acard rv">
+      <div class="media"><span class="cat">تغذية</span>
+        <div class="ph"><svg><use href="#i-wheat"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/cms/articles/p92_1200x640.jpg" alt="" onerror="this.remove()"></div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 4 دقائق قراءة</span><span>فريق نيومي</span></div>
+        <h3>لماذا يُعدّ الترمس مصدراً نباتياً غنياً بالبروتين؟</h3>
+        <p class="ex">نظرة على القيمة الغذائية لحبة الترمس ودورها في نظام غذائي متوازن.</p>
+        <span class="go">اقرأ المقال ←</span>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media"><span class="cat">رياضة</span>
+        <div class="ph"><svg><use href="#i-protein"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/cms/articles/p93_1200x640.jpg" alt="" onerror="this.remove()"></div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 5 دقائق قراءة</span><span>فريق نيومي</span></div>
+        <h3>كم غراماً من البروتين يحتاج الجسم بعد التمرين؟</h3>
+        <p class="ex">دليل عملي لحساب احتياجك اليومي حسب وزنك وهدفك، مع أمثلة وجبات جاهزة.</p>
+        <span class="go">اقرأ المقال ←</span>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media"><span class="cat">نمط حياة</span>
+        <div class="ph"><svg><use href="#i-drop"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/cms/articles/p94_1200x640.jpg" alt="" onerror="this.remove()"></div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 3 دقائق قراءة</span><span>فريق نيومي</span></div>
+        <h3>أوميغا-3 النباتي: ما الذي تضيفه ملعقة الكتان إلى يومك؟</h3>
+        <p class="ex">الفرق بين مصادر الأوميغا، وكيف تدمج بذور الكتان في يومك دون أن تشعر.</p>
+        <span class="go">اقرأ المقال ←</span>
+      </div>
+    </article>
+  </div>
+  </div>
+  <div class="hubpanel" id="k2"><span id="recipes"></span>
+<div class="card-grid">
+    <article class="acard rv">
+      <div class="media"><span class="cat">إفطار</span>
+        <div class="ph"><svg><use href="#i-bread"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/cms/recipes/p95_1200x640.jpg" alt="" onerror="this.remove()"></div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 15 دقيقة</span><span><span class="kcal-box">kcal</span> 320</span><span>21غ بروتين</span></div>
+        <h3>توست الترمس بالأفوكادو والبيض</h3>
+        <p class="ex">إفطار متكامل على شريحة واحدة من خبز نيومي.</p>
+        <span class="go">شاهد الوصفة ←</span>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media"><span class="cat">وجبة خفيفة</span>
+        <div class="ph"><svg><use href="#i-cookie"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/cms/recipes/p96_1200x640.jpg" alt="" onerror="this.remove()"></div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 10 دقائق</span><span><span class="kcal-box">kcal</span> 280</span><span>14غ بروتين</span></div>
+        <h3>بارفيه الجرانولا واللبن بالتوت</h3>
+        <p class="ex">طبقات من جرانولا الكتان والعسل مع لبن يوناني وتوت.</p>
+        <span class="go">شاهد الوصفة ←</span>
+      </div>
+    </article>
+    <article class="acard rv">
+      <div class="media"><span class="cat">غداء</span>
+        <div class="ph"><svg><use href="#i-leaf"/></svg></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="https://newme.learningova.com/storage/cms/recipes/p97_1200x640.jpg" alt="" onerror="this.remove()"></div>
+      <div class="body">
+        <div class="meta"><span><svg class="i"><use href="#i-clock"/></svg> 20 دقيقة</span><span><span class="kcal-box">kcal</span> 410</span><span>24غ بروتين</span></div>
+        <h3>سلطة الترمس والكينوا بالليمون</h3>
+        <p class="ex">غداء خفيف مشبع يجمع بروتين الترمس مع انتعاش الليمون.</p>
+        <span class="go">شاهد الوصفة ←</span>
+      </div>
+    </article>
+  </div>
+  </div>
+</section>
+</div>
+<div class="view" id="v-help" data-label="الأسئلة والاستشارة">
+<!-- ============ 05c · FAQ ============ -->
+<section class="section alt" id="faq">
+  <div class="sec-head rv">
+    <span class="kick">الأسئلة الشائعة</span>
+    <h2>عندك <em>سؤال؟</em></h2>
+  </div>
+  <div class="faq-wrap rv">
+    <div class="fitem open">
+      <button class="fq">ما نطاق التوصيل؟<span class="x">+</span></button>
+      <div class="fa"><p>يوصّل أسطولنا الخاص داخل مدينة الرياض مباشرة. وتتوفر مخبوزاتنا في فروع دايت سنتر بالمنطقة الشرقية ومدينة جدة، وعبر منصات التوصيل الشريكة: جاهز، هنقرستيشن، كيتا، ذا شيفز، نينجا.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">كيف تُحسب القيم الغذائية؟<span class="x">+</span></button>
+      <div class="fa"><p>تُعاير كل وصفة بإشراف خبير تغذية متخصص، وتُطبع القيم كاملة — السعرات والبروتين والكربوهيدرات والدهون والألياف وأوميغا-3 — على بطاقة كل منتج، إلى جانب رقم التشغيلة وتاريخ الإنتاج.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">هل يمكن تعديل الاشتراك أو إيقافه؟<span class="x">+</span></button>
+      <div class="fa"><p>نعم. يمكنك الترقية أو الإيقاف أو الإلغاء من حسابك مباشرة، دون رسوم أو شروط معقّدة.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">ما الذي يميّز الدقيق الصحي الخاص بنيومي؟<span class="x">+</span></button>
+      <div class="fa"><p>هو مكوّن مطوَّر داخلياً من بذور الترمس والكتان العضوية، منخفض النشويات وغني بالبروتين والألياف وأوميغا-3. ويبدأ التميّز من المادة الخام ذاتها، لا من الوصفة وحدها.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">هل منتجاتكم مناسبة لمرضى السكري؟<span class="x">+</span></button>
+      <div class="fa"><p>صُمّمت منتجاتنا في المقام الأول لتلبية احتياجات مرضى السكري والسمنة، وتحمل كل عبوة قيمها الغذائية كاملة. ومع ذلك نوصي دائماً بمراجعة الطبيب أو أخصائي التغذية المتابع للحالة قبل تعديل النظام الغذائي.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">متى يُخبز المنتج قبل وصوله؟<span class="x">+</span></button>
+      <div class="fa"><p>تُخبز المخبوزات وتُحضَّر الوجبات في اليوم ذاته، وتُوزَّع مبرَّدة ضمن سلسلة تبريد متكاملة. ويحمل كل صندوق رقم تشغيلته وتاريخ إنتاجه.</p></div>
+    </div>
+    <div class="fitem">
+      <button class="fq">هل تناسب المنتجات نظام الكيتو؟<span class="x">+</span></button>
+      <div class="fa"><p>نعم. تشمل التشكيلة خيارات منخفضة جداً في النشويات تناسب متّبعي النظام منخفض الكربوهيدرات، إلى جانب خيارات النظام الصحي العام.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ الاستشارة المجانية ============ -->
+<section class="consult" id="consult">
+  <div class="in">
+    <div>
+      <span class="kick">الاستشارة المجانية</span>
+      <h3>لم تحسم اختيارك بعد؟</h3>
+      <p>احجز استشارة مجانية مع أخصائي تغذية — حدّد اسمك وتاريخك ووقتك، ونساعدك على اختيار ما يلائم هدفك ونمط يومك.</p>
+    </div>
+    <a href="#subs" class="btn">احجز استشارتك</a>
+  </div>
+</section>
+</div>
+</main>
+
+<!-- ============ 06c · CLOSING ============ -->
+<section class="closing">
+  <div class="in">
+    <h2>جدّد حياتك</h2>
+    <p class="tag">PREP — EAT — RENEW</p>
+    <p class="k">ابدأ اشتراكك اليوم — استشارة تغذية أولى مجانية مع كل باقة.</p>
+    <p style="margin-top:16px"><a href="#subs" class="btn white sm">ابدأ اشتراكك</a></p>
+    <p class="fine">دون التزام · التعديل أو الإيقاف متاح في أي وقت</p>
+  </div>
+</section>
+<!-- ============ 06d · FOOTER ============ -->
+<footer>
+  <div class="f-grid">
+    <div class="f-brand">
+      <a class="logo" href="#top"><span class="mark"></span><b style="color:#fff">نيومي</b></a>
+      <b>دمتم بصحة مع نيومي</b>
+      <p>شركة سعودية للمخبوزات والوجبات الصحية الجاهزة، تأسست في مدينة الرياض عام 2020م.</p>
+    </div>
+    <div class="f-col"><h4>الشركة</h4>
+      <a href="#company">عن نيومي</a><a href="#about">قصتنا</a><a href="#" data-legal="p1">الشروط والأحكام</a><a href="#" data-legal="p2">الاسترجاع والإلغاء</a><a href="#" data-legal="p3">سياسة الخصوصية</a></div>
+    <div class="f-col"><h4>المنتجات</h4>
+      <a href="#shop">المخبوزات الصحية</a><a href="#shop">المنتجات الداعمة</a><a href="#subs">الاشتراكات الغذائية</a></div>
+    <div class="f-col"><h4>المحتوى</h4>
+      <a href="#articles">مقالات التغذية</a><a href="#recipes">وصفات</a><a href="#journey">صناعتنا</a><a href="#faq">الأسئلة الشائعة</a></div>
+    <div class="f-col"><h4>التواصل</h4>
+      <a href="https://wa.me/966539603302">واتساب ‎+966539603302</a>
+      <a href="tel:+966532406566">‎+966532406566</a>
+      <a href="https://newmeksa.com">newmeksa.com</a>
+      <a href="#consult">الاستشارة المجانية</a>
+      <a href="#">شارع الرياض، حي المعذر الشمالي، الرياض</a>
+      <a href="#">إنستقرام وتيك توك: newme.forever</a>
+      <a href="#">سناب شات وإكس: newmeforever20</a></div>
+  </div>
+  <div class="f-bottom">
+    <span>© 2026 نيومي — جميع الحقوق محفوظة · الرقم الضريبي 312782087600003</span>
+    <span>دمتم بصحة مع نيومي · جدّد حياتك</span>
+  </div>
+</footer>
+
+<nav class="rail-dots" id="railDots" aria-label="أقسام الصفحة"></nav>
+
+
+<!-- ================= legal drawer =================
+     ملاحظة للفريق: النصوص أدناه صياغة تشغيلية مبنية على معطيات الشركة،
+     ويلزم عرضها على مستشار قانوني قبل النشر.
+================================================== -->
+<div class="lg-back" id="lgBack"></div>
+<aside class="lg" id="lg" role="dialog" aria-modal="true" aria-labelledby="lgTitle">
+  <div class="lg-head">
+    <div class="top">
+      <h3 id="lgTitle">الشروط والسياسات</h3>
+      <button class="lg-close" id="lgClose" aria-label="إغلاق">×</button>
+    </div>
+    <div class="lg-tabs">
+      <button class="lg-tab on" data-p="p1">الشروط والأحكام</button>
+      <button class="lg-tab" data-p="p2">الاسترجاع والإلغاء</button>
+      <button class="lg-tab" data-p="p3">الخصوصية</button>
+    </div>
+  </div>
+
+  <div class="lg-body">
+    <div class="lg-pane on" id="p1">
+      <h4><b>01</b> نطاق الاتفاقية</h4>
+      <p>تنظّم هذه الشروط استخدامك لموقع نيومي وطلب منتجاتها وخدمات الاشتراك الغذائي. ويُعدّ إتمام أي طلب موافقةً صريحة عليها.</p>
+      <h4><b>02</b> الطلبات والأسعار</h4>
+      <p>تُعرض الأسعار بالريال السعودي شاملةً ضريبة القيمة المضافة. وتحتفظ الشركة بحق تعديل الأسعار أو إيقاف صنف عن البيع، على أن يُنفَّذ كل طلب مؤكَّد بالسعر المعتمد وقت تأكيده.</p>
+      <h4><b>03</b> التوصيل ونطاقه</h4>
+      <ul>
+        <li>يُنفَّذ التوصيل المبرَّد داخل مدينة الرياض عبر أسطول الشركة وشركائها.</li>
+        <li>تتوفر المخبوزات في فروع دايت سنتر بالمنطقة الشرقية ومدينة جدة.</li>
+        <li>يقع على العميل تزويدنا بعنوان دقيق ورقم تواصل فعّال، ولا تتحمل الشركة تبعات تعذّر التسليم لبيانات غير صحيحة.</li>
+      </ul>
+      <h4><b>04</b> الاشتراكات</h4>
+      <p>يُجدَّد الاشتراك تلقائياً في نهاية مدته ما لم يوقفه العميل من حسابه. ويمكن الترقية أو الإيقاف أو الإلغاء في أي وقت دون رسوم.</p>
+      <h4><b>05</b> الاستخدام المسؤول للمعلومات الغذائية</h4>
+      <p>القيم الغذائية المنشورة إرشادية للاستخدام العام، ولا تُغني عن استشارة الطبيب أو أخصائي التغذية المتابع للحالة. ولا تُقدَّم منتجات الشركة بوصفها علاجاً لأي حالة مرضية.</p>
+      <h4><b>06</b> الملكية الفكرية</h4>
+      <p>علامة «نيو مي — New Me» وجميع المحتويات والصور والوصفات المنشورة مملوكة للشركة، ولا يجوز استخدامها أو إعادة نشرها دون إذن كتابي.</p>
+      <h4><b>07</b> القانون الواجب التطبيق</h4>
+      <p>تخضع هذه الشروط لأنظمة المملكة العربية السعودية، وتختص الجهات القضائية المختصة بالنظر في أي نزاع ينشأ عنها.</p>
+      <div class="lg-meta">
+        شركة نيومي · الرقم الضريبي 312782087600003<br>
+        شارع الرياض، حي المعذر الشمالي، مدينة الرياض، المملكة العربية السعودية
+      </div>
+    </div>
+
+    <div class="lg-pane" id="p2">
+      <h4><b>01</b> ضمان الطلب الأول</h4>
+      <p>إن لم يحُز طلبك الأول رضاك، نعيد إليك قيمته كاملة دون استفسار، على أن يُبلَّغ خلال ٢٤ ساعة من الاستلام.</p>
+      <h4><b>02</b> إلغاء الطلبات</h4>
+      <ul>
+        <li>يمكن إلغاء الطلب أو تعديله قبل دخوله مرحلة التحضير.</li>
+        <li>بعد بدء التحضير يتعذّر الإلغاء لطبيعة المنتجات الغذائية القابلة للتلف.</li>
+      </ul>
+      <h4><b>03</b> المنتجات غير المطابقة</h4>
+      <p>إذا وصلك صنف تالف أو مخالف لما طُلب، تواصل معنا عبر واتساب خلال ٢٤ ساعة مرفقاً صورة المنتج ورقم التشغيلة المطبوع على الصندوق، ونستبدله أو نردّ قيمته.</p>
+      <h4><b>04</b> إيقاف الاشتراك</h4>
+      <p>يمكن إيقاف الاشتراك أو إلغاؤه من الحساب مباشرة. وتُحتسب المدة المستهلكة فقط، ويُردّ الرصيد المتبقي وفق آلية الدفع الأصلية.</p>
+      <h4><b>05</b> مدة الاسترجاع</h4>
+      <p>تُنفَّذ عمليات الاسترجاع خلال مدة تتراوح بين ٥ و١٤ يوم عمل حسب مزوّد خدمة الدفع.</p>
+    </div>
+
+    <div class="lg-pane" id="p3">
+      <h4><b>01</b> البيانات التي نجمعها</h4>
+      <ul>
+        <li>بيانات التعريف: الاسم ورقم التواصل والبريد الإلكتروني وعنوان التوصيل.</li>
+        <li>بيانات الطلب: الأصناف والباقات وسجل المعاملات.</li>
+        <li>البيانات الغذائية التي تشاركها طوعاً عند حجز الاستشارة.</li>
+      </ul>
+      <h4><b>02</b> غرض الاستخدام</h4>
+      <p>تُستخدم البيانات لتنفيذ الطلبات وتخصيص الباقات وتحسين الخدمة والتواصل بشأن الطلب. ولا تُستخدم لأي غرض آخر دون موافقتك.</p>
+      <h4><b>03</b> بيانات الحالة الصحية</h4>
+      <p>ما تشاركه من معلومات صحية عند حجز استشارة التغذية يُعامَل بسرّية تامة، ولا يُطّلع عليه إلا أخصائي التغذية المختص، ولا يُشارك مع أي طرف ثالث.</p>
+      <h4><b>04</b> المشاركة مع الغير</h4>
+      <p>تقتصر المشاركة على ما يلزم لتنفيذ الخدمة: شركاء التوصيل ومزوّدو خدمات الدفع، وفي حدود البيانات الضرورية فقط.</p>
+      <h4><b>05</b> حقوقك</h4>
+      <p>لك حق الاطلاع على بياناتك وتصحيحها أو طلب حذفها، وذلك بمراسلتنا عبر واتساب على ‎+966539603302.</p>
+      <h4><b>06</b> ملفات الارتباط</h4>
+      <p>يستخدم الموقع ملفات ارتباط أساسية لتشغيل السلة وتذكّر تفضيلاتك، ويمكنك ضبطها من إعدادات متصفحك.</p>
+    </div>
+  </div>
+
+  <div class="lg-foot">
+    <span>آخر تحديث: أغسطس ٢٠٢٦</span>
+    <a href="https://wa.me/966539603302" class="btn sm">تواصل معنا</a>
+  </div>
+</aside>
+
+<button class="totop" id="totop" aria-label="أعلى الصفحة"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<div class="sticky-cta" id="sticky">
+  <div class="info"><b>باقة أيام العمل — 20 يوماً</b><small>وجبات يومية محسوبة القيم · إلغاء بأي وقت</small></div>
+  <a href="#subs" class="btn sm">اشترك</a>
+</div>
+
+<script>
+// images fade-in
+document.querySelectorAll('img.aiimg').forEach(function(i){
+  if(i.complete) i.classList.add('loaded');
+  else i.addEventListener('load',function(){ i.classList.add('loaded'); });
+});
+// reveal + fuel bars
+(function(){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.fuel').forEach(function(f){
+        f.style.setProperty('--v',(f.getAttribute('data-v')||0)+'%'); });
+      io.unobserve(e.target);
+    });
+  },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  setTimeout(function(){ document.querySelectorAll('.fuel').forEach(function(f){
+    if(!f.style.getPropertyValue('--v')) return; }); },100);
+})();
+// intro
+(function(){
+  var intro=document.getElementById('intro');
+  var sk0=document.getElementById('skip');
+  if(sk0) sk0.addEventListener('click',function(){ intro.classList.add('hide'); });
+  document.querySelectorAll('.enter').forEach(function(b){
+    b.addEventListener('click',function(){ intro.classList.add('hide'); }); });
+})();
+// announcement rotator
+(function(){
+  var a=document.getElementById('announce'); if(!a) return;
+  var s=a.querySelectorAll('span'), i=0;
+  setInterval(function(){ s[i].classList.remove('on'); i=(i+1)%s.length; s[i].classList.add('on'); },4200);
+})();
+// mobile menu
+(function(){
+  var m=document.getElementById('mmenu');
+  var bg=document.getElementById('burger');
+  if(bg) bg.addEventListener('click',function(){ m.classList.add('open'); });
+  var mc=document.getElementById('mclose');
+  if(mc) mc.addEventListener('click',function(){ m.classList.remove('open'); });
+  m.addEventListener('click',function(e){ if(e.target.tagName==='A') m.classList.remove('open'); });
+})();
+// product rail: filter · drag · keyboard · progress
+(function(){
+  var rail=document.getElementById('rail'); if(!rail) return;
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  var bar=document.getElementById('railbar'), tabs=document.getElementById('tabs');
+  var rtl=getComputedStyle(rail).direction==='rtl';
+
+  function visible(){ return [].slice.call(rail.querySelectorAll('.prod:not(.hide)')); }
+  function step(){ var c=visible()[0]; return c ? c.getBoundingClientRect().width+18 : rail.clientWidth*0.8; }
+  function pos(){ return Math.abs(rail.scrollLeft); }
+  function go(d){ var x=step()*d; rail.scrollBy({left: rtl? -x : x, behavior:'smooth'}); }
+
+  next && next.addEventListener('click',function(){ go(1); });
+  prev && prev.addEventListener('click',function(){ go(-1); });
+
+  rail.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft'){ e.preventDefault(); go(rtl?-1:1); }
+    if(e.key==='ArrowRight'){ e.preventDefault(); go(rtl?1:-1); }
+    if(e.key==='Home'){ e.preventDefault(); rail.scrollTo({left:0,behavior:'smooth'}); }
+  });
+
+  var down=false,sx=0,sl=0,moved=0;
+  rail.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='touch') return;
+    down=true; moved=0; sx=e.clientX; sl=rail.scrollLeft; rail.classList.add('dragging');
+    rail.setPointerCapture(e.pointerId);
+  });
+  rail.addEventListener('pointermove',function(e){
+    if(!down) return; var d=e.clientX-sx; moved=Math.abs(d);
+    rail.scrollLeft = sl - d;
+  });
+  ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
+    rail.addEventListener(ev,function(){ if(!down) return; down=false; rail.classList.remove('dragging'); sync(); });
+  });
+  rail.addEventListener('click',function(e){ if(moved>6) e.preventDefault(); },true);
+
+  function sync(){
+    var max=rail.scrollWidth-rail.clientWidth, x=Math.min(pos(),Math.max(max,0));
+    if(prev) prev.disabled = x<=2;
+    if(next) next.disabled = x>=max-2;
+    if(bar){
+      var ratio = rail.scrollWidth>0 ? rail.clientWidth/rail.scrollWidth : 1;
+      var w = Math.max(12, ratio*100);
+      bar.style.width = w+'%';
+      var t = max>0 ? (x/max)*(100-w) : 0;
+      bar.style.transform = 'translateX(' + (rtl? t : -t) + '%)';
+    }
+  }
+  rail.addEventListener('scroll',sync,{passive:true});
+  window.addEventListener('resize',sync);
+
+  tabs && tabs.addEventListener('click',function(e){
+    var b=e.target.closest('.tab'); if(!b) return;
+    [].forEach.call(tabs.querySelectorAll('.tab'),function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    var c=b.getAttribute('data-cat');
+    [].forEach.call(rail.querySelectorAll('.prod'),function(pr){
+      pr.classList.toggle('hide', c!=='all' && pr.getAttribute('data-cat')!==c);
+      pr.classList.add('in');
+    });
+    rail.scrollTo({left:0,behavior:'smooth'});
+    setTimeout(sync,120);
+  });
+
+  setTimeout(sync,80); sync();
+})();
+// faq
+document.querySelectorAll('.fq').forEach(function(b){
+  b.addEventListener('click',function(){ b.parentElement.classList.toggle('open'); }); });
+// tabs
+(function(){ var t=document.querySelectorAll('.tab');
+  t.forEach(function(x){ x.addEventListener('click',function(){
+    t.forEach(function(y){ y.classList.remove('on'); }); x.classList.add('on'); }); }); })();
+// sticky cta
+(function(){
+  var s=document.getElementById('sticky'), h=document.getElementById('shop');
+  if(!s||!h) return;
+  window.addEventListener('scroll',function(){
+    s.classList.toggle('show', window.scrollY > h.offsetTop-200);
+  },{passive:true});
+})();
+
+// scroll progress + spy + back-to-top
+(function(){
+  var prog=document.getElementById('prog'), top=document.getElementById('totop');
+  var links=[].slice.call(document.querySelectorAll('#navlinks a')).filter(function(a){
+    var h=a.getAttribute('href')||''; return h.length>1 && h.charAt(0)==='#';
+  });
+  var targets=links.map(function(a){
+    try{ return document.querySelector(a.getAttribute('href')); }catch(_){ return null; }
+  });
+  function onScroll(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    if(prog) prog.style.width=(max>0? (h.scrollTop/max*100):0)+'%';
+    if(top) top.classList.toggle('show', h.scrollTop>700);
+    var cur=-1;
+    targets.forEach(function(t,i){ if(t && t.getBoundingClientRect().top<=140) cur=i; });
+    links.forEach(function(a,i){ a.classList.toggle('active', i===cur); });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  top && top.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  onScroll();
+})();
+
+// KPI counters
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.kfig .to'));
+  if(!els.length) return;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(el){
+    var a=parseFloat(el.getAttribute('data-from')), b=parseFloat(el.getAttribute('data-to'));
+    if(reduce){ el.textContent=b; return; }
+    var dur=1400, t0=null;
+    function frame(t){
+      if(!t0) t0=t;
+      var k=Math.min(1,(t-t0)/dur);
+      var e=1-Math.pow(1-k,3);
+      el.textContent = Math.round(a+(b-a)*e);
+      if(k<1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      io.unobserve(e.target);
+      setTimeout(function(){ run(e.target); }, 450);
+    });
+  },{threshold:.5});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+// landing screen: delayed skip + sequenced beats
+(function(){
+  var sk=document.getElementById('skip'), beats=document.getElementById('beats');
+  if(sk) setTimeout(function(){ sk.classList.add('ready'); },1000);
+  if(!beats) return;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=[].slice.call(beats.children);
+  if(reduce){ items.forEach(function(el){ el.classList.add('done'); });
+    items[2].classList.remove('done'); items[2].classList.add('on'); return; }
+  items.forEach(function(el,i){
+    setTimeout(function(){
+      items.forEach(function(x,j){ if(j<i) { x.classList.remove('on'); x.classList.add('done'); } });
+      el.classList.add('on');
+    }, 260 + i*1100);
+  });
+})();
+
+// landing: pointer tilt on the orbit stage
+(function(){
+  var st=document.getElementById('ioStage'); if(!st) return;
+  if(!(window.matchMedia && matchMedia('(pointer:fine)').matches)) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var tx=0,ty=0,cx=0,cy=0,live=true;
+  document.addEventListener('mousemove',function(e){
+    tx=(e.clientX/innerWidth-.5)*18; ty=(e.clientY/innerHeight-.5)*18;
+  },{passive:true});
+  (function loop(){
+    if(!live) return;
+    cx+=(tx-cx)*.06; cy+=(ty-cy)*.06;
+    st.style.transform='translate3d('+(-cx)+'px,'+(-cy)+'px,0)';
+    requestAnimationFrame(loop);
+  })();
+})();
+
+// ---- restrained motion: gentle stagger + nav shrink ----
+(function(){
+  var groups='.grid,.card-grid,.edge-grid,.fs-grid,.stats,.goalstrip,.sub-grid,.steps,.pillars,.feats';
+  [].slice.call(document.querySelectorAll(groups)).forEach(function(g){
+    [].slice.call(g.children).forEach(function(c,i){
+      if(c.classList.contains('rv')) c.style.transitionDelay=Math.min(i,4)*60+'ms';
+    });
+  });
+  var nav=document.querySelector('nav.main'), t=false;
+  function f(){ t=false; if(nav) nav.classList.toggle('shrunk', window.scrollY>40); }
+  window.addEventListener('scroll',function(){ if(!t){ t=true; requestAnimationFrame(f); } },{passive:true});
+  f();
+})();
+
+// ================= numeric count-up for story stats =================
+(function(){
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nodes=[].slice.call(document.querySelectorAll('.stat b')).filter(function(b){
+    return /^\d+$/.test(b.textContent.trim());
+  });
+  if(!nodes.length) return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return; io.unobserve(e.target);
+      var el=e.target, target=parseInt(el.textContent,10);
+      if(reduce){ el.textContent=target; return; }
+      var from=target>1000?target-40:0, dur=1300, t0=null;
+      function step(t){ if(!t0)t0=t;
+        var k=Math.min(1,(t-t0)/dur), ez=1-Math.pow(1-k,3);
+        el.textContent=Math.round(from+(target-from)*ez);
+        if(k<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  },{threshold:.6});
+  nodes.forEach(function(n){ io.observe(n); });
+})();
+
+// ---- tabbed hubs ----
+(function(){
+  function wire(barId){
+    var bar=document.getElementById(barId); if(!bar) return;
+    bar.addEventListener('click',function(e){
+      var b=e.target.closest('.tab'); if(!b) return;
+      [].forEach.call(bar.querySelectorAll('.tab'),function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      var sec=bar.closest('section');
+      [].forEach.call(sec.querySelectorAll('.hubpanel'),function(pn){
+        pn.classList.toggle('on', pn.id===b.getAttribute('data-t'));
+      });
+      [].forEach.call(sec.querySelectorAll('.hubpanel.on .rv'),function(el){ el.classList.add('in'); });
+    });
+  }
+  wire('hubtabs'); wire('kittabs');
+  // deep links still work: #recipes opens the recipes tab
+  function openFromHash(){
+    if(location.hash==='#recipes'){
+      var b=document.querySelector('#kittabs .tab[data-t="k2"]'); if(b) b.click();
+      var sc=document.getElementById('articles'); if(sc&&sc.scrollIntoView) sc.scrollIntoView();
+    }
+  }
+  window.addEventListener('hashchange',openFromHash); openFromHash();
+})();
+
+// ---- section index + chapter rail ----
+(function(){
+  var btn=document.getElementById('idxBtn'), panel=document.getElementById('idxPanel');
+  if(btn&&panel){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=panel.classList.toggle('open');
+      btn.classList.toggle('open',open); btn.setAttribute('aria-expanded',open);
+    });
+    document.addEventListener('click',function(){ panel.classList.remove('open'); btn.classList.remove('open'); });
+    panel.addEventListener('click',function(){ panel.classList.remove('open'); btn.classList.remove('open'); });
+  }
+
+  var map=[['why','لماذا نيومي'],['about','قصتنا'],['vision','الرؤية الوطنية'],['lines','خطوط الأعمال'],
+           ['shop','المتجر'],['nutrition','القيم الغذائية'],['journey','صناعتنا'],
+           ['flour','ابتكار نيومي'],['subs','الاشتراكات'],['company','عن نيومي'],
+           ['articles','مطبخنا'],['faq','الأسئلة الشائعة']];
+  var rail=document.getElementById('railDots'); if(!rail) return;
+  var dots=[], secs=[];
+  map.forEach(function(m){
+    var sec=document.getElementById(m[0]); if(!sec) return;
+    var b=document.createElement('button');
+    b.className='rdot'; b.type='button';
+    b.innerHTML='<span>'+m[1]+'</span>';
+    b.setAttribute('aria-label',m[1]);
+    b.addEventListener('click',function(){ sec.scrollIntoView({behavior:'smooth'}); });
+    rail.appendChild(b); dots.push(b); secs.push(sec);
+  });
+  var dark=['vision','subs','flour','consult'];
+  var t=false;
+  function frame(){
+    t=false;
+    var y=window.scrollY, cur=-1;
+    secs.forEach(function(sec,i){ if(sec.getBoundingClientRect().top<=160) cur=i; });
+    dots.forEach(function(d,i){ d.classList.toggle('on', i===cur); });
+    rail.classList.toggle('show', y>600);
+    // invert the rail when it sits over a dark section
+    var mid=window.innerHeight/2, over=false;
+    dark.forEach(function(id){
+      var el=document.getElementById(id); if(!el) return;
+      var r=el.getBoundingClientRect();
+      if(r.top<=mid && r.bottom>=mid) over=true;
+    });
+    rail.classList.toggle('ondark', over);
+  }
+  window.addEventListener('scroll',function(){ if(!t){ t=true; requestAnimationFrame(frame); } },{passive:true});
+  window.addEventListener('resize',frame); frame();
+})();
+
+// ---- legal drawer ----
+(function(){
+  var lg=document.getElementById('lg'), back=document.getElementById('lgBack');
+  if(!lg) return;
+  function open(pane){
+    lg.classList.add('open'); back.classList.add('open'); document.body.classList.add('lg-lock');
+    if(pane) select(pane);
+    var c=document.getElementById('lgClose'); if(c) c.focus();
+  }
+  function close(){
+    lg.classList.remove('open'); back.classList.remove('open'); document.body.classList.remove('lg-lock');
+  }
+  function select(id){
+    [].forEach.call(lg.querySelectorAll('.lg-tab'),function(t){ t.classList.toggle('on', t.getAttribute('data-p')===id); });
+    [].forEach.call(lg.querySelectorAll('.lg-pane'),function(pn){ pn.classList.toggle('on', pn.id===id); });
+    var b=lg.querySelector('.lg-body'); if(b) b.scrollTop=0;
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-legal]');
+    if(t){ e.preventDefault(); open(t.getAttribute('data-legal')); return; }
+    var tab=e.target.closest('.lg-tab');
+    if(tab){ select(tab.getAttribute('data-p')); }
+  });
+  var lc=document.getElementById('lgClose');
+  if(lc) lc.addEventListener('click',close);
+  if(back) back.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+
+// ---- view router ----
+(function(){
+  var views=[].slice.call(document.querySelectorAll('.view'));
+  if(!views.length) return;
+  var links=[].slice.call(document.querySelectorAll('#navlinks a,#viewbar a,.mmenu a[href^="#v-"]'));
+  var live=document.getElementById('live');
+  var SEC2VIEW={}, POS={}, current=null;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  views.forEach(function(v){
+    v.setAttribute('role','region');
+    v.setAttribute('aria-label',v.getAttribute('data-label')||'');
+    [].forEach.call(v.querySelectorAll('[id]'),function(el){ if(!SEC2VIEW[el.id]) SEC2VIEW[el.id]=v.id; });
+  });
+
+  function paint(id,scroll){
+    views.forEach(function(v){ v.classList.toggle('on', v.id===id); });
+    links.forEach(function(a){
+      var on=a.getAttribute('href')==='#'+id;
+      a.classList.toggle('active',on);
+      if(on) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+    });
+    var v=document.getElementById(id), label=v.getAttribute('data-label')||'';
+    [].forEach.call(v.querySelectorAll('.rv'),function(el){ el.classList.add('in'); });
+    [].forEach.call(v.querySelectorAll('.fuel'),function(f){
+      f.style.setProperty('--v',(f.getAttribute('data-v')||0)+'%'); });
+    if(live) live.textContent='انتقلت إلى قسم '+label;
+    document.title = label + ' · نيومي — جدّد حياتك';
+    var d=document.querySelector('meta[name="description"]');
+    if(d) d.setAttribute('content', label+' — نيومي، مخبوزات ووجبات صحية جاهزة بقيم غذائية موثّقة.');
+    if(scroll===false) return;
+    window.scrollTo({top: (typeof scroll==='number'? scroll : 0), behavior:'auto'});
+  }
+
+  function show(id,scroll){
+    if(!document.getElementById(id)) id='v-home';
+    if(current && current!==id) POS[current]=window.scrollY;
+    var target = (scroll===undefined && POS[id]!==undefined) ? POS[id] : scroll;
+    current=id;
+    if(!reduce && document.startViewTransition){
+      document.startViewTransition(function(){ paint(id,target); });
+    } else { paint(id,target); }
+  }
+
+  function route(scroll){
+    var h=(location.hash||'').replace('#','');
+    if(!h) return show('v-home',scroll);
+    if(h.indexOf('v-')===0) return show(h,scroll);
+    var view=SEC2VIEW[h];
+    if(view){
+      show(view,false);
+      var t=document.getElementById(h);
+      if(t&&t.scrollIntoView) setTimeout(function(){ t.scrollIntoView({behavior:'smooth'}); },60);
+      return;
+    }
+    show('v-home',scroll);
+  }
+  window.addEventListener('hashchange',function(){ route(); });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]'); if(!a) return;
+    var h=a.getAttribute('href').slice(1);
+    if(!h||a.hasAttribute('data-legal')) return;
+    if(h.indexOf('v-')===0){ e.preventDefault(); if(location.hash==='#'+h) show(h,0); else location.hash=h; return; }
+    var view=SEC2VIEW[h];
+    if(view && !document.getElementById(view).classList.contains('on')){ e.preventDefault(); location.hash=h; }
+  });
+  route(0);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+try{
+if(window.gsap && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)){
+  gsap.timeline({defaults:{ease:'power3.out'}})
+    .from('.io-top',{y:-26,opacity:0,duration:.6,clearProps:'all'})
+    .from('.io-stage',{scale:.6,opacity:0,duration:1.1,ease:'power4.out',clearProps:'opacity'})
+    .from('.io-copy h1',{y:30,opacity:0,duration:.7,clearProps:'all'},'-=.5')
+    .from('.io-copy p,.io-ctas > *',{y:20,opacity:0,duration:.5,stagger:.08,clearProps:'all'},'-=.45')
+    .from('.io-strip',{y:26,opacity:0,duration:.5,clearProps:'all'},'-=.4')
+    .from('.io-bigword span',{opacity:0,duration:1.2,clearProps:'all'},'-=.9');
+}
+}catch(_){}
+</script>
+</body>
+</html>

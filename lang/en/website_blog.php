@@ -16,4 +16,9 @@ return [
     'recipes_h2' => 'Recipes',
     'ingredients' => 'Ingredients',
     'method' => 'Method',
+    'read_article' => 'Read article ←',
+    'view_recipe' => 'View recipe ←',
+    'back' => 'Back to the kitchen',
+    'empty_articles' => 'No articles yet.',
+    'empty_recipes' => 'No recipes yet.',
 ];

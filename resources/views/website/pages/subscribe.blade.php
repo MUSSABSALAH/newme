@@ -2,8 +2,10 @@
 
 @section('title', __('website.subscribe.title'))
 @section('theme', '#122B4A')
+@section('body_class', 'is-subscribe')
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
 <style>
 @verbatim
 :root{
@@ -37,19 +39,19 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .btn.sm{padding:11px 20px;min-height:44px;font-size:13.5px}
 .btn[disabled]{opacity:.4;pointer-events:none}
 
-/* announcement + nav */
-.announce{background:var(--navy);color:#fff;text-align:center;padding:calc(9px + var(--sat)) 14px 9px;font-size:12.5px;font-weight:700}
-.announce b{color:var(--orange-hi)}
-nav.main{position:sticky;top:0;z-index:90;background:rgba(247,245,241,.92);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--gray-2)}
-nav.main .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;gap:12px}
-.logo{display:flex;align-items:center;gap:10px}
-.logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,var(--navy-3),var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
-.logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(255,255,255,.2) 36%, transparent 60%)}
-.logo b{font-size:18px;color:var(--navy);font-weight:900}
-.nav-links{display:none;gap:20px;font-weight:800;font-size:13.5px;color:var(--ink)}
-.nav-links a{padding:6px 0;border-bottom:2.5px solid transparent;white-space:nowrap}
-.nav-links a:hover,.nav-links a.on{border-color:var(--orange)}
-@media(min-width:960px){.nav-links{display:flex}}
+/* announcement + nav (mobile chrome only — desktop uses shared v30-header) */
+.v30-mob-only .announce{background:var(--navy);color:#fff;text-align:center;padding:calc(9px + var(--sat)) 14px 9px;font-size:12.5px;font-weight:700}
+.v30-mob-only .announce b{color:var(--orange-hi)}
+.v30-mob-only nav.main{position:sticky;top:0;z-index:90;background:rgba(247,245,241,.92);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--gray-2)}
+.v30-mob-only nav.main .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;gap:12px}
+.v30-mob-only .logo{display:flex;align-items:center;gap:10px}
+.v30-mob-only .logo .mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,var(--navy-3),var(--navy) 140deg,var(--orange) 270deg,var(--orange-hi));position:relative;flex-shrink:0}
+.v30-mob-only .logo .mark::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(255,255,255,.2) 36%, transparent 60%)}
+.v30-mob-only .logo b{font-size:18px;color:var(--navy);font-weight:900}
+.v30-mob-only .nav-links{display:none;gap:20px;font-weight:800;font-size:13.5px;color:var(--ink)}
+.v30-mob-only .nav-links a{padding:6px 0;border-bottom:2.5px solid transparent;white-space:nowrap;border-radius:0;background:transparent;box-shadow:none;min-height:0;transform:none}
+.v30-mob-only .nav-links a:hover,.v30-mob-only .nav-links a.on{border-color:var(--orange);background:transparent;color:inherit;box-shadow:none}
+@media(min-width:960px){.v30-mob-only .nav-links{display:flex}}
 
 /* page head (compact) */
 .phead{padding:30px 20px 8px;text-align:center}
@@ -73,6 +75,66 @@ nav.main .bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;jus
 .snode.lock{pointer-events:none}
 /* Seven nodes do not fit next to their labels on a phone; the step title carries the name there. */
 @media(max-width:600px){.stepper{padding:0 12px}.snode{padding:0 3px}.snode span:not(.c){display:none}}
+
+/* Step 1: navy plan cards (desktop + mobile). Photo grid kept as unused fallback. */
+.sub-step-desk{display:block}
+.sub-step-mob{display:none!important}
+.wwrap.is-plan-step{max-width:none;padding-inline:0;padding-block:0}
+.wstep[data-step="1"].active{padding:0;max-width:none}
+.wstep[data-step="1"] .sub-step-desk .subs{margin:0;border-radius:0;border-top:0}
+.splan.is-picked{outline:2px solid var(--orange);outline-offset:3px}
+.splan .fuel-bar{background:rgba(255,255,255,.14)}
+body.sub-on-1 .wbar,
+body.sub-on-1 .phead,
+body.sub-on-1 #stepper{display:none!important}
+
+@media(max-width:819.98px){
+  #ipDurPick{display:none!important}
+  body.is-subscribe.sub-on-1{background:var(--navy)}
+  .nm-chrome .brand img{height:34px!important;width:auto!important;max-width:148px;object-fit:contain!important}
+  .sub-step-desk .rv{opacity:1!important;transform:none!important}
+  .sub-step-desk .subs{padding:22px 0 calc(32px + var(--ip-tabbar,64px) + var(--sab))}
+  .sub-step-desk .sec-head{max-width:none;margin:0 auto 22px;padding:0 18px;text-align:center}
+  .sub-step-desk .sec-head .kick{color:var(--orange-hi)!important}
+  .sub-step-desk .sec-head h2{font-size:28px;color:#fff!important;margin:8px 0 10px}
+  .sub-step-desk .sec-head h2 em{color:var(--orange-hi)!important;font-style:normal}
+  .sub-step-desk .sec-head p{display:block;color:#B9C9E2!important;font-size:13.5px;font-weight:600;line-height:1.8}
+  .sub-grid{grid-template-columns:1fr;gap:16px;padding:0 16px}
+  .splan,.splan.pop{
+    display:flex!important;flex-direction:column;
+    padding:26px 20px 20px;border-radius:22px
+  }
+  .splan{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.16)}
+  .splan.pop{background:linear-gradient(165deg,rgba(240,127,45,.18),rgba(255,255,255,.05));border:2px solid var(--orange)}
+  .splan:hover{transform:none}
+  .splan .tag{
+    display:inline-flex;position:absolute;top:-12px;left:50%;right:auto;inset-inline:auto;
+    transform:translateX(-50%);white-space:nowrap
+  }
+  .splan h3,.splan .goal,.splan .pline,.splan .per,.splan .plan-fuel{min-height:0!important}
+  .splan h3{font-size:22px;color:#fff!important;line-height:1.3}
+  .splan .goal{font-size:13px;line-height:1.6;margin-top:8px;color:#9FB4D2;align-items:flex-start}
+  .splan .goal .i{width:16px;height:16px;flex-shrink:0;margin-top:2px;color:var(--orange-hi)}
+  .splan .pline{margin-top:16px}
+  .splan .pline b{font-size:40px;color:#fff!important}
+  .splan .pline small{font-size:15px;color:#C7D6EC}
+  .splan .per{font-size:12px;padding:7px 14px;margin-top:12px;color:#DCE7F5}
+  .splan .plan-fuel{margin-top:16px;padding:14px;min-height:0;background:rgba(255,255,255,.06)}
+  .splan .plan-fuel .hd{font-size:12px;margin-bottom:9px;color:#C7D6EC}
+  .splan .plan-fuel .hd b{font-size:13px;color:var(--orange-hi)}
+  .splan .fuel-bar{height:8px;background:rgba(255,255,255,.14)}
+  .splan .btn{
+    margin-top:20px;width:100%;font-size:15px;font-weight:900;min-height:50px;padding:14px 18px;
+    border-radius:999px
+  }
+  .splan .btn:not(.navy){background:var(--grad);border-color:var(--orange);box-shadow:0 12px 28px rgba(240,127,45,.35)}
+  .splan .btn.navy{background:#0C1F38;border-color:rgba(255,255,255,.22);box-shadow:none}
+  .sub-guarantee{display:flex;color:#C7D6EC;font-size:13px;padding:0 18px;margin-top:22px}
+  .sub-trust{display:flex;color:#8FA4C4;font-size:12px;padding:0 18px}
+}
+@media(min-width:820px){
+  #ipDurPick{display:none!important}
+}
 
 /* ===== wizard steps ===== */
 .wwrap{max-width:900px;width:100%;margin:0 auto;padding:18px 20px 10px;position:relative;flex:1 0 auto}
@@ -326,14 +388,10 @@ body.menu-open{overflow:hidden}
 <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17" stroke-linecap="round"/></symbol>
 </defs></svg>
 
-<!-- ANNOUNCEMENT -->
-<div class="announce">{!! __('website.subscribe.announce') !!}</div>
-
-<!-- NAV -->
-@include('website.partials.nav', ['active' => 'subscribe', 'showCart' => false])
+@include('website.partials.v30-icons')
 
 <!-- PAGE HEAD -->
-<header class="phead">
+<header class="phead" id="wizard">
   <span class="off-pill">{{ __('website.subscribe.off_pill') }}</span>
   <h1>{!! __('website.subscribe.heading') !!}</h1>
   <p>{{ __('website.subscribe.lead') }}</p>
@@ -358,29 +416,34 @@ body.menu-open{overflow:hidden}
 
 <div class="wwrap" id="wwrap">
 
-  <!-- STEP 1 -->
+  <!-- STEP 1: plan / الباقة -->
   <section class="wstep active" data-step="1">
-    <div class="step-h"><h2>{{ __('website.subscribe.step1.title') }}</h2><small>{{ trans_choice('website.subscribe.step1.sub', count($plans)) }}</small></div>
-    <div class="plans9" id="plans9">
-      @foreach ($plans as $plan)
-        <button class="p9" data-plan="{{ $plan['key'] }}" data-f="{{ $plan['f'] }}">
-          <span class="img">
-            @if($plan['image_url'])
-              <img class="aiimg" src="{{ $plan['image_url'] }}" alt="" onerror="this.remove()">
-            @endif
-            @if($plan['pop'])
-              <span class="pop">{{ __('website.subscribe.most_chosen') }}</span>
-            @endif
-            <span class="tick"></span>
-          </span>
-          <span class="body"><span class="ic"><svg class="i"><use href="#{{ $plan['icon'] }}"/></svg></span><h3>{{ $plan['name'] }}</h3><p>{{ $plan['desc'] }}</p></span>
-        </button>
-      @endforeach
+    <div class="sub-step-desk">
+      @include('website.partials.v30-plans', ['plans' => $plans ?? []])
     </div>
-    <div class="macros3">
-      <div class="m3"><b>20–35%</b><span>{{ __('website.subscribe.macros.protein') }}</span></div>
-      <div class="m3"><b>40–55%</b><span>{{ __('website.subscribe.macros.carbs') }}</span></div>
-      <div class="m3"><b>20–30%</b><span>{{ __('website.subscribe.macros.fat') }}</span></div>
+    <div class="sub-step-mob">
+      <div class="step-h"><h2>{{ __('website.subscribe.step1.title') }}</h2><small>{{ trans_choice('website.subscribe.step1.sub', count($plans)) }}</small></div>
+      <div class="plans9" id="plans9">
+        @foreach ($plans as $plan)
+          <button class="p9" data-plan="{{ $plan['key'] }}" data-f="{{ $plan['f'] }}">
+            <span class="img">
+              @if($plan['image_url'])
+                <img class="aiimg" src="{{ $plan['image_url'] }}" alt="" onerror="this.remove()">
+              @endif
+              @if($plan['pop'])
+                <span class="pop">{{ __('website.subscribe.most_chosen') }}</span>
+              @endif
+              <span class="tick"></span>
+            </span>
+            <span class="body"><span class="ic"><svg class="i"><use href="#{{ $plan['icon'] }}"/></svg></span><h3>{{ $plan['name'] }}</h3><p>{{ $plan['desc'] }}</p></span>
+          </button>
+        @endforeach
+      </div>
+      <div class="macros3">
+        <div class="m3"><b>20–35%</b><span>{{ __('website.subscribe.macros.protein') }}</span></div>
+        <div class="m3"><b>40–55%</b><span>{{ __('website.subscribe.macros.carbs') }}</span></div>
+        <div class="m3"><b>20–30%</b><span>{{ __('website.subscribe.macros.fat') }}</span></div>
+      </div>
     </div>
   </section>
 
@@ -527,12 +590,13 @@ body.menu-open{overflow:hidden}
 </div>
 
 <!-- FOOTER -->
-@include('website.partials.footer', ['variant' => 'full'])
+<div class="v30-desk">
+  @include('website.partials.v30-closing')
+</div>
 
 
 
 
-@include('website.partials.mobile-menu')
 
 @endsection
 
@@ -722,7 +786,16 @@ function renderDurations(){
   var opts=durOptions();
   wrap.innerHTML='';
   if(!opts.length){wrap.innerHTML='<div class="dur-empty">'+t('no_durations')+'</div>';return;}
-  if(state.durIndex==null||!opts[state.durIndex])state.durIndex=0;
+  if(state.durIndex==null||!opts[state.durIndex]){
+    var pref=window.NM_PREF_DAYS, best=0, diff=999;
+    if(pref){
+      opts.forEach(function(o,i){
+        var d=Math.abs((o.total_days||o.length||0)-pref);
+        if(d<diff){diff=d;best=i;}
+      });
+    }
+    state.durIndex=best;
+  }
   opts.forEach(function(o,i){
     var btn=document.createElement('button');
     btn.type='button';
@@ -907,6 +980,9 @@ function goStep(n){
     if(n>5&&!ageOk())return;
   }
   cur=n; if(n>maxVisited)maxVisited=n;
+  document.body.classList.toggle('sub-on-1',n===1);
+  var wrap=document.getElementById('wwrap');
+  if(wrap)wrap.classList.toggle('is-plan-step',n===1);
   document.querySelectorAll('.wstep').forEach(function(s){
     s.classList.toggle('active',+s.getAttribute('data-step')===n);
   });
@@ -919,7 +995,9 @@ function goStep(n){
   document.querySelectorAll('#stepper .sline').forEach(function(l,i){l.classList.toggle('ok',i+1<cur);});
   if(n===3)renderDurations();
   if(n===6)renderDayDishes();
-  window.scrollTo({top:0,behavior:'smooth'});
+  var anchor=document.getElementById('wizard')||document.getElementById('stepper');
+  if(anchor){ try{anchor.scrollIntoView({behavior:'smooth',block:'start'});}catch(_){window.scrollTo({top:0,behavior:'smooth'});} }
+  else window.scrollTo({top:0,behavior:'smooth'});
   render();
 }
 function autoNext(){setTimeout(function(){if(cur<TOTAL)goStep(cur+1);},380);}
@@ -1033,6 +1111,28 @@ document.querySelectorAll('.sel-chip .edit').forEach(function(e){
   e.addEventListener('click',function(){goStep(+e.getAttribute('data-go'));});
 });
 
+document.querySelectorAll('[data-plan-pick]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var name=a.getAttribute('data-plan-pick');
+    if(!name) return;
+    var known={};PLAN_SLUGS.forEach(function(s){known[s]=1;});
+    if(!known[name]) return;
+    state.plan=name;
+    state.durIndex=null;
+    document.querySelectorAll('#plans9 .p9').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-plan')===name);
+    });
+    document.querySelectorAll('.splan').forEach(function(card){
+      var btn=card.querySelector('[data-plan-pick]');
+      card.classList.toggle('is-picked',btn&&btn.getAttribute('data-plan-pick')===name);
+    });
+    render();
+    refreshCoupon();
+    goStep(2);
+  });
+});
+
 document.querySelectorAll('img.aiimg').forEach(function(img){
   img.loading='lazy'; img.decoding='async';
   if(img.complete&&img.naturalWidth>0)img.classList.add('loaded');
@@ -1040,6 +1140,10 @@ document.querySelectorAll('img.aiimg').forEach(function(img){
 });
 
 render();
+
+document.body.classList.add('sub-on-1');
+var wrap0=document.getElementById('wwrap');
+if(wrap0)wrap0.classList.add('is-plan-step');
 
 (function(){
   var h=(location.hash||'').replace('#','');
