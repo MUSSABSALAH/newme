@@ -3,7 +3,8 @@
   $siteCss = [];
   foreach (['website.css', 'website-v30.css', 'website-iphone.css'] as $cssFile) {
       $cssPath = 'assets/css/'.$cssFile;
-      $siteCss[$cssFile] = '/'.$cssPath.'?v='.(is_file(public_path($cssPath)) ? filemtime(public_path($cssPath)) : time());
+      $version = is_file(public_path($cssPath)) ? filemtime(public_path($cssPath)) : time();
+      $siteCss[$cssFile] = asset($cssPath).'?v='.$version;
   }
 @endphp
 <!DOCTYPE html>

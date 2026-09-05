@@ -15,6 +15,7 @@
 /node_modules
 /public/build
 /public/hot
+# Keep /public/assets (css + images) in git. Do not ignore them.
 /vendor
 Homestead.json
 Homestead.yaml
