@@ -1,4 +1,11 @@
-@php($rtl = app()->getLocale() === 'ar')
+@php
+  $rtl = app()->getLocale() === 'ar';
+  $siteCss = [];
+  foreach (['website.css', 'website-v30.css', 'website-iphone.css'] as $cssFile) {
+      $cssPath = 'assets/css/'.$cssFile;
+      $siteCss[$cssFile] = '/'.$cssPath.'?v='.(is_file(public_path($cssPath)) ? filemtime(public_path($cssPath)) : time());
+  }
+@endphp
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" dir="{{ $rtl ? 'rtl' : 'ltr' }}">
 <head>
@@ -12,17 +19,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-@php
-  $siteCss = static function (string $file): string {
-      $path = 'assets/css/'.$file;
-      $version = is_file(public_path($path)) ? (string) filemtime(public_path($path)) : (string) time();
-
-      return '/'.$path.'?v='.$version;
-  };
-@endphp
-<link rel="stylesheet" href="{{ $siteCss('website.css') }}">
-<link rel="stylesheet" href="{{ $siteCss('website-v30.css') }}">
-<link rel="stylesheet" href="{{ $siteCss('website-iphone.css') }}">
+<link rel="stylesheet" href="{{ $siteCss['website.css'] }}">
+<link rel="stylesheet" href="{{ $siteCss['website-v30.css'] }}">
+<link rel="stylesheet" href="{{ $siteCss['website-iphone.css'] }}">
 @stack('styles')
 </head>
 <body class="@yield('body_class')">
