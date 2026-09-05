@@ -24,8 +24,6 @@
   $nmItems[] = ['href' => route('locale.switch', $nmLangTarget), 'icon' => 't-lang', 'title' => $nmLangTarget === 'en' ? 'EN · English' : 'AR · العربية', 'sub' => $isAr ? 'تغيير لغة الموقع' : 'Switch site language', 'hreflang' => $nmLangTarget];
 @endphp
 
-<link rel="stylesheet" href="{{ asset('assets/css/website-iphone.css') }}">
-
 <svg style="display:none" aria-hidden="true"><defs>
   <symbol id="t-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></symbol>
   <symbol id="t-shop" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>

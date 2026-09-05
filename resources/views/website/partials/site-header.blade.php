@@ -19,9 +19,6 @@
   $showCart = trim($__env->yieldContent('header_cart')) !== '0'
     && ! request()->routeIs('website.subscribe', 'website.menu', 'website.terms', 'website.consult');
 @endphp
-@once
-<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
-@endonce
 <div class="v30-desk site-header-desk">
   @include('website.partials.v30-header', [
     'active' => $headerActive,

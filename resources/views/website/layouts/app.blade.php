@@ -12,7 +12,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('assets/css/website.css') }}">
+@php
+  $siteCss = static function (string $file): string {
+      $path = 'assets/css/'.$file;
+      $version = is_file(public_path($path)) ? (string) filemtime(public_path($path)) : (string) time();
+
+      return '/'.$path.'?v='.$version;
+  };
+@endphp
+<link rel="stylesheet" href="{{ $siteCss('website.css') }}">
+<link rel="stylesheet" href="{{ $siteCss('website-v30.css') }}">
+<link rel="stylesheet" href="{{ $siteCss('website-iphone.css') }}">
 @stack('styles')
 </head>
 <body class="@yield('body_class')">
