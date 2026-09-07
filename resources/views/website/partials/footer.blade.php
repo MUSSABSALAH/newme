@@ -29,20 +29,18 @@ footer.w-foot-full.site-footer .f-brand .logo {
   justify-content: flex-start;
 }
 footer.w-foot-full.site-footer .f-phones {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   max-width: 100%;
   line-height: 1.7;
 }
 footer.w-foot-full.site-footer .f-num,
-footer.w-foot-full.site-footer .f-vat-num,
-footer.w-foot-full.site-footer .f-web {
+footer.w-foot-full.site-footer .f-vat-num {
   white-space: nowrap;
   display: inline-block;
   max-width: 100%;
-}
-footer.w-foot-full.site-footer .f-phone-sep {
-  display: inline;
-  white-space: normal;
 }
 footer.w-foot-full.site-footer .f-bottom {
   justify-content: space-between !important;
@@ -89,12 +87,10 @@ footer.w-foot-simple.site-footer .flinks {
       <h4>{{ __('website.footer.contact_title') }}</h4>
       <a href="https://wa.me/966539603302">{{ __('website.site.contact.phone_label') }}</a>
       <span class="f-muted f-phones">
-        @foreach ($phones as $i => $phone)
-          @if ($i > 0)<span class="f-phone-sep"> · </span>@endif
+        @foreach ($phones as $phone)
           <bdi class="f-num" dir="ltr">{{ $phone }}</bdi>
         @endforeach
       </span>
-      <a class="f-web" href="https://www.newme.com.sa" dir="ltr" rel="noopener" target="_blank">{{ __('website.site.contact.web') }}</a>
       <a href="{{ route('website.consult') }}">{{ __('website.footer.link_consult') }}</a>
       <span class="f-muted">{{ __('website.site.contact.address') }}</span>
       <a href="https://www.instagram.com/newme.forever" rel="noopener" target="_blank">{{ __('website.site.contact.social_ig') }}</a>
