@@ -2,6 +2,8 @@
 
 @section('title', __('website.home.title'))
 @section('theme', '#0A1B31')
+@section('hide_site_header', '1')
+@section('hide_site_footer', '1')
 @section('hide_mobile_chrome', '1')
 @section('body_class', 'is-home-intro')
 
@@ -154,7 +156,7 @@ body.is-home-intro .nm-chrome{display:none!important}
     @include('website.partials.logo', ['tone' => 'light', 'href' => route('website.home')])
     <div class="io-top__actions">
       @include('website.partials.lang-toggle', ['class' => 'on-dark'])
-      <a class="intro-skip" id="skip" href="{{ route('website.main') }}">{{ $isAr ? 'تخطّ المقدمة ←' : 'Skip intro →' }}</a>
+      <a class="intro-skip" id="skip" href="{{ route('website.main') }}">{{ __('website.site.intro.skip') }}</a>
     </div>
   </div>
 
@@ -173,25 +175,21 @@ body.is-home-intro .nm-chrome{display:none!important}
 
     <div class="io-copy">
       <div class="beats" id="beats">
-        <span data-b="1">{{ $isAr ? 'حضّر' : 'Prep' }}</span>
-        <span data-b="2">{{ $isAr ? 'كُل' : 'Eat' }}</span>
-        <span data-b="3">{{ $isAr ? 'جدّد' : 'Renew' }}</span>
+        @foreach (__('website.site.intro.beats') as $i => $beat)
+          <span data-b="{{ $i + 1 }}">{{ $beat }}</span>
+        @endforeach
       </div>
-      <h1>{!! $isAr ? 'جدّد <em>حياتك</em>' : 'Renew your <em>life</em>' !!}</h1>
-      <p>{{ $isAr
-        ? 'حضّر · كُل · جدّد — مخبوزات ووجبات صحية تصلك طازجة، بقيم غذائية مطبوعة كاملة على كل عبوة.'
-        : 'Prep · Eat · Renew — fresh healthy bakes and meals with full nutrition printed on every pack.' }}</p>
+      <h1>{!! __('website.site.intro.title') !!}</h1>
+      <p>{{ __('website.site.intro.lead') }}</p>
       <div class="io-ctas">
-        <a href="{{ route('website.main') }}" class="io-enter">{{ $isAr ? 'ابدأ من هنا ←' : 'Start here →' }}</a>
-        <a href="{{ route('website.subscribe') }}" class="io-ghost">{{ $isAr ? 'الباقات والأسعار' : 'Plans & pricing' }}</a>
+        <a href="{{ route('website.main') }}" class="io-enter">{{ __('website.site.intro.cta_taste') }}</a>
+        <a href="{{ route('website.subscribe') }}" class="io-ghost">{{ __('website.site.intro.cta_plans') }}</a>
       </div>
     </div>
   </div>
 
   <div class="io-strip">
-    {!! $isAr
-      ? 'شريك لمستشفى الملك فيصل التخصصي ومركز الأبحاث · <b>دايت سنتر</b> · Daily Mealz'
-      : 'Partner of King Faisal Specialist Hospital & Research Centre · <b>Diet Center</b> · Daily Mealz' !!}
+    {{ __('website.site.intro.strip') }}
   </div>
 </section>
 @endsection

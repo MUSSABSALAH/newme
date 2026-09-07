@@ -41,6 +41,50 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 @media(min-width:960px){.v30-mob-only .nav-links{display:flex}}
 .v30-mob-only .nav-cta{font-size:12px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
 .v30-mob-only .nav-cta:hover{background:var(--ink);color:#fff}
+@media (max-width: 819.98px) {
+  #articles { padding: 18px 16px 56px; }
+  #articles .sec-head { text-align: center; margin-bottom: 16px; }
+  #articles .sec-head h2 { font-size: 1.65rem; margin: 8px 0 8px; }
+  #articles .sec-head p { font-size: 13.5px; font-weight: 600; color: #7C8799; }
+  #articles .hubtabs {
+    display: flex; gap: 8px; overflow-x: auto; margin: 0 0 16px;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  #articles .hubtabs::-webkit-scrollbar { display: none; }
+  #articles .hubtabs .tab {
+    flex: none; border: 1.5px solid #E8E4DC; background: #fff; color: #122B4A;
+    border-radius: 999px; padding: 9px 16px; font-weight: 800; font-size: 13px;
+  }
+  #articles .hubtabs .tab.on { background: #122B4A; color: #fff; border-color: #122B4A; }
+  #articles .hubpanel { display: none; }
+  #articles .hubpanel.on { display: block; }
+  #articles .card-grid { display: grid; gap: 12px; padding: 0; }
+  #articles .acard {
+    display: flex; flex-direction: column; background: #fff; border: 1px solid #E8E4DC;
+    border-radius: 18px; overflow: hidden; color: inherit;
+  }
+  #articles .acard .media {
+    position: relative; aspect-ratio: 16/9; background: #EFEBE3; overflow: hidden;
+  }
+  #articles .acard .media img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 1 !important; visibility: visible !important;
+  }
+  #articles .acard .ph {
+    position: absolute; inset: 0; display: grid; place-items: center; background: #EFEBE3;
+  }
+  #articles .acard .cat {
+    position: absolute; top: 10px; inset-inline-start: 10px; z-index: 3;
+    background: #fff; color: #122B4A; font-size: 11px; font-weight: 900;
+    border-radius: 999px; padding: 5px 12px;
+  }
+  #articles .acard .body { padding: 14px 16px 16px; display: flex; flex-direction: column; flex: 1; }
+  #articles .acard .meta { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; font-weight: 800; color: #7C8799; }
+  #articles .acard h3 { font-size: 16px; margin: 6px 0 8px; line-height: 1.4; }
+  #articles .acard .ex { font-size: 13px; color: #7C8799; font-weight: 600; line-height: 1.7; }
+  #articles .acard .go { margin-top: auto; padding-top: 12px; font-size: 13px; font-weight: 900; color: #DD6516; }
+  #articles .rv { opacity: 1 !important; transform: none !important; }
+}
 .phead{padding:56px 24px 30px;text-align:center}
 .phead h1{font-size:clamp(34px,8vw,64px);margin:8px 0 10px}
 .phead h1 em{font-style:normal;color:var(--orange-deep)}
@@ -100,68 +144,12 @@ body.menu-open{overflow:hidden}
 @endpush
 
 @section('content')
-@php
-  $blogArticles = $articles ?? collect();
-  $blogRecipes = $recipes ?? collect();
-@endphp
 @include('website.partials.v30-icons')
 
+@include('website.partials.v30-kitchen')
+
 <div class="v30-desk">
-  @include('website.partials.v30-kitchen')
   @include('website.partials.v30-closing')
-</div>
-
-<div class="v30-mob-only nm-ip">
-  <div class="ltitle">
-    <h1>{{ app()->getLocale() === 'ar' ? 'مطبخنا' : __('website.blog.kick') }}</h1>
-    <p>{{ __('website.blog.sub') }}</p>
-  </div>
-  <div class="sec wrap">
-    <span class="kick">{{ __('website.blog.kick') }}</span>
-    <h2>{!! app()->getLocale() === 'ar' ? 'مقالات <em>ووصفات</em>' : __('website.blog.h1') !!}</h2>
-    <p class="lead">{{ __('website.blog.sub') }}</p>
-    <div class="chips" id="kchips" style="padding:0;margin-top:14px">
-      <button type="button" class="chip on" data-k="k1">{{ __('website.blog.toc_articles') }}</button>
-      <button type="button" class="chip" data-k="k2">{{ __('website.blog.toc_recipes') }}</button>
-    </div>
-
-    <div class="acards" id="k1">
-      @forelse ($blogArticles as $a)
-        <a class="ac" href="{{ route('website.article', ['article' => $a->slug]) }}">
-          <div class="media">
-            <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-            @if ($a->imageUrl())<img src="{{ $a->imageUrl() }}" alt="{{ $a->translated('title') }}" onerror="this.remove()">@endif
-          </div>
-          <div class="bd">
-            <p class="meta">{{ $a->translated('category') }}@if ($a->translated('read_time') !== '') · {{ $a->translated('read_time') }}@endif</p>
-            <h4>{{ $a->translated('title') }}</h4>
-            @php $articleLead = $a->translated('excerpt') !== '' ? $a->translated('excerpt') : $a->translated('body_1'); @endphp
-            @if ($articleLead !== '')<p>{{ \Illuminate\Support\Str::limit($articleLead, 90) }}</p>@endif
-          </div>
-        </a>
-      @empty
-        <p>{{ __('website.blog.empty_articles') }}</p>
-      @endforelse
-    </div>
-
-    <div class="acards" id="k2" style="display:none">
-      @forelse ($blogRecipes as $r)
-        <a class="ac" href="{{ route('website.recipe', ['recipe' => $r->slug]) }}">
-          <div class="media">
-            <div class="ph"><svg><use href="#i-bread"/></svg></div>
-            @if ($r->imageUrl())<img src="{{ $r->imageUrl() }}" alt="{{ $r->translated('title') }}" onerror="this.remove()">@endif
-          </div>
-          <div class="bd">
-            <p class="meta">{{ $r->translated('category') }}@if ($r->translated('time_label') !== '') · {{ $r->translated('time_label') }}@endif</p>
-            <h4>{{ $r->translated('title') }}</h4>
-            @if ($r->translated('excerpt') !== '')<p>{{ \Illuminate\Support\Str::limit($r->translated('excerpt'), 90) }}</p>@endif
-          </div>
-        </a>
-      @empty
-        <p>{{ __('website.blog.empty_recipes') }}</p>
-      @endforelse
-    </div>
-  </div>
 </div>
 
 @endsection
@@ -177,23 +165,6 @@ document.querySelectorAll('img.aiimg').forEach(function(img){
   else img.addEventListener('load',function(){img.classList.add('loaded');});
 });
 }catch(_){document.querySelectorAll('img.aiimg').forEach(function(i){i.classList.add('loaded');});}
-
-@endverbatim
-</script>
-<script>
-@verbatim
-
-try{(function(){
-var bar=document.getElementById('kchips');
-if(!bar)return;
-bar.addEventListener('click',function(e){
-  var b=e.target.closest('.chip'); if(!b)return;
-  [].forEach.call(bar.querySelectorAll('.chip'),function(x){x.classList.toggle('on',x===b);});
-  var k1=document.getElementById('k1'), k2=document.getElementById('k2');
-  if(k1) k1.style.display = b.getAttribute('data-k')==='k1' ? '' : 'none';
-  if(k2) k2.style.display = b.getAttribute('data-k')==='k2' ? '' : 'none';
-});
-})();}catch(_){}
 
 @endverbatim
 </script>

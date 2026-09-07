@@ -5,7 +5,11 @@
 @section('body_class', 'is-subscribe')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
+@php
+  $v30Css = 'assets/css/website-v30.css';
+  $v30Ver = is_file(public_path($v30Css)) ? filemtime(public_path($v30Css)) : time();
+@endphp
+<link rel="stylesheet" href="{{ asset($v30Css) }}?v={{ $v30Ver }}">
 <style>
 @verbatim
 :root{
@@ -90,7 +94,13 @@ body.sub-on-1 #stepper{display:none!important}
 
 @media(max-width:819.98px){
   #ipDurPick{display:none!important}
-  body.is-subscribe.sub-on-1{background:var(--navy)}
+  body.is-subscribe{padding-bottom:calc(78px + var(--ip-tabbar,64px))}
+  body.is-subscribe.sub-on-1{background:var(--navy);padding-bottom:var(--ip-tabbar,64px)}
+  .wbar{
+    bottom:var(--ip-tabbar,60px);
+    padding:10px 16px;
+    z-index:220
+  }
   .nm-chrome .brand img{height:34px!important;width:auto!important;max-width:148px;object-fit:contain!important}
   .sub-step-desk .rv{opacity:1!important;transform:none!important}
   .sub-step-desk .subs{padding:22px 0 calc(32px + var(--ip-tabbar,64px) + var(--sab))}
@@ -99,7 +109,7 @@ body.sub-on-1 #stepper{display:none!important}
   .sub-step-desk .sec-head h2{font-size:28px;color:#fff!important;margin:8px 0 10px}
   .sub-step-desk .sec-head h2 em{color:var(--orange-hi)!important;font-style:normal}
   .sub-step-desk .sec-head p{display:block;color:#B9C9E2!important;font-size:13.5px;font-weight:600;line-height:1.8}
-  .sub-grid{grid-template-columns:1fr;gap:16px;padding:0 16px}
+  .sub-grid{grid-template-columns:1fr;gap:28px;padding:0 16px}
   .splan,.splan.pop{
     display:flex!important;flex-direction:column;
     padding:26px 20px 20px;border-radius:22px
@@ -108,13 +118,14 @@ body.sub-on-1 #stepper{display:none!important}
   .splan.pop{background:linear-gradient(165deg,rgba(240,127,45,.18),rgba(255,255,255,.05));border:2px solid var(--orange)}
   .splan:hover{transform:none}
   .splan .tag{
-    display:inline-flex;position:absolute;top:-12px;left:50%;right:auto;inset-inline:auto;
+    display:inline-flex;position:absolute;top:-10px;left:50%;right:auto;inset-inline:auto;
     transform:translateX(-50%);white-space:nowrap
   }
-  .splan h3,.splan .goal,.splan .pline,.splan .per,.splan .plan-fuel{min-height:0!important}
+  .splan h3,.splan .goal,.splan .splan-lead,.splan .pline,.splan .per,.splan .plan-fuel{min-height:0!important}
   .splan h3{font-size:22px;color:#fff!important;line-height:1.3}
-  .splan .goal{font-size:13px;line-height:1.6;margin-top:8px;color:#9FB4D2;align-items:flex-start}
+  .splan .goal{font-size:13px;line-height:1.6;margin-top:8px;color:#9FB4D2;align-items:flex-start;white-space:normal}
   .splan .goal .i{width:16px;height:16px;flex-shrink:0;margin-top:2px;color:var(--orange-hi)}
+  .splan .splan-lead{font-size:13px;line-height:1.75;margin-top:8px;color:#C7D6EC}
   .splan .pline{margin-top:16px}
   .splan .pline b{font-size:40px;color:#fff!important}
   .splan .pline small{font-size:15px;color:#C7D6EC}
@@ -166,6 +177,7 @@ body.sub-on-1 #stepper{display:none!important}
 .p9 .ic .i{width:18px;height:18px}
 .p9 h3{font-size:15px;margin:14px 0 2px}
 .p9 p{font-size:11px;font-weight:600;color:var(--muted);line-height:1.6}
+.p9 p.hook{font-weight:800;color:var(--ink);margin:0 0 4px}
 .p9 .pop{position:absolute;top:10px;inset-inline-start:10px;background:var(--grad);color:#fff;font-size:9.5px;font-weight:900;border-radius:999px;padding:3px 11px;box-shadow:0 6px 14px rgba(240,127,45,.4);z-index:2}
 .macros3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;max-width:520px;margin-inline:auto}
 .m3{background:#fff;border:1.5px solid var(--gray-2);border-radius:14px;padding:11px;text-align:center}
@@ -435,7 +447,7 @@ body.menu-open{overflow:hidden}
               @endif
               <span class="tick"></span>
             </span>
-            <span class="body"><span class="ic"><svg class="i"><use href="#{{ $plan['icon'] }}"/></svg></span><h3>{{ $plan['name'] }}</h3><p>{{ $plan['desc'] }}</p></span>
+            <span class="body"><span class="ic"><svg class="i"><use href="#{{ $plan['icon'] }}"/></svg></span><h3>{{ $plan['name'] }}</h3>@if(!empty($plan['hook']))<p class="hook">{{ $plan['hook'] }}</p>@endif<p>{{ $plan['desc'] }}</p></span>
           </button>
         @endforeach
       </div>

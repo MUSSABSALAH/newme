@@ -1,6 +1,6 @@
-{{-- Sitewide announce — partner strip lives only on the homepage intro --}}
+{{-- Sitewide rotating announce bar --}}
 <div class="announce" id="announce">
-  <span class="on">توصيل مجاني للطلبات فوق <b>150 ر.س</b></span>
-  <span>استشارة تغذية أولى <b>مجانية</b> مع أي اشتراك</span>
-  <span>يُخبز طازجاً كل يوم · قيم غذائية مطبوعة على كل عبوة</span>
+  <span class="on">{!! __('website.site.announce.partners') !!}</span>
+  <span>{!! __('website.site.announce.shipping') !!}</span>
+  <span>{!! __('website.site.announce.consult') !!}</span>
 </div>

@@ -8,8 +8,8 @@
   <div class="f-grid">
     <div class="f-brand">
       @include('website.partials.logo', ['tone' => 'light'])
-      <b>{{ __('website.footer.brand_title') }}</b>
-      <p>{{ __('website.footer.brand_text') }}</p>
+      <b>{{ __('website.site.contact.tagline') }}</b>
+      <p>{{ __('website.site.contact.about') }}</p>
     </div>
 
     <div class="f-col">
@@ -38,19 +38,20 @@
 
     <div class="f-col">
       <h4>{{ __('website.footer.contact_title') }}</h4>
-      <a href="https://wa.me/966539603302" dir="ltr">{{ __('website.footer.whatsapp') }} +966539603302</a>
-      <a href="tel:+966532406566" dir="ltr">+966532406566</a>
-      <a href="https://newmeksa.com" dir="ltr" rel="noopener" target="_blank">newmeksa.com</a>
+      <a href="https://wa.me/966539603302" dir="ltr">{{ __('website.site.contact.phone_label') }}</a>
+      <span class="f-muted" dir="ltr">{{ __('website.site.contact.phone') }}</span>
+      <a href="https://www.newme.com.sa" dir="ltr" rel="noopener" target="_blank">{{ __('website.site.contact.web') }}</a>
       <a href="{{ route('website.consult') }}">{{ __('website.footer.link_consult') }}</a>
-      <span class="f-muted">{{ __('website.footer.address') }}</span>
-      <a href="https://www.instagram.com/newme.forever" rel="noopener" target="_blank">{{ __('website.footer.social_ig') }}</a>
-      <a href="https://www.snapchat.com/add/newmeforever20" rel="noopener" target="_blank">{{ __('website.footer.social_snap') }}</a>
+      <span class="f-muted">{{ __('website.site.contact.address') }}</span>
+      <a href="https://www.instagram.com/newme.forever" rel="noopener" target="_blank">{{ __('website.site.contact.social_ig') }}</a>
+      <a href="https://www.snapchat.com/add/newmeforever20" rel="noopener" target="_blank">{{ __('website.site.contact.social_snap') }}</a>
+      <span class="f-muted">{{ __('website.site.contact.vat_label') }} {{ __('website.site.contact.vat') }}</span>
     </div>
   </div>
 
   <div class="f-bottom">
-    <span>{{ __('website.footer.copyright', ['year' => $year]) }}</span>
-    <span>{{ __('website.footer.tagline') }}</span>
+    <span>{{ __('website.site.contact.copyright', ['year' => $year]) }}</span>
+    <span>{{ __('website.site.contact.tagline') }}</span>
   </div>
 </footer>
 

@@ -121,6 +121,44 @@
     margin-top: auto; padding-top: 10px;
   }
   .nm-ip .rail .card .pr .icon-saudi-riyal { width: 14px; height: 15px; }
+  .nm-ip .rail .card .media .shot {
+    position: absolute; inset: 0; z-index: 2; display: block;
+  }
+  .nm-ip .rail .card .nutov {
+    position: absolute; inset: 0; z-index: 4;
+    background: rgba(247,245,241,.88);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 12px 10px; opacity: 0; transition: opacity .3s ease; pointer-events: none;
+  }
+  .nm-ip .rail .card.showN .nutov { opacity: 1; }
+  .nm-ip .rail .card .nutov .nv-h {
+    font-size: 8px; font-weight: 800; color: var(--ip-muted); letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 6px; text-align: center;
+  }
+  .nm-ip .rail .card .nutov .nv-h em { font-style: normal; color: var(--ip-orange-deep); }
+  .nm-ip .rail .card .nutov .nv-r {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 5px 1px; border-top: 1px solid rgba(18,43,74,.14);
+    font-size: 11px; font-weight: 800; color: var(--ip-navy);
+  }
+  .nm-ip .rail .card .nutov .nv-r:last-of-type { border-bottom: 1px solid rgba(18,43,74,.14); }
+  .nm-ip .rail .card .nutov .nv-r b { font-weight: 700; font-size: 11.5px; }
+  .nm-ip .rail .card .nutov .nv-r b small { font-size: 8.5px; color: var(--ip-muted); font-weight: 700; }
+  .nm-ip .rail .card .nutov .nv-note {
+    margin-top: 6px; font-size: 8px; font-weight: 800; color: var(--ip-muted); text-align: center;
+  }
+  .nm-ip .rail .card .nutov .nv-note.real { color: var(--ip-green); }
+  .nm-ip .rail .card .nut-toggle {
+    position: absolute; top: 8px; inset-inline-end: 8px; z-index: 5;
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1.5px solid rgba(18,43,74,.45);
+    background: rgba(247,245,241,.92); color: var(--ip-navy);
+    font-weight: 900; font-size: 13px; font-family: ui-monospace, Menlo, monospace;
+    display: grid; place-items: center;
+  }
+  .nm-ip .rail .card.showN .nut-toggle { background: var(--ip-navy); color: #fff; border-color: var(--ip-navy); }
   .nm-ip .shop-more { padding-top: 14px; padding-bottom: 4px; }
 
   .nm-ip .spec { background: var(--ip-navy); border-radius: 20px; padding: 20px; color: #fff; margin-top: 14px; }
@@ -199,6 +237,55 @@
   .nm-ip .acc-i.on .acc-a { max-height: 900px; }
   .nm-ip .acc-a .in { padding: 0 2px 16px; font-size: 13px; color: var(--ip-body); font-weight: 600; line-height: 2; }
 
+  .nm-ip .faq-wrap { max-width: none; padding: 0; margin: 0; }
+  .nm-ip .fitem { border-bottom: 1px solid var(--ip-gray-2); }
+  .nm-ip .fq {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 4px;
+    text-align: start;
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--ip-navy);
+    line-height: 1.45;
+    min-height: 52px;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .nm-ip .fq .x {
+    color: var(--ip-orange-deep);
+    font-size: 22px;
+    font-weight: 900;
+    flex: none;
+    line-height: 1;
+    transition: transform .25s ease;
+  }
+  .nm-ip .fitem.open .fq .x { transform: rotate(45deg); }
+  .nm-ip .fa { max-height: 0; overflow: hidden; transition: max-height .32s ease; }
+  .nm-ip .fitem.open .fa { max-height: 960px; }
+  .nm-ip .fa p {
+    font-size: 13.5px;
+    color: var(--ip-body);
+    font-weight: 600;
+    line-height: 1.9;
+    padding: 0 4px 16px;
+  }
+  .nm-ip .consult {
+    background: var(--ip-navy);
+    color: #fff;
+    padding: 28px 16px 32px;
+    margin: 8px -16px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .nm-ip .consult .in { display: grid; gap: 16px; padding: 0; position: relative; z-index: 2; }
+  .nm-ip .consult .kick { color: var(--ip-orange-hi); }
+  .nm-ip .consult h3 { color: #fff; font-size: 1.25rem; margin: 6px 0 8px; }
+  .nm-ip .consult p { color: #B9C9E2; font-size: 13.5px; font-weight: 600; line-height: 1.85; margin: 0; max-width: none; }
+
   .nm-ip .closing { background: var(--ip-grad); color: #fff; padding: 30px 18px; text-align: center; }
   .nm-ip .closing h2 { color: #fff; font-size: 27px; }
   .nm-ip .closing .tag { font-size: 11px; letter-spacing: .28em; margin-top: 6px; color: rgba(255,255,255,.85); font-weight: 800; }
@@ -212,8 +299,38 @@
   .nm-ip .foot .links a { font-size: 12.5px; color: #8296B2; padding: 5px 0; font-weight: 700; }
   .nm-ip .foot .cr { font-size: 11px; margin-top: 16px; color: #6C7F9B; line-height: 1.8; }
 
-  .nm-ip .ph { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; background: var(--ip-tile); }
-  .nm-ip .ph svg { width: 40px; height: 40px; color: var(--ip-gray-3); fill: currentColor; }
+  .nm-ip .hero .ph,
+  .nm-ip .photoblock .ph,
+  .nm-ip .rail .card .media .ph,
+  .nm-ip .ac .media .ph,
+  .v30-page .wide-hero .ph,
+  .v30-page .fs-banner .ph,
+  .v30-page .media-card .ph,
+  .v30-page .eh-media .ph,
+  .v30-page .ethumb .ph,
+  .v30-page .dpanel .ph {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: var(--ip-tile);
+  }
+  .nm-ip .hero .ph svg,
+  .nm-ip .photoblock .ph svg,
+  .nm-ip .rail .card .media .ph svg,
+  .nm-ip .ac .media .ph svg,
+  .v30-page .wide-hero .ph svg,
+  .v30-page .fs-banner .ph svg,
+  .v30-page .media-card .ph svg,
+  .v30-page .eh-media .ph svg,
+  .v30-page .ethumb .ph svg,
+  .v30-page .dpanel .ph svg {
+    width: 40px;
+    height: 40px;
+    color: var(--ip-gray-3);
+    fill: currentColor;
+  }
 
   /* ===== shared chrome ===== */
   .nm-chrome { --cream: var(--ip-bg); --navy: var(--ip-navy); font-family: 'Cairo', system-ui, sans-serif; }
@@ -341,8 +458,8 @@
     width: 100%; height: 100%; object-fit: cover;
   }
 
-  /* No category chips / filter tabs on mobile */
-  .nm-ip .chips,
+  /* Store/home category chips only — kitchen (blog) tabs stay visible */
+  .home-mobile .chips,
   .v30-mob-only .filters,
   .cat-bar { display: none !important; }
 }

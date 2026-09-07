@@ -65,14 +65,14 @@ return [
     'goals' => [
         'weight_loss' => 'خسارة الوزن',
         'muscle_building' => 'بناء العضلات',
-        'diabetic' => 'مرضى السكري',
+        'diabetic' => 'نظام مرضى السكري',
         'breastfeeding' => 'المرضعات',
-        'balanced' => 'متوازنة',
+        'balanced' => 'النظام الصحي العام',
         'digestive_health' => 'صحة الجهاز الهضمي',
         'carnivore' => 'لحوم',
-        'low_carb' => 'قليلة الكربوهيدرات',
+        'low_carb' => 'منخفض النشويات',
         'vegan' => 'نباتية',
-        'keto' => 'كيتو',
+        'keto' => 'الكيتو',
     ],
 
     'units' => [

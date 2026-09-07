@@ -62,22 +62,38 @@
     }
 
     /* FAQ accordion */
+    function faqAnswer(item){
+      return item ? item.querySelector('.fa') : null;
+    }
+    function faqCollapse(item){
+      item.classList.remove('open');
+      var a = faqAnswer(item);
+      if (a) a.style.maxHeight = '0px';
+    }
+    function faqExpand(item){
+      item.classList.add('open');
+      var a = faqAnswer(item);
+      if (!a) return;
+      a.style.maxHeight = 'none';
+      var h = a.scrollHeight;
+      a.style.maxHeight = '0px';
+      a.offsetHeight;
+      a.style.maxHeight = h + 'px';
+    }
     document.querySelectorAll('.fq').forEach(function(btn){
       btn.addEventListener('click', function(){
         var item = btn.parentElement;
         if (!item) return;
-        var open = item.classList.contains('open');
-        var ans = item.querySelector('.fa');
-        document.querySelectorAll('.fitem.open').forEach(function(o){
-          o.classList.remove('open');
-          var a = o.querySelector('.fa');
-          if (a) a.style.maxHeight = '0px';
-        });
-        if (!open) {
-          item.classList.add('open');
-          if (ans) ans.style.maxHeight = ans.scrollHeight + 'px';
-        }
+        var wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.fitem.open').forEach(faqCollapse);
+        if (!wasOpen) faqExpand(item);
       });
+    });
+    document.querySelectorAll('.fitem.open').forEach(function(item){
+      var a = faqAnswer(item);
+      if (!a) return;
+      a.style.maxHeight = 'none';
+      a.style.maxHeight = a.scrollHeight + 'px';
     });
 
     /* hub tabs */
@@ -140,6 +156,18 @@
       if (!isGrid && next) next.addEventListener('click', function(){ go(1); });
       if (!isGrid && prev) prev.addEventListener('click', function(){ go(-1); });
 
+      rail.querySelectorAll('.prod .nut-toggle').forEach(function(b){
+        b.addEventListener('click', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          var card = b.closest('.prod');
+          if (!card) return;
+          var was = card.classList.contains('showN');
+          document.querySelectorAll('.prod.showN').forEach(function(c){ c.classList.remove('showN'); });
+          if (!was) card.classList.add('showN');
+        });
+      });
+
       if (isGrid) {
         if (tabs) {
           tabs.addEventListener('click', function(e){
@@ -166,6 +194,7 @@
       var down = false, sx = 0, sl = 0, moved = 0;
       rail.addEventListener('pointerdown', function(e){
         if (e.pointerType === 'touch') return;
+        if (e.target.closest('a, button, input, label')) return;
         down = true; moved = 0; sx = e.clientX; sl = rail.scrollLeft;
         rail.classList.add('dragging');
         rail.setPointerCapture(e.pointerId);
@@ -184,7 +213,9 @@
           sync();
         });
       });
-      rail.addEventListener('click', function(e){ if (moved > 6) e.preventDefault(); }, true);
+      rail.addEventListener('click', function(e){
+        if (moved > 6 && !e.target.closest('a, button')) e.preventDefault();
+      }, true);
 
       function sync(){
         var max = rail.scrollWidth - rail.clientWidth;

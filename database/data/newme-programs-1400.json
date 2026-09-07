@@ -1,0 +1,2004 @@
+{
+    "programs": [
+        {
+            "goal": "balanced",
+            "name": {
+                "ar": "النظام الصحي العام",
+                "en": "General Healthy"
+            },
+            "description": {
+                "ar": "للحفاظ على التوازن لا لتغييره\nأكلٌ متوازن ومحسوب المقادير، بلا قيود قاسية — لمن يريد طعاماً نظيفاً وحياة مستمرة كما هي.",
+                "en": "To hold your balance, not change it\nBalanced, measured eating without harsh restrictions — clean food, and life carrying on as it is."
+            },
+            "macros": {
+                "calories": 1400,
+                "protein": "100–110",
+                "carbs": "125–140",
+                "fat": "45–50",
+                "fiber": "≥25"
+            },
+            "meals": [
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "شكشوكة نيومي",
+                        "en": "New Me shakshuka"
+                    },
+                    "calories": 370,
+                    "protein_g": 27,
+                    "carbs_g": 30,
+                    "fat_g": 17,
+                    "sort_order": 0
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "زبادي يوناني وجرانولا",
+                        "en": "Greek yogurt and granola"
+                    },
+                    "calories": 370,
+                    "protein_g": 26,
+                    "carbs_g": 38,
+                    "fat_g": 13,
+                    "sort_order": 1
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "ساندويتش دجاج وأفوكادو",
+                        "en": "Chicken and avocado sandwich"
+                    },
+                    "calories": 380,
+                    "protein_g": 32,
+                    "carbs_g": 30,
+                    "fat_g": 15,
+                    "sort_order": 2
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "أومليت الخضار والجبن",
+                        "en": "Veggie and cheese omelette"
+                    },
+                    "calories": 380,
+                    "protein_g": 30,
+                    "carbs_g": 27,
+                    "fat_g": 18,
+                    "sort_order": 3
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "فول وبيض",
+                        "en": "Foul and eggs"
+                    },
+                    "calories": 390,
+                    "protein_g": 24,
+                    "carbs_g": 42,
+                    "fat_g": 14,
+                    "sort_order": 4
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "توست التونة",
+                        "en": "Tuna toast"
+                    },
+                    "calories": 370,
+                    "protein_g": 32,
+                    "carbs_g": 35,
+                    "fat_g": 11,
+                    "sort_order": 5
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بانكيك بروتين",
+                        "en": "Protein pancakes"
+                    },
+                    "calories": 390,
+                    "protein_g": 28,
+                    "carbs_g": 38,
+                    "fat_g": 14,
+                    "sort_order": 6
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بيض وأفوكادو",
+                        "en": "Eggs and avocado"
+                    },
+                    "calories": 380,
+                    "protein_g": 25,
+                    "carbs_g": 28,
+                    "fat_g": 19,
+                    "sort_order": 7
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "ساندويتش حلوم",
+                        "en": "Halloumi sandwich"
+                    },
+                    "calories": 390,
+                    "protein_g": 25,
+                    "carbs_g": 35,
+                    "fat_g": 18,
+                    "sort_order": 8
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "ساندويتش البيض والجبن",
+                        "en": "Egg and cheese sandwich"
+                    },
+                    "calories": 400,
+                    "protein_g": 28,
+                    "carbs_g": 38,
+                    "fat_g": 17,
+                    "sort_order": 9
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج مشوي وأرز",
+                        "en": "Grilled chicken and rice"
+                    },
+                    "calories": 470,
+                    "protein_g": 42,
+                    "carbs_g": 48,
+                    "fat_g": 13,
+                    "sort_order": 10
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "سلمون وبطاطا",
+                        "en": "Salmon and potatoes"
+                    },
+                    "calories": 480,
+                    "protein_g": 34,
+                    "carbs_g": 40,
+                    "fat_g": 20,
+                    "sort_order": 11
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "كفتة وأرز",
+                        "en": "Kofta and rice"
+                    },
+                    "calories": 480,
+                    "protein_g": 36,
+                    "carbs_g": 45,
+                    "fat_g": 18,
+                    "sort_order": 12
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "باستا الدجاج",
+                        "en": "Chicken pasta"
+                    },
+                    "calories": 460,
+                    "protein_g": 40,
+                    "carbs_g": 50,
+                    "fat_g": 11,
+                    "sort_order": 13
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "كبسة صحية",
+                        "en": "Healthy kabsa"
+                    },
+                    "calories": 470,
+                    "protein_g": 40,
+                    "carbs_g": 50,
+                    "fat_g": 12,
+                    "sort_order": 14
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "ستيك وبطاطا",
+                        "en": "Steak and potatoes"
+                    },
+                    "calories": 490,
+                    "protein_g": 39,
+                    "carbs_g": 38,
+                    "fat_g": 20,
+                    "sort_order": 15
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "صيادية السمك",
+                        "en": "Fish sayadieh"
+                    },
+                    "calories": 450,
+                    "protein_g": 38,
+                    "carbs_g": 47,
+                    "fat_g": 12,
+                    "sort_order": 16
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج ترياكي",
+                        "en": "Teriyaki chicken"
+                    },
+                    "calories": 460,
+                    "protein_g": 40,
+                    "carbs_g": 52,
+                    "fat_g": 10,
+                    "sort_order": 17
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "كينوا ودجاج",
+                        "en": "Quinoa and chicken"
+                    },
+                    "calories": 450,
+                    "protein_g": 42,
+                    "carbs_g": 40,
+                    "fat_g": 14,
+                    "sort_order": 18
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "برجر نيومي",
+                        "en": "New Me burger"
+                    },
+                    "calories": 480,
+                    "protein_g": 38,
+                    "carbs_g": 43,
+                    "fat_g": 18,
+                    "sort_order": 19
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ساندويتش دجاج",
+                        "en": "Chicken sandwich"
+                    },
+                    "calories": 330,
+                    "protein_g": 32,
+                    "carbs_g": 30,
+                    "fat_g": 10,
+                    "sort_order": 20
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "راب تونة",
+                        "en": "Tuna wrap"
+                    },
+                    "calories": 320,
+                    "protein_g": 30,
+                    "carbs_g": 29,
+                    "fat_g": 10,
+                    "sort_order": 21
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سيزر دجاج",
+                        "en": "Chicken Caesar"
+                    },
+                    "calories": 340,
+                    "protein_g": 35,
+                    "carbs_g": 25,
+                    "fat_g": 12,
+                    "sort_order": 22
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "أومليت وخبز",
+                        "en": "Omelette with bread"
+                    },
+                    "calories": 320,
+                    "protein_g": 27,
+                    "carbs_g": 26,
+                    "fat_g": 13,
+                    "sort_order": 23
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ساندويتش حلوم",
+                        "en": "Halloumi sandwich"
+                    },
+                    "calories": 340,
+                    "protein_g": 25,
+                    "carbs_g": 30,
+                    "fat_g": 14,
+                    "sort_order": 24
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "شوربة عدس ودجاج",
+                        "en": "Lentil and chicken soup"
+                    },
+                    "calories": 330,
+                    "protein_g": 29,
+                    "carbs_g": 38,
+                    "fat_g": 7,
+                    "sort_order": 25
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سلطة يونانية بالدجاج",
+                        "en": "Greek salad with chicken"
+                    },
+                    "calories": 330,
+                    "protein_g": 32,
+                    "carbs_g": 25,
+                    "fat_g": 12,
+                    "sort_order": 26
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ميني بيتزا نيومي",
+                        "en": "New Me mini pizza"
+                    },
+                    "calories": 350,
+                    "protein_g": 30,
+                    "carbs_g": 32,
+                    "fat_g": 12,
+                    "sort_order": 27
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ساندويتش روست بيف",
+                        "en": "Roast beef sandwich"
+                    },
+                    "calories": 330,
+                    "protein_g": 31,
+                    "carbs_g": 30,
+                    "fat_g": 10,
+                    "sort_order": 28
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "شوربة وساندويتش تونة",
+                        "en": "Soup and tuna sandwich"
+                    },
+                    "calories": 320,
+                    "protein_g": 30,
+                    "carbs_g": 31,
+                    "fat_g": 9,
+                    "sort_order": 29
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "زبادي يوناني وتوت",
+                        "en": "Greek yogurt and berries"
+                    },
+                    "calories": 140,
+                    "protein_g": 12,
+                    "carbs_g": 15,
+                    "fat_g": 4,
+                    "sort_order": 30
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "تفاح وزبدة لوز",
+                        "en": "Apple and almond butter"
+                    },
+                    "calories": 150,
+                    "protein_g": 3,
+                    "carbs_g": 22,
+                    "fat_g": 7,
+                    "sort_order": 31
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "مكسرات وفراولة",
+                        "en": "Nuts and strawberries"
+                    },
+                    "calories": 140,
+                    "protein_g": 4,
+                    "carbs_g": 12,
+                    "fat_g": 9,
+                    "sort_order": 32
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "زبادي وشيا",
+                        "en": "Yogurt and chia"
+                    },
+                    "calories": 150,
+                    "protein_g": 12,
+                    "carbs_g": 12,
+                    "fat_g": 6,
+                    "sort_order": 33
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "حمص وخضار",
+                        "en": "Hummus and veggies"
+                    },
+                    "calories": 150,
+                    "protein_g": 6,
+                    "carbs_g": 20,
+                    "fat_g": 6,
+                    "sort_order": 34
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "جبن قريش وخيار",
+                        "en": "Cottage cheese and cucumber"
+                    },
+                    "calories": 130,
+                    "protein_g": 15,
+                    "carbs_g": 8,
+                    "fat_g": 4,
+                    "sort_order": 35
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "جرانولا وزبادي",
+                        "en": "Granola and yogurt"
+                    },
+                    "calories": 160,
+                    "protein_g": 10,
+                    "carbs_g": 20,
+                    "fat_g": 6,
+                    "sort_order": 36
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "كمثرى ولوز",
+                        "en": "Pear and almonds"
+                    },
+                    "calories": 150,
+                    "protein_g": 3,
+                    "carbs_g": 22,
+                    "fat_g": 7,
+                    "sort_order": 37
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "كراكر ولبنة",
+                        "en": "Crackers and labneh"
+                    },
+                    "calories": 150,
+                    "protein_g": 8,
+                    "carbs_g": 15,
+                    "fat_g": 7,
+                    "sort_order": 38
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "بودينغ شيا",
+                        "en": "Chia pudding"
+                    },
+                    "calories": 160,
+                    "protein_g": 8,
+                    "carbs_g": 16,
+                    "fat_g": 8,
+                    "sort_order": 39
+                }
+            ]
+        },
+        {
+            "goal": "diabetic",
+            "name": {
+                "ar": "نظام مرضى السكري",
+                "en": "Diabetes"
+            },
+            "description": {
+                "ar": "النظام الذي بدأنا منه\nمصمَّم على احتياج الحالة، بمتابعة أخصائي التغذية وضبطٍ دقيق للمقادير في كل وجبة.",
+                "en": "The programme we started with\nBuilt around the condition, with nutritionist follow-up and precise portioning in every meal."
+            },
+            "macros": {
+                "calories": 1400,
+                "protein": "100–110",
+                "carbs": "90–110",
+                "fat": "55–65",
+                "fiber": "≥25"
+            },
+            "meals": [
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بيض وخبز نيومي",
+                        "en": "Eggs and New Me bread"
+                    },
+                    "calories": 350,
+                    "protein_g": 27,
+                    "carbs_g": 24,
+                    "fat_g": 17,
+                    "sort_order": 0
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "شكشوكة بروتين",
+                        "en": "Protein shakshuka"
+                    },
+                    "calories": 360,
+                    "protein_g": 30,
+                    "carbs_g": 25,
+                    "fat_g": 16,
+                    "sort_order": 1
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "زبادي وتوت وشيا",
+                        "en": "Yogurt, berries and chia"
+                    },
+                    "calories": 340,
+                    "protein_g": 25,
+                    "carbs_g": 25,
+                    "fat_g": 16,
+                    "sort_order": 2
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "ساندويتش تونة",
+                        "en": "Tuna sandwich"
+                    },
+                    "calories": 350,
+                    "protein_g": 32,
+                    "carbs_g": 25,
+                    "fat_g": 14,
+                    "sort_order": 3
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "فول محسوب وبيض",
+                        "en": "Measured foul and eggs"
+                    },
+                    "calories": 370,
+                    "protein_g": 26,
+                    "carbs_g": 32,
+                    "fat_g": 15,
+                    "sort_order": 4
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "أومليت سبانخ",
+                        "en": "Spinach omelette"
+                    },
+                    "calories": 350,
+                    "protein_g": 29,
+                    "carbs_g": 22,
+                    "fat_g": 17,
+                    "sort_order": 5
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "ساندويتش دجاج",
+                        "en": "Chicken sandwich"
+                    },
+                    "calories": 360,
+                    "protein_g": 32,
+                    "carbs_g": 25,
+                    "fat_g": 15,
+                    "sort_order": 6
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "لبنة وزعتر وبيض",
+                        "en": "Labneh, zaatar and eggs"
+                    },
+                    "calories": 350,
+                    "protein_g": 25,
+                    "carbs_g": 24,
+                    "fat_g": 18,
+                    "sort_order": 7
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "جبن قريش وخضار",
+                        "en": "Cottage cheese and veggies"
+                    },
+                    "calories": 340,
+                    "protein_g": 27,
+                    "carbs_g": 25,
+                    "fat_g": 15,
+                    "sort_order": 8
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بانكيك نيومي مضبوط",
+                        "en": "Measured New Me pancakes"
+                    },
+                    "calories": 360,
+                    "protein_g": 27,
+                    "carbs_g": 30,
+                    "fat_g": 14,
+                    "sort_order": 9
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج وأرز محسوب",
+                        "en": "Chicken with measured rice"
+                    },
+                    "calories": 460,
+                    "protein_g": 43,
+                    "carbs_g": 35,
+                    "fat_g": 16,
+                    "sort_order": 10
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "سلمون وكينوا",
+                        "en": "Salmon and quinoa"
+                    },
+                    "calories": 470,
+                    "protein_g": 36,
+                    "carbs_g": 32,
+                    "fat_g": 22,
+                    "sort_order": 11
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "كفتة وخضار وبرغل",
+                        "en": "Kofta, veggies and bulgur"
+                    },
+                    "calories": 460,
+                    "protein_g": 38,
+                    "carbs_g": 34,
+                    "fat_g": 18,
+                    "sort_order": 12
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "سمك وطحينة",
+                        "en": "Fish and tahini"
+                    },
+                    "calories": 450,
+                    "protein_g": 40,
+                    "carbs_g": 33,
+                    "fat_g": 17,
+                    "sort_order": 13
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج بالكاري",
+                        "en": "Chicken curry"
+                    },
+                    "calories": 470,
+                    "protein_g": 42,
+                    "carbs_g": 36,
+                    "fat_g": 17,
+                    "sort_order": 14
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "لحم وبروكلي",
+                        "en": "Beef and broccoli"
+                    },
+                    "calories": 460,
+                    "protein_g": 40,
+                    "carbs_g": 32,
+                    "fat_g": 18,
+                    "sort_order": 15
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "مقلوبة صحية",
+                        "en": "Healthy maqlouba"
+                    },
+                    "calories": 470,
+                    "protein_g": 40,
+                    "carbs_g": 38,
+                    "fat_g": 16,
+                    "sort_order": 16
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "برجر نيومي",
+                        "en": "New Me burger"
+                    },
+                    "calories": 460,
+                    "protein_g": 38,
+                    "carbs_g": 32,
+                    "fat_g": 19,
+                    "sort_order": 17
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "شاورما دجاج",
+                        "en": "Chicken shawarma"
+                    },
+                    "calories": 450,
+                    "protein_g": 42,
+                    "carbs_g": 30,
+                    "fat_g": 18,
+                    "sort_order": 18
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج بالليمون",
+                        "en": "Lemon chicken"
+                    },
+                    "calories": 460,
+                    "protein_g": 43,
+                    "carbs_g": 35,
+                    "fat_g": 16,
+                    "sort_order": 19
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سيزر دجاج",
+                        "en": "Chicken Caesar"
+                    },
+                    "calories": 330,
+                    "protein_g": 34,
+                    "carbs_g": 20,
+                    "fat_g": 13,
+                    "sort_order": 20
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ساندويتش تونة",
+                        "en": "Tuna sandwich"
+                    },
+                    "calories": 320,
+                    "protein_g": 31,
+                    "carbs_g": 22,
+                    "fat_g": 11,
+                    "sort_order": 21
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "شوربة عدس محسوبة",
+                        "en": "Measured lentil soup"
+                    },
+                    "calories": 330,
+                    "protein_g": 28,
+                    "carbs_g": 30,
+                    "fat_g": 10,
+                    "sort_order": 22
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "أومليت خضار",
+                        "en": "Veggie omelette"
+                    },
+                    "calories": 310,
+                    "protein_g": 29,
+                    "carbs_g": 12,
+                    "fat_g": 16,
+                    "sort_order": 23
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سلطة يونانية ودجاج",
+                        "en": "Greek salad and chicken"
+                    },
+                    "calories": 330,
+                    "protein_g": 32,
+                    "carbs_g": 15,
+                    "fat_g": 17,
+                    "sort_order": 24
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ساندويتش روست بيف",
+                        "en": "Roast beef sandwich"
+                    },
+                    "calories": 330,
+                    "protein_g": 32,
+                    "carbs_g": 23,
+                    "fat_g": 12,
+                    "sort_order": 25
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "تونة وأفوكادو",
+                        "en": "Tuna and avocado"
+                    },
+                    "calories": 330,
+                    "protein_g": 30,
+                    "carbs_g": 20,
+                    "fat_g": 16,
+                    "sort_order": 26
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "دجاج ولبنة",
+                        "en": "Chicken and labneh"
+                    },
+                    "calories": 320,
+                    "protein_g": 32,
+                    "carbs_g": 22,
+                    "fat_g": 11,
+                    "sort_order": 27
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ميني بيتزا مضبوطة",
+                        "en": "Measured mini pizza"
+                    },
+                    "calories": 340,
+                    "protein_g": 30,
+                    "carbs_g": 25,
+                    "fat_g": 13,
+                    "sort_order": 28
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "جبن قريش وبيض",
+                        "en": "Cottage cheese and eggs"
+                    },
+                    "calories": 320,
+                    "protein_g": 28,
+                    "carbs_g": 22,
+                    "fat_g": 13,
+                    "sort_order": 29
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "زبادي يوناني",
+                        "en": "Greek yogurt"
+                    },
+                    "calories": 120,
+                    "protein_g": 14,
+                    "carbs_g": 8,
+                    "fat_g": 3,
+                    "sort_order": 30
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "مكسرات",
+                        "en": "Mixed nuts"
+                    },
+                    "calories": 120,
+                    "protein_g": 4,
+                    "carbs_g": 5,
+                    "fat_g": 10,
+                    "sort_order": 31
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "جبن قريش",
+                        "en": "Cottage cheese"
+                    },
+                    "calories": 120,
+                    "protein_g": 15,
+                    "carbs_g": 6,
+                    "fat_g": 3,
+                    "sort_order": 32
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "توت وزبادي",
+                        "en": "Berries and yogurt"
+                    },
+                    "calories": 130,
+                    "protein_g": 10,
+                    "carbs_g": 13,
+                    "fat_g": 4,
+                    "sort_order": 33
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "بيضة وخضار",
+                        "en": "Egg and veggies"
+                    },
+                    "calories": 110,
+                    "protein_g": 7,
+                    "carbs_g": 5,
+                    "fat_g": 7,
+                    "sort_order": 34
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "كراكر ولبنة",
+                        "en": "Crackers and labneh"
+                    },
+                    "calories": 130,
+                    "protein_g": 8,
+                    "carbs_g": 10,
+                    "fat_g": 7,
+                    "sort_order": 35
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "حمص وخيار",
+                        "en": "Hummus and cucumber"
+                    },
+                    "calories": 130,
+                    "protein_g": 5,
+                    "carbs_g": 14,
+                    "fat_g": 6,
+                    "sort_order": 36
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "لوز وفراولة",
+                        "en": "Almonds and strawberries"
+                    },
+                    "calories": 120,
+                    "protein_g": 4,
+                    "carbs_g": 9,
+                    "fat_g": 8,
+                    "sort_order": 37
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "شيا خفيف",
+                        "en": "Light chia"
+                    },
+                    "calories": 140,
+                    "protein_g": 7,
+                    "carbs_g": 10,
+                    "fat_g": 9,
+                    "sort_order": 38
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "لبنة وخضار",
+                        "en": "Labneh and veggies"
+                    },
+                    "calories": 120,
+                    "protein_g": 8,
+                    "carbs_g": 7,
+                    "fat_g": 7,
+                    "sort_order": 39
+                }
+            ]
+        },
+        {
+            "goal": "low_carb",
+            "name": {
+                "ar": "منخفض النشويات",
+                "en": "Low-Starch"
+            },
+            "description": {
+                "ar": "البداية الأسهل، والأقرب لأسلوب حياتك\nتقليلٌ لا حرمان — نشويات أقل وبروتين وألياف أعلى، بوجبات تشبه ما اعتدته لكن بتركيبة مختلفة.",
+                "en": "The easier start, closest to how you already live\nReduction, not deprivation — fewer starches, more protein and fibre, in meals that look like what you know but are built differently."
+            },
+            "macros": {
+                "calories": 1400,
+                "protein": "110–120",
+                "carbs": "50–70",
+                "fat": "70–80",
+                "fiber": "≥25"
+            },
+            "meals": [
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "أومليت أفوكادو",
+                        "en": "Avocado omelette"
+                    },
+                    "calories": 370,
+                    "protein_g": 28,
+                    "carbs_g": 12,
+                    "fat_g": 24,
+                    "sort_order": 0
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "ساندويتش دجاج نيومي",
+                        "en": "New Me chicken sandwich"
+                    },
+                    "calories": 370,
+                    "protein_g": 34,
+                    "carbs_g": 18,
+                    "fat_g": 19,
+                    "sort_order": 1
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بيض وحلوم",
+                        "en": "Eggs and halloumi"
+                    },
+                    "calories": 380,
+                    "protein_g": 29,
+                    "carbs_g": 16,
+                    "fat_g": 23,
+                    "sort_order": 2
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "زبادي ومكسرات",
+                        "en": "Yogurt and nuts"
+                    },
+                    "calories": 350,
+                    "protein_g": 27,
+                    "carbs_g": 18,
+                    "fat_g": 20,
+                    "sort_order": 3
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "شكشوكة وجبن",
+                        "en": "Shakshuka and cheese"
+                    },
+                    "calories": 370,
+                    "protein_g": 30,
+                    "carbs_g": 18,
+                    "fat_g": 21,
+                    "sort_order": 4
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "تونة وأفوكادو",
+                        "en": "Tuna and avocado"
+                    },
+                    "calories": 360,
+                    "protein_g": 33,
+                    "carbs_g": 16,
+                    "fat_g": 19,
+                    "sort_order": 5
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بيض ولبنة",
+                        "en": "Eggs and labneh"
+                    },
+                    "calories": 370,
+                    "protein_g": 27,
+                    "carbs_g": 17,
+                    "fat_g": 23,
+                    "sort_order": 6
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "أومليت دجاج",
+                        "en": "Chicken omelette"
+                    },
+                    "calories": 360,
+                    "protein_g": 36,
+                    "carbs_g": 10,
+                    "fat_g": 20,
+                    "sort_order": 7
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "جبن قريش ومكسرات",
+                        "en": "Cottage cheese and nuts"
+                    },
+                    "calories": 350,
+                    "protein_g": 30,
+                    "carbs_g": 16,
+                    "fat_g": 18,
+                    "sort_order": 8
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بانكيك منخفض النشويات",
+                        "en": "Low-carb pancakes"
+                    },
+                    "calories": 380,
+                    "protein_g": 30,
+                    "carbs_g": 20,
+                    "fat_g": 21,
+                    "sort_order": 9
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج وخضار وطحينة",
+                        "en": "Chicken, veggies and tahini"
+                    },
+                    "calories": 470,
+                    "protein_g": 45,
+                    "carbs_g": 18,
+                    "fat_g": 25,
+                    "sort_order": 10
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "سلمون وأفوكادو",
+                        "en": "Salmon and avocado"
+                    },
+                    "calories": 480,
+                    "protein_g": 38,
+                    "carbs_g": 15,
+                    "fat_g": 30,
+                    "sort_order": 11
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "كفتة بالطحينة",
+                        "en": "Kofta in tahini"
+                    },
+                    "calories": 470,
+                    "protein_g": 40,
+                    "carbs_g": 17,
+                    "fat_g": 27,
+                    "sort_order": 12
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "ستيك وفطر",
+                        "en": "Steak and mushrooms"
+                    },
+                    "calories": 480,
+                    "protein_g": 43,
+                    "carbs_g": 16,
+                    "fat_g": 28,
+                    "sort_order": 13
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج كريمي",
+                        "en": "Creamy chicken"
+                    },
+                    "calories": 460,
+                    "protein_g": 45,
+                    "carbs_g": 15,
+                    "fat_g": 24,
+                    "sort_order": 14
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "سمك وخضار",
+                        "en": "Fish and veggies"
+                    },
+                    "calories": 450,
+                    "protein_g": 42,
+                    "carbs_g": 17,
+                    "fat_g": 23,
+                    "sort_order": 15
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "برجر نيومي",
+                        "en": "New Me burger"
+                    },
+                    "calories": 470,
+                    "protein_g": 41,
+                    "carbs_g": 20,
+                    "fat_g": 25,
+                    "sort_order": 16
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "شاورما صحن",
+                        "en": "Shawarma plate"
+                    },
+                    "calories": 460,
+                    "protein_g": 44,
+                    "carbs_g": 19,
+                    "fat_g": 23,
+                    "sort_order": 17
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "لحم وفاصوليا خضراء",
+                        "en": "Beef and green beans"
+                    },
+                    "calories": 470,
+                    "protein_g": 42,
+                    "carbs_g": 18,
+                    "fat_g": 26,
+                    "sort_order": 18
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج بيستو",
+                        "en": "Pesto chicken"
+                    },
+                    "calories": 460,
+                    "protein_g": 45,
+                    "carbs_g": 14,
+                    "fat_g": 25,
+                    "sort_order": 19
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سيزر دجاج",
+                        "en": "Chicken Caesar"
+                    },
+                    "calories": 330,
+                    "protein_g": 35,
+                    "carbs_g": 10,
+                    "fat_g": 17,
+                    "sort_order": 20
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "تونة وأفوكادو",
+                        "en": "Tuna and avocado"
+                    },
+                    "calories": 320,
+                    "protein_g": 31,
+                    "carbs_g": 11,
+                    "fat_g": 17,
+                    "sort_order": 21
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "أومليت جبن",
+                        "en": "Cheese omelette"
+                    },
+                    "calories": 330,
+                    "protein_g": 30,
+                    "carbs_g": 10,
+                    "fat_g": 19,
+                    "sort_order": 22
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ساندويتش دجاج صغير",
+                        "en": "Small chicken sandwich"
+                    },
+                    "calories": 330,
+                    "protein_g": 34,
+                    "carbs_g": 17,
+                    "fat_g": 13,
+                    "sort_order": 23
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سلطة حلوم",
+                        "en": "Halloumi salad"
+                    },
+                    "calories": 340,
+                    "protein_g": 25,
+                    "carbs_g": 12,
+                    "fat_g": 22,
+                    "sort_order": 24
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "روست بيف وسلطة",
+                        "en": "Roast beef and salad"
+                    },
+                    "calories": 320,
+                    "protein_g": 32,
+                    "carbs_g": 10,
+                    "fat_g": 16,
+                    "sort_order": 25
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ميني بيتزا نيومي",
+                        "en": "New Me mini pizza"
+                    },
+                    "calories": 350,
+                    "protein_g": 31,
+                    "carbs_g": 18,
+                    "fat_g": 18,
+                    "sort_order": 26
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "بيض وتونة",
+                        "en": "Eggs and tuna"
+                    },
+                    "calories": 320,
+                    "protein_g": 34,
+                    "carbs_g": 8,
+                    "fat_g": 17,
+                    "sort_order": 27
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "شوربة بروكلي ودجاج",
+                        "en": "Broccoli and chicken soup"
+                    },
+                    "calories": 330,
+                    "protein_g": 32,
+                    "carbs_g": 12,
+                    "fat_g": 17,
+                    "sort_order": 28
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "جبن قريش وأفوكادو",
+                        "en": "Cottage cheese and avocado"
+                    },
+                    "calories": 330,
+                    "protein_g": 29,
+                    "carbs_g": 16,
+                    "fat_g": 17,
+                    "sort_order": 29
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "مكسرات",
+                        "en": "Mixed nuts"
+                    },
+                    "calories": 130,
+                    "protein_g": 4,
+                    "carbs_g": 4,
+                    "fat_g": 12,
+                    "sort_order": 30
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "زبادي يوناني",
+                        "en": "Greek yogurt"
+                    },
+                    "calories": 120,
+                    "protein_g": 14,
+                    "carbs_g": 7,
+                    "fat_g": 3,
+                    "sort_order": 31
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "جبن وخيار",
+                        "en": "Cheese and cucumber"
+                    },
+                    "calories": 130,
+                    "protein_g": 10,
+                    "carbs_g": 4,
+                    "fat_g": 9,
+                    "sort_order": 32
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "بيضة وأفوكادو",
+                        "en": "Egg and avocado"
+                    },
+                    "calories": 140,
+                    "protein_g": 7,
+                    "carbs_g": 4,
+                    "fat_g": 11,
+                    "sort_order": 33
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "زيتون ولبنة",
+                        "en": "Olives and labneh"
+                    },
+                    "calories": 130,
+                    "protein_g": 6,
+                    "carbs_g": 5,
+                    "fat_g": 10,
+                    "sort_order": 34
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "توت وزبادي",
+                        "en": "Berries and yogurt"
+                    },
+                    "calories": 120,
+                    "protein_g": 9,
+                    "carbs_g": 10,
+                    "fat_g": 5,
+                    "sort_order": 35
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "كراكر نيومي",
+                        "en": "New Me crackers"
+                    },
+                    "calories": 140,
+                    "protein_g": 9,
+                    "carbs_g": 8,
+                    "fat_g": 9,
+                    "sort_order": 36
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "شيا غير محلى",
+                        "en": "Unsweetened chia"
+                    },
+                    "calories": 140,
+                    "protein_g": 7,
+                    "carbs_g": 8,
+                    "fat_g": 10,
+                    "sort_order": 37
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "لوز وخيار",
+                        "en": "Almonds and cucumber"
+                    },
+                    "calories": 120,
+                    "protein_g": 4,
+                    "carbs_g": 5,
+                    "fat_g": 9,
+                    "sort_order": 38
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "جبن قريش",
+                        "en": "Cottage cheese"
+                    },
+                    "calories": 120,
+                    "protein_g": 15,
+                    "carbs_g": 6,
+                    "fat_g": 3,
+                    "sort_order": 39
+                }
+            ]
+        },
+        {
+            "goal": "keto",
+            "name": {
+                "ar": "الكيتو",
+                "en": "Keto"
+            },
+            "description": {
+                "ar": "لمن يريد نتيجة سريعة وانضباطاً عالياً\nنشويات في أدنى حدودها، ودهون صحية تقود الطاقة — وجبات مبنية على دقيق «نيو مي» تُبقيك داخل نطاقك دون أن تفقد الخبز عن طاولتك.",
+                "en": "For fast results and high discipline\nStarches at their lowest, healthy fats driving energy — meals built on New Me flour that keep you in range without giving up bread."
+            },
+            "macros": {
+                "calories": 1400,
+                "protein": "85–95",
+                "carbs": "≤25 صافي",
+                "fat": "105–115",
+                "fiber": "≥20"
+            },
+            "meals": [
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بيض وأفوكادو كيتو",
+                        "en": "Keto eggs and avocado"
+                    },
+                    "calories": 390,
+                    "protein_g": 24,
+                    "carbs_g": 5,
+                    "fat_g": 30,
+                    "sort_order": 0
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "أومليت حلوم",
+                        "en": "Halloumi omelette"
+                    },
+                    "calories": 400,
+                    "protein_g": 27,
+                    "carbs_g": 5,
+                    "fat_g": 31,
+                    "sort_order": 1
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بيض وسلمون",
+                        "en": "Eggs and salmon"
+                    },
+                    "calories": 390,
+                    "protein_g": 28,
+                    "carbs_g": 4,
+                    "fat_g": 29,
+                    "sort_order": 2
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "شكشوكة كيتو",
+                        "en": "Keto shakshuka"
+                    },
+                    "calories": 380,
+                    "protein_g": 25,
+                    "carbs_g": 6,
+                    "fat_g": 29,
+                    "sort_order": 3
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "تونة وأفوكادو",
+                        "en": "Tuna and avocado"
+                    },
+                    "calories": 380,
+                    "protein_g": 30,
+                    "carbs_g": 4,
+                    "fat_g": 27,
+                    "sort_order": 4
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "أومليت دجاج",
+                        "en": "Chicken omelette"
+                    },
+                    "calories": 390,
+                    "protein_g": 34,
+                    "carbs_g": 5,
+                    "fat_g": 26,
+                    "sort_order": 5
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "لبنة وزيتون وبيض",
+                        "en": "Labneh, olives and eggs"
+                    },
+                    "calories": 400,
+                    "protein_g": 24,
+                    "carbs_g": 6,
+                    "fat_g": 32,
+                    "sort_order": 6
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "جبن قريش وأفوكادو",
+                        "en": "Cottage cheese and avocado"
+                    },
+                    "calories": 390,
+                    "protein_g": 27,
+                    "carbs_g": 6,
+                    "fat_g": 29,
+                    "sort_order": 7
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بانكيك كيتو نيومي",
+                        "en": "New Me keto pancakes"
+                    },
+                    "calories": 400,
+                    "protein_g": 25,
+                    "carbs_g": 7,
+                    "fat_g": 31,
+                    "sort_order": 8
+                },
+                {
+                    "type": "breakfast",
+                    "name": {
+                        "ar": "بيض ولحم",
+                        "en": "Eggs and beef"
+                    },
+                    "calories": 410,
+                    "protein_g": 32,
+                    "carbs_g": 5,
+                    "fat_g": 30,
+                    "sort_order": 9
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "سلمون بزبدة الأعشاب",
+                        "en": "Salmon in herb butter"
+                    },
+                    "calories": 480,
+                    "protein_g": 35,
+                    "carbs_g": 6,
+                    "fat_g": 35,
+                    "sort_order": 10
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "ستيك وفطر",
+                        "en": "Steak and mushrooms"
+                    },
+                    "calories": 480,
+                    "protein_g": 40,
+                    "carbs_g": 7,
+                    "fat_g": 32,
+                    "sort_order": 11
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج وأفوكادو",
+                        "en": "Chicken and avocado"
+                    },
+                    "calories": 470,
+                    "protein_g": 42,
+                    "carbs_g": 6,
+                    "fat_g": 30,
+                    "sort_order": 12
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "كفتة بالطحينة",
+                        "en": "Kofta in tahini"
+                    },
+                    "calories": 480,
+                    "protein_g": 38,
+                    "carbs_g": 7,
+                    "fat_g": 34,
+                    "sort_order": 13
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج كريمي وفطر",
+                        "en": "Creamy chicken and mushrooms"
+                    },
+                    "calories": 470,
+                    "protein_g": 42,
+                    "carbs_g": 6,
+                    "fat_g": 31,
+                    "sort_order": 14
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "سمك بصلصة الزبدة",
+                        "en": "Fish in butter sauce"
+                    },
+                    "calories": 460,
+                    "protein_g": 40,
+                    "carbs_g": 6,
+                    "fat_g": 30,
+                    "sort_order": 15
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "برجر كيتو",
+                        "en": "Keto burger"
+                    },
+                    "calories": 480,
+                    "protein_g": 39,
+                    "carbs_g": 7,
+                    "fat_g": 34,
+                    "sort_order": 16
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "شاورما كيتو",
+                        "en": "Keto shawarma"
+                    },
+                    "calories": 470,
+                    "protein_g": 42,
+                    "carbs_g": 7,
+                    "fat_g": 31,
+                    "sort_order": 17
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "لحم وكوسة",
+                        "en": "Beef and zucchini"
+                    },
+                    "calories": 470,
+                    "protein_g": 40,
+                    "carbs_g": 6,
+                    "fat_g": 32,
+                    "sort_order": 18
+                },
+                {
+                    "type": "lunch",
+                    "name": {
+                        "ar": "دجاج بيستو",
+                        "en": "Pesto chicken"
+                    },
+                    "calories": 470,
+                    "protein_g": 43,
+                    "carbs_g": 6,
+                    "fat_g": 31,
+                    "sort_order": 19
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سيزر دجاج كيتو",
+                        "en": "Keto chicken Caesar"
+                    },
+                    "calories": 330,
+                    "protein_g": 30,
+                    "carbs_g": 4,
+                    "fat_g": 21,
+                    "sort_order": 20
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "تونة وأفوكادو",
+                        "en": "Tuna and avocado"
+                    },
+                    "calories": 330,
+                    "protein_g": 29,
+                    "carbs_g": 4,
+                    "fat_g": 22,
+                    "sort_order": 21
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "أومليت جبن",
+                        "en": "Cheese omelette"
+                    },
+                    "calories": 340,
+                    "protein_g": 27,
+                    "carbs_g": 4,
+                    "fat_g": 24,
+                    "sort_order": 22
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "سلطة حلوم",
+                        "en": "Halloumi salad"
+                    },
+                    "calories": 340,
+                    "protein_g": 23,
+                    "carbs_g": 5,
+                    "fat_g": 25,
+                    "sort_order": 23
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "بيض وسلمون",
+                        "en": "Eggs and salmon"
+                    },
+                    "calories": 350,
+                    "protein_g": 28,
+                    "carbs_g": 4,
+                    "fat_g": 24,
+                    "sort_order": 24
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "دجاج وكريمة",
+                        "en": "Chicken in cream sauce"
+                    },
+                    "calories": 340,
+                    "protein_g": 31,
+                    "carbs_g": 5,
+                    "fat_g": 22,
+                    "sort_order": 25
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "روست بيف وأفوكادو",
+                        "en": "Roast beef and avocado"
+                    },
+                    "calories": 330,
+                    "protein_g": 30,
+                    "carbs_g": 5,
+                    "fat_g": 21,
+                    "sort_order": 26
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "شوربة بروكلي كيتو",
+                        "en": "Keto broccoli soup"
+                    },
+                    "calories": 350,
+                    "protein_g": 29,
+                    "carbs_g": 6,
+                    "fat_g": 23,
+                    "sort_order": 27
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "ميني بيتزا كيتو",
+                        "en": "Keto mini pizza"
+                    },
+                    "calories": 350,
+                    "protein_g": 29,
+                    "carbs_g": 6,
+                    "fat_g": 23,
+                    "sort_order": 28
+                },
+                {
+                    "type": "dinner",
+                    "name": {
+                        "ar": "جبن وبيض وزيتون",
+                        "en": "Cheese, eggs and olives"
+                    },
+                    "calories": 340,
+                    "protein_g": 25,
+                    "carbs_g": 5,
+                    "fat_g": 24,
+                    "sort_order": 29
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "مكسرات",
+                        "en": "Mixed nuts"
+                    },
+                    "calories": 100,
+                    "protein_g": 3,
+                    "carbs_g": 2,
+                    "fat_g": 9,
+                    "sort_order": 30
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "زيتون وجبن",
+                        "en": "Olives and cheese"
+                    },
+                    "calories": 110,
+                    "protein_g": 6,
+                    "carbs_g": 2,
+                    "fat_g": 9,
+                    "sort_order": 31
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "بيضة",
+                        "en": "Boiled egg"
+                    },
+                    "calories": 80,
+                    "protein_g": 6,
+                    "carbs_g": 1,
+                    "fat_g": 5,
+                    "sort_order": 32
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "أفوكادو",
+                        "en": "Avocado"
+                    },
+                    "calories": 90,
+                    "protein_g": 1,
+                    "carbs_g": 1,
+                    "fat_g": 8,
+                    "sort_order": 33
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "جبن كريمي وخيار",
+                        "en": "Cream cheese and cucumber"
+                    },
+                    "calories": 100,
+                    "protein_g": 4,
+                    "carbs_g": 2,
+                    "fat_g": 9,
+                    "sort_order": 34
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "مكاديميا",
+                        "en": "Macadamia nuts"
+                    },
+                    "calories": 110,
+                    "protein_g": 1,
+                    "carbs_g": 2,
+                    "fat_g": 11,
+                    "sort_order": 35
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "لبنة كاملة الدسم",
+                        "en": "Full-fat labneh"
+                    },
+                    "calories": 100,
+                    "protein_g": 5,
+                    "carbs_g": 3,
+                    "fat_g": 8,
+                    "sort_order": 36
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "شيا كيتو",
+                        "en": "Keto chia"
+                    },
+                    "calories": 110,
+                    "protein_g": 4,
+                    "carbs_g": 3,
+                    "fat_g": 8,
+                    "sort_order": 37
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "جوز",
+                        "en": "Walnuts"
+                    },
+                    "calories": 100,
+                    "protein_g": 2,
+                    "carbs_g": 2,
+                    "fat_g": 10,
+                    "sort_order": 38
+                },
+                {
+                    "type": "snack",
+                    "name": {
+                        "ar": "حلوم صغير",
+                        "en": "Halloumi bites"
+                    },
+                    "calories": 110,
+                    "protein_g": 7,
+                    "carbs_g": 1,
+                    "fat_g": 9,
+                    "sort_order": 39
+                }
+            ]
+        }
+    ]
+}

@@ -61,12 +61,12 @@ enum PlanGoal: string
     public function dailyCalorieTarget(): int
     {
         return match ($this) {
+            // The four New Me programs share one 1400 kcal envelope.
+            self::Balanced, self::Diabetic, self::LowCarb, self::Keto => 1400,
             self::MuscleBuilding => 2200,
-            self::Carnivore => 1800,
             self::Breastfeeding => 1900,
-            self::Balanced, self::Keto => 1600,
+            self::Carnivore => 1800,
             self::DigestiveHealth, self::Vegan => 1550,
-            self::Diabetic, self::LowCarb => 1500,
             self::WeightLoss => 1450,
         };
     }

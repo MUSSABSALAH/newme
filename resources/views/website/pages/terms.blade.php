@@ -61,8 +61,8 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 /* layout */
 .tl{max-width:1140px;margin:0 auto;padding:36px 20px 80px;display:grid;gap:34px}
 @media(min-width:960px){.tl{grid-template-columns:280px 1fr;align-items:start}}
-.toc{display:none}
-@media(min-width:960px){.toc{display:block;position:sticky;top:calc(84px + var(--sat));max-height:calc(100vh - 120px);overflow-y:auto;padding-inline-end:8px}}
+.toc{display:block}
+@media(min-width:960px){.toc{position:sticky;top:calc(84px + var(--sat));max-height:calc(100vh - 120px);overflow-y:auto;padding-inline-end:8px}}
 .toc h3{font-size:11px;font-family:var(--mono);letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
 .toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:10px;font-size:12px;font-weight:800;color:var(--body);transition:.15s;border-inline-start:2.5px solid transparent}
 .toc a small{font-family:var(--mono);font-size:9.5px;color:var(--muted);min-width:20px}
@@ -108,11 +108,60 @@ body.mlock{overflow:hidden}
 .js .tsec{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
 .js .tsec.in{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.js .tsec{opacity:1;transform:none;transition:none}}
+@media (max-width: 959.98px) {
+  .js .tsec, .js .tsec.in { opacity: 1 !important; transform: none !important; }
+  .progress { top: var(--ip-topbar, 52px); }
+  .thero { padding: 28px 16px 24px; }
+  .thero h1 { font-size: 1.7rem; }
+  .thero p { font-size: 13.5px; }
+  .tl { padding: 16px 16px 88px; gap: 14px; }
+  .toc {
+    background: #fff;
+    border: 1.5px solid var(--gray-2);
+    border-radius: 18px;
+    padding: 14px 12px 10px;
+    position: relative;
+    top: auto;
+    z-index: 2;
+    max-height: none;
+  }
+  .toc h3 { margin-bottom: 8px; }
+  .toc a {
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+    min-height: 48px;
+    font-size: 13.5px;
+    border-radius: 12px;
+    border: 1px solid var(--gray-2);
+    border-inline-start-width: 3px;
+    margin-bottom: 8px;
+    background: var(--bg);
+  }
+  .toc a:last-of-type { margin-bottom: 0; }
+  .toc a.on { background: var(--orange-soft); border-color: var(--orange); }
+  .tsec {
+    padding: 18px 16px 16px;
+    margin-bottom: 12px;
+    scroll-margin-top: calc(var(--ip-topbar, 52px) + 12px);
+  }
+  .tsec .num { width: 40px; height: 40px; border-radius: 12px; }
+  .nm-ip .toTop, .toTop {
+    bottom: calc(12px + var(--ip-tabbar, 64px));
+    inset-inline-start: 16px;
+    z-index: 220;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+  }
+  .toTop.show { opacity: 1; pointer-events: auto; }
+}
 @endverbatim
 </style>
 @endpush
 
 @section('content')
+<div class="terms-page nm-ip">
 <div class="progress"><i id="pbar"></i></div>
 
 <header class="thero">
@@ -133,7 +182,7 @@ body.mlock{overflow:hidden}
   <aside class="toc" id="toc"><h3>{{ __('website.terms.toc_title') }}</h3></aside>
   <main id="tmain">
     @foreach (__('website.terms.sections') as $i => $sec)
-    <section class="tsec" id="s{{ $i + 1 }}"><div class="th"><span class="num">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span><h2>{{ $sec['title'] }}</h2></div>
+    <section class="tsec" id="{{ $sec['id'] ?? ('s'.($i + 1)) }}"><div class="th"><span class="num">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span><h2>{{ $sec['title'] }}</h2></div>
       {!! $sec['html'] !!}
     </section>
     @endforeach
@@ -142,10 +191,8 @@ body.mlock{overflow:hidden}
   </main>
 </div>
 
-<button class="toTop" id="toTop" aria-label="{{ __('website.terms.to_top') }}">↑</button>
-
-
-
+<button class="toTop" id="toTop" type="button" aria-label="{{ __('website.terms.to_top') }}">↑</button>
+</div>
 @endsection
 
 @push('scripts')
@@ -154,6 +201,7 @@ body.mlock{overflow:hidden}
 
 function failOpen(){try{document.querySelectorAll('.tsec').forEach(function(s){s.classList.add('in');});}catch(_){}}
 window.addEventListener('error',failOpen);
+failOpen();
 try{
 'use strict';
 /* TOC build */
@@ -166,6 +214,20 @@ secs.forEach(function(s,i){
   toc.appendChild(a);
 });
 var tlinks=toc.querySelectorAll('a');
+tlinks.forEach(function(a){
+  a.addEventListener('click', function(e){
+    var id=a.getAttribute('href');
+    var el=id ? document.querySelector(id) : null;
+    if (!el) return;
+    e.preventDefault();
+    var offset=72;
+    var chrome=document.querySelector('.nm-chrome');
+    if (chrome) offset = chrome.getBoundingClientRect().height + 12;
+    var y=el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    history.replaceState(null, '', id);
+  });
+});
 /* progress + active section + toTop */
 function onScroll(){
   var h=document.documentElement;

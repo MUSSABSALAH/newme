@@ -12,170 +12,210 @@ use App\Modules\Plans\Models\Meal;
 use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Models\PlanVersion;
 use Illuminate\Database\Seeder;
+use RuntimeException;
 
 /**
- * Seeds the 10 dietary programs from the public subscribe wizard
- * (`lang/{ar,en}/website.php` → `subscribe.plans`) with pricing aligned to
- * the website calculator (12 SAR / meal, weekly / monthly / quarterly).
+ * Seeds the four New Me 1400 kcal programs together with their own meal
+ * catalogue and pricing matrix.
+ *
+ * Program content comes from `database/data/newme-programs-1400.json`, which is
+ * generated from the nutrition team's workbook. Each program owns its meals:
+ * the same dish name can appear in several programs with different macros, so
+ * meals are never shared across plans.
+ *
+ * Prices are placeholders meant to be adjusted from the admin panel.
  */
 final class PlanSeeder extends Seeder
 {
-    /** Website BASE price per dish in minor units (12.00 SAR). */
+    /** Placeholder price per meal in minor units (12.00 SAR). */
     private const BasePerMealMinor = 1200;
 
-    /** Assumed delivery days/week baked into the seeded base price. */
+    /** Delivery days per week baked into the seeded package price. */
     private const DeliveryDaysPerWeek = 5;
+
+    /**
+     * Public display order: keto, low carb, general healthy, diabetes.
+     *
+     * @var array<string, int>
+     */
+    private const DisplayOrder = [
+        'keto' => 1,
+        'low_carb' => 2,
+        'balanced' => 3,
+        'diabetic' => 4,
+    ];
 
     public function run(): void
     {
         if (Plan::query()->exists()) {
+            $updated = self::syncExistingCopy();
+            $this->command?->info("Updated copy on {$updated} existing plan(s).");
+
             return;
         }
 
-        foreach ($this->plans() as $index => $plan) {
-            $this->seedPlan(
-                goal: $plan['goal'],
-                name: $plan['name'],
-                description: $plan['description'],
-                imagePath: $plan['image'],
-                sortOrder: $index,
-            );
+        foreach ($this->programs() as $index => $program) {
+            $this->seedProgram($program, $index);
         }
     }
 
     /**
-     * @return list<array{goal: PlanGoal, name: array<string, string>, description: array<string, string>, image: string}>
+     * Refresh names, descriptions, and sort order on existing plans
+     * without touching meals, prices, or subscriptions.
      */
-    private function plans(): array
+    public static function syncExistingCopy(): int
+    {
+        $updated = 0;
+
+        foreach (Plan::query()->get() as $plan) {
+            $copy = self::marketingCopy()[$plan->goal->value] ?? null;
+
+            if ($copy === null) {
+                continue;
+            }
+
+            $plan->setTranslations('name', $copy['name']);
+            $plan->setTranslations('description', $copy['description']);
+            $plan->sort_order = $copy['sort'];
+            $plan->save();
+            $updated++;
+        }
+
+        return $updated;
+    }
+
+    /**
+     * Customer-facing plan names and descriptions (AR + EN).
+     *
+     * @return array<string, array{sort: int, name: array{ar: string, en: string}, description: array{ar: string, en: string}}>
+     */
+    public static function marketingCopy(): array
     {
         return [
-            [
-                'goal' => PlanGoal::MuscleBuilding,
-                'name' => ['ar' => 'بناء العضلات', 'en' => 'Muscle building'],
-                'description' => [
-                    'ar' => 'تغذية عالية الأداء للقوة ونمو العضلات',
-                    'en' => 'High-performance nutrition for strength and muscle growth',
+            'keto' => [
+                'sort' => 1,
+                'name' => [
+                    'ar' => 'الكيتو',
+                    'en' => 'Keto',
                 ],
-                'image' => 'subscription/p101_700x400.jpg',
+                'description' => [
+                    'ar' => "لمن يريد نتيجة سريعة وانضباطاً عالياً\nنشويات في أدنى حدودها، ودهون صحية تقود الطاقة — وجبات مبنية على دقيق «نيو مي» تُبقيك داخل نطاقك دون أن تفقد الخبز عن طاولتك.",
+                    'en' => "For fast results and high discipline\nStarches at their lowest, healthy fats driving energy — meals built on New Me flour that keep you in range without giving up bread.",
+                ],
             ],
-            [
-                'goal' => PlanGoal::WeightLoss,
-                'name' => ['ar' => 'خسارة الوزن', 'en' => 'Weight loss'],
-                'description' => [
-                    'ar' => 'سعرات مضبوطة لخسارة دهون آمنة وأسرع',
-                    'en' => 'Calorie-controlled for safe, faster fat loss',
+            'low_carb' => [
+                'sort' => 2,
+                'name' => [
+                    'ar' => 'منخفض النشويات',
+                    'en' => 'Low-Starch',
                 ],
-                'image' => 'subscription/p102_700x400.jpg',
+                'description' => [
+                    'ar' => "البداية الأسهل، والأقرب لأسلوب حياتك\nتقليلٌ لا حرمان — نشويات أقل وبروتين وألياف أعلى، بوجبات تشبه ما اعتدته لكن بتركيبة مختلفة.",
+                    'en' => "The easier start, closest to how you already live\nReduction, not deprivation — fewer starches, more protein and fibre, in meals that look like what you know but are built differently.",
+                ],
             ],
-            [
-                'goal' => PlanGoal::Balanced,
-                'name' => ['ar' => 'التوازن', 'en' => 'Balance'],
-                'description' => [
-                    'ar' => 'نمط حياة غذائي مرن وطويل الأمد',
-                    'en' => 'A flexible, long-term eating lifestyle',
+            'balanced' => [
+                'sort' => 3,
+                'name' => [
+                    'ar' => 'النظام الصحي العام',
+                    'en' => 'General Healthy',
                 ],
-                'image' => 'subscription/p103_700x400.jpg',
+                'description' => [
+                    'ar' => "للحفاظ على التوازن لا لتغييره\nأكلٌ متوازن ومحسوب المقادير، بلا قيود قاسية — لمن يريد طعاماً نظيفاً وحياة مستمرة كما هي.",
+                    'en' => "To hold your balance, not change it\nBalanced, measured eating without harsh restrictions — clean food, and life carrying on as it is.",
+                ],
             ],
-            [
-                'goal' => PlanGoal::Diabetic,
-                'name' => ['ar' => 'السكري', 'en' => 'Diabetes'],
-                'description' => [
-                    'ar' => 'مصمم لضبط سكر الدم بدقة',
-                    'en' => 'Designed for precise blood-sugar control',
+            'diabetic' => [
+                'sort' => 4,
+                'name' => [
+                    'ar' => 'نظام مرضى السكري',
+                    'en' => 'Diabetes',
                 ],
-                'image' => 'subscription/p104_700x400.jpg',
-            ],
-            [
-                'goal' => PlanGoal::Breastfeeding,
-                'name' => ['ar' => 'الرضاعة', 'en' => 'Breastfeeding'],
                 'description' => [
-                    'ar' => 'تغذية تدعم التعافي والطاقة وإدرار الحليب',
-                    'en' => 'Nutrition that supports recovery, energy, and milk supply',
+                    'ar' => "النظام الذي بدأنا منه\nمصمَّم على احتياج الحالة، بمتابعة أخصائي التغذية وضبطٍ دقيق للمقادير في كل وجبة.",
+                    'en' => "The programme we started with\nBuilt around the condition, with nutritionist follow-up and precise portioning in every meal.",
                 ],
-                'image' => 'subscription/p105_700x400.jpg',
-            ],
-            [
-                'goal' => PlanGoal::DigestiveHealth,
-                'name' => ['ar' => 'صحة الجهاز الهضمي', 'en' => 'Gut health'],
-                'description' => [
-                    'ar' => 'تغذية تركّز على راحة المعدة وتحسين الهضم',
-                    'en' => 'Nutrition focused on comfort and better digestion',
-                ],
-                'image' => 'subscription/p106_700x400.jpg',
-            ],
-            [
-                'goal' => PlanGoal::LowCarb,
-                'name' => ['ar' => 'قليل الكربوهيدرات', 'en' => 'Low carb'],
-                'description' => [
-                    'ar' => 'كربوهيدرات مضبوطة مع توازن البروتين والدهون',
-                    'en' => 'Controlled carbs with balanced protein and fats',
-                ],
-                'image' => 'subscription/p107_700x400.jpg',
-            ],
-            [
-                'goal' => PlanGoal::Keto,
-                'name' => ['ar' => 'كيتو', 'en' => 'Keto'],
-                'description' => [
-                    'ar' => 'قليل الكربوهيدرات عالي الدهون للحفاظ على الكيتوزية',
-                    'en' => 'Low carb, high fat to stay in ketosis',
-                ],
-                'image' => 'subscription/p108_700x400.jpg',
-            ],
-            [
-                'goal' => PlanGoal::Vegan,
-                'name' => ['ar' => 'نباتي', 'en' => 'Vegan'],
-                'description' => [
-                    'ar' => 'تغذية نباتية 100% متوازنة ومستقرة السكر',
-                    'en' => '100% plant-based, balanced and blood-sugar steady',
-                ],
-                'image' => 'subscription/p109_700x400.jpg',
-            ],
-            [
-                'goal' => PlanGoal::Carnivore,
-                'name' => ['ar' => 'كارنيفور', 'en' => 'Carnivore'],
-                'description' => [
-                    'ar' => 'بروتين حيواني صافٍ لأقصى تركيز وشبع',
-                    'en' => 'Pure animal protein for focus and lasting satiety',
-                ],
-                'image' => 'subscription/p110_700x400.jpg',
             ],
         ];
     }
 
     /**
-     * @param  array<string, string>  $name
-     * @param  array<string, string>  $description
+     * @return list<array<string, mixed>>
      */
-    private function seedPlan(PlanGoal $goal, array $name, array $description, string $imagePath, int $sortOrder): void
+    private function programs(): array
     {
+        $path = database_path('data/newme-programs-1400.json');
+
+        if (! is_file($path)) {
+            throw new RuntimeException("Program data file is missing: {$path}");
+        }
+
+        $decoded = json_decode((string) file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
+
+        return $decoded['programs'] ?? [];
+    }
+
+    /**
+     * @param  array<string, mixed>  $program
+     */
+    private function seedProgram(array $program, int $sortOrder): void
+    {
+        $goal = PlanGoal::from($program['goal']);
+
         $plan = new Plan;
+        $copy = self::marketingCopy()[$goal->value] ?? null;
+
         $plan->goal = $goal;
-        $plan->setTranslations('name', $name);
-        $plan->setTranslations('description', $description);
-        $plan->setTranslations('features', [
-            'ar' => [
-                'وجبات طازجة يوميًا',
-                'توصيل مجاني',
-                'إشراف أخصائي تغذية',
-                'تخطَّ أو أعد الجدولة في أي وقت',
-                'إلغاء في أي وقت — بدون رسوم',
-            ],
-            'en' => [
-                'Fresh daily meals',
-                'Free delivery',
-                'Nutritionist supervised',
-                'Skip or reschedule anytime',
-                'Cancel anytime — no fees',
-            ],
-        ]);
-        $plan->image_path = $imagePath;
+        $plan->setTranslations('name', is_array($copy) ? $copy['name'] : $program['name']);
+        $plan->setTranslations('description', is_array($copy) ? $copy['description'] : $program['description']);
+        $plan->setTranslations('features', $this->features($program['macros']));
         $plan->requires_day_selection = true;
         $plan->min_delivery_days_per_week = self::DeliveryDaysPerWeek;
         $plan->delivery_fee = 0;
         $plan->is_active = true;
-        $plan->sort_order = $sortOrder;
+        $plan->sort_order = is_array($copy)
+            ? $copy['sort']
+            : (self::DisplayOrder[$goal->value] ?? ($sortOrder + 1));
         $plan->save();
 
+        $this->seedPricing($plan);
+        $plan->meals()->sync($this->seedMeals($program['meals']));
+    }
+
+    /**
+     * Macro envelope from the workbook summary, shown as the plan feature list.
+     *
+     * @param  array<string, mixed>  $macros
+     * @return array<string, list<string>>
+     */
+    private function features(array $macros): array
+    {
+        return [
+            'ar' => [
+                $macros['calories'].' كالوري في اليوم',
+                'بروتين '.$macros['protein'].' غ',
+                'كربوهيدرات '.$macros['carbs'].' غ',
+                'دهون '.$macros['fat'].' غ',
+                'ألياف '.$macros['fiber'].' غ',
+                'قيم معايَرة بإشراف خبير التغذية',
+            ],
+            'en' => [
+                $macros['calories'].' kcal per day',
+                'Protein '.$macros['protein'].' g',
+                'Carbs '.$macros['carbs'].' g',
+                'Fat '.$macros['fat'].' g',
+                'Fibre '.$macros['fiber'].' g',
+                'Reviewed by our nutrition expert',
+            ],
+        ];
+    }
+
+    /**
+     * Creates the published version and its price table: every selectable
+     * meal-type combination across the three subscription durations.
+     */
+    private function seedPricing(Plan $plan): void
+    {
         /** @var PlanVersion $version */
         $version = $plan->versions()->create([
             'version_number' => 1,
@@ -183,7 +223,7 @@ final class PlanSeeder extends Seeder
             'published_at' => now(),
         ]);
 
-        // Common meal-type combos (website requires ≥2 meals including lunch or dinner).
+        // The wizard requires at least two meals, one of them lunch or dinner.
         $combinations = [
             [MealType::Breakfast->value, MealType::Lunch->value],
             [MealType::Lunch->value, MealType::Dinner->value],
@@ -197,7 +237,6 @@ final class PlanSeeder extends Seeder
             ],
         ];
 
-        // Matches subscribe wizard: weekly / monthly (15%) / quarterly (31%).
         $durations = [
             ['unit' => DurationUnit::Week, 'length' => 1, 'discount' => '0.00'],
             ['unit' => DurationUnit::Week, 'length' => 4, 'discount' => '15.00'],
@@ -222,8 +261,31 @@ final class PlanSeeder extends Seeder
                 ]);
             }
         }
+    }
 
-        // Website menu is shared across programs.
-        $plan->meals()->sync(Meal::query()->where('is_active', true)->pluck('id')->all());
+    /**
+     * @param  list<array<string, mixed>>  $meals
+     * @return list<int> ids of the meals created for this program
+     */
+    private function seedMeals(array $meals): array
+    {
+        $ids = [];
+
+        foreach ($meals as $meal) {
+            $model = new Meal;
+            $model->meal_type = MealType::from($meal['type']);
+            $model->setTranslations('name', $meal['name']);
+            $model->calories = $meal['calories'];
+            $model->protein_g = $meal['protein_g'];
+            $model->carbs_g = $meal['carbs_g'];
+            $model->fat_g = $meal['fat_g'];
+            $model->is_active = true;
+            $model->sort_order = $meal['sort_order'];
+            $model->save();
+
+            $ids[] = $model->id;
+        }
+
+        return $ids;
     }
 }

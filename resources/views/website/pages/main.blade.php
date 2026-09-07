@@ -16,7 +16,7 @@
   @php $shopProducts = $shopProducts ?? []; @endphp
   @if (count($shopProducts) > 0)
     @include('website.partials.v30-shop-rail', ['shopProducts' => $shopProducts, 'preview' => true])
-  @endif
+        @endif
 
   @include('website.partials.v30-closing')
 </div>

@@ -101,7 +101,7 @@ class WebsiteController extends Controller
             'planNames' => $plans->pluck('name', 'key')->all(),
             'planSlugs' => $plans->pluck('key')->all(),
             'planIds' => $plans->pluck('public_id', 'key')->all(),
-            'defaultPlan' => $plans->firstWhere('key', 'balance') ?? $plans->first(),
+            'defaultPlan' => $plans->first(),
             'plansData' => $this->websitePlansData(),
             'finance' => $this->financeConfig(),
             'operations' => $this->operationsConfig(),
@@ -281,17 +281,46 @@ class WebsiteController extends Controller
     private function websitePlan(Plan $plan): array
     {
         $slug = $plan->goal->websiteSlug();
+        $copy = $this->websitePlanCopy($plan, $slug);
 
         return [
             'key' => $slug,
-            'name' => $plan->label(),
-            'desc' => (string) $plan->getTranslation('description', app()->getLocale(), false),
+            'name' => $copy['name'],
+            'hook' => $copy['hook'],
+            'desc' => $copy['desc'],
             'image_url' => $plan->image_path !== null ? asset('storage/'.$plan->image_path) : null,
             'icon' => self::PLAN_ICONS[$slug] ?? 'i-target',
-            'pop' => $slug === 'balance',
+            'pop' => $slug === 'keto',
             'f' => '1',
             'kcal' => $plan->goal->dailyCalorieTarget(),
             'public_id' => $plan->public_id,
+        ];
+    }
+
+    /**
+     * Public marketing copy for a plan card (name, hook line, body).
+     *
+     * @return array{name: string, hook: string, desc: string}
+     */
+    private function websitePlanCopy(Plan $plan, string $slug): array
+    {
+        $copy = trans('website.subscribe.plans.'.$slug);
+        $locale = app()->getLocale();
+
+        $name = is_array($copy) && filled($copy['name'] ?? null)
+            ? (string) $copy['name']
+            : $plan->label();
+
+        $hook = is_array($copy) ? (string) ($copy['hook'] ?? '') : '';
+
+        $desc = is_array($copy) && filled($copy['desc'] ?? null)
+            ? (string) $copy['desc']
+            : (string) $plan->getTranslation('description', $locale, false);
+
+        return [
+            'name' => $name,
+            'hook' => $hook,
+            'desc' => $desc,
         ];
     }
 
@@ -311,7 +340,7 @@ class WebsiteController extends Controller
             $version = $plan->publishedVersion();
 
             $data[$slug] = [
-                'name' => $plan->label(),
+                'name' => $this->websitePlanCopy($plan, $slug)['name'],
                 'requires_days' => $plan->requires_day_selection,
                 'min_days' => $plan->min_delivery_days_per_week,
                 'delivery_fee' => $plan->delivery_fee,
@@ -462,22 +491,25 @@ class WebsiteController extends Controller
                 $description = $category->label();
             }
 
+            $href = route('website.product.show', ['product' => $product->slug]);
+
             return [
                 'name' => $product->label(),
                 'sub' => $description,
                 'image_url' => $product->imageUrl(),
-                'url' => route('website.product.show', ['product' => $product->slug]),
+                'url' => $href,
+                'href' => $href,
                 'flag' => $product->flag?->label(),
                 'flag_icon' => $flagIcons[$flag] ?? null,
                 'flag_style' => $flag === 'sale' ? 'color:var(--green)' : '',
                 'cat' => $catSlug,
                 'cat_label' => $parent !== null ? $parent->label() : $category->label(),
-                'protein' => $protein !== ''
-                    ? __('website.main.shop.protein', ['value' => $protein])
-                    : null,
-                'kcal' => $kcal > 0
-                    ? __('website.main.shop.kcal', ['value' => $kcal])
-                    : null,
+                'protein' => $protein,
+                'kcal' => $kcal > 0 ? $kcal : null,
+                'fat' => $this->trimDecimal($product->fat_g),
+                'carbs' => $this->trimDecimal($product->carbs_g),
+                'serving' => $product->serving_size?->label() ?? '',
+                'note' => $product->nutrition_note?->value,
                 'price' => $this->trimDecimal(Money::fromMinor($product->price)->format()),
             ];
         })->all();

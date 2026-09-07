@@ -117,14 +117,12 @@ img{display:block;width:100%;height:100%;object-fit:cover}
   .card,.card.feat:not(.hide){grid-column:auto;background:#F3EEE6;border-radius:18px;overflow:hidden;padding:0 0 12px;box-shadow:0 4px 16px rgba(16,38,63,.06)}
   .card.feat .tilelink{aspect-ratio:1/1;height:auto;min-height:0}
   .tilelink{border-radius:18px 18px 0 0;aspect-ratio:1/1}
-  .kchip,.nut-toggle,.nutov,.tilelink .quick,.meta .pline .arrow{display:none!important}
+  .kchip,.tilelink .quick,.meta .pline .arrow,.meta .p-specs{display:none!important}
   .flag{top:10px;inset-inline-start:10px;background:rgba(255,255,255,.95);border-radius:999px;padding:5px 10px;font-size:10px;letter-spacing:0;text-transform:none;font-weight:800}
   .meta{padding:12px 12px 0;gap:0}
   .meta h3{font-size:14px;font-weight:900;color:var(--ink);order:1;margin:0}
   .meta .cat{order:2;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;font-family:var(--font);color:var(--body);margin:4px 0 0}
-  .meta .p-specs{display:grid;gap:8px;order:3;margin:12px 0;padding:11px 0;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
-  .meta .p-spec{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12.5px;font-weight:800;color:var(--ink)}
-  .meta .pline{order:4;border:0;padding:0;margin:0 0 10px}
+  .meta .pline{order:4;border:0;padding:0;margin:10px 0}
   .meta .pr{font-family:var(--font);font-size:18px;font-weight:900}
   .meta .p-view{display:flex;order:5;justify-content:center;align-items:center;background:var(--navy);color:#fff;font-weight:800;font-size:13px;border-radius:999px;padding:12px;min-height:44px;margin-top:2px}
 }
@@ -147,6 +145,19 @@ img{display:block;width:100%;height:100%;object-fit:cover}
   .nut-toggle{display:grid;place-items:center}
   .kchip{inset-inline-end:50px}
   .card.showN .quick{opacity:1;transform:none;display:block;z-index:4}
+}
+@media(max-width:819.98px){
+  .v30-mob-only .nut-toggle{
+    display:grid!important;place-items:center;
+    top:10px;inset-inline-end:10px;width:28px;height:28px
+  }
+  .v30-mob-only .nutov{
+    display:flex!important;padding:12px 10px
+  }
+  .v30-mob-only .nutov .nv-h{font-size:8px;letter-spacing:.1em;margin-bottom:6px}
+  .v30-mob-only .nutov .nv-r{font-size:11px;padding:5px 1px}
+  .v30-mob-only .nutov .nv-r b{font-size:11.5px}
+  .v30-mob-only .nutov .nv-note{font-size:8px;margin-top:6px}
 }
 
 .empty{text-align:center;padding:70px 20px;font-weight:800;color:var(--muted);display:none;letter-spacing:.04em}
@@ -252,7 +263,7 @@ body.menu-open{overflow:hidden}
           </span>
           <span class="quick">{{ __('website.store.view_product') }}</span>
         </a>
-        <button class="nut-toggle" aria-label="{{ __('website.store.nutrition_aria') }}">i</button>
+        <button type="button" class="nut-toggle" aria-label="{{ __('website.store.nutrition_aria') }}">i</button>
         <div class="meta">
           <h3>{{ $p['name'] }}</h3>
           <span class="cat">{{ $p['cat_label'] }}</span>
@@ -341,7 +352,9 @@ document.querySelectorAll('#subsRow .sub').forEach(function(s){
 document.querySelectorAll('.nut-toggle').forEach(function(b){
   b.addEventListener('click',function(e){
     e.preventDefault();
+    e.stopPropagation();
     var card=b.closest('.card');
+    if(!card)return;
     var was=card.classList.contains('showN');
     document.querySelectorAll('.card.showN').forEach(function(c){c.classList.remove('showN');});
     if(!was)card.classList.add('showN');

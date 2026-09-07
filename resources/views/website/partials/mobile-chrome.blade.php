@@ -7,14 +7,14 @@
   $wa = 'https://wa.me/966539603302';
   $nmLangTarget = $isAr ? 'en' : 'ar';
   $nmItems = [
-    ['href' => route('website.main'), 'icon' => 't-home', 'title' => $isAr ? 'الرئيسة' : 'Home', 'sub' => $isAr ? 'الواجهة ولماذا نيومي' : 'The site and why New Me'],
-    ['href' => route('website.store'), 'icon' => 't-shop', 'title' => __('website.nav.store'), 'sub' => $isAr ? 'المنتجات والقيم الغذائية' : 'Products and nutrition'],
-    ['href' => route('website.subscribe'), 'icon' => 't-card', 'title' => $isAr ? 'الاشتراكات' : __('website.nav.subscribe'), 'sub' => $isAr ? 'ثلاث باقات حسب المدة' : 'Three packs by duration'],
-    ['href' => route('website.make'), 'icon' => 't-craft', 'title' => $isAr ? 'صناعتنا' : 'Our craft', 'sub' => $isAr ? 'كيف نخبز ولماذا يفرق' : 'How we bake and why it matters'],
-    ['href' => route('website.about'), 'icon' => 't-about', 'title' => __('website.nav.about'), 'sub' => $isAr ? 'قصتنا ورؤيتنا' : 'Our story and vision'],
-    ['href' => route('website.blog'), 'icon' => 't-kitchen', 'title' => $isAr ? 'مطبخنا' : __('website.nav.articles'), 'sub' => $isAr ? 'مقالات ووصفات' : 'Articles and recipes'],
-    ['href' => route('website.help'), 'icon' => 't-help', 'title' => $isAr ? 'الأسئلة' : 'FAQ', 'sub' => $isAr ? 'الدعم والاستشارة' : 'Help and consults'],
-    ['href' => route('website.terms'), 'icon' => 't-doc', 'title' => __('website.nav.terms'), 'sub' => $isAr ? 'الشروط والسياسات' : 'Terms and policies'],
+    ['href' => route('website.main'), 'icon' => 't-home', 'title' => __('website.site.nav.home'), 'sub' => __('website.site.nav.sub_home')],
+    ['href' => route('website.about'), 'icon' => 't-about', 'title' => __('website.site.nav.about'), 'sub' => __('website.site.nav.sub_about')],
+    ['href' => route('website.make'), 'icon' => 't-craft', 'title' => __('website.site.nav.make'), 'sub' => __('website.site.nav.sub_make')],
+    ['href' => route('website.blog'), 'icon' => 't-kitchen', 'title' => __('website.site.nav.kitchen'), 'sub' => __('website.site.nav.sub_kitchen')],
+    ['href' => route('website.store'), 'icon' => 't-shop', 'title' => __('website.site.nav.store'), 'sub' => __('website.site.nav.sub_store')],
+    ['href' => route('website.subscribe'), 'icon' => 't-card', 'title' => __('website.site.nav.subscribe'), 'sub' => __('website.site.nav.sub_subscribe')],
+    ['href' => route('website.help'), 'icon' => 't-help', 'title' => __('website.site.nav.faq'), 'sub' => __('website.site.nav.sub_faq')],
+    ['href' => route('website.terms'), 'icon' => 't-doc', 'title' => __('website.site.nav.terms'), 'sub' => __('website.site.nav.sub_terms')],
   ];
   if (auth()->check() && auth()->user()->isCustomer()) {
     $nmItems[] = ['href' => route('website.account'), 'icon' => 't-user', 'title' => __('account.nav.account'), 'sub' => $isAr ? 'طلباتك واشتراكك' : 'Orders and subscription'];
@@ -90,19 +90,19 @@
 
 <nav class="nm-tabbar" id="nmTabbar" aria-label="{{ $isAr ? 'التنقل' : 'Navigation' }}">
   <a class="tab {{ request()->routeIs('website.main') ? 'on' : '' }}" href="{{ route('website.main') }}">
-    <svg><use href="#t-home"/></svg>{{ $isAr ? 'الرئيسة' : 'Home' }}
+    <svg><use href="#t-home"/></svg>{{ __('website.site.nav.home') }}
   </a>
   <a class="tab {{ ($nmTab === 'store' || request()->routeIs('website.store', 'website.product', 'website.product.show')) ? 'on' : '' }}" href="{{ route('website.store') }}">
-    <svg><use href="#t-shop"/></svg>{{ __('website.nav.store') }}
+    <svg><use href="#t-shop"/></svg>{{ __('website.site.nav.store') }}
   </a>
   <a class="tab {{ ($nmTab === 'subscribe' || request()->routeIs('website.subscribe')) ? 'on' : '' }}" href="{{ route('website.subscribe') }}">
-    <svg><use href="#t-subs"/></svg>{{ $isAr ? 'الاشتراكات' : __('website.nav.subscribe') }}
+    <svg><use href="#t-subs"/></svg>{{ __('website.site.nav.subscribe') }}
   </a>
   <a class="tab {{ ($nmTab === 'blog' || request()->routeIs('website.blog', 'website.article', 'website.recipe')) ? 'on' : '' }}" href="{{ route('website.blog') }}">
-    <svg><use href="#t-kitchen"/></svg>{{ $isAr ? 'مطبخنا' : __('website.nav.articles') }}
+    <svg><use href="#t-kitchen"/></svg>{{ __('website.site.nav.kitchen') }}
   </a>
   <a class="tab {{ ($nmTab === 'about' || request()->routeIs('website.about')) ? 'on' : '' }}" href="{{ route('website.about') }}">
-    <svg><use href="#t-more"/></svg>{{ $isAr ? 'عن نيومي' : __('website.nav.about') }}
+    <svg><use href="#t-more"/></svg>{{ __('website.site.nav.about') }}
   </a>
 </nav>
 

@@ -60,8 +60,8 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .nav-links a:hover,.nav-links a.on{border-color:var(--w-orange)}
 @media(min-width:1060px){.nav-links{display:flex}}
 .nav-right{display:flex;align-items:center;gap:8px}
-.nav-cta{font-size:12px;font-weight:900;color:var(--w-ink);border:1.5px solid var(--w-ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
-.nav-cta:hover{background:var(--w-ink);color:#fff}
+.nav-cta,.nav-login{font-size:12px;font-weight:900;color:var(--w-ink);border:1.5px solid var(--w-ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1;white-space:nowrap;flex-shrink:0}
+.nav-cta:hover,.nav-login:hover{background:var(--w-ink);color:#fff}
 .nav-right .w-btn,.nav-right .w-btn.sm{min-height:36px;height:36px;padding:0 16px;font-size:12.5px;border-width:1.5px;box-shadow:0 6px 16px rgba(240,127,45,.28);line-height:1}
 .lang-toggle{display:inline-grid;place-items:center;min-width:36px;height:36px;padding:0 10px;border-radius:999px;border:1.5px solid var(--w-gray-3);background:#fff;color:var(--w-navy);font-family:var(--w-mono);font-weight:800;font-size:12px;letter-spacing:.04em;transition:.2s;flex-shrink:0}
 .lang-toggle:hover{border-color:var(--w-orange);color:var(--w-orange-deep)}

@@ -8,143 +8,180 @@ use App\Modules\Store\Models\Category;
 use App\Modules\Store\Models\Product;
 use App\Support\Money\Money;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 /**
- * Imports the static store catalog (config/website_store.php + lang copy)
- * into the categories/products tables.
+ * Imports store categories and the September 2026 product catalog
+ * (database/data/store-catalog-2026.json) with official nutrition and photos.
  */
 class StoreCatalogSeeder extends Seeder
 {
     /**
-     * Top-level categories, in display order.
+     * Current store categories, in display order. All are top-level.
      *
-     * @var list<string>
+     * @var array<string, array{ar: string, en: string}>
      */
-    private array $topCategories = ['bakery', 'sweets', 'others'];
+    private array $catalog = [
+        'bakery' => ['ar' => 'المخبوزات', 'en' => 'Bakery'],
+        'shabura' => ['ar' => 'الشابورة', 'en' => 'Shabura'],
+        'crackers' => ['ar' => 'المقرمشات', 'en' => 'Crackers'],
+        'samosa' => ['ar' => 'السمبوسه', 'en' => 'Samosa'],
+        'flour' => ['ar' => 'دقيق', 'en' => 'Flour'],
+        'sandwiches' => ['ar' => 'الساندويشات', 'en' => 'Sandwiches'],
+        'hot_dishes' => ['ar' => 'أطباق ساخنة', 'en' => 'Hot dishes'],
+        'salads' => ['ar' => 'السلطات', 'en' => 'Salads'],
+        'fermented' => ['ar' => 'مخمرات', 'en' => 'Pickles'],
+        'sweets' => ['ar' => 'الحلى', 'en' => 'Sweets'],
+        'others' => ['ar' => 'اخرى', 'en' => 'Other'],
+    ];
 
     /**
-     * Bakery subcategories, in display order.
+     * Legacy slugs that should be renamed before upsert.
      *
-     * @var list<string>
+     * @var array<string, string>
      */
-    private array $bakerySubs = ['bread', 'croissant', 'crackers', 'rusk', 'pies', 'crumbs'];
+    private array $slugAliases = [
+        'rusk' => 'shabura',
+    ];
 
     public function run(): void
     {
-        /** @var array<string, mixed> $catalog */
-        $catalog = config('website_store', ['products' => []]);
-        $products = is_array($catalog['products'] ?? null) ? $catalog['products'] : [];
+        $this->renameAliasedSlugs();
 
-        $tabs = $this->translations('website.store.tabs');
-        $subs = $this->translations('website.store.subs');
-        $names = $this->translations('website.store.products');
-
-        // Category slug => Category model (cache to attach products).
         $categories = [];
-
-        // Top-level categories.
         $sort = 0;
-        foreach ($this->topCategories as $slug) {
+        foreach ($this->catalog as $slug => $name) {
             $categories[$slug] = $this->upsertCategory(
                 slug: $slug,
-                name: $this->localePair($tabs, $slug, $slug),
+                name: $name,
                 parentId: null,
                 sortOrder: $sort++,
             );
         }
 
-        // Soft-delete the temporary flat "flour" category if it exists.
-        Category::withTrashed()
-            ->where('slug', 'flour')
-            ->get()
-            ->each(function (Category $category): void {
-                if ($category->trashed()) {
-                    return;
-                }
-                $category->delete();
-            });
+        $this->retireUnknownCategories($categories);
+        $imported = $this->importCatalogProducts($categories);
+        $this->command?->info("Updated {$imported} catalog products.");
+    }
 
-        // Bakery subcategories.
-        $sort = 0;
-        foreach ($this->bakerySubs as $slug) {
-            $categories[$slug] = $this->upsertCategory(
-                slug: $slug,
-                name: $this->localePair($subs, $slug, $slug),
-                parentId: $categories['bakery']->id,
-                sortOrder: $sort++,
-            );
+    /**
+     * @param  array<string, Category>  $categories
+     */
+    private function importCatalogProducts(array $categories): int
+    {
+        $path = database_path('data/store-catalog-2026.json');
+        if (! is_file($path)) {
+            throw new \RuntimeException('Missing store catalog JSON: '.$path);
         }
 
-        // Products.
-        foreach ($products as $index => $item) {
-            if (! is_array($item) || empty($item['id'])) {
+        /** @var array{products?: list<array<string, mixed>>} $payload */
+        $payload = json_decode((string) file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
+        $items = is_array($payload['products'] ?? null) ? $payload['products'] : [];
+        $keep = [];
+
+        foreach ($items as $item) {
+            if (! is_array($item) || empty($item['slug'])) {
                 continue;
             }
 
-            $cat = (string) ($item['cat'] ?? 'others');
-            $sub = (string) ($item['sub'] ?? '');
-            $leafSlug = $cat === 'bakery'
-                ? ($sub !== '' ? $sub : 'bakery')
-                : $cat;
-
-            $category = $categories[$leafSlug] ?? $categories['others'] ?? null;
+            $slug = (string) $item['slug'];
+            $keep[] = $slug;
+            $category = $categories[(string) ($item['category'] ?? '')] ?? $categories['others'] ?? null;
             if ($category === null) {
                 continue;
             }
 
-            $id = (string) $item['id'];
+            $name = is_array($item['name'] ?? null) ? $item['name'] : [];
+            $serving = is_string($item['serving'] ?? null) ? $item['serving'] : null;
 
             Product::withTrashed()->updateOrCreate(
-                ['slug' => $id],
+                ['slug' => $slug],
                 [
                     'category_id' => $category->id,
-                    'name' => $this->localePair($names, $id, Str::headline($id)),
-                    'description' => ['ar' => '', 'en' => ''],
-                    'image_path' => $this->storeImage($this->stringOrNull($item['img'] ?? null)),
-                    'external_url' => $this->stringOrNull($item['href'] ?? null),
-                    'price' => $this->toMinor($item['price'] ?? '0'),
-                    'calories' => isset($item['kcal']) ? (int) $item['kcal'] : null,
-                    'serving_size' => $this->stringOrNull($item['serving'] ?? null),
-                    'protein_g' => $this->stringOrNull($item['protein'] ?? null),
-                    'carbs_g' => $this->stringOrNull($item['carbs'] ?? null),
-                    'fat_g' => $this->stringOrNull($item['fat'] ?? null),
-                    'nutrition_note' => $this->stringOrNull($item['note'] ?? null),
-                    'flag' => $this->stringOrNull($item['flag'] ?? null),
-                    'is_featured' => (bool) ($item['feat'] ?? false),
+                    'name' => [
+                        'ar' => (string) ($name['ar'] ?? $slug),
+                        'en' => (string) ($name['en'] ?? $slug),
+                    ],
+                    'description' => [
+                        'ar' => $serving !== null ? 'الحصة: '.$serving : '',
+                        'en' => $serving !== null ? 'Serving: '.$serving : '',
+                    ],
+                    'image_path' => $this->stringOrNull($item['image'] ?? null),
+                    'external_url' => null,
+                    'price' => $this->toMinor($item['price'] ?? 0),
+                    'calories' => isset($item['calories']) && $item['calories'] !== null ? (int) $item['calories'] : null,
+                    'serving_size' => $this->stringOrNull($item['serving_size'] ?? null),
+                    'protein_g' => $this->decimalOrNull($item['protein_g'] ?? null),
+                    'carbs_g' => $this->decimalOrNull($item['carbs_g'] ?? null),
+                    'fat_g' => $this->decimalOrNull($item['fat_g'] ?? null),
+                    'nutrition_note' => $this->stringOrNull($item['nutrition_note'] ?? null),
+                    'flag' => null,
+                    'is_featured' => false,
                     'is_active' => true,
-                    'sort_order' => (int) $index,
+                    'sort_order' => (int) ($item['n'] ?? 0),
                     'deleted_at' => null,
                 ],
             );
         }
+
+        if ($keep !== []) {
+            Product::query()->whereNotIn('slug', $keep)->update(['is_active' => false]);
+        }
+
+        return count($keep);
     }
 
     /**
-     * @param  array{ar: array<string, mixed>, en: array<string, mixed>}  $source
-     * @return array<string, string>
+     * @param  array<string, Category>  $keep
      */
-    private function localePair(array $source, string $key, string $fallback): array
+    private function retireUnknownCategories(array $keep): void
     {
-        return [
-            'ar' => (string) ($source['ar'][$key] ?? $fallback),
-            'en' => (string) ($source['en'][$key] ?? $fallback),
-        ];
+        $fallback = $keep['bakery'] ?? $keep['others'] ?? null;
+        $keepIds = array_map(static fn (Category $category): int => $category->id, $keep);
+
+        Category::query()
+            ->whereNotIn('id', $keepIds)
+            ->get()
+            ->each(function (Category $category) use ($fallback): void {
+                if ($fallback instanceof Category) {
+                    Product::withTrashed()
+                        ->where('category_id', $category->id)
+                        ->update(['category_id' => $fallback->id]);
+                }
+
+                $category->delete();
+            });
     }
 
-    /**
-     * Load a translation group for both locales.
-     *
-     * @return array{ar: array<string, mixed>, en: array<string, mixed>}
-     */
-    private function translations(string $key): array
+    private function renameAliasedSlugs(): void
     {
-        return [
-            'ar' => (array) App::make('translator')->get($key, [], 'ar'),
-            'en' => (array) App::make('translator')->get($key, [], 'en'),
-        ];
+        foreach ($this->slugAliases as $from => $to) {
+            $source = Category::withTrashed()->where('slug', $from)->first();
+            $target = Category::withTrashed()->where('slug', $to)->first();
+
+            if ($source === null) {
+                continue;
+            }
+
+            if ($target === null) {
+                $source->slug = $to;
+                $source->parent_id = null;
+                $source->save();
+
+                continue;
+            }
+
+            if ($source->id === $target->id) {
+                continue;
+            }
+
+            Product::withTrashed()
+                ->where('category_id', $source->id)
+                ->update(['category_id' => $target->id]);
+
+            if (! $source->trashed()) {
+                $source->delete();
+            }
+        }
     }
 
     /**
@@ -170,37 +207,6 @@ class StoreCatalogSeeder extends Seeder
     }
 
     /**
-     * Copy a static product image from public/assets/images into the public
-     * storage disk (store/products) so admin-managed and seeded images share
-     * the same location, and return the storage-relative path.
-     */
-    private function storeImage(?string $filename): ?string
-    {
-        if ($filename === null || trim($filename) === '') {
-            return null;
-        }
-
-        $target = 'store/products/'.$filename;
-        $source = public_path('assets/images/'.$filename);
-
-        if (! Storage::disk('public')->exists($target) && is_file($source)) {
-            Storage::disk('public')->put($target, (string) file_get_contents($source));
-        }
-
-        // Prefer the storage-relative path whenever the file is available under
-        // either the public disk or the committed public/storage tree.
-        if (
-            Storage::disk('public')->exists($target)
-            || is_file(public_path('storage/'.$target))
-        ) {
-            return $target;
-        }
-
-        // Last resort: keep pointing at the static assets folder.
-        return is_file($source) ? $filename : null;
-    }
-
-    /**
      * @param  mixed  $value
      */
     private function stringOrNull($value): ?string
@@ -212,6 +218,18 @@ class StoreCatalogSeeder extends Seeder
         $value = (string) $value;
 
         return trim($value) === '' ? null : $value;
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    private function decimalOrNull($value): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        return is_numeric($value) ? (string) $value : null;
     }
 
     /**

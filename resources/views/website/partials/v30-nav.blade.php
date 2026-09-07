@@ -1,16 +1,15 @@
 @php
   $active = $active ?? null;
   $showCart = $showCart ?? false;
-  $isAr = app()->getLocale() === 'ar';
   $links = [
-    'home' => ['route' => 'website.main', 'label' => $isAr ? 'الرئيسة' : 'Home'],
-    'store' => ['route' => 'website.store', 'label' => $isAr ? 'المتجر' : __('website.nav.store')],
-    'make' => ['route' => 'website.make', 'label' => $isAr ? 'صناعتنا' : 'Our craft'],
-    'subscribe' => ['route' => 'website.subscribe', 'label' => $isAr ? 'الاشتراكات' : __('website.nav.subscribe')],
-    'about' => ['route' => 'website.about', 'label' => $isAr ? 'عن نيومي' : __('website.nav.about')],
-    'blog' => ['route' => 'website.blog', 'label' => $isAr ? 'مطبخنا' : __('website.nav.articles')],
-    'help' => ['route' => 'website.help', 'label' => $isAr ? 'الأسئلة' : 'FAQ'],
-    'terms' => ['route' => 'website.terms', 'label' => $isAr ? 'الشروط' : __('website.nav.terms')],
+    'home' => ['route' => 'website.main', 'label' => __('website.site.nav.home')],
+    'about' => ['route' => 'website.about', 'label' => __('website.site.nav.about')],
+    'make' => ['route' => 'website.make', 'label' => __('website.site.nav.make')],
+    'blog' => ['route' => 'website.blog', 'label' => __('website.site.nav.kitchen')],
+    'store' => ['route' => 'website.store', 'label' => __('website.site.nav.store')],
+    'subscribe' => ['route' => 'website.subscribe', 'label' => __('website.site.nav.subscribe')],
+    'help' => ['route' => 'website.help', 'label' => __('website.site.nav.faq')],
+    'terms' => ['route' => 'website.terms', 'label' => __('website.site.nav.terms')],
   ];
 @endphp
 <nav class="main">
@@ -30,7 +29,7 @@
           <i data-cart-count @class(['is-empty' => ($cartCount ?? 0) < 1])>{{ $cartCount ?? 0 }}</i>
         </a>
       @endif
-      <a href="{{ route('website.subscribe') }}" class="btn sm">{{ $isAr ? 'ابدأ اشتراكك' : __('website.nav.cta') }}</a>
+      <a href="{{ route('website.subscribe') }}" class="btn sm">{{ __('website.site.nav.cta') }}</a>
     </div>
   </div>
 </nav>

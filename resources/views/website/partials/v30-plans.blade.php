@@ -1,17 +1,14 @@
 {{-- Desktop subscription plan cards from DB — links into the existing wizard. --}}
 @php
   $plans = $plans ?? [];
-  $isAr = app()->getLocale() === 'ar';
 @endphp
 
 <section class="subs" id="subs" style="border-top:1px solid rgba(255,255,255,.12)">
   <div class="inner">
     <div class="sec-head rv">
-      <span class="kick">{{ $isAr ? 'الاشتراكات' : 'Subscriptions' }}</span>
-      <h2>{!! $isAr ? 'اختر <em style="color:var(--orange-hi)">باقتك</em>' : 'Choose your <em style="color:var(--orange-hi)">plan</em>' !!}</h2>
-      <p>{{ $isAr
-        ? 'هذه هي الخطوة الأولى — اختر الباقة ثم ننتقل مباشرة لاختيار الوجبات.'
-        : 'This is step one — pick your plan, then continue to meals.' }}</p>
+      <span class="kick">{{ __('website.subscribe.kick') }}</span>
+      <h2>{!! __('website.subscribe.heading') !!}</h2>
+      <p>{{ __('website.subscribe.lead') }}</p>
     </div>
 
     @if (count($plans) > 0)
@@ -25,22 +22,25 @@
         @endphp
         <div class="splan rv{{ $pop ? ' pop' : '' }}">
           @if ($pop)
-            <span class="tag">★ {{ $isAr ? 'الأكثر اختياراً' : 'Most popular' }}</span>
+            <span class="tag">{{ __('website.subscribe.most_chosen') }}</span>
           @endif
           <h3>{{ $plan['name'] }}</h3>
+          @if (!empty($plan['hook']))
+            <div class="goal"><svg class="i"><use href="{{ $icon }}"/></svg> {{ $plan['hook'] }}</div>
+          @endif
           @if (!empty($plan['desc']))
-            <div class="goal"><svg class="i"><use href="{{ $icon }}"/></svg> {{ $plan['desc'] }}</div>
+            <p class="splan-lead">{{ $plan['desc'] }}</p>
           @endif
           @if ($kcal)
             <div class="pline"><b>{{ $kcal }}</b><small>kcal</small></div>
-            <span class="per">{{ $isAr ? 'هدف يومي تقريبي' : 'Approx. daily target' }}</span>
+            <span class="per">{{ __('website.subscribe.daily_target') }}</span>
             <div class="plan-fuel">
-              <div class="hd"><span>{{ $isAr ? 'الطاقة اليومية' : 'Daily energy' }}</span><b>{{ $kcal }} KCAL</b></div>
+              <div class="hd"><span>{{ __('website.subscribe.daily_energy') }}</span><b>{{ $kcal }} KCAL</b></div>
               <div class="fuel-bar fuel" data-v="{{ $fuel }}" style="--v: {{ $fuel }}%"><i></i></div>
             </div>
           @endif
           <a href="#wizard" class="btn{{ $pop ? '' : ' navy' }} full" data-plan-pick="{{ $plan['key'] }}">
-            {{ $isAr ? 'اختر هذه الباقة' : 'Choose this plan' }}
+            {{ __('website.subscribe.choose_plan') }}
           </a>
         </div>
       @endforeach
@@ -49,14 +49,12 @@
 
     <div class="sub-guarantee">
       <svg class="i"><use href="#i-shield"/></svg>
-      {{ $isAr
-        ? 'ضماننا: طلبك الأول على مسؤوليتنا — إن لم يحُز رضاك، نعيد إليك المبلغ كاملاً دون استفسار.'
-        : 'First-order guarantee — if you’re not satisfied, we refund in full.' }}
+      {{ __('website.subscribe.guarantee') }}
     </div>
     <div class="sub-trust">
-      <span><b>✓</b> {{ $isAr ? 'إلغاء أو إيقاف في أي وقت' : 'Cancel anytime' }}</span>
-      <span><b>✓</b> {{ $isAr ? 'تبديل الباقة بضغطة' : 'Switch plans easily' }}</span>
-      <span><b>✓</b> {{ $isAr ? 'دفع آمن' : 'Secure payment' }}</span>
+      <span><b>✓</b> {{ __('website.subscribe.trust.cancel') }}</span>
+      <span><b>✓</b> {{ __('website.subscribe.trust.switch') }}</span>
+      <span><b>✓</b> {{ __('website.subscribe.trust.pay') }}</span>
     </div>
   </div>
 </section>

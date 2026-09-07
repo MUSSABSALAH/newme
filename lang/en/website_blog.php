@@ -3,11 +3,11 @@
 declare(strict_types=1);
 
 return [
-    'title' => 'Articles & Recipes — New Me',
+    'title' => 'Our Kitchen — Learn & Cook — New Me',
+    'h1' => 'Our Kitchen — <em>Learn & Cook</em>',
     'announce' => 'Articles and recipes by the <b>New Me</b> nutrition team — science without the jargon',
     'kick' => 'NEWME JOURNAL',
-    'h1' => 'Know more, <em>eat better</em>',
-    'sub' => 'Short articles and practical recipes from our nutrition team — every dish with counted calories.',
+    'sub' => 'Nutrition articles and practical recipes from our team — science without the jargon.',
     'toc_articles' => 'Health articles',
     'toc_recipes' => 'Recipes',
     'articles_kick' => 'HEALTH — Health articles',

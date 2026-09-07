@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', app()->getLocale() === 'ar' ? 'صناعتنا — نيومي' : 'Our craft — New Me')
+@section('title', __('website.site.make.title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -8,11 +8,95 @@
 <style>
 @media (max-width: 819.98px) {
   .v30-page { padding: 20px 16px 48px; }
-  .v30-page .sec-head { margin-bottom: 20px; }
+  .v30-page .rv { opacity: 1 !important; transform: none !important; }
+  .v30-page .sec-head { margin-bottom: 18px; text-align: center; }
+  .v30-page .sec-head .chapter { display: inline-block; font-size: 11px; font-weight: 800; color: #7C8799; margin-bottom: 6px; }
   .v30-page h1, .v30-page h2 { font-size: 1.6rem; }
-  .v30-page .section { padding: 48px 0; }
-  .v30-page .steps, .v30-page .specstrip { display: grid; gap: 14px; }
-  .v30-page .tcard, .v30-page .spec { background: #fff; border: 1px solid #E8E4DC; border-radius: 16px; padding: 16px; }
+  .v30-page .section { padding: 28px 0 36px; }
+  .v30-page .wide-hero {
+    position: relative;
+    height: 220px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #1B3A61;
+    margin: 0 0 18px;
+  }
+  .v30-page .wide-hero img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 1 !important; visibility: visible !important;
+  }
+  .v30-page .wide-hero::after {
+    content: "";
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(to top, rgba(10,22,40,.9), rgba(10,22,40,.2) 55%, transparent);
+  }
+  .v30-page .wh-in {
+    position: absolute; inset-inline: 0; bottom: 0; z-index: 3;
+    padding: 16px;
+  }
+  .v30-page .wh-kick { display: block; color: #FFA05C; font-size: 11px; font-weight: 800; margin-bottom: 6px; }
+  .v30-page .wh-in b { display: block; color: #fff; font-size: 18px; font-weight: 900; line-height: 1.35; }
+  .v30-page .steps { display: grid; gap: 14px; }
+  .v30-page .tcard { background: #fff; border: 1px solid #E8E4DC; border-radius: 16px; padding: 16px; }
+  .v30-page .flourshow { background: #122B4A; color: #fff; padding: 28px 16px 32px; margin: 8px -16px 0; }
+  .v30-page .fs-banner {
+    position: relative;
+    min-height: 280px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #1B3A61;
+  }
+  .v30-page .fs-banner img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 1 !important; visibility: visible !important;
+  }
+  .v30-page .fs-banner::after {
+    content: "";
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(to top, rgba(10,22,40,.92), rgba(10,22,40,.35) 50%, transparent);
+  }
+  .v30-page .fsb-in {
+    position: relative; z-index: 3;
+    padding: 28px 16px 18px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    min-height: 280px;
+  }
+  .v30-page .fsb-in .kick { color: #FFA05C; }
+  .v30-page .fsb-in h2 { color: #fff; margin: 8px 0 10px; }
+  .v30-page .fsb-in p { color: #C7D6EC; font-size: 13.5px; font-weight: 600; line-height: 1.85; }
+  .v30-page .fsb-stamp {
+    align-self: flex-start; margin-top: 14px; background: #fff; color: #122B4A;
+    border-radius: 14px; padding: 10px 14px;
+  }
+  .v30-page .fsb-stamp b { display: block; font-size: 13.5px; font-weight: 900; }
+  .v30-page .fsb-stamp small { display: block; font-size: 11px; color: #7C8799; font-weight: 700; margin-top: 2px; }
+  .v30-page .fs-kpis { display: grid; gap: 10px; margin-top: 16px; }
+  .v30-page .fs-kpis > div { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 14px; text-align: center; }
+  .v30-page .fs-kpis b { display: block; color: #FFA05C; font-size: 16px; font-weight: 900; }
+  .v30-page .fs-kpis span { display: block; color: #9FB4D2; font-size: 12px; font-weight: 700; margin-top: 4px; }
+  .v30-page .flourshow .specstrip { display: grid; gap: 0; margin-top: 8px; }
+  .v30-page .flourshow .spec {
+    background: transparent;
+    border: 0;
+    border-top: 1px solid rgba(255,255,255,.14);
+    border-radius: 0;
+    padding: 18px 4px;
+    margin: 0;
+    color: #fff;
+  }
+  .v30-page .flourshow .spec:first-child { border-top: 0; }
+  .v30-page .flourshow .spec .ic {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: rgba(240,127,45,.18); color: #FFA05C;
+    display: grid; place-items: center; margin-bottom: 10px;
+  }
+  .v30-page .flourshow .spec .ic .i { width: 20px; height: 20px; }
+  .v30-page .flourshow .spec b {
+    display: block; font-size: 15px; color: #fff; font-weight: 900; margin-bottom: 6px;
+  }
+  .v30-page .flourshow .spec > span:not(.ic) {
+    display: block; font-size: 13px; color: #9FB4D2; font-weight: 600; line-height: 1.85;
+  }
 }
 </style>
 @endpush
@@ -23,74 +107,55 @@
 <div class="v30-page nm-ip">
   <section class="section tile" id="journey">
     <div class="sec-head rv">
-      <span class="chapter">الفصل <b>03</b> · صناعتنا</span>
-      <span class="kick">صناعتنا</span>
-      <h2>من المكوّن — <em>إلى بابك</em></h2>
-      <p>أربع مراحل موثّقة تمرّ بها كل تشغيلة قبل أن تصلك.</p>
+      <span class="chapter">{!! __('website.site.make.chapter') !!}</span>
+      <span class="kick">{{ __('website.site.make.kick') }}</span>
+      <h2>{!! __('website.site.make.h2') !!}</h2>
+      <p>{{ __('website.site.make.sub') }}</p>
     </div>
     <div class="wide-hero rv">
       <div class="ph"><svg><use href="#i-bread"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-journey.jpg') }}" alt="توصيل نيومي إلى باب العميل" onerror="this.remove()">
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-journey.jpg') }}" alt="{{ __('website.site.make.alt_journey') }}" onerror="this.remove()">
       <div class="wh-in">
-        <span class="wh-kick">من المكوّن إلى بابك</span>
-        <b>أربع مراحل · تشغيلة واحدة · معيار لا يتغيّر</b>
+        <span class="wh-kick">{{ __('website.site.make.banner_kick') }}</span>
+        <b>{{ __('website.site.make.banner') }}</b>
       </div>
     </div>
     <div class="steps">
-      <div class="tcard rv"><span class="n">01</span>
-        <span class="ic"><svg class="i"><use href="#i-wheat"/></svg></span>
-        <h4>المكوّن</h4>
-        <p>بذور الترمس المستوردة من أستراليا وبذور الكتان العضوية، تُطحن لإنتاج الدقيق الصحي الخاص بالشركة.</p>
+      @php $stepIcons = ['#i-wheat', '#i-bread', '#i-clipboard', '#i-box']; @endphp
+      @foreach (__('website.site.make.steps') as $i => $step)
+      <div class="tcard rv"><span class="n">{{ $step['n'] }}</span>
+        <span class="ic"><svg class="i"><use href="{{ $stepIcons[$i] ?? '#i-wheat' }}"/></svg></span>
+        <h4>{{ $step['title'] }}</h4>
+        <p>{{ $step['body'] }}</p>
       </div>
-      <div class="tcard rv"><span class="n">02</span>
-        <span class="ic"><svg class="i"><use href="#i-bread"/></svg></span>
-        <h4>الخَبز والتحضير</h4>
-        <p>تُخبز المنتجات وتُحضَّر الوجبات يومياً وفق وصفات ثابتة ومعايير إنتاج منضبطة، ويحمل كل صندوق رقم تشغيلته وتاريخ إنتاجه.</p>
-      </div>
-      <div class="tcard rv"><span class="n">03</span>
-        <span class="ic"><svg class="i"><use href="#i-clipboard"/></svg></span>
-        <h4>المعايرة والتوثيق</h4>
-        <p>تُراجَع القيم الغذائية لكل وصفة بإشراف خبير التغذية، وتُطبع على بطاقة المنتج قبل خروجه من المصنع.</p>
-      </div>
-      <div class="tcard rv"><span class="n">04</span>
-        <span class="ic"><svg class="i"><use href="#i-box"/></svg></span>
-        <h4>التوصيل</h4>
-        <p>تُوصَّل الطلبات مبرَّدة عبر شبكة شركاء التوصيل، بسلسلة تبريد متكاملة وتتبّع لحظي للطلب.</p>
-      </div>
+      @endforeach
     </div>
   </section>
 
   <section class="flourshow" id="flour">
     <div class="fs-banner rv">
       <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-flour.jpg') }}" alt="الدقيق الصحي من نيومي داخل المخبز" onerror="this.remove()">
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-flour.jpg') }}?v={{ filemtime(public_path('assets/images/v30-flour.jpg')) }}" alt="{{ __('website.site.make.flour_alt') }}" onerror="this.remove()">
       <div class="fsb-in">
-        <span class="kick">الدقيق الصحي</span>
-        <h2>ابتكار <em>نيومي</em></h2>
-        <p>دقيق صحي مبتكر منخفض النشويات، مصنوع من بذور الترمس وبذور الكتان العضوية — يجمع بين القيمة الغذائية العالية والطعم المتوازن. هو المكوّن الذي تُبنى عليه تشكيلاتنا كافة.</p>
-        <span class="fsb-stamp"><b>ملكية خاصة</b><small>مطوَّر داخل الشركة</small></span>
+        <span class="kick">{{ __('website.site.make.flour_kick') }}</span>
+        <h2>{!! __('website.site.make.flour_h2') !!}</h2>
+        <p>{{ __('website.site.make.flour_p') }}</p>
+        <span class="fsb-stamp"><b>{{ __('website.site.make.flour_stamp') }}</b><small>{{ __('website.site.make.flour_stamp_sub') }}</small></span>
       </div>
     </div>
 
     <div class="fs-kpis rv">
-      <div><b>منخفض</b><span>النشويات</span></div>
-      <div><b>عالي</b><span>البروتين والألياف</span></div>
-      <div><b>أوميغا-3</b><span>من الكتان العضوي</span></div>
+      @foreach (__('website.site.make.kpis') as $kpi)
+      <div><b>{{ $kpi['b'] }}</b><span>{{ $kpi['s'] }}</span></div>
+      @endforeach
     </div>
 
     <div class="specstrip rv">
-      <div class="spec"><span class="ic"><svg class="i"><use href="#i-wheat"/></svg></span>
-        <b>بذور الترمس الأسترالية</b><span>من أغنى المصادر النباتية بالبروتين والألياف، وتسهم في دعم صحة القلب وتنظيم مستوى السكر في الدم.</span></div>
-      <div class="spec"><span class="ic"><svg class="i"><use href="#i-drop"/></svg></span>
-        <b>بذور الكتان العضوية</b><span>من أفضل المصادر النباتية لأوميغا-3، وتسهم في دعم صحة القلب وتقليل الالتهابات.</span></div>
-      <div class="spec"><span class="ic"><svg class="i"><use href="#i-protein"/></svg></span>
-        <b>بروتين مرتفع</b><span>داعم للرياضيين ولكل من يسعى إلى زيادة مدخوله البروتيني.</span></div>
-      <div class="spec"><span class="ic"><svg class="i"><use href="#i-leaf"/></svg></span>
-        <b>ألياف مرتفعة</b><span>تسهم في تحسين الهضم ودعم حركة الأمعاء.</span></div>
-      <div class="spec"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span>
-        <b>مضادات الأكسدة</b><span>تسهم في حماية الخلايا من الإجهاد التأكسدي.</span></div>
-      <div class="spec"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span>
-        <b>شبع أطول</b><span>يساعد على التحكم في الشهية وتنظيم مستويات السكر في الدم.</span></div>
+      @php $specIcons = ['#i-wheat', '#i-drop', '#i-protein', '#i-leaf', '#i-shield', '#i-clock']; @endphp
+      @foreach (__('website.site.make.specs') as $i => $spec)
+      <div class="spec"><span class="ic"><svg class="i"><use href="{{ $specIcons[$i] ?? '#i-wheat' }}"/></svg></span>
+        <b>{{ $spec['title'] }}</b><span>{{ $spec['body'] }}</span></div>
+      @endforeach
     </div>
   </section>
 

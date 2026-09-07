@@ -7,10 +7,10 @@
 
 <section class="section tile" id="articles">
   <div class="sec-head rv">
-    <span class="chapter">{{ $isAr ? 'الفصل' : 'Chapter' }} <b>04</b> · {{ $isAr ? 'تعلّم واطبخ' : 'Learn & cook' }}</span>
-    <span class="kick">{{ $isAr ? 'مطبخنا' : __('website.blog.kick') }}</span>
-    <h2>{!! $isAr ? 'مقالات <em>ووصفات</em>' : __('website.blog.h1') !!}</h2>
-    <p>{{ __('website.blog.sub') }}</p>
+    <span class="chapter">{{ __('website.site.kitchen.chapter') }}</span>
+    <span class="kick">{{ __('website.site.kitchen.kick') }}</span>
+    <h2>{!! __('website.site.kitchen.h2') !!}</h2>
+    <p>{{ __('website.site.kitchen.sub') }}</p>
   </div>
   <div class="hubtabs" id="kittabs">
     <button type="button" class="tab on" data-t="k1">{{ __('website.blog.toc_articles') }}</button>
