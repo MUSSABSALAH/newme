@@ -135,7 +135,7 @@
   <section class="flourshow" id="flour">
     <div class="fs-banner rv">
       <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-flour.jpg') }}?v={{ filemtime(public_path('assets/images/v30-flour.jpg')) }}" alt="{{ __('website.site.make.flour_alt') }}" onerror="this.remove()">
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-nutrition.jpg') }}?v={{ filemtime(public_path('assets/images/v30-nutrition.jpg')) }}" alt="{{ __('website.site.make.flour_alt') }}" onerror="this.remove()">
       <div class="fsb-in">
         <span class="kick">{{ __('website.site.make.flour_kick') }}</span>
         <h2>{!! __('website.site.make.flour_h2') !!}</h2>

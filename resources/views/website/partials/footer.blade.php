@@ -2,9 +2,58 @@
   $variant = $variant ?? 'full';
   $isAr = app()->getLocale() === 'ar';
   $year = now()->year;
+  $phones = preg_split('/\s*[·•|]\s*/u', (string) __('website.site.contact.phone')) ?: [];
+  $phones = array_values(array_filter(array_map('trim', $phones)));
 @endphp
+@once
+<style>
+footer.w-foot-full.site-footer,
+footer.w-foot-simple.site-footer {
+  text-align: start !important;
+}
+footer.w-foot-full.site-footer .f-grid,
+footer.w-foot-full.site-footer .f-brand,
+footer.w-foot-full.site-footer .f-col,
+footer.w-foot-full.site-footer .f-bottom,
+footer.w-foot-full.site-footer h4,
+footer.w-foot-full.site-footer p,
+footer.w-foot-full.site-footer b,
+footer.w-foot-full.site-footer a,
+footer.w-foot-full.site-footer span,
+footer.w-foot-simple.site-footer .flinks,
+footer.w-foot-simple.site-footer .legal {
+  text-align: start !important;
+}
+footer.w-foot-full.site-footer .f-brand .logo {
+  display: inline-flex;
+  justify-content: flex-start;
+}
+footer.w-foot-full.site-footer .f-phones {
+  display: block;
+  max-width: 100%;
+  line-height: 1.7;
+}
+footer.w-foot-full.site-footer .f-num,
+footer.w-foot-full.site-footer .f-vat-num,
+footer.w-foot-full.site-footer .f-web {
+  white-space: nowrap;
+  display: inline-block;
+  max-width: 100%;
+}
+footer.w-foot-full.site-footer .f-phone-sep {
+  display: inline;
+  white-space: normal;
+}
+footer.w-foot-full.site-footer .f-bottom {
+  justify-content: space-between !important;
+}
+footer.w-foot-simple.site-footer .flinks {
+  justify-content: flex-start !important;
+}
+</style>
+@endonce
 @if ($variant === 'full')
-<footer class="w-foot-full site-footer">
+<footer class="w-foot-full site-footer" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
   <div class="f-grid">
     <div class="f-brand">
       @include('website.partials.logo', ['tone' => 'light'])
@@ -38,14 +87,19 @@
 
     <div class="f-col">
       <h4>{{ __('website.footer.contact_title') }}</h4>
-      <a href="https://wa.me/966539603302" dir="ltr">{{ __('website.site.contact.phone_label') }}</a>
-      <span class="f-muted" dir="ltr">{{ __('website.site.contact.phone') }}</span>
-      <a href="https://www.newme.com.sa" dir="ltr" rel="noopener" target="_blank">{{ __('website.site.contact.web') }}</a>
+      <a href="https://wa.me/966539603302">{{ __('website.site.contact.phone_label') }}</a>
+      <span class="f-muted f-phones">
+        @foreach ($phones as $i => $phone)
+          @if ($i > 0)<span class="f-phone-sep"> · </span>@endif
+          <bdi class="f-num" dir="ltr">{{ $phone }}</bdi>
+        @endforeach
+      </span>
+      <a class="f-web" href="https://www.newme.com.sa" dir="ltr" rel="noopener" target="_blank">{{ __('website.site.contact.web') }}</a>
       <a href="{{ route('website.consult') }}">{{ __('website.footer.link_consult') }}</a>
       <span class="f-muted">{{ __('website.site.contact.address') }}</span>
       <a href="https://www.instagram.com/newme.forever" rel="noopener" target="_blank">{{ __('website.site.contact.social_ig') }}</a>
       <a href="https://www.snapchat.com/add/newmeforever20" rel="noopener" target="_blank">{{ __('website.site.contact.social_snap') }}</a>
-      <span class="f-muted">{{ __('website.site.contact.vat_label') }} {{ __('website.site.contact.vat') }}</span>
+      <span class="f-muted">{{ __('website.site.contact.vat_label') }} <bdi class="f-vat-num" dir="ltr">{{ __('website.site.contact.vat') }}</bdi></span>
     </div>
   </div>
 
@@ -73,7 +127,7 @@
 @endpush
 @endonce
 @else
-<footer class="w-foot-simple">
+<footer class="w-foot-simple site-footer" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
   <div class="flinks">
     <a href="{{ route('website.main') }}">{{ __('website.footer.home') }}</a>
     <a href="{{ route('website.store') }}">{{ __('website.nav.store') }}</a>

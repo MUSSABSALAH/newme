@@ -180,7 +180,7 @@ return [
         'flour_p' => 'A low-starch flour from lupin and organic flax, balanced between nutritional value and taste. Everything we make is built on it.',
         'flour_stamp' => 'Proprietary',
         'flour_stamp_sub' => 'Developed in-house',
-        'flour_alt' => 'Fresh New Me bread in the oven',
+        'flour_alt' => 'New Me flour and bakery in the kitchen',
         'kpis' => [
             ['b' => 'Low', 's' => 'in starch'],
             ['b' => 'High', 's' => 'in protein and fibre'],

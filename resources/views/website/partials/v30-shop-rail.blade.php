@@ -186,7 +186,7 @@
   <div class="split">
     <div class="media-card rv">
       <div class="ph"><svg><use href="#i-bread"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-nutrition.jpg') }}?v={{ filemtime(public_path('assets/images/v30-nutrition.jpg')) }}" alt="{{ __('website.main.nutrition.alt') }}" onerror="this.remove()">
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-flour.jpg') }}?v={{ filemtime(public_path('assets/images/v30-flour.jpg')) }}" alt="{{ __('website.main.nutrition.alt') }}" onerror="this.remove()">
       <span class="cap">{{ __('website.main.nutrition.cap') }}</span>
     </div>
     @php
