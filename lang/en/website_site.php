@@ -334,7 +334,7 @@ return [
         'social_x_aria' => 'X — @:handle',
         'vat_label' => 'VAT number',
         'vat' => '312782087600003',
-        'copyright' => '© :year New Me. All rights reserved — here’s to your health.',
+        'copyright' => '© :year New Me. All rights reserved.',
         'tagline' => 'Here’s to your health',
     ],
 ];

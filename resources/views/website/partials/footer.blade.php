@@ -17,6 +17,16 @@
 footer.w-foot-full.site-footer,
 footer.w-foot-simple.site-footer {
   text-align: start !important;
+  font-family: 'Cairo', Tahoma, Arial, sans-serif;
+}
+html[lang="ar"] footer.site-footer,
+html[lang="ar"] footer.site-footer h4,
+html[lang="ar"] footer.site-footer p,
+html[lang="ar"] footer.site-footer b,
+html[lang="ar"] footer.site-footer a,
+html[lang="ar"] footer.site-footer span,
+html[lang="ar"] footer.site-footer .legal {
+  font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
 }
 footer.w-foot-full.site-footer .f-grid,
 footer.w-foot-full.site-footer .f-brand,

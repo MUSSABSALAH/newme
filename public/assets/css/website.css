@@ -11,7 +11,7 @@
   --w-green:#39B478;
   --w-grad:linear-gradient(105deg,var(--w-orange-hi),var(--w-orange) 55%,var(--w-orange-deep));
   --w-font:'Cairo',-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
-  --w-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --w-mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
   --sar-icon:url('../images/icons/saudi-riyal.svg');
 }

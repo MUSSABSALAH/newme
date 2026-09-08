@@ -24,6 +24,24 @@
 <link rel="stylesheet" href="{{ $siteCss['website-v30.css'] }}">
 <link rel="stylesheet" href="{{ $siteCss['website-iphone.css'] }}">
 @stack('styles')
+@if ($rtl)
+<style>
+html[lang="ar"]{
+  --font:'Cairo',Tahoma,Arial,sans-serif;
+  --w-font:'Cairo',Tahoma,Arial,sans-serif;
+  --mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --w-mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-family:'Cairo',Tahoma,Arial,sans-serif;
+}
+html[lang="ar"] body,
+html[lang="ar"] button,
+html[lang="ar"] input,
+html[lang="ar"] textarea,
+html[lang="ar"] select{
+  font-family:'Cairo',Tahoma,Arial,sans-serif;
+}
+</style>
+@endif
 </head>
 <body class="@yield('body_class')">
 @if (trim($__env->yieldContent('hide_site_header')) === '')

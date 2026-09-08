@@ -436,7 +436,14 @@
   }
   .nm-chrome .scrim.on { opacity: 1; pointer-events: auto; }
 
-  footer.w-foot-full, footer.w-foot-simple { padding-bottom: calc(28px + var(--ip-tabbar)) !important; }
+  footer.w-foot-full, footer.w-foot-simple {
+    padding-bottom: calc(28px + var(--ip-tabbar)) !important;
+    font-family: 'Cairo', Tahoma, Arial, sans-serif;
+  }
+  html[lang="ar"] footer.site-footer,
+  html[lang="ar"] footer.site-footer :not(svg):not(path) {
+    font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
+  }
 
   /* Hide leftover desktop/mobile announce+nav on marketing pages */
   body:not(:has(.home-intro)) .v30-mob-only .announce,
