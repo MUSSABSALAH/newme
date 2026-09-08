@@ -73,13 +73,19 @@
     border-radius: 16px; padding: 16px;
   }
   .v30-page .kfig {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+    display: grid; grid-template-columns: auto auto auto;
+    column-gap: 14px; row-gap: 6px; justify-content: flex-start; justify-items: center;
+    align-items: center;
   }
-  .v30-page .kfig i { font-style: normal; font-weight: 900; color: #fff; }
-  .v30-page .kfig .from { font-size: 18px; color: rgba(255,255,255,.5); }
-  .v30-page .kfig .to { font-size: 26px; color: #fff; }
-  .v30-page .kfig .arrow { color: #FFA05C; font-size: 16px; opacity: 1; transform: none; }
-  .v30-page .kfig small { display: none; }
+  .v30-page .kfig i { font-style: normal; font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; }
+  .v30-page .kfig .from { font-size: 22px; color: rgba(255,255,255,.55); }
+  .v30-page .kfig .to { font-size: 28px; color: #fff; }
+  .v30-page .kfig .arrow {
+    color: #FFA05C; font-size: 18px; line-height: 1; opacity: 1; transform: none;
+    align-self: center; justify-self: center; margin: 0;
+    display: grid; place-items: center;
+  }
+  .v30-page .kfig small { font-size: 10px; font-weight: 800; letter-spacing: .04em; color: #8FA4C4; white-space: nowrap; }
   .v30-page .klabel { display: block; font-size: 12.5px; color: #9FB4D2; font-weight: 700; margin-top: 10px; line-height: 1.7; }
   .v30-page .rule { margin: 18px 0 0; padding: 0; }
   .v30-page .rule i { display: block; height: 1px; background: #E8E4DC; }
@@ -221,7 +227,7 @@
           <div class="kfig">
             <i class="from">510</i>
             <i class="arrow">←</i>
-            <i class="to" data-from="510" data-to="324">510</i>
+            <i class="to" data-from="510" data-to="324">324</i>
             <small>{{ __('website.site.about.kpi_from') }}</small>
             <small></small>
             <small>{{ __('website.site.about.kpi_to') }}</small>
@@ -231,7 +237,7 @@
           <div class="kfig">
             <i class="from">74</i>
             <i class="arrow">←</i>
-            <i class="to" data-from="74" data-to="80">74</i>
+            <i class="to" data-from="74" data-to="80">80</i>
             <small>{{ __('website.site.about.kpi_from') }}</small>
             <small></small>
             <small>{{ __('website.site.about.kpi_to') }}</small>
@@ -326,7 +332,9 @@
             <p>{{ __('website.site.about.vision_text') }}</p>
           </div>
         </article>
-        <article class="dpanel navy rv">
+        <article class="dpanel photo rv">
+          <div class="ph"><svg><use href="#i-box"/></svg></div>
+          <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-mission.jpg') }}" alt="{{ __('website.site.about.alt_mission') }}" onerror="this.remove()">
           <div class="dp-in">
             <span class="dp-kick">{{ __('website.site.about.mission_label') }}</span>
             <p>{{ __('website.site.about.mission_text') }}</p>

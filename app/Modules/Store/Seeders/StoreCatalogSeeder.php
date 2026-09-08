@@ -107,12 +107,12 @@ class StoreCatalogSeeder extends Seeder
                     ],
                     'image_path' => $this->stringOrNull($item['image'] ?? null),
                     'external_url' => null,
-                    'price' => $this->toMinor($item['price'] ?? 0),
-                    'calories' => isset($item['calories']) && $item['calories'] !== null ? (int) $item['calories'] : null,
+                    'price' => $this->toMinor($item['price'] ?? null),
+                    'calories' => $this->intOrZero($item['calories'] ?? null),
                     'serving_size' => $this->stringOrNull($item['serving_size'] ?? null),
-                    'protein_g' => $this->decimalOrNull($item['protein_g'] ?? null),
-                    'carbs_g' => $this->decimalOrNull($item['carbs_g'] ?? null),
-                    'fat_g' => $this->decimalOrNull($item['fat_g'] ?? null),
+                    'protein_g' => $this->decimalOrZero($item['protein_g'] ?? null),
+                    'carbs_g' => $this->decimalOrZero($item['carbs_g'] ?? null),
+                    'fat_g' => $this->decimalOrZero($item['fat_g'] ?? null),
                     'nutrition_note' => $this->stringOrNull($item['nutrition_note'] ?? null),
                     'flag' => null,
                     'is_featured' => false,
@@ -221,23 +221,39 @@ class StoreCatalogSeeder extends Seeder
     }
 
     /**
+     * Missing macros still persist as 0 so every catalog row is complete.
+     *
      * @param  mixed  $value
      */
-    private function decimalOrNull($value): ?string
+    private function decimalOrZero($value): string
     {
-        if ($value === null || $value === '') {
-            return null;
+        if ($value === null || $value === '' || ! is_numeric($value)) {
+            return '0';
         }
 
-        return is_numeric($value) ? (string) $value : null;
+        return (string) $value;
     }
 
     /**
      * @param  mixed  $value
      */
+    private function intOrZero($value): int
+    {
+        if ($value === null || $value === '' || ! is_numeric($value)) {
+            return 0;
+        }
+
+        return (int) $value;
+    }
+
+    /**
+     * Missing prices still persist as 0 so the product is imported.
+     *
+     * @param  mixed  $value
+     */
     private function toMinor($value): int
     {
-        if ($value === null || $value === '') {
+        if ($value === null || $value === '' || ! is_numeric($value)) {
             return 0;
         }
 

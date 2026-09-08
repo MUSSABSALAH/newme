@@ -487,6 +487,15 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 .f-col h4{font-size:13.5px;color:#fff;font-weight:900;margin-bottom:13px}
 .f-col a,.f-col .f-muted{display:block;font-size:13px;color:#8296B2;padding:5px 0;font-weight:600}
 .f-col a:hover{color:#fff}
+.f-social{margin-top:4px}
+.f-social-label{display:block;margin-bottom:8px}
+.f-social-icons{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.f-social-icons a{display:inline-grid;place-items:center;width:38px;height:38px;padding:0!important;
+  border-radius:999px;border:1px solid rgba(255,255,255,.16);color:#C7D6EC;background:rgba(255,255,255,.04);
+  transition:color .2s,border-color .2s,background .2s,transform .2s}
+.f-social-icons a:hover{color:#fff;border-color:#F07F2D;background:rgba(240,127,45,.14);transform:translateY(-1px)}
+.f-social-icons svg{width:18px;height:18px;display:block}
+.f-social-icons a[data-net="snapchat"] svg{width:20px;height:20px}
 .f-bottom{max-width:var(--max);margin:36px auto 0;padding:22px 20px 0;
   border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;
   gap:14px;flex-wrap:wrap;font-size:12.5px;color:#7A8DA8;font-weight:700}
@@ -656,21 +665,24 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 @media(min-width:760px){.lines-rail{grid-auto-flow:row;grid-template-columns:repeat(3,1fr);
   grid-auto-columns:auto;overflow:visible;gap:18px}}
 .lcard{background:#fff;border:1.5px solid var(--gray-2);border-radius:22px;overflow:hidden;
-  scroll-snap-align:start;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s}
+  scroll-snap-align:start;display:flex;flex-direction:column;height:100%;
+  transition:transform .22s,box-shadow .22s;min-width:0}
 .lcard:hover{transform:translateY(-5px);box-shadow:0 26px 54px rgba(18,43,74,.13)}
 .lcard .media{aspect-ratio:16/11;position:relative;overflow:hidden;background:var(--tile)}
 .lcard .media img{position:absolute;inset:0;transition:transform .5s ease}
 .lcard:hover .media img{transform:scale(1.06)}
 .lcard .media .n{position:absolute;top:14px;inset-inline-start:14px;z-index:3;font-family:var(--mono);
   font-size:12px;font-weight:900;color:#fff;background:rgba(18,43,74,.82);border-radius:999px;padding:6px 13px}
-.lcard .bd{padding:22px;display:flex;flex-direction:column;flex:1}
+.lcard .bd{padding:22px;display:flex;flex-direction:column;flex:1;min-width:0}
 .lcard h4{font-size:18px;margin-bottom:8px}
-.lcard p{font-size:13px;color:var(--muted);font-weight:600;line-height:1.9}
-.lcard .tags{margin-top:14px;padding-top:0;display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start;align-content:flex-start}
+.lcard p{font-size:13px;color:var(--muted);font-weight:600;line-height:1.9;flex:1}
+.lcard .tags{margin-top:auto;padding-top:14px;display:flex;gap:6px;flex-wrap:wrap;
+  align-items:flex-start;align-content:flex-start;max-width:100%;min-height:68px}
 .lcard .tags span{font-size:11px;font-weight:800;color:var(--navy);background:var(--tile);
-  border-radius:999px;padding:5px 12px}
+  border-radius:999px;padding:5px 12px;white-space:nowrap;line-height:1.2}
 .lines-hint{text-align:center;font-size:12px;color:var(--muted);font-weight:700;margin-top:16px}
-@media(min-width:760px){.lines-hint{display:none}}
+@media(min-width:760px){.lines-hint{display:none}
+  .lcard .tags span{font-size:10px;padding:4px 10px}}
 
 
 /* ===== wide banner ===== */
@@ -807,8 +819,8 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 .kfig .from{font-size:26px;color:rgba(255,255,255,.5)}
 .kfig .to{font-size:38px;color:#fff}
 .kpi.in .kfig .to{text-shadow:0 0 26px rgba(240,127,45,.45)}
-.kfig .arrow{font-style:normal;font-size:22px;color:var(--orange-hi);align-self:flex-start;
-  margin-top:6px;transform:translateX(6px);opacity:0;
+.kfig .arrow{font-style:normal;font-size:22px;color:var(--orange-hi);line-height:1;
+  align-self:center;justify-self:center;margin:0;transform:translateX(6px);opacity:0;
   transition:transform .5s ease .3s,opacity .5s ease .3s}
 .kpi.in .kfig .arrow{transform:none;opacity:1}
 .klabel{display:block;font-size:13px;color:#9FB4D2;font-weight:700;margin-top:14px;line-height:1.8}
@@ -855,7 +867,7 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 .kfig{gap:26px;align-items:flex-start}
 .kside{gap:9px}
 .kside small{letter-spacing:.06em;white-space:nowrap}
-.kfig .arrow{margin-top:10px}
+.kfig .arrow{margin:0}
 .klabel{margin-top:20px}
 .kpi{padding:26px 24px}
 
@@ -886,12 +898,13 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 /* ===== KPI: one baseline for both figures ===== */
 .kfig{display:grid!important;grid-template-columns:auto auto auto;
   column-gap:20px;row-gap:8px;justify-content:flex-start;justify-items:center;
-  align-items:baseline!important}
+  align-items:center!important}
 .kfig i{font-style:normal;font-family:var(--mono);font-weight:900;line-height:1;
   font-variant-numeric:tabular-nums}
 .kfig .from{font-size:30px;color:rgba(255,255,255,.5)}
 .kfig .to{font-size:38px;color:#fff}
-.kfig .arrow{font-size:22px;color:var(--orange-hi);margin-top:0;
+.kfig .arrow{font-size:22px;color:var(--orange-hi);line-height:1;
+  align-self:center;justify-self:center;margin:0;
   transform:translateX(6px);opacity:0;transition:transform .5s ease .3s,opacity .5s ease .3s}
 .kpi.in .kfig .arrow{transform:none;opacity:1}
 .kfig small{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:#8FA4C4;white-space:nowrap}

@@ -253,6 +253,39 @@
       sync();
     })();
 
+    /* KPI counters (vision section) */
+    (function(){
+      var els = [].slice.call(document.querySelectorAll('.kfig .to'));
+      if (!els.length) return;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function run(el){
+        var a = parseFloat(el.getAttribute('data-from'));
+        var b = parseFloat(el.getAttribute('data-to'));
+        if (reduce || isNaN(a) || isNaN(b)) { el.textContent = b; return; }
+        var dur = 1400, t0 = null;
+        function frame(t){
+          if (!t0) t0 = t;
+          var k = Math.min(1, (t - t0) / dur);
+          var e = 1 - Math.pow(1 - k, 3);
+          el.textContent = Math.round(a + (b - a) * e);
+          if (k < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+      if ('IntersectionObserver' in window) {
+        var kio = new IntersectionObserver(function(es){
+          es.forEach(function(e){
+            if (!e.isIntersecting) return;
+            kio.unobserve(e.target);
+            setTimeout(function(){ run(e.target); }, 450);
+          });
+        }, { threshold: 0.5 });
+        els.forEach(function(el){ kio.observe(el); });
+      } else {
+        els.forEach(function(el){ run(el); });
+      }
+    })();
+
   } catch (_) {
     failOpen();
   }

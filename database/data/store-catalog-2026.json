@@ -656,7 +656,7 @@
         "ar": "عجينة الفطاير",
         "en": "Pie dough"
       },
-      "price": null,
+      "price": 0,
       "calories": 96,
       "serving": "40 جرام — قطعة واحدة",
       "serving_size": "per_piece",

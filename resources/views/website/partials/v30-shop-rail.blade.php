@@ -159,9 +159,7 @@
               @endif
             </div>
           @endif
-          @if (!empty($p['price']))
-            <div class="p-price">{{ $p['price'] }} <x-ui.sar /> <small>/ {{ $p['unit'] ?? 'عبوة' }}</small></div>
-          @endif
+          <div class="p-price">{{ $p['price'] !== '' && $p['price'] !== null ? $p['price'] : '0' }} <x-ui.sar /> <small>/ {{ $p['unit'] ?? 'عبوة' }}</small></div>
           <a href="{{ $href }}" class="p-view">{{ __('website.store.view_product') }}</a>
         </article>
       @endforeach
