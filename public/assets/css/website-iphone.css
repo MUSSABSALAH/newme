@@ -133,9 +133,10 @@
     padding: 12px 10px; opacity: 0; transition: opacity .3s ease; pointer-events: none;
   }
   .nm-ip .rail .card.showN .nutov { opacity: 1; }
+  .nm-ip .rail .card .nutov { font-family: 'Cairo', Tahoma, Arial, sans-serif; }
   .nm-ip .rail .card .nutov .nv-h {
-    font-size: 8px; font-weight: 800; color: var(--ip-muted); letter-spacing: .08em;
-    text-transform: uppercase; margin-bottom: 6px; text-align: center;
+    font-size: 11px; font-weight: 800; color: var(--ip-muted); letter-spacing: 0;
+    text-transform: none; font-family: inherit; margin-bottom: 6px; text-align: center;
   }
   .nm-ip .rail .card .nutov .nv-h em { font-style: normal; color: var(--ip-orange-deep); }
   .nm-ip .rail .card .nutov .nv-r {

@@ -130,13 +130,14 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 /* ===== transparent nutrition rollover ===== */
 .nutov{position:absolute;inset:0;z-index:3;background:rgba(248,246,241,.82);backdrop-filter:blur(12px) saturate(1.1);-webkit-backdrop-filter:blur(12px) saturate(1.1);display:flex;flex-direction:column;justify-content:center;padding:20px 18px 62px;opacity:0;transition:opacity .35s ease;pointer-events:none}
 .card:hover .nutov,.card.showN .nutov{opacity:1}
-.nutov .nv-h{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-family:var(--mono);margin-bottom:10px;text-align:center}
-.nutov .nv-h em{font-style:normal;color:var(--orange-deep)}
-.nutov .nv-r{display:flex;justify-content:space-between;align-items:baseline;padding:7px 2px;border-top:1px solid rgba(16,38,63,.14);font-size:12px;font-weight:800;color:var(--ink)}
+.nutov{font-family:var(--font)}
+.nutov .nv-h{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:0;text-transform:none;font-family:var(--font);margin-bottom:10px;text-align:center}
+.nutov .nv-h em{font-style:normal;color:var(--orange-deep);font-family:var(--font)}
+.nutov .nv-r{display:flex;justify-content:space-between;align-items:baseline;padding:7px 2px;border-top:1px solid rgba(16,38,63,.14);font-size:12px;font-weight:800;color:var(--ink);font-family:var(--font)}
 .nutov .nv-r:last-of-type{border-bottom:1px solid rgba(16,38,63,.14)}
-.nutov .nv-r b{font-family:var(--mono);font-weight:700;font-size:13px}
-.nutov .nv-r b small{font-size:9px;color:var(--muted);font-weight:700}
-.nutov .nv-note{margin-top:9px;font-size:8.5px;font-weight:800;color:var(--muted);text-align:center;letter-spacing:.06em;font-family:var(--mono)}
+.nutov .nv-r b{font-family:var(--font);font-weight:700;font-size:13px}
+.nutov .nv-r b small{font-size:9px;color:var(--muted);font-weight:700;font-family:var(--font)}
+.nutov .nv-note{margin-top:9px;font-size:11px;font-weight:800;color:var(--muted);text-align:center;letter-spacing:0;font-family:var(--font)}
 .nutov .nv-note.real{color:var(--green)}
 .card:hover .quick{z-index:4}
 .nut-toggle{display:none;position:absolute;top:12px;inset-inline-end:12px;z-index:5;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(16,38,63,.5);background:rgba(248,246,241,.85);color:var(--ink);font-weight:900;font-size:13px;font-family:var(--mono);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}

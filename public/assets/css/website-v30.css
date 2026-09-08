@@ -252,16 +252,18 @@ nav.main .bar{max-width:var(--max);margin:0 auto;display:flex;align-items:center
   display:flex;flex-direction:column;justify-content:center;padding:18px 16px;opacity:0;
   transition:opacity .35s ease;pointer-events:none}
 .prod:hover .nutov,.prod.showN .nutov{opacity:1}
-.prod .nutov .nv-h{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.16em;
-  text-transform:uppercase;font-family:var(--mono);margin-bottom:10px;text-align:center}
-.prod .nutov .nv-h em{font-style:normal;color:var(--orange-deep)}
+.prod .nutov{font-family:var(--font)}
+.prod .nutov .nv-h{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:0;
+  text-transform:none;font-family:var(--font);margin-bottom:10px;text-align:center}
+.prod .nutov .nv-h em{font-style:normal;color:var(--orange-deep);font-family:var(--font)}
 .prod .nutov .nv-r{display:flex;justify-content:space-between;align-items:baseline;
-  padding:7px 2px;border-top:1px solid rgba(18,43,74,.14);font-size:12.5px;font-weight:800;color:var(--navy)}
+  padding:7px 2px;border-top:1px solid rgba(18,43,74,.14);font-size:12.5px;font-weight:800;color:var(--navy);
+  font-family:var(--font)}
 .prod .nutov .nv-r:last-of-type{border-bottom:1px solid rgba(18,43,74,.14)}
-.prod .nutov .nv-r b{font-family:var(--mono);font-weight:700;font-size:13px}
-.prod .nutov .nv-r b small{font-size:9px;color:var(--muted);font-weight:700}
-.prod .nutov .nv-note{margin-top:9px;font-size:8.5px;font-weight:800;color:var(--muted);
-  text-align:center;letter-spacing:.04em;font-family:var(--mono)}
+.prod .nutov .nv-r b{font-family:var(--font);font-weight:700;font-size:13px}
+.prod .nutov .nv-r b small{font-size:9px;color:var(--muted);font-weight:700;font-family:var(--font)}
+.prod .nutov .nv-note{margin-top:9px;font-size:11px;font-weight:800;color:var(--muted);
+  text-align:center;letter-spacing:0;font-family:var(--font)}
 .prod .nutov .nv-note.real{color:var(--green)}
 .prod .nut-toggle{display:none;position:absolute;top:12px;inset-inline-end:12px;z-index:5;
   width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(18,43,74,.45);
