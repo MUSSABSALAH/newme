@@ -2,7 +2,7 @@
 
 @section('title', __('website.subscribe.title'))
 @section('theme', '#122B4A')
-@section('body_class', 'is-subscribe')
+@section('body_class', 'is-subscribe sub-on-1')
 
 @push('styles')
 @php
@@ -88,19 +88,16 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .wstep[data-step="1"] .sub-step-desk .subs{margin:0;border-radius:0;border-top:0}
 .splan.is-picked{outline:2px solid var(--orange);outline-offset:3px}
 .splan .fuel-bar{background:rgba(255,255,255,.14)}
+body.is-subscribe.sub-on-1{background:var(--navy)}
 body.sub-on-1 .wbar,
 body.sub-on-1 .phead,
 body.sub-on-1 #stepper{display:none!important}
+body.sub-on-1 .rv{opacity:1!important;transform:none!important}
 
 @media(max-width:819.98px){
   #ipDurPick{display:none!important}
   body.is-subscribe{padding-bottom:calc(78px + var(--ip-tabbar,64px))}
   body.is-subscribe.sub-on-1{background:var(--navy);padding-bottom:var(--ip-tabbar,64px)}
-  .wbar{
-    bottom:var(--ip-tabbar,60px);
-    padding:10px 16px;
-    z-index:220
-  }
   .nm-chrome .brand img{height:34px!important;width:auto!important;max-width:148px;object-fit:contain!important}
   .sub-step-desk .rv{opacity:1!important;transform:none!important}
   .sub-step-desk .subs{padding:22px 0 calc(32px + var(--ip-tabbar,64px) + var(--sab))}
@@ -151,7 +148,8 @@ body.sub-on-1 #stepper{display:none!important}
 .wwrap{max-width:900px;width:100%;margin:0 auto;padding:18px 20px 10px;position:relative;flex:1 0 auto}
 .wstep{display:block}
 .js .wstep{display:none}
-.js .wstep.active{display:block;animation:stepIn .4s cubic-bezier(.2,.7,.2,1)}
+.js .wstep.active{display:block}
+.js .wstep.active.is-enter{animation:stepIn .4s cubic-bezier(.2,.7,.2,1)}
 @keyframes stepIn{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
 .wstep .step-h{text-align:center;margin-bottom:20px}
 .wstep .step-h h2{font-size:clamp(21px,5vw,30px);margin-bottom:4px}
@@ -292,6 +290,13 @@ body.sub-on-1 #stepper{display:none!important}
 
 /* ===== wizard bottom bar ===== */
 .wbar{position:fixed;bottom:0;inset-inline:0;z-index:95;background:rgba(247,245,241,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--gray-2);padding:11px 16px calc(11px + var(--sab))}
+@media(max-width:819.98px){
+  .wbar{
+    bottom:var(--ip-tabbar,64px);
+    z-index:220;
+    padding:10px 16px;
+  }
+}
 .wbar .inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:12px}
 .wbar .back{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;font-size:18px;color:var(--navy);flex-shrink:0;transition:.2s}
 .wbar .back[disabled]{opacity:.3;pointer-events:none}
@@ -426,7 +431,7 @@ body.menu-open{overflow:hidden}
   <div class="snode lock" data-go="7"><span class="c"><b>7</b></span><span>{{ __('website.subscribe.steps.7') }}</span></div>
 </div>
 
-<div class="wwrap" id="wwrap">
+<div class="wwrap is-plan-step" id="wwrap">
 
   <!-- STEP 1: plan / الباقة -->
   <section class="wstep active" data-step="1">
@@ -996,7 +1001,9 @@ function goStep(n){
   var wrap=document.getElementById('wwrap');
   if(wrap)wrap.classList.toggle('is-plan-step',n===1);
   document.querySelectorAll('.wstep').forEach(function(s){
-    s.classList.toggle('active',+s.getAttribute('data-step')===n);
+    var on=+s.getAttribute('data-step')===n;
+    s.classList.toggle('active',on);
+    s.classList.toggle('is-enter',on);
   });
   document.querySelectorAll('#stepper .snode').forEach(function(nd,i){
     var s=i+1;
