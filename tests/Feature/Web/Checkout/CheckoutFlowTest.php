@@ -56,7 +56,7 @@ final class CheckoutFlowTest extends TestCase
             ->assertSee(__('checkout.payment.heading'))
             ->assertSee(__('checkout.review.place'))
             ->assertSee(PaymentMethod::Mada->label())
-            ->assertSee(PaymentMethod::CashOnDelivery->label());
+            ->assertDontSee(PaymentMethod::CashOnDelivery->label());
     }
 
     public function test_checkout_with_an_empty_cart_goes_back_to_the_cart(): void

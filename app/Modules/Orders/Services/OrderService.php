@@ -113,6 +113,95 @@ final class OrderService
     }
 
     /**
+     * Persist an order from a hosted-checkout snapshot after the money is in.
+     *
+     * Totals come from the snapshot so they match what PayTabs charged, even if
+     * catalogue prices moved in the meantime.
+     *
+     * @param  array<string, mixed>  $intent
+     */
+    public function placeFromSnapshot(
+        User $user,
+        Address $address,
+        PaymentMethod $method,
+        array $intent,
+        ?string $note = null,
+    ): Order {
+        $items = is_array($intent['items'] ?? null) ? $intent['items'] : [];
+
+        if ($items === []) {
+            throw new EmptyCartException;
+        }
+
+        $note = is_string($intent['note'] ?? null) ? $intent['note'] : $note;
+        $subtotal = (int) ($intent['subtotal_minor'] ?? 0);
+        $discount = (int) ($intent['discount_minor'] ?? 0);
+        $total = max(0, (int) ($intent['total_minor'] ?? max(0, $subtotal - $discount)));
+        $code = $intent['coupon_code'] ?? null;
+        $code = is_string($code) && $code !== '' ? $code : null;
+
+        return DB::transaction(function () use ($user, $address, $method, $note, $items, $subtotal, $discount, $total, $code): Order {
+            $applied = $code === null ? null : $this->coupons->resolveQuietly(
+                $code,
+                CouponScope::Store,
+                Money::fromMinor($subtotal),
+                $user,
+            );
+
+            $order = new Order;
+            $order->user_id = $user->getKey();
+            $order->address_id = $address->getKey();
+            $order->shipping_address = $address->snapshot();
+            $order->status = OrderStatus::Pending;
+            $order->currency = 'SAR';
+            $order->coupon_id = $applied?->coupon->getKey();
+            $order->coupon_code = $applied?->code() ?? $code;
+            $order->subtotal_minor = $subtotal;
+            $order->discount_minor = $discount;
+            $order->total_minor = $total;
+            $order->payment_method = $method;
+            $order->payment_status = PaymentStatus::Pending;
+            $order->note = $note;
+            $order->placed_at = now();
+            $order->save();
+
+            foreach ($items as $item) {
+                if (! is_array($item)) {
+                    continue;
+                }
+
+                $order->items()->create([
+                    'product_id' => (int) ($item['product_id'] ?? 0) ?: null,
+                    'name' => (string) ($item['name'] ?? ''),
+                    'unit_price_minor' => (int) ($item['unit_price_minor'] ?? 0),
+                    'quantity' => (int) ($item['quantity'] ?? 1),
+                    'line_total_minor' => (int) ($item['line_total_minor'] ?? 0),
+                ]);
+            }
+
+            if ($applied !== null) {
+                try {
+                    $this->coupons->redeem($applied->coupon, $user, $order, $applied->discount);
+                } catch (\App\Modules\Promotions\Exceptions\CouponRejectedException) {
+                    // The customer already paid; do not block the order if the
+                    // coupon ran out between checkout and the gateway return.
+                }
+            }
+
+            $this->audit->log(AuditAction::OrderPlaced, $order, [], [
+                'subtotal_minor' => $subtotal,
+                'discount_minor' => $discount,
+                'total_minor' => $order->total_minor,
+                'coupon_code' => $order->coupon_code,
+                'payment_method' => $method->value,
+                'items' => count($items),
+            ]);
+
+            return $order;
+        });
+    }
+
+    /**
      * Record the outcome of the charge on the order.
      *
      * A settled payment confirms a still-pending order; a deferred method

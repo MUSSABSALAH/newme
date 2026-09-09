@@ -99,9 +99,15 @@ final class CheckoutService
         PaymentMethod $method,
         ?CardDetails $card = null,
         ?string $note = null,
-    ): Order|Subscription {
+    ): Order|Subscription|null {
         $this->hostedRedirectUrl = null;
         $draft = $this->drafts->subscription();
+
+        if ($this->payments->usesHostedCheckout() && ! $method->isDeferred()) {
+            $this->startHosted($user, $address, $method, $draft, $note);
+
+            return null;
+        }
 
         try {
             if ($draft instanceof SubscriptionDraft) {
@@ -122,9 +128,6 @@ final class CheckoutService
             throw $e;
         }
 
-        // Hosted checkout: the payable is parked pending until the gateway
-        // confirms. Clear the cart now so the customer cannot place twice, but
-        // wait for the return/IPN before invoicing or mailing.
         if ($placed instanceof Subscription) {
             $this->drafts->forgetSubscription();
         } else {
@@ -135,8 +138,6 @@ final class CheckoutService
             return $placed;
         }
 
-        // Only notify once the transaction has committed, so neither staff nor
-        // the customer hears about an order that was rolled back.
         if ($placed instanceof Subscription) {
             $this->notifier->subscriptionStarted($placed);
             $this->customerNotifier->subscriptionStarted($placed);
@@ -148,6 +149,74 @@ final class CheckoutService
         $this->invoiceIfPaid($placed);
 
         return $placed;
+    }
+
+    /**
+     * Park the cart (or subscription draft) and send the customer to PayTabs.
+     *
+     * Nothing is written to orders/subscriptions until the gateway confirms.
+     */
+    private function startHosted(
+        User $user,
+        Address $address,
+        PaymentMethod $method,
+        ?SubscriptionDraft $draft,
+        ?string $note,
+    ): void {
+        $payer = PayerDetails::fromCustomer($user, $address);
+
+        if ($draft instanceof SubscriptionDraft) {
+            $plan = $this->plan($draft);
+            $quote = $this->quote($plan, $draft);
+            $intent = [
+                'source' => CheckoutSource::Subscription->value,
+                'address_id' => $address->getKey(),
+                'method' => $method->value,
+                'draft' => $draft->toArray(),
+            ];
+
+            $attempt = $this->payments->startHostedCheckout(
+                $user,
+                $method,
+                $quote->total,
+                $payer,
+                'Subscription checkout',
+                $intent,
+            );
+        } else {
+            if ($this->cart->items()->isEmpty()) {
+                throw new NothingToCheckoutException;
+            }
+
+            $intent = [
+                'source' => CheckoutSource::Cart->value,
+                'address_id' => $address->getKey(),
+                'method' => $method->value,
+                'note' => $note,
+                'subtotal_minor' => $this->cart->subtotalMinor(),
+                'discount_minor' => $this->cart->discountMinor(),
+                'total_minor' => $this->cart->totalMinor(),
+                'coupon_code' => $this->cart->couponCode(),
+                'items' => $this->cart->items()->map(static fn (array $item): array => [
+                    'product_id' => $item['id'],
+                    'name' => $item['name'],
+                    'unit_price_minor' => $item['unit_price'],
+                    'quantity' => $item['qty'],
+                    'line_total_minor' => $item['line_total'],
+                ])->values()->all(),
+            ];
+
+            $attempt = $this->payments->startHostedCheckout(
+                $user,
+                $method,
+                Money::fromMinor($this->cart->totalMinor()),
+                $payer,
+                'Store checkout',
+                $intent,
+            );
+        }
+
+        $this->hostedRedirectUrl = $attempt->redirectUrl;
     }
 
     /**

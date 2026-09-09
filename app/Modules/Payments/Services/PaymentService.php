@@ -20,6 +20,7 @@ use App\Modules\Payments\Models\Payment;
 use App\Support\Money\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Route;
 
 final class PaymentService
 {
@@ -27,6 +28,74 @@ final class PaymentService
         private readonly PaymentGateway $gateway,
         private readonly AuditService $audit,
     ) {}
+
+    public function usesHostedCheckout(): bool
+    {
+        return $this->gateway->usesHostedCheckout();
+    }
+
+    /**
+     * Open a hosted payment page without creating an order first.
+     *
+     * The cart (or subscription draft) stays with the customer until the
+     * gateway confirms. The snapshot in checkout_intent is enough for the
+     * return/IPN to persist the payable afterwards.
+     *
+     * @param  array<string, mixed>  $intent
+     *
+     * @throws PaymentDeclinedException
+     */
+    public function startHostedCheckout(
+        User $user,
+        PaymentMethod $method,
+        Money $amount,
+        PayerDetails $payer,
+        string $description,
+        array $intent,
+    ): ChargeAttempt {
+        $payment = new Payment;
+        $payment->user_id = $user->id;
+        $payment->payable_type = null;
+        $payment->payable_id = null;
+        $payment->method = $method;
+        $payment->currency = $amount->currency->code;
+        $payment->amount_minor = $amount->toMinor();
+        $payment->gateway = $this->gateway->name();
+        $payment->status = PaymentStatus::Pending;
+        $payment->checkout_intent = $intent;
+        $payment->save();
+
+        $result = $this->gateway->charge(new ChargeRequest(
+            amount: $amount,
+            method: $method,
+            reference: $payment->public_id,
+            description: $description,
+            payer: $payer,
+            returnUrl: route('website.payments.paytabs.return'),
+            callbackUrl: $this->publicCallbackUrl(),
+            language: App::getLocale(),
+        ));
+
+        $payment->gateway_reference = $result->gatewayReference !== ''
+            ? $result->gatewayReference
+            : $payment->gateway_reference;
+
+        if ($result->requiresRedirect()) {
+            $payment->save();
+
+            $this->audit->log(AuditAction::PaymentPending, $payment, [], $this->snapshot($payment));
+
+            return new ChargeAttempt($payment, $result->redirectUrl);
+        }
+
+        $payment->status = PaymentStatus::Failed;
+        $payment->decline_reason = $result->decline ?? PaymentDecline::GatewayError;
+        $payment->save();
+
+        $this->audit->log(AuditAction::PaymentDeclined, $payment, [], $this->snapshot($payment));
+
+        throw new PaymentDeclinedException($payment->decline_reason ?? PaymentDecline::GatewayError, $payment);
+    }
 
     /**
      * Charge a payable (an order or a subscription) and record the attempt.
@@ -146,6 +215,10 @@ final class PaymentService
      */
     private function publicCallbackUrl(): ?string
     {
+        if (! Route::has('paytabs.ipn')) {
+            return null;
+        }
+
         $url = route('paytabs.ipn');
         $host = parse_url($url, PHP_URL_HOST);
 

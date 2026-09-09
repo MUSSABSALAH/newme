@@ -170,8 +170,8 @@ body.is-home-intro .nm-chrome{display:none!important}
         <img class="aiimg" loading="eager" decoding="async"
              src="{{ asset('assets/images/v30-intro.jpg') }}"
              alt="{{ $isAr ? 'رغيف نيومي بالبذور' : 'New Me seeded loaf' }}">
-      </div>
-    </div>
+  </div>
+</div>
 
     <div class="io-copy">
       <div class="beats" id="beats">

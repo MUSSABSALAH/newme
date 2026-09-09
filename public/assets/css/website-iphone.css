@@ -357,6 +357,7 @@
   .nm-chrome .tb-act {
     width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
     background: #fff; border: 1px solid var(--ip-gray-2); color: var(--ip-navy); text-decoration: none; padding: 0;
+    position: relative; overflow: visible;
   }
   .nm-chrome .tb-act svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
   .nm-chrome .tb-act.on {
@@ -364,9 +365,26 @@
     border-color: rgba(240,127,45,.35);
     background: #FFF6EE;
   }
-  .nm-chrome .tb-act{position:relative}
-  .nm-chrome .tb-act i[data-cart-count]{position:absolute;top:-4px;inset-inline-start:-4px;background:#F07F2D;color:#fff;font-style:normal;font-size:9px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;font-weight:800;line-height:1;pointer-events:none}
-  .nm-chrome .tb-act i[data-cart-count].is-empty{display:none}
+  .nm-chrome .tb-cart-badge {
+    position: absolute;
+    top: -3px;
+    inset-inline-end: -3px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #F07F2D;
+    color: #fff;
+    font-family: 'Cairo', sans-serif;
+    font-style: normal;
+    font-size: 9px;
+    font-weight: 800;
+    line-height: 16px;
+    text-align: center;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+  .nm-chrome .tb-cart-badge.is-empty { display: none !important; }
   .nm-chrome .live { display: none; }
 
   .nm-tabbar {

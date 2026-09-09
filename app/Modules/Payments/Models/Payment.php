@@ -20,8 +20,8 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $public_id
  * @property int $user_id
- * @property string $payable_type
- * @property int $payable_id
+ * @property string|null $payable_type
+ * @property int|null $payable_id
  * @property PaymentMethod $method
  * @property PaymentStatus $status
  * @property string $currency
@@ -31,6 +31,7 @@ use Illuminate\Support\Str;
  * @property string|null $card_brand
  * @property string|null $card_last4
  * @property PaymentDecline|null $decline_reason
+ * @property array<string, mixed>|null $checkout_intent
  * @property \Illuminate\Support\Carbon|null $paid_at
  */
 class Payment extends Model
@@ -52,6 +53,7 @@ class Payment extends Model
         'card_brand',
         'card_last4',
         'decline_reason',
+        'checkout_intent',
         'paid_at',
     ];
 
@@ -73,6 +75,7 @@ class Payment extends Model
             'method' => PaymentMethod::class,
             'status' => PaymentStatus::class,
             'decline_reason' => PaymentDecline::class,
+            'checkout_intent' => 'array',
             'amount_minor' => 'integer',
             'paid_at' => 'datetime',
         ];

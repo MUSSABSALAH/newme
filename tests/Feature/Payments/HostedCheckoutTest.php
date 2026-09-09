@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Payments;
 
 use App\Models\User;
+use App\Modules\Checkout\Enums\CheckoutSource;
 use App\Modules\Identity\Seeders\RolesAndPermissionsSeeder;
 use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Orders\Enums\OrderStatus;
@@ -89,14 +90,15 @@ final class HostedCheckoutTest extends TestCase
             'card_cvv' => null,
         ])->assertRedirect(FakeHostedGateway::REDIRECT_URL);
 
-        $order = Order::query()->firstOrFail();
+        $this->assertSame(0, Order::query()->count());
+
         $payment = Payment::query()->firstOrFail();
 
-        $this->assertSame(OrderStatus::Pending, $order->status);
-        $this->assertSame(PaymentStatus::Pending, $order->payment_status);
+        $this->assertNull($payment->payable_id);
         $this->assertSame(PaymentStatus::Pending, $payment->status);
         $this->assertSame(FakeHostedGateway::TRAN_REF, $payment->gateway_reference);
-        $this->assertSame([], session('store_cart', []));
+        $this->assertSame(CheckoutSource::Cart->value, $payment->checkout_intent['source'] ?? null);
+        $this->assertNotSame([], session('store_cart', []));
         $this->assertSame(0, Invoice::query()->count());
 
         Notification::assertNothingSent();
@@ -126,14 +128,19 @@ final class HostedCheckoutTest extends TestCase
             'card_cvv' => null,
         ]);
 
-        $order = Order::query()->firstOrFail();
+        $this->assertSame(0, Order::query()->count());
+
         $payment = Payment::query()->firstOrFail();
 
-        $this->actingAs($customer)
+        $response = $this->actingAs($customer)
             ->get(route('website.payments.paytabs.return', [
                 'cart_id' => $payment->public_id,
                 'paid' => 1,
-            ]))
+            ]));
+
+        $order = Order::query()->firstOrFail();
+
+        $response
             ->assertRedirect(route('website.account.order', ['order' => $order->public_id]))
             ->assertSessionHas('success', __('payments.messages.paid'));
 
@@ -145,6 +152,7 @@ final class HostedCheckoutTest extends TestCase
         $this->assertSame(PaymentStatus::Paid, $payment->status);
         $this->assertNotNull($payment->paid_at);
         $this->assertSame(1, Invoice::query()->count());
+        $this->assertSame([], session('store_cart', []));
 
         Notification::assertSentTo($customer, OrderConfirmationNotification::class);
     }
@@ -186,7 +194,6 @@ final class HostedCheckoutTest extends TestCase
             'card_cvv' => null,
         ]);
 
-        $order = Order::query()->firstOrFail();
         $payment = Payment::query()->firstOrFail();
 
         $this->actingAs($customer)
@@ -194,12 +201,12 @@ final class HostedCheckoutTest extends TestCase
                 'cart_id' => $payment->public_id,
                 'paid' => 0,
             ]))
-            ->assertRedirect(route('website.account.order', ['order' => $order->public_id]))
+            ->assertRedirect(route('website.cart'))
             ->assertSessionHas('error', __('payments.messages.return_failed'));
 
+        $this->assertSame(0, Order::query()->count());
         $this->assertSame(PaymentStatus::Failed, $payment->refresh()->status);
-        $this->assertSame(OrderStatus::Pending, $order->refresh()->status);
-        $this->assertSame(PaymentStatus::Failed, $order->payment_status);
+        $this->assertNotSame([], session('store_cart', []));
         $this->assertSame(0, Invoice::query()->count());
     }
 

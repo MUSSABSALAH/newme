@@ -109,6 +109,9 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 .empty{text-align:center;padding:70px 20px}
 .empty p{font-weight:800;color:var(--muted);margin-bottom:20px}
 
+.alert{border-radius:14px;padding:13px 15px;font-size:13.5px;font-weight:700;margin-bottom:16px}
+.alert.bad{background:#FDECEA;color:#A03024;border:1.5px solid #F3C3BD}
+
 .w-foot-simple{background:#0C1F38;color:#9FB4D2;padding:36px 20px 40px;text-align:center;margin-top:20px}
 .burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-2);background:transparent;color:var(--navy);flex-shrink:0}
 .burger svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
@@ -135,6 +138,11 @@ body.menu-open{overflow:hidden}
 
 <div class="cwrap">
   <h1>{{ __('website.cart.heading') }}</h1>
+
+  @if (session('error'))
+    <div class="alert bad">{{ session('error') }}</div>
+    <script>alert(@json(session('error')));</script>
+  @endif
 
   @if ($items->isEmpty())
     <div class="empty" id="emptyState">

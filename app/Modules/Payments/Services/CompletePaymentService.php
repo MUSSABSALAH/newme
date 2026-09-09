@@ -9,6 +9,7 @@ use App\Modules\Audit\Services\AuditService;
 use App\Modules\Invoices\Services\InvoiceService;
 use App\Modules\Notifications\Services\AdminNotifier;
 use App\Modules\Notifications\Services\CustomerNotifier;
+use App\Modules\Checkout\Services\HostedCheckoutFulfillment;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Services\OrderService;
 use App\Modules\Payments\DTOs\PaymentCallback;
@@ -32,6 +33,7 @@ final class CompletePaymentService
     public function __construct(
         private readonly OrderService $orders,
         private readonly SubscriptionService $subscriptions,
+        private readonly HostedCheckoutFulfillment $fulfillment,
         private readonly InvoiceService $invoices,
         private readonly AuditService $audit,
         private readonly AdminNotifier $notifier,
@@ -100,6 +102,11 @@ final class CompletePaymentService
             }
 
             if ($callback->successful) {
+                if ($payment->payable_id === null) {
+                    $this->fulfillment->fulfill($payment);
+                    $payment->refresh();
+                }
+
                 $payment->status = PaymentStatus::Paid;
                 $payment->paid_at = now();
                 $payment->decline_reason = null;

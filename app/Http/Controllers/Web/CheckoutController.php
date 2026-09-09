@@ -145,6 +145,12 @@ final class CheckoutController extends Controller
             return redirect()->away($url);
         }
 
+        if ($placed === null) {
+            return redirect()
+                ->route('website.cart')
+                ->with('error', __('payments.messages.return_failed'));
+        }
+
         return redirect($this->checkout->confirmationRoute($placed))
             ->with('success', $placed instanceof Subscription
                 ? __('subscriptions.messages.created')
