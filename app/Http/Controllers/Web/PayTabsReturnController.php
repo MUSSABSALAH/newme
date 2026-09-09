@@ -38,6 +38,13 @@ final class PayTabsReturnController extends Controller
             abort(404);
         }
 
+        // PayTabs may redirect the browser via GET with payment data in query
+        // parameters. The SDK reads from the POST bag exclusively, so when the
+        // POST body is empty we copy query parameters across.
+        if ($request->isMethod('GET') && $request->query->count() > 0 && $request->request->count() === 0) {
+            $request->request->add($request->query->all());
+        }
+
         try {
             $callback = $this->gateway->parseReturn($request);
             $payment = $this->completions->apply($callback);
