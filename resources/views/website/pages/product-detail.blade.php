@@ -298,10 +298,10 @@ try{
   var addBtn=document.getElementById('addCart'), addTxt=document.getElementById('addCartText');
   function meta(name){var m=document.querySelector('meta[name="'+name+'"]');return m?m.getAttribute('content'):'';}
   function updateBadge(count){
-    var b=document.querySelector('[data-cart-count]');
-    if(!b)return;
-    b.textContent=count;
-    b.classList.toggle('is-empty',!(count>0));
+    document.querySelectorAll('[data-cart-count]').forEach(function(b){
+      b.textContent=count;
+      b.classList.toggle('is-empty',!(count>0));
+    });
   }
   addBtn.addEventListener('click',function(){
     if(addBtn.disabled)return;

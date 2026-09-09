@@ -134,6 +134,7 @@ html[dir="rtl"] .card > .hint{margin:0 33px 16px 0}
 .sum .back:hover{color:var(--navy)}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:15px;border-radius:999px;padding:15px 22px;min-height:52px;border:2px solid var(--orange);background:var(--grad);color:#fff;transition:.2s;box-shadow:0 12px 28px rgba(240,127,45,.35);width:100%;text-align:center;line-height:1.25}
+nav.main .btn{width:auto;min-height:auto;padding:9px 18px;font-size:13px;box-shadow:none}
 .btn:hover{filter:brightness(1.06)}
 .btn[disabled]{opacity:.6;box-shadow:none;cursor:progress}
 .btn.ghost{background:#fff;color:var(--navy);border-color:var(--gray-2);box-shadow:none;min-height:44px;font-size:13.5px;padding:11px 18px}

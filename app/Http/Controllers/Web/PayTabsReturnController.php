@@ -69,6 +69,15 @@ final class PayTabsReturnController extends Controller
         $message = $this->flash($paid, $pending);
         $flashKey = $paid || $pending ? 'success' : 'error';
 
+        // Payment failed — send the customer back to checkout so they can
+        // choose a different method and try again.
+        if (! $paid && ! $pending) {
+            $user = Auth::user();
+            $route = $user !== null ? 'website.checkout' : 'website.login';
+
+            return redirect()->route($route)->with('error', $message);
+        }
+
         $user = Auth::user();
 
         if ($user === null || (int) $user->getKey() !== (int) $payment->user_id) {

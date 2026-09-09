@@ -218,7 +218,7 @@ try{
   function meta(n){var m=document.querySelector('meta[name="'+n+'"]');return m?m.getAttribute('content'):'';}
   var cur=' ';
   function money(minor){return (minor/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-  function badge(count){var b=document.querySelector('[data-cart-count]');if(b){b.textContent=count;b.classList.toggle('is-empty',!(count>0));}}
+  function badge(count){document.querySelectorAll('[data-cart-count]').forEach(function(b){b.textContent=count;b.classList.toggle('is-empty',!(count>0));});}
 
   function send(url,method,body){
     return fetch(url,{

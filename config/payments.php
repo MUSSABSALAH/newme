@@ -37,7 +37,6 @@ return [
         'mada',
         'visa',
         'apple_pay',
-        'cash_on_delivery',
     ],
 
 ];

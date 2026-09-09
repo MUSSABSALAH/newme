@@ -51,7 +51,7 @@ return [
         'already_confirmed' => 'This payment was already confirmed.',
         'paid' => 'Payment received. Thank you.',
         'awaiting' => 'Your payment is still being confirmed.',
-        'return_failed' => 'The payment did not go through. You can try again from a new checkout.',
+        'return_failed' => 'The payment did not go through. Please choose a different payment method and try again.',
         'return_invalid' => 'We could not verify the payment response. If you were charged, it will appear on your order shortly.',
         'return_unknown' => 'We could not match this payment to an order.',
     ],

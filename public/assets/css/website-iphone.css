@@ -364,6 +364,9 @@
     border-color: rgba(240,127,45,.35);
     background: #FFF6EE;
   }
+  .nm-chrome .tb-act{position:relative}
+  .nm-chrome .tb-act i[data-cart-count]{position:absolute;top:-4px;inset-inline-start:-4px;background:#F07F2D;color:#fff;font-style:normal;font-size:9px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;font-weight:800;line-height:1;pointer-events:none}
+  .nm-chrome .tb-act i[data-cart-count].is-empty{display:none}
   .nm-chrome .live { display: none; }
 
   .nm-tabbar {

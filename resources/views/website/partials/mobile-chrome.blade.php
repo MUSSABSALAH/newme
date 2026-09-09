@@ -61,6 +61,7 @@
         @if ($nmShowCart)
         <a class="tb-act" href="{{ route('website.cart') }}" aria-label="{{ __('website.nav.cart') }}">
           <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          <i data-cart-count @class(['is-empty' => ($cartCount ?? 0) < 1])>{{ $cartCount ?? 0 }}</i>
         </a>
         @endif
         <a class="tb-act" href="{{ $wa }}" aria-label="WhatsApp">
