@@ -113,7 +113,7 @@ final class PayTabsSdkClient implements PayTabsClient
             return PaymentCallback::fromBrowser(
                 Paytabs::getResultProcessor()->handleRedirect(),
             );
-        } catch (InvalidSignatureException|InvalidPayloadException $e) {
+        } catch (InvalidSignatureException|InvalidPayloadException|\InvalidArgumentException $e) {
             throw new InvalidPaymentCallbackException($e->getMessage(), 0, $e);
         }
     }

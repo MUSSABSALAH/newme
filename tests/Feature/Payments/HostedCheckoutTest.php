@@ -210,6 +210,26 @@ final class HostedCheckoutTest extends TestCase
         $this->assertSame(0, Invoice::query()->count());
     }
 
+    public function test_an_empty_browser_return_sends_the_customer_to_the_cart(): void
+    {
+        $customer = $this->customerWithCart();
+        $this->placeOrder($customer, $this->addressFor($customer), [
+            'card_number' => null,
+            'card_holder' => null,
+            'card_expiry_month' => null,
+            'card_expiry_year' => null,
+            'card_cvv' => null,
+        ]);
+
+        $this->actingAs($customer)
+            ->get(route('website.payments.paytabs.return'))
+            ->assertRedirect(route('website.cart'))
+            ->assertSessionHas('error');
+
+        $this->assertSame(0, Order::query()->count());
+        $this->assertNotSame([], session('store_cart', []));
+    }
+
     public function test_cash_on_delivery_still_places_without_a_redirect(): void
     {
         $customer = $this->customerWithCart();

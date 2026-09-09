@@ -44,20 +44,32 @@ final class PayTabsReturnController extends Controller
             abort(404);
         }
 
-        // PayTabs may redirect the browser via GET with payment data in query
-        // parameters. The SDK reads from the POST bag exclusively, so when the
-        // POST body is empty we copy query parameters across.
-        if ($request->isMethod('GET') && $request->query->count() > 0 && $request->request->count() === 0) {
-            $request->request->add($request->query->all());
+        // PayTabs often sends the shopper back with a GET that has no body.
+        // The SDK only reads the POST bag, so copy every incoming field into it.
+        if ($request->request->count() === 0) {
+            $incoming = array_filter(
+                $request->all(),
+                static fn ($value): bool => $value !== null && $value !== '',
+            );
+
+            if ($incoming !== []) {
+                $request->request->add($incoming);
+            }
+        }
+
+        if ($request->request->count() === 0) {
+            Log::warning('PayTabs return with empty payload.');
+
+            return $this->toCart(__('payments.messages.return_failed'));
         }
 
         try {
             $callback = $this->gateway->parseReturn($request);
             $payment = $this->completions->apply($callback);
-        } catch (InvalidPaymentCallbackException $e) {
+        } catch (InvalidPaymentCallbackException|\InvalidArgumentException $e) {
             Log::warning('PayTabs return rejected.', ['error' => $e->getMessage()]);
 
-            return $this->toCart(__('payments.messages.return_invalid'));
+            return $this->toCart(__('payments.messages.return_failed'));
         } catch (ModelNotFoundException $e) {
             Log::warning('PayTabs return for an unknown cart.');
 

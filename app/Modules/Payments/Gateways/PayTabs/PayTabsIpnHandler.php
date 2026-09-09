@@ -27,10 +27,14 @@ final class PayTabsIpnHandler implements IpnHandlerInterface
         Ipn $mappedPayload,
     ): void {
         $callback = PaymentCallback::fromIpn($mappedPayload);
+        $result = $mappedPayload->payment_result;
 
         Log::info('PayTabs IPN received.', [
             'cart_id' => $callback->cartId,
             'tran_ref' => $callback->tranRef,
+            'response_status' => $result->response_status,
+            'response_code' => $result->response_code,
+            'response_message' => $result->response_message,
             'successful' => $callback->successful,
             'pending' => $callback->pending,
         ]);
