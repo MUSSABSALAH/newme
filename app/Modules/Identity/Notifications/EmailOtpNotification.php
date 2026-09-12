@@ -69,7 +69,6 @@ final class EmailOtpNotification extends Notification implements ShouldQueue
                 'code' => $this->code,
                 'expiry' => $expiry,
                 'ignore' => $ignore,
-                'mailFont' => BrandMail::font(),
             ],
             $subject,
             $greeting,

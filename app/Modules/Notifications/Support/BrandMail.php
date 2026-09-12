@@ -34,8 +34,6 @@ final class BrandMail
         ?string $actionLabel = null,
         ?string $actionUrl = null,
     ): MailMessage {
-        $data['mailFont'] ??= self::font();
-
         $message = (new MailMessage)
             ->subject($subject)
             ->view($view, $data);

@@ -2,7 +2,7 @@
     $isAr = app()->getLocale() === 'ar';
     $dir = $isAr ? 'rtl' : 'ltr';
     $align = $dir === 'rtl' ? 'right' : 'left';
-    $mailFont = \App\Modules\Notifications\Support\BrandMail::font();
+    $mailFont = $isAr ? "'Cairo', Tahoma, Arial, sans-serif" : 'Tahoma, Arial, sans-serif';
     $logo = $logoUrl ?? url('/assets/images/logos/'.($isAr ? 'logo_ar.png' : 'logo_en.png'));
     $strip = $stripUrl ?? url('/assets/images/mail/renew-strip.jpg');
 @endphp
