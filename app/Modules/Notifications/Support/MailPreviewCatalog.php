@@ -112,7 +112,6 @@ final class MailPreviewCatalog
                     'code' => '482917',
                     'expiry' => __('account.otp.mail.expiry', ['minutes' => 10]),
                     'ignore' => __('account.otp.mail.ignore'),
-                    'mailFont' => BrandMail::font(),
                 ],
             ],
             'password' => [
