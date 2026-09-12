@@ -1,6 +1,7 @@
 @extends('mail.layout')
 
 @section('content')
+    @php($mailFont = \App\Modules\Notifications\Support\BrandMail::font())
     <p style="margin:0 0 14px;font-family:{{ $mailFont }};">{{ $greeting }}</p>
     <p style="margin:0 0 18px;font-family:{{ $mailFont }};">{{ $intro }}</p>
     @include('mail.partials.button', ['label' => $actionLabel, 'url' => $actionUrl])

@@ -113,12 +113,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(SubscriptionDelivery::class, SubscriptionDeliveryPolicy::class);
 
         View::composer(['mail.*', 'mail.operations.*', 'mail.partials.*'], function ($view): void {
-            $view->with(
-                'mailFont',
-                app()->getLocale() === 'ar'
-                    ? "'Cairo', Tahoma, Arial, sans-serif"
-                    : 'Tahoma, Arial, sans-serif',
-            );
+            $view->with('mailFont', \App\Modules\Notifications\Support\BrandMail::font());
         });
 
         // Expose the live cart count to the shared website navigation.

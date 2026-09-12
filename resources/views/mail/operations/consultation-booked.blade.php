@@ -1,6 +1,7 @@
 @extends('mail.layout')
 
 @section('content')
+    @php($mailFont = \App\Modules\Notifications\Support\BrandMail::font())
     <p style="margin:0 0 14px;font-family:{{ $mailFont }};">{{ $greeting }}</p>
     <p style="margin:0 0 16px;font-family:{{ $mailFont }};">{{ $intro }}</p>
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F4F7F7;border-right:4px solid #128C8C;margin:0 0 16px;font-family:{{ $mailFont }};">

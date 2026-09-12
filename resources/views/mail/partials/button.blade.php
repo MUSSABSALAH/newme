@@ -1,4 +1,4 @@
-@php $mailFont = $mailFont ?? (app()->getLocale() === 'ar' ? "'Cairo', Tahoma, Arial, sans-serif" : 'Tahoma, Arial, sans-serif'); @endphp
+@php($mailFont = \App\Modules\Notifications\Support\BrandMail::font())
 <table role="presentation" cellspacing="0" cellpadding="0" style="margin:8px 0 4px;font-family:{{ $mailFont }};">
     <tr>
         <td style="background:#128C8C;border-radius:6px;font-family:{{ $mailFont }};">

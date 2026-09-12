@@ -157,6 +157,25 @@ final class CustomerOtpAuthTest extends TestCase
         $this->assertStringContainsString("'Cairo', Tahoma, Arial, sans-serif", $html);
     }
 
+    public function test_email_otp_view_renders_without_a_mail_font_variable(): void
+    {
+        $this->app->setLocale('ar');
+
+        $html = view('mail.operations.email-otp', [
+            'title' => 'OTP',
+            'heading' => 'OTP',
+            'subheading' => 'Code',
+            'greeting' => 'Hello',
+            'intro' => 'Your code',
+            'code' => '482917',
+            'expiry' => '10 minutes',
+            'ignore' => 'Ignore',
+        ])->render();
+
+        $this->assertStringContainsString('482917', $html);
+        $this->assertStringContainsString("'Cairo', Tahoma, Arial, sans-serif", $html);
+    }
+
     public function test_the_queued_otp_email_uses_the_language_the_customer_was_browsing_in(): void
     {
         Notification::fake();
