@@ -4,7 +4,6 @@
 @section('theme', '#122B4A')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
 <style>
 @verbatim
 :root{

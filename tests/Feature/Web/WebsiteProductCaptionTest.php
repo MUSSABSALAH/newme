@@ -68,6 +68,22 @@ final class WebsiteProductCaptionTest extends TestCase
             ->assertDontSee('الحصة: 40 جرام — قطعة واحدة · لكل قطعة', false);
     }
 
+    public function test_the_product_page_exposes_cart_toast_copy(): void
+    {
+        $product = Product::factory()->create([
+            'slug' => 'toast-bread',
+            'name' => ['ar' => 'خبز التوست', 'en' => 'Toast bread'],
+            'is_active' => true,
+        ]);
+
+        $this->get(route('website.product.show', $product))
+            ->assertOk()
+            ->assertSee('cartAdded', false)
+            ->assertSee('cartView', false)
+            ->assertSee('NMToast', false)
+            ->assertSee('خبز التوست', false);
+    }
+
     public function test_the_legacy_product_demo_page_redirects_to_the_store(): void
     {
         $this->get('/product')

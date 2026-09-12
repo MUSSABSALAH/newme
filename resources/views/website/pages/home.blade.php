@@ -8,7 +8,6 @@
 @section('body_class', 'is-home-intro')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
 <style>
 /* Homepage intro landing — always (not limited to desktop media in v30) */
 html:has(body.is-home-intro){

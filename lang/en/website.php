@@ -628,6 +628,7 @@ return [
         'continue' => 'Continue shopping',
         'checkout' => 'Checkout',
         'added' => 'Added to cart',
+        'view' => 'View cart',
         'updated' => 'Cart updated',
         'removed' => 'Item removed',
     ],

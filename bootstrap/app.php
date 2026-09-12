@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\AssignRequestId;
+use App\Http\Middleware\DisableHtmlCache;
 use App\Http\Middleware\EnsureUserType;
 use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\SetWebLocale;
@@ -35,6 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->web(append: [
             SetWebLocale::class,
+            DisableHtmlCache::class,
         ]);
 
         $middleware->alias([

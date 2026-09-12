@@ -3,10 +3,6 @@
 @section('title', $recipe->translated('title').' — '.(app()->getLocale() === 'ar' ? 'نيومي' : 'New Me'))
 @section('theme', '#122B4A')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
-@endpush
-
 @section('content')
 @include('website.partials.v30-icons')
 

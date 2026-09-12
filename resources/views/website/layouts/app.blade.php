@@ -2,16 +2,18 @@
   $rtl = app()->getLocale() === 'ar';
   $siteCss = [];
   foreach (['website.css', 'website-v30.css', 'website-iphone.css'] as $cssFile) {
-      $cssPath = 'assets/css/'.$cssFile;
-      $version = is_file(public_path($cssPath)) ? filemtime(public_path($cssPath)) : time();
-      $siteCss[$cssFile] = asset($cssPath).'?v='.$version;
+      $siteCss[$cssFile] = \App\Support\VersionedAsset::url('assets/css/'.$cssFile);
   }
+  $siteJs = \App\Support\VersionedAsset::url('assets/js/website.js');
 @endphp
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" dir="{{ $rtl ? 'rtl' : 'ltr' }}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="@yield('theme', '#122B4A')">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="cart-url" content="{{ route('website.cart.store') }}">
@@ -73,7 +75,17 @@ html[lang="ar"] select{
 @if (trim($__env->yieldContent('hide_site_footer')) === '')
   @include('website.partials.footer', ['variant' => 'full'])
 @endif
-<script src="{{ asset('assets/js/website.js') }}" defer></script>
+@php
+  $nmI18n = [
+      'cartAdded' => __('website.cart.added'),
+      'cartView' => __('website.cart.view'),
+      'cartUrl' => route('website.cart'),
+  ];
+@endphp
+<script>
+window.NM_I18N = @json($nmI18n);
+</script>
+<script src="{{ $siteJs }}" defer></script>
 @stack('scripts')
 </body>
 </html>

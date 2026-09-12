@@ -6,11 +6,6 @@
 @section('hide_site_footer', '1')
 
 @push('styles')
-@php
-  $v30Css = 'assets/css/website-v30.css';
-  $v30Ver = is_file(public_path($v30Css)) ? filemtime(public_path($v30Css)) : time();
-@endphp
-<link rel="stylesheet" href="{{ asset($v30Css) }}?v={{ $v30Ver }}">
 <style>
 @verbatim
 :root{

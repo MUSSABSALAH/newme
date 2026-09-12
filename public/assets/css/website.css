@@ -116,3 +116,34 @@ footer.w-foot-full .f-bottom{max-width:1160px;margin:36px auto 0;padding:22px 20
 .totop.show{display:grid}
 .totop:hover{background:#122B4A;color:#fff;border-color:#122B4A}
 .totop svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- add-to-cart toast ---- */
+.nm-toast-host{
+  position:fixed;inset-inline:16px;top:calc(88px + var(--sat));bottom:auto;
+  z-index:400;display:flex;justify-content:center;pointer-events:none;
+}
+.nm-toast{
+  display:flex;align-items:center;gap:12px;max-width:420px;width:min(100%,420px);
+  padding:13px 15px;border-radius:16px;background:#fff;color:var(--w-ink);
+  border:1px solid var(--w-gray-2);pointer-events:auto;
+  box-shadow:0 18px 40px rgba(18,43,74,.16);
+  transform:translateY(-12px);opacity:0;
+  transition:transform .32s cubic-bezier(.2,.7,.2,1),opacity .32s ease;
+}
+.nm-toast.is-in{transform:none;opacity:1}
+.nm-toast.is-out{transform:translateY(-10px);opacity:0}
+.nm-toast-icon{width:30px;height:30px;color:var(--w-green);flex-shrink:0}
+.nm-toast-icon svg{display:block;width:100%;height:100%}
+.nm-toast-copy{min-width:0;flex:1}
+.nm-toast-copy strong{display:block;font-size:14px;font-weight:800;color:var(--w-navy);line-height:1.35}
+.nm-toast-copy span{
+  display:block;margin-top:2px;font-size:12.5px;font-weight:600;color:var(--w-muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.nm-toast-link{
+  flex-shrink:0;font-size:12.5px;font-weight:800;color:var(--w-orange);
+  text-decoration:none;padding:6px 2px;white-space:nowrap;
+}
+.nm-toast-link:hover{color:var(--w-orange-deep)}
+@keyframes nm-badge-pop{0%,100%{transform:scale(1)}40%{transform:scale(1.28)}}
+[data-cart-count].is-pop{animation:nm-badge-pop .45s ease}

@@ -4,7 +4,6 @@
 @section('theme', '#122B4A')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
 <style>
 @media (max-width: 819.98px) {
   .v30-page { padding: 16px 16px 56px; }

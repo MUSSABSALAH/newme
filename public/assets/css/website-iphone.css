@@ -740,4 +740,20 @@
   /* Homepage chips stay hidden; store category filters are shown */
   .home-mobile .chips,
   .cat-bar { display: none !important; }
+
+  .nm-toast-host {
+    top: auto;
+    bottom: calc(20px + var(--ip-sab));
+  }
+  body:has(.nm-tabbar) .nm-toast-host {
+    bottom: calc(var(--ip-tabbar) + 12px);
+  }
+  .nm-toast {
+    max-width: none;
+    width: 100%;
+    border-radius: 14px;
+    padding: 12px 14px;
+    transform: translateY(12px);
+  }
+  .nm-toast.is-out { transform: translateY(8px); }
 }

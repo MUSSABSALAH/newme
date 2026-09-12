@@ -271,8 +271,15 @@ body.menu-open{overflow:hidden}
 @endsection
 
 @push('scripts')
+@php
+  $nmPd = [
+      'add' => __('website.product_detail.add_to_cart'),
+      'added' => __('website.product_detail.added'),
+      'name' => $product['name'],
+  ];
+@endphp
 <script>
-window.NM_PD = @json(['add' => __('website.product_detail.add_to_cart'), 'added' => __('website.product_detail.added')]);
+window.NM_PD = @json($nmPd);
 </script>
 <script>
 @verbatim
@@ -289,6 +296,9 @@ try{
     document.querySelectorAll('[data-cart-count]').forEach(function(b){
       b.textContent=count;
       b.classList.toggle('is-empty',!(count>0));
+      b.classList.remove('is-pop');
+      void b.offsetWidth;
+      b.classList.add('is-pop');
     });
   }
   addBtn.addEventListener('click',function(){
@@ -301,6 +311,15 @@ try{
     }).then(function(r){return r.ok?r.json():Promise.reject(r);}).then(function(res){
       if(res&&typeof res.count!=='undefined')updateBadge(res.count);
       addTxt.textContent=(window.NM_PD&&window.NM_PD.added)||'✓';
+      if(window.NMToast){
+        var i18n=window.NM_I18N||{};
+        window.NMToast.show({
+          message:(res&&res.message)||i18n.cartAdded||'',
+          detail:window.NM_PD&&window.NM_PD.name||'',
+          actionHref:i18n.cartUrl||'',
+          actionLabel:i18n.cartView||''
+        });
+      }
       setTimeout(function(){addTxt.textContent=(window.NM_PD&&window.NM_PD.add)||'';addBtn.disabled=false;},1800);
     }).catch(function(){addBtn.disabled=false;});
   });

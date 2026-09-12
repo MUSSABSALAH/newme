@@ -134,6 +134,16 @@ final class WebsiteCmsContentTest extends TestCase
             ->assertSee('recipe-home-recipe', false);
     }
 
+    public function test_website_html_is_not_cached_and_assets_are_versioned(): void
+    {
+        $this->get(route('website.main'))
+            ->assertOk()
+            ->assertHeader('Cache-Control')
+            ->assertSee('website-iphone.css?v=', false)
+            ->assertSee('website.js?v=', false)
+            ->assertDontSee('href="'.asset('assets/css/website-v30.css').'"', false);
+    }
+
     public function test_main_page_leads_with_free_delivery_over_200(): void
     {
         $this->get(route('website.main'))
