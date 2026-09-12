@@ -63,7 +63,7 @@
       @endphp
       <div class="announce ship-announce" id="nmAnnounce">
         @foreach ($announceMessages as $i => $line)
-          <span @class(['on' => $i === 0])>{!! $line !!}</span>
+          <span @class(['on' => $i === 0])><em class="ship-line">{!! $line !!}</em></span>
         @endforeach
       </div>
     @endif

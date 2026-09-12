@@ -1,6 +1,9 @@
 @extends('mail.layout')
 
 @section('content')
+    @php
+        $mailFont = $mailFont ?? (app()->getLocale() === 'ar' ? "'Cairo', Tahoma, Arial, sans-serif" : 'Tahoma, Arial, sans-serif');
+    @endphp
     <p style="margin:0 0 14px;font-family:{{ $mailFont }};">{{ $greeting }}</p>
     <p style="margin:0 0 18px;font-family:{{ $mailFont }};">{{ $intro }}</p>
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="font-family:{{ $mailFont }};">

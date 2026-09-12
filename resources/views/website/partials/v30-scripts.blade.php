@@ -20,7 +20,7 @@
     /* announcement rotator */
     (function(){
       document.querySelectorAll('.announce').forEach(function(a){
-        var s = a.querySelectorAll('span'), i = 0;
+        var s = a.querySelectorAll(':scope > span'), i = 0;
         if (s.length < 2) return;
         setInterval(function(){
           s[i].classList.remove('on');

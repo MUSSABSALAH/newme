@@ -14,6 +14,13 @@ use Illuminate\Notifications\Messages\MailMessage;
  */
 final class BrandMail
 {
+    public static function font(?string $locale = null): string
+    {
+        return ($locale ?? app()->getLocale()) === 'ar'
+            ? "'Cairo', Tahoma, Arial, sans-serif"
+            : 'Tahoma, Arial, sans-serif';
+    }
+
     /**
      * @param  array<string, mixed>  $data
      * @param  list<string>  $lines
@@ -27,6 +34,8 @@ final class BrandMail
         ?string $actionLabel = null,
         ?string $actionUrl = null,
     ): MailMessage {
+        $data['mailFont'] ??= self::font();
+
         $message = (new MailMessage)
             ->subject($subject)
             ->view($view, $data);

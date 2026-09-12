@@ -143,6 +143,20 @@ final class CustomerOtpAuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
+    public function test_email_otp_notification_renders_the_mail_font(): void
+    {
+        $user = User::factory()->customer()->create([
+            'name' => 'Sara',
+            'email' => 'sara@example.com',
+        ]);
+        $this->app->setLocale('ar');
+
+        $html = (string) (new EmailOtpNotification('482917'))->toMail($user)->render();
+
+        $this->assertStringContainsString('482917', $html);
+        $this->assertStringContainsString("'Cairo', Tahoma, Arial, sans-serif", $html);
+    }
+
     public function test_the_queued_otp_email_uses_the_language_the_customer_was_browsing_in(): void
     {
         Notification::fake();

@@ -77,8 +77,6 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 
 /* ===== grid ===== */
 .shop-wrap{max-width:1280px;margin:0 auto;padding:34px 24px 80px}
-.count{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:24px;letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono);border-bottom:1px solid var(--line);padding-bottom:14px}
-.count b{color:var(--ink)}
 .grid{display:grid;gap:38px 20px;grid-template-columns:repeat(2,1fr)}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1040px){.grid{grid-template-columns:repeat(4,1fr);gap:44px 24px}}
@@ -244,7 +242,6 @@ body.menu-open{overflow:hidden}
 </div>
 
 <div class="shop-wrap">
-  <div class="count"><span>{!! __('website.store.count_label') !!}</span><span>{!! __('website.store.count_showing', ['total' => $total]) !!}</span></div>
   <div class="grid" id="grid">
     @foreach ($products as $p)
       @php
@@ -339,8 +336,10 @@ function apply(){
     c.classList.toggle('hide',!show);
     if(show)n++;
   });
-  document.getElementById('shown').textContent=n;
-  document.getElementById('shownCat').textContent=(label||'ALL').toUpperCase();
+  var shown=document.getElementById('shown');
+  var shownCat=document.getElementById('shownCat');
+  if(shown) shown.textContent=n;
+  if(shownCat) shownCat.textContent=(label||'ALL').toUpperCase();
   document.getElementById('empty').style.display=n?'none':'block';
   document.getElementById('subsRow').classList.toggle('show',hasSubs);
   if(window.gsap){
