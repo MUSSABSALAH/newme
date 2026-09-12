@@ -66,7 +66,7 @@ Route::name('website.')->group(function () {
     Route::get('/blog', [WebsiteController::class, 'blog'])->name('blog');
     Route::get('/blog/articles/{article:slug}', [WebsiteController::class, 'article'])->name('article');
     Route::get('/blog/recipes/{recipe:slug}', [WebsiteController::class, 'recipe'])->name('recipe');
-    Route::get('/product', [WebsiteController::class, 'product'])->name('product');
+    Route::redirect('/product', '/store', 301);
     Route::get('/product/{product:slug}', [WebsiteController::class, 'productShow'])->name('product.show');
 
     // Shopping cart (session-based).

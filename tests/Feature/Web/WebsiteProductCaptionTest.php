@@ -67,4 +67,10 @@ final class WebsiteProductCaptionTest extends TestCase
             ->assertSee('الحصة: 40 جرام — قطعة واحدة', false)
             ->assertDontSee('الحصة: 40 جرام — قطعة واحدة · لكل قطعة', false);
     }
+
+    public function test_the_legacy_product_demo_page_redirects_to_the_store(): void
+    {
+        $this->get('/product')
+            ->assertRedirect('/store');
+    }
 }

@@ -62,7 +62,10 @@ final class WebsiteCmsContentTest extends TestCase
         $this->get(route('website.article', ['article' => $article->slug]))
             ->assertOk()
             ->assertSee('مقال الترمس', false)
-            ->assertSee('الفقرة الأولى.', false);
+            ->assertSee('الفقرة الأولى.', false)
+            ->assertSee('kit-entry', false)
+            ->assertSee('kit-post', false)
+            ->assertSee('website-iphone.css', false);
     }
 
     public function test_inactive_article_is_not_found(): void
@@ -89,7 +92,10 @@ final class WebsiteCmsContentTest extends TestCase
             ->assertOk()
             ->assertSee('وصفة التوست', false)
             ->assertSee('بيض', false)
-            ->assertSee('اخبز', false);
+            ->assertSee('اخبز', false)
+            ->assertSee('kit-entry', false)
+            ->assertSee('kit-rcols', false)
+            ->assertSee('website-iphone.css', false);
     }
 
     public function test_inactive_recipe_is_not_found(): void

@@ -63,7 +63,7 @@ return [
     'hints' => [
         'slug' => 'اتركه فارغاً ليُولَّد من العنوان الإنجليزي.',
         'lists' => 'سطر واحد لكل عنصر.',
-        'cta_url' => 'مثال: /store أو /product',
+        'cta_url' => 'مثال: /store',
     ],
 
     'messages' => [

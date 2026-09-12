@@ -355,7 +355,7 @@ return [
             'id' => 'bread_multiseed',
             'cat' => 'bakery',
             'sub' => 'bread',
-            'href' => '/product',
+            'href' => '/store',
             'img' => 'bread_multiseed.jpg',
             'kcal' => 119,
             'serving' => 'per_piece',

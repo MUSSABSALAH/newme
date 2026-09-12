@@ -423,7 +423,15 @@
     background: #fff; border: 1px solid var(--ip-gray-2); color: var(--ip-navy); text-decoration: none; padding: 0;
     position: relative; overflow: visible;
   }
-  .nm-chrome .tb-act svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .nm-chrome .tb-act svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+  .nm-chrome .tb-act.tb-cart svg circle { fill: currentColor; stroke: none; }
+  .nm-chrome .tb-act.tb-wa svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    stroke: none;
+    overflow: visible;
+  }
   .nm-chrome .tb-act.on {
     color: var(--ip-orange-deep);
     border-color: rgba(240,127,45,.35);
@@ -556,9 +564,169 @@
 
   .v30-page { padding-bottom: 8px; }
 
+  /* Article / recipe detail: v30 kit rules are desktop-only (>=820px). */
+  .kit-entry {
+    --navy: var(--ip-navy);
+    --ink: var(--ip-ink);
+    --body: var(--ip-body);
+    --muted: var(--ip-muted);
+    --orange: var(--ip-orange);
+    --orange-deep: var(--ip-orange-deep);
+    --gray-2: var(--ip-gray-2);
+    --tile: var(--ip-tile);
+    font-family: 'Cairo', Tahoma, Arial, sans-serif;
+    background: var(--ip-bg);
+    color: var(--ip-body);
+  }
+  .kit-entry .section.tile {
+    background: var(--ip-tile);
+    padding: 20px 0 36px;
+  }
+  .kit-back {
+    display: block;
+    margin: 0 auto 14px;
+    padding: 0 16px;
+    font-size: 13.5px;
+    font-weight: 900;
+    color: var(--ip-orange-deep);
+    text-decoration: none;
+  }
+  .kit-post {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 16px 28px;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .kit-post-media {
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: var(--ip-tile);
+    margin-bottom: 18px;
+  }
+  .kit-post-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .kit-post-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--ip-muted);
+    margin-bottom: 10px;
+  }
+  .kit-post-meta .kit-cat { color: var(--ip-orange-deep); }
+  .kit-post h1 {
+    font-size: 1.65rem;
+    margin: 0 0 14px;
+    line-height: 1.3;
+    color: var(--ip-navy);
+    font-weight: 900;
+    letter-spacing: -.02em;
+  }
+  .kit-post p {
+    margin: 0 0 14px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ip-body);
+    line-height: 1.9;
+  }
+  .kit-hl {
+    background: #fff;
+    border: 1px solid var(--ip-gray-2);
+    border-inline-start: 3px solid var(--ip-orange);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ip-ink);
+    margin: 16px 0;
+  }
+  .kit-cta {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13.5px;
+    font-weight: 900;
+    color: var(--ip-orange-deep);
+    border-bottom: 1.5px solid var(--ip-orange);
+    padding-bottom: 2px;
+    text-decoration: none;
+  }
+  .kit-rmeta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .kit-rmeta span {
+    border: 1.5px solid var(--ip-gray-2);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--ip-ink);
+    background: #fff;
+  }
+  .kit-rcols {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+  }
+  .kit-rbox {
+    background: #fff;
+    border: 1px solid var(--ip-gray-2);
+    border-radius: 16px;
+    padding: 16px 18px;
+  }
+  .kit-rbox h2 {
+    font-size: 12.5px;
+    color: var(--ip-navy);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin: 0 0 10px;
+    border-bottom: 1px solid var(--ip-gray-2);
+    padding-bottom: 8px;
+  }
+  .kit-rbox ul,
+  .kit-rbox ol {
+    margin: 0;
+  }
+  .kit-rbox ul {
+    list-style: none;
+    padding: 0;
+  }
+  .kit-rbox ul li {
+    padding: 8px 0;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ip-ink);
+    border-bottom: 1px dashed var(--ip-gray-2);
+  }
+  .kit-rbox ul li:last-child { border-bottom: none; }
+  .kit-rbox ol {
+    padding-inline-start: 18px;
+  }
+  .kit-rbox ol li {
+    padding: 8px 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ip-body);
+  }
+
   /* Product photos: keep them visible (override .js .aiimg fade + GSAP leftovers) */
   .js .aiimg,
   .js .aiimg.loaded,
+  .kit-post-media img,
   .v30-mob-only .tilelink img,
   .gmain img {
     opacity: 1 !important;

@@ -63,7 +63,7 @@ return [
     'hints' => [
         'slug' => 'Leave blank to generate from the English title.',
         'lists' => 'One item per line.',
-        'cta_url' => 'Example: /store or /product',
+        'cta_url' => 'Example: /store',
     ],
 
     'messages' => [

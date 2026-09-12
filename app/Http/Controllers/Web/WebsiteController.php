@@ -155,11 +155,6 @@ class WebsiteController extends Controller
         ]);
     }
 
-    public function product(): View
-    {
-        return view('website.pages.product');
-    }
-
     public function productShow(Product $product): View
     {
         abort_unless($product->is_active, 404);

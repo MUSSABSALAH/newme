@@ -241,7 +241,7 @@ final class CmsContentSeeder extends Seeder
             [
                 'slug' => 'lupin-avocado-egg-toast',
                 'image' => 'p95_1200x640.jpg',
-                'cta_url' => '/product',
+                'cta_url' => '/store',
                 'category' => ['ar' => 'إفطار', 'en' => 'Breakfast'],
                 'title' => [
                     'ar' => 'توست الترمس بالأفوكادو والبيض',

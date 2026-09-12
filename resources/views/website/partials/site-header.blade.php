@@ -4,7 +4,7 @@
   if ($headerActive === '') {
       $headerActive = match (true) {
           request()->routeIs('website.main') => 'home',
-          request()->routeIs('website.store', 'website.product', 'website.product.show', 'website.cart') => 'store',
+          request()->routeIs('website.store', 'website.product.show', 'website.cart') => 'store',
           request()->routeIs('website.subscribe') => 'subscribe',
           request()->routeIs('website.about') => 'about',
           request()->routeIs('website.make') => 'make',
