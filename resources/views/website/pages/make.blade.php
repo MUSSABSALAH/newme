@@ -114,7 +114,7 @@
     </div>
     <div class="wide-hero rv">
       <div class="ph"><svg><use href="#i-bread"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-journey.jpg') }}" alt="{{ __('website.site.make.alt_journey') }}" onerror="this.remove()">
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-craft.jpg') }}?v={{ filemtime(public_path('assets/images/v30-craft.jpg')) }}" alt="{{ __('website.site.make.alt_journey') }}" onerror="this.remove()">
       <div class="wh-in">
         <span class="wh-kick">{{ __('website.site.make.banner_kick') }}</span>
         <b>{{ __('website.site.make.banner') }}</b>
