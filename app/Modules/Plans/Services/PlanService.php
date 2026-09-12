@@ -25,6 +25,7 @@ final class PlanService
             $plan = new Plan;
             $this->fill($plan, $data);
             $plan->save();
+            $this->exclusiveMostChosen($plan);
 
             $plan->versions()->create([
                 'version_number' => 1,
@@ -45,6 +46,7 @@ final class PlanService
 
             $this->fill($plan, $data);
             $plan->save();
+            $this->exclusiveMostChosen($plan);
 
             $this->audit->log(AuditAction::PlanUpdated, $plan, $old, $this->snapshot($plan->fresh() ?? $plan));
 
@@ -252,11 +254,27 @@ final class PlanService
         $plan->min_delivery_days_per_week = $data->minDeliveryDaysPerWeek;
         $plan->delivery_fee = $data->deliveryFee;
         $plan->is_active = $data->isActive;
+        $plan->is_most_chosen = $data->isMostChosen;
         $plan->sort_order = $data->sortOrder;
 
         if ($data->imagePath !== null) {
             $plan->image_path = $data->imagePath;
         }
+    }
+
+    /**
+     * Only one plan carries the public “most chosen” badge at a time.
+     */
+    private function exclusiveMostChosen(Plan $plan): void
+    {
+        if (! $plan->is_most_chosen) {
+            return;
+        }
+
+        Plan::query()
+            ->whereKeyNot($plan->getKey())
+            ->where('is_most_chosen', true)
+            ->update(['is_most_chosen' => false]);
     }
 
     /**
@@ -268,6 +286,7 @@ final class PlanService
             'goal' => $plan->goal->value,
             'name' => $plan->getTranslations('name'),
             'is_active' => $plan->is_active,
+            'is_most_chosen' => $plan->is_most_chosen,
             'requires_day_selection' => $plan->requires_day_selection,
             'allows_pause' => $plan->allows_pause,
             'min_delivery_days_per_week' => $plan->min_delivery_days_per_week,

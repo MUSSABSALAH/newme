@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Modules\Addresses\Models\Address;
 use App\Modules\Identity\Seeders\RolesAndPermissionsSeeder;
 use App\Modules\Invoices\Models\Invoice;
+use App\Modules\Delivery\Enums\DeliveryStatus;
+use App\Modules\Delivery\Models\SubscriptionDelivery;
+use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Plans\Enums\MealType;
 use App\Modules\Settings\Services\SettingsService;
@@ -216,6 +219,45 @@ final class AccountAreaTest extends TestCase
             ->assertOk()
             ->assertSee('INV-2026-000042')
             ->assertSee(route('website.account.invoice', $invoice), false);
+    }
+
+    public function test_customer_sees_order_shipping_status_on_account_pages(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $order = Order::factory()->for($customer)->status(OrderStatus::OutForDelivery)->create();
+
+        $this->actingAs($customer)
+            ->get(route('website.account', ['tab' => 'orders']))
+            ->assertOk()
+            ->assertSee(__('account.delivery.shipping_status'))
+            ->assertSee(__('orders.statuses.out_for_delivery'));
+
+        $this->actingAs($customer)
+            ->get(route('website.account.order', $order))
+            ->assertOk()
+            ->assertSee(__('account.delivery.shipping_status'))
+            ->assertSee(__('orders.statuses.out_for_delivery'));
+    }
+
+    public function test_customer_sees_subscription_shipment_status(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $subscription = Subscription::factory()->for($customer)->create(['plan_name' => 'Keto']);
+
+        SubscriptionDelivery::factory()->for($subscription)->status(DeliveryStatus::Delivered)->create([
+            'delivery_date' => now()->toDateString(),
+        ]);
+
+        $this->actingAs($customer)
+            ->get(route('website.account', ['tab' => 'subscriptions']))
+            ->assertOk()
+            ->assertSee(__('deliveries.statuses.delivered'));
+
+        $this->actingAs($customer)
+            ->get(route('website.account.subscription', $subscription))
+            ->assertOk()
+            ->assertSee(__('account.delivery.shipping_status'))
+            ->assertSee(__('deliveries.statuses.delivered'));
     }
 
     public function test_customer_can_edit_meals_outside_the_lead_window(): void

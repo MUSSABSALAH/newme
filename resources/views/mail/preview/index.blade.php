@@ -4,8 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ __('mail.preview.title') }}</title>
+    @include('partials.favicons')
+    @if (app()->getLocale() === 'ar')
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    @endif
     <style>
-        body { margin: 0; font-family: Tahoma, Arial, sans-serif; background: #F3F4F4; color: #1A1A1A; }
+        body { margin: 0; font-family: {{ app()->getLocale() === 'ar' ? "'Cairo', Tahoma, Arial, sans-serif" : 'Tahoma, Arial, sans-serif' }}; background: #F3F4F4; color: #1A1A1A; }
         .wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 48px; }
         h1 { color: #128C8C; margin: 0 0 8px; }
         .lead { color: #555; margin: 0 0 24px; }

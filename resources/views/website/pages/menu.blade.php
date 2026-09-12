@@ -112,11 +112,6 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 .mcta-bar .txt small{font-size:10.5px;color:var(--green);font-weight:800}
 .mcta-bar .btn{flex:0 0 auto;min-height:48px;padding:13px 26px;font-size:14px}
 
-footer{background:#0C1F38;color:#9FB4D2;padding:36px 20px 40px;text-align:center;margin-top:16px}
-footer .flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;font-weight:800;margin-bottom:12px}
-footer .flinks a:hover{color:var(--orange-hi)}
-footer .legal{font-size:11px;font-weight:600;color:#6E84A5;line-height:2}
-
 /* mobile menu (site pattern) */
 .mmenu{position:fixed;inset:0;z-index:220;background:var(--bg);display:flex;flex-direction:column;padding:calc(16px + var(--sat)) 24px calc(28px + var(--sab));transform:translateY(-103%);transition:transform .55s cubic-bezier(.77,0,.18,1);overflow-y:auto}
 .mmenu.open{transform:none}

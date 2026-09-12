@@ -27,6 +27,7 @@ return [
     'status' => [
         'active' => 'Active',
         'inactive' => 'Inactive',
+        'most_chosen' => '★ Most chosen',
     ],
 
     'sections' => [
@@ -58,6 +59,8 @@ return [
         'delivery_fee_hint' => 'Set 0 for free delivery.',
         'is_active' => 'Active',
         'is_active_hint' => 'Inactive plans are hidden from customers.',
+        'is_most_chosen' => 'Most chosen',
+        'is_most_chosen_hint' => 'Shows the “★ Most chosen” badge on this plan on the subscriptions page. Only one plan at a time.',
         'sort_order' => 'Sort order',
         'image_hint' => 'PNG or JPG, up to 2 MB.',
     ],

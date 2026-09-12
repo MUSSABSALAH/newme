@@ -4,7 +4,7 @@
   $nmShowCart = $showCart ?? true;
   $nmTab = $active ?? ($nmTab ?? null);
   $isAr = app()->getLocale() === 'ar';
-  $wa = 'https://wa.me/966539603302';
+  $wa = 'https://wa.me/966533360317';
   $nmLangTarget = $isAr ? 'en' : 'ar';
   $nmItems = [
     ['href' => route('website.main'), 'icon' => 't-home', 'title' => __('website.site.nav.home'), 'sub' => __('website.site.nav.sub_home')],
@@ -53,6 +53,20 @@
 
 <div class="nm-chrome" id="nmChrome">
   <div class="topwrap">
+    @if (request()->routeIs('website.main'))
+      @php
+        $announceMessages = $announceMessages ?? [
+            $announceShipping ?? __('website.site.announce.shipping'),
+            __('website.site.announce.partners'),
+            __('website.site.announce.consult'),
+        ];
+      @endphp
+      <div class="announce ship-announce" id="nmAnnounce">
+        @foreach ($announceMessages as $i => $line)
+          <span @class(['on' => $i === 0])>{!! $line !!}</span>
+        @endforeach
+      </div>
+    @endif
     <header class="ip-topbar">
       <a class="brand" href="{{ route('website.main') }}">
         <img src="{{ asset('assets/images/logos/'.$nmChromeLogo) }}" alt="{{ __('website.brand') }}" width="140" height="40">

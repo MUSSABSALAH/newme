@@ -19,15 +19,15 @@
   try {
     /* announcement rotator */
     (function(){
-      var a = document.getElementById('announce');
-      if (!a) return;
-      var s = a.querySelectorAll('span'), i = 0;
-      if (!s.length) return;
-      setInterval(function(){
-        s[i].classList.remove('on');
-        i = (i + 1) % s.length;
-        s[i].classList.add('on');
-      }, 4200);
+      document.querySelectorAll('.announce').forEach(function(a){
+        var s = a.querySelectorAll('span'), i = 0;
+        if (s.length < 2) return;
+        setInterval(function(){
+          s[i].classList.remove('on');
+          i = (i + 1) % s.length;
+          s[i].classList.add('on');
+        }, 4200);
+      });
     })();
 
     /* image fade-in */

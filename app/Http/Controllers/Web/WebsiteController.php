@@ -290,7 +290,7 @@ class WebsiteController extends Controller
             'desc' => $copy['desc'],
             'image_url' => $plan->image_path !== null ? asset('storage/'.$plan->image_path) : null,
             'icon' => self::PLAN_ICONS[$slug] ?? 'i-target',
-            'pop' => $slug === 'keto',
+            'pop' => $plan->is_most_chosen,
             'f' => '1',
             'kcal' => $plan->goal->dailyCalorieTarget(),
             'public_id' => $plan->public_id,
@@ -486,16 +486,13 @@ class WebsiteController extends Controller
             $parent = $category->parent;
             $catSlug = $parent !== null ? $parent->slug : $category->slug;
 
-            $description = (string) $product->getTranslation('description', app()->getLocale(), false);
-            if ($description === '') {
-                $description = $category->label();
-            }
+            $caption = $this->productCaption($product);
 
             $href = route('website.product.show', ['product' => $product->slug]);
 
             return [
                 'name' => $product->label(),
-                'sub' => $description,
+                'sub' => $caption,
                 'image_url' => $product->imageUrl(),
                 'url' => $href,
                 'href' => $href,
@@ -623,6 +620,7 @@ class WebsiteController extends Controller
             'price' => $this->trimDecimal(Money::fromMinor($product->price)->format()),
             'flag' => $product->flag?->value,
             'feat' => $product->is_featured,
+            'caption' => $this->productCaption($product),
         ];
     }
 
@@ -639,7 +637,7 @@ class WebsiteController extends Controller
         return [
             'id' => $product->id,
             'name' => $product->label(),
-            'description' => (string) $product->getTranslation('description', app()->getLocale(), false),
+            'description' => $this->productCaption($product),
             'image_url' => $product->imageUrl(),
             'price' => Money::fromMinor($product->price)->format(),
             'kcal' => (int) $product->calories,
@@ -654,6 +652,24 @@ class WebsiteController extends Controller
                 ? $parent->label().' — '.$category->label()
                 : $category->label(),
         ];
+    }
+
+    /**
+     * Public one-line caption from the product description.
+     * Serving-size labels stay on the nutrition chip — they must not be glued
+     * onto a description that already says e.g. "قطعة واحدة".
+     */
+    private function productCaption(Product $product): string
+    {
+        $description = trim((string) $product->getTranslation('description', app()->getLocale(), false));
+        $description = preg_replace('/\s*\n+\s*/u', ' · ', $description) ?? $description;
+        $description = trim(preg_replace('/[ \t]+/u', ' ', $description) ?? $description);
+
+        if ($description !== '') {
+            return $description;
+        }
+
+        return trim($product->serving_size?->label() ?? '');
     }
 
     /**

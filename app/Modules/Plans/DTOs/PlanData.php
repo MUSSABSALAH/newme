@@ -27,6 +27,7 @@ final class PlanData extends Data
         public readonly int $minDeliveryDaysPerWeek,
         public readonly int $deliveryFee,
         public readonly bool $isActive,
+        public readonly bool $isMostChosen,
         public readonly int $sortOrder,
     ) {}
 
@@ -51,6 +52,7 @@ final class PlanData extends Data
                 ? Money::fromMajor($deliveryFee)->toMinor()
                 : (int) ($deliveryFee ?? 0),
             isActive: (bool) ($attributes['is_active'] ?? false),
+            isMostChosen: (bool) ($attributes['is_most_chosen'] ?? false),
             sortOrder: (int) ($attributes['sort_order'] ?? 0),
         );
     }

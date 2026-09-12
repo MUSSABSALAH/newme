@@ -25,6 +25,9 @@
                 <x-ui.badge :variant="$plan->is_active ? 'success' : 'neutral'">
                     {{ $plan->is_active ? __('plans.status.active') : __('plans.status.inactive') }}
                 </x-ui.badge>
+                @if ($plan->is_most_chosen)
+                    <x-ui.badge variant="info">{{ __('plans.status.most_chosen') }}</x-ui.badge>
+                @endif
             </div>
             <div class="field">
                 <span class="field__label">{{ __('plans.fields.delivery_fee') }}</span>

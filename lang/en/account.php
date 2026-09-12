@@ -135,6 +135,10 @@ return [
     'delivery' => [
         'title' => 'Delivery & payment',
         'address' => 'Delivery address',
+        'shipping_status' => 'Shipping status',
+        'shipping_today' => 'Today’s shipment',
+        'recent' => 'Recent shipments',
+        'no_shipments' => 'No shipments recorded yet.',
     ],
 
     'order' => [

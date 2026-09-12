@@ -46,6 +46,7 @@ return [
         'roles' => 'الأدوار',
         'plans' => 'الباقات',
         'meals' => 'الوجبات',
+        'homepage' => 'الصفحة الرئيسية',
         'articles' => 'المقالات',
         'recipes' => 'الوصفات',
         'consultations' => 'الاستشارات',

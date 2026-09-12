@@ -47,10 +47,6 @@
     </div>
     @endif
 
-    <div class="sub-guarantee">
-      <svg class="i"><use href="#i-shield"/></svg>
-      {{ __('website.subscribe.guarantee') }}
-    </div>
     <div class="sub-trust">
       <span><b>✓</b> {{ __('website.subscribe.trust.cancel') }}</span>
       <span><b>✓</b> {{ __('website.subscribe.trust.switch') }}</span>

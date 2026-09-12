@@ -21,6 +21,10 @@
     <h1>{{ $subscription->plan_name }}</h1>
     <p>
       <span class="pill {{ $subscription->status->value }}">{{ $subscription->status->label() }}</span>
+      @php $shipmentStatus = $subscription->visibleShipmentStatus(); @endphp
+      @if ($shipmentStatus)
+        · <span class="pill {{ $shipmentStatus->value }}">{{ $shipmentStatus->label() }}</span>
+      @endif
       · {{ $subscription->created_at?->translatedFormat('d M Y') }}
     </p>
   </div>
@@ -115,6 +119,18 @@
       'heading' => __('account.delivery.title'),
       'heading_n' => '4',
     ])
+
+    @if ($subscription->deliveries->isNotEmpty())
+      <div class="card">
+        <h2><span class="n">5</span>{{ __('account.delivery.recent') }}</h2>
+        @foreach ($subscription->deliveries->take(14) as $shipment)
+          <div class="kv">
+            <span>{{ $shipment->delivery_date->translatedFormat('d M Y') }}</span>
+            <b><span class="pill {{ $shipment->status->value }}">{{ $shipment->status->label() }}</span></b>
+          </div>
+        @endforeach
+      </div>
+    @endif
   </div>
 
   @if ($subscription->status === \App\Modules\Subscriptions\Enums\SubscriptionStatus::Active && $subscription->allowsPause())

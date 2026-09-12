@@ -135,6 +135,10 @@ return [
     'delivery' => [
         'title' => 'التوصيل والدفع',
         'address' => 'عنوان التوصيل',
+        'shipping_status' => 'حالة الشحن',
+        'shipping_today' => 'شحنة اليوم',
+        'recent' => 'آخر الشحنات',
+        'no_shipments' => 'لا توجد شحنات مسجّلة بعد.',
     ],
 
     'order' => [

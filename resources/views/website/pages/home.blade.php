@@ -11,17 +11,26 @@
 <link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
 <style>
 /* Homepage intro landing — always (not limited to desktop media in v30) */
+html:has(body.is-home-intro){
+  overflow-x:hidden;
+  max-width:100%;
+}
 body.is-home-intro{
   margin:0;overflow-x:hidden;overflow-y:auto;min-height:100vh;min-height:100svh;
+  width:100%;max-width:100%;
   font-family:'Cairo',Tahoma,Arial,sans-serif;
   background:radial-gradient(ellipse 90% 70% at 50% 30%,#12304F 0%,#0A1B31 60%);
   color:#8FA6C6;
+  overscroll-behavior-x:none;
+  touch-action:pan-y;
 }
 body.is-home-intro .nm-chrome{display:none!important}
 .home-intro{
-  position:relative;overflow:visible;min-height:100vh;min-height:100svh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  padding:calc(84px + env(safe-area-inset-top,0px)) 20px calc(72px + env(safe-area-inset-bottom,0px));
+  position:relative;overflow-x:clip;
+  width:100%;max-width:100%;
+  min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;text-align:center;
+  padding:calc(84px + env(safe-area-inset-top,0px)) 0 0;
   box-sizing:border-box;
 }
 .home-intro .io-stars,.home-intro .io-stars2{position:absolute;inset:0;pointer-events:none;background-repeat:repeat;opacity:.5;z-index:1}
@@ -37,9 +46,11 @@ body.is-home-intro .nm-chrome{display:none!important}
     radial-gradient(1px 1px at 240px 210px,rgba(255,160,92,.6),transparent);
   background-size:300px 300px;animation:hiTw 7s ease-in-out infinite alternate-reverse}
 @keyframes hiTw{to{opacity:.15}}
-.home-intro .io-bigword{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:1}
+.home-intro .io-bigword{
+  position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:1;
+  overflow:hidden;width:100%;max-width:100%}
 .home-intro .io-bigword span{
-  font-weight:900;font-size:clamp(120px,26vw,340px);color:transparent;
+  font-weight:900;font-size:clamp(80px,22vw,340px);color:transparent;
   -webkit-text-stroke:1px rgba(255,255,255,.07);letter-spacing:-.02em;white-space:nowrap}
 .home-intro .io-top{
   position:absolute;top:0;inset-inline:0;z-index:20;display:flex;justify-content:space-between;
@@ -62,7 +73,8 @@ body.is-home-intro .nm-chrome{display:none!important}
 /* Orbit stage */
 .home-intro .io-stage{
   --R:min(34vw,248px);position:relative;z-index:5;
-  width:calc(var(--R)*2);height:calc(var(--R)*2);display:grid;place-items:center;margin-bottom:22px}
+  width:calc(var(--R)*2);height:calc(var(--R)*2);max-width:100%;
+  display:grid;place-items:center;margin-bottom:22px}
 .home-intro .io-ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(255,255,255,.18);animation:hiSpin 40s linear infinite}
 .home-intro .io-ring.r2{inset:-11%;border:1px solid rgba(255,255,255,.08);animation-duration:70s;animation-direction:reverse}
 .home-intro .io-arc{
@@ -86,7 +98,7 @@ body.is-home-intro .nm-chrome{display:none!important}
   position:absolute;inset:0;display:grid;place-items:center;background:#122B4A;color:rgba(255,255,255,.2)}
 .home-intro .io-core .ph svg{width:48px;height:48px;fill:currentColor}
 
-.home-intro .io-copy{position:relative;z-index:10;max-width:640px;margin:0 auto}
+.home-intro .io-copy{position:relative;z-index:10;max-width:640px;width:100%;min-width:0;margin:0 auto}
 .home-intro .beats{display:flex;justify-content:center;gap:0;margin-bottom:16px}
 .home-intro .beats span{
   font-size:13px;font-weight:900;color:#5F7797;padding:0 16px;position:relative;
@@ -103,34 +115,52 @@ body.is-home-intro .nm-chrome{display:none!important}
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .home-intro .io-copy p{
   font-size:13.5px;font-weight:600;color:#8FA6C6;margin:12px auto 0;max-width:52ch;line-height:1.95}
-.home-intro .io-ctas{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.home-intro .io-ctas{
+  display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:12px;width:100%;margin:22px auto 0}
 .home-intro .io-enter{
   position:relative;display:inline-flex;align-items:center;justify-content:center;
   background:linear-gradient(105deg,#FFA05C,#F07F2D 55%,#DD6516);color:#fff;font-weight:900;font-size:15px;
   border-radius:999px;padding:15px 34px;min-width:186px;text-decoration:none;
-  box-shadow:0 18px 46px rgba(240,127,45,.4);overflow:hidden}
+  box-shadow:0 18px 46px rgba(240,127,45,.4);overflow:hidden;box-sizing:border-box}
 .home-intro .io-ghost{
   display:inline-flex;align-items:center;justify-content:center;color:#EAF1FA;font-weight:800;
   font-size:13.5px;border:1.5px solid rgba(255,255,255,.14);border-radius:999px;padding:14px 26px;
-  min-width:186px;text-decoration:none;transition:.25s}
+  min-width:186px;text-decoration:none;transition:.25s;box-sizing:border-box}
 .home-intro .io-ghost:hover{border-color:#F07F2D;color:#FFA05C}
 .home-intro .io-strip{
-  position:fixed;bottom:0;inset-inline:0;z-index:30;text-align:center;width:100%;
+  position:relative!important;inset:auto!important;z-index:30;
+  display:block;width:100%;max-width:100%;min-width:0;
+  box-sizing:border-box;margin-top:auto;flex:0 0 auto;
   border-top:1px solid rgba(255,255,255,.12);background:#0A1B31;
-  padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));
-  font-size:12px;font-weight:700;color:#C8D4E6;line-height:1.7;
-  margin:0;
+  padding:16px 24px calc(18px + env(safe-area-inset-bottom,0px));
+  overflow:visible;text-align:center;
+}
+.home-intro .io-strip p{
+  margin:0 auto;max-width:36em;
+  font-size:12px;font-weight:700;color:#C8D4E6;line-height:1.85;
+  white-space:normal;overflow-wrap:break-word;word-break:normal;
+  text-align:center;
 }
 .home-intro .io-strip b{color:#fff;font-weight:900}
 .home-intro .io-stack{
   position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;
-  width:100%;max-width:720px;margin:0 auto;flex:1 0 auto;justify-content:center;
-  padding-bottom:8px;
+  width:100%;max-width:720px;min-width:0;margin:0 auto;flex:1 1 auto;justify-content:center;
+  padding:0 20px 28px;box-sizing:border-box;
 }
 @media (max-width:640px){
-  .home-intro .io-bigword span{font-size:34vw}
-  .home-intro .io-stage{--R:min(38vw,190px);margin-bottom:16px}
-  .home-intro .io-ctas{flex-direction:column;align-items:center}
+  .home-intro .io-top{padding-inline:20px}
+  .home-intro .io-bigword span{font-size:min(42vw,160px)}
+  .home-intro .io-stage{--R:min(34vw,150px);margin-bottom:16px;max-width:100%}
+  .home-intro .io-ring.r2{inset:-6%}
+  .home-intro .io-arc{inset:-3%}
+  .home-intro .io-copy{width:100%;max-width:100%;min-width:0;padding:0;box-sizing:border-box;text-align:center}
+  .home-intro .io-copy p{padding:0 8px}
+  .home-intro .io-ctas{flex-direction:column;align-items:center;justify-content:center;width:100%;margin:20px auto 0}
+  .home-intro .io-enter,.home-intro .io-ghost{
+    width:min(260px,calc(100% - 16px));min-width:0;margin-inline:auto}
+  .home-intro .io-strip{padding-inline:24px}
+  .home-intro .io-strip p{max-width:none}
 }
 @media (max-height:780px){
   .home-intro .io-stage{--R:min(28vw,190px);margin-bottom:14px}
@@ -189,7 +219,7 @@ body.is-home-intro .nm-chrome{display:none!important}
   </div>
 
   <div class="io-strip">
-    {{ __('website.site.intro.strip') }}
+    <p>{{ __('website.site.intro.strip') }}</p>
   </div>
 </section>
 @endsection

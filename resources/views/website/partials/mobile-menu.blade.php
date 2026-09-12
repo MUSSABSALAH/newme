@@ -20,5 +20,5 @@
   @endif
   <a class="mcta" href="{{ route('website.subscribe') }}">{{ __('website.menu.cta') }}</a>
   @include('website.partials.lang-toggle')
-  <div class="mfoot">{{ __('website.menu.foot') }} <a href="https://wa.me/966539603302" style="color:#FFA05C">+966 53 960 3302</a></div>
+  <div class="mfoot">{{ __('website.menu.foot') }} <a href="https://wa.me/966533360317" style="color:#FFA05C">+966533360317</a></div>
 </div>

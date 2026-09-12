@@ -16,6 +16,7 @@ use App\Modules\Promotions\Models\Coupon;
 use App\Modules\Promotions\Models\CouponRedemption;
 use App\Support\Money\Money;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\UniqueConstraintViolationException;
 
 /**
  * The single source of truth for whether a coupon may be used and what it is
@@ -75,8 +76,9 @@ final class CouponRedemptionService
      * Record a use of the coupon against the order or subscription it discounted.
      *
      * Must be called inside the transaction that creates the redeemable: the
-     * coupon row is locked and its global limit re-checked, otherwise two
-     * concurrent checkouts could both slip past the last redemption.
+     * coupon row is locked and both the global and per-customer limits are
+     * re-checked, otherwise two concurrent checkouts could both slip through.
+     * A second call for the same order or subscription is a no-op.
      *
      * @throws CouponRejectedException
      */
@@ -85,8 +87,17 @@ final class CouponRedemptionService
         /** @var Coupon $locked */
         $locked = Coupon::query()->lockForUpdate()->findOrFail($coupon->getKey());
 
+        $existing = $this->existingRedemption($locked, $redeemable);
+        if ($existing instanceof CouponRedemption) {
+            return $existing;
+        }
+
         if ($locked->isExhausted()) {
             throw new CouponRejectedException(CouponRejection::Exhausted);
+        }
+
+        if ($this->userLimitReached($locked, $user, lock: true)) {
+            throw new CouponRejectedException(CouponRejection::AlreadyUsed);
         }
 
         $redemption = new CouponRedemption;
@@ -95,7 +106,17 @@ final class CouponRedemptionService
         $redemption->redeemable_type = $redeemable::class;
         $redemption->redeemable_id = (int) $redeemable->getKey();
         $redemption->discount_minor = $discount->toMinor();
-        $redemption->save();
+
+        try {
+            $redemption->save();
+        } catch (UniqueConstraintViolationException) {
+            $replay = $this->existingRedemption($locked, $redeemable);
+            if ($replay instanceof CouponRedemption) {
+                return $replay;
+            }
+
+            throw new CouponRejectedException(CouponRejection::AlreadyUsed);
+        }
 
         $locked->increment('redemptions_count');
 
@@ -188,16 +209,28 @@ final class CouponRedemptionService
         }
     }
 
-    private function userLimitReached(Coupon $coupon, User $user): bool
+    private function userLimitReached(Coupon $coupon, User $user, bool $lock = false): bool
     {
         if ($coupon->max_redemptions_per_user === null) {
             return false;
         }
 
-        $used = $coupon->redemptions()
-            ->where('user_id', $user->getKey())
-            ->count();
+        $query = $coupon->redemptions()->where('user_id', $user->getKey());
 
-        return $used >= $coupon->max_redemptions_per_user;
+        if ($lock) {
+            $query->lockForUpdate();
+        }
+
+        return $query->count() >= $coupon->max_redemptions_per_user;
+    }
+
+    private function existingRedemption(Coupon $coupon, Model $redeemable): ?CouponRedemption
+    {
+        return CouponRedemption::query()
+            ->where('coupon_id', $coupon->getKey())
+            ->where('redeemable_type', $redeemable::class)
+            ->where('redeemable_id', (int) $redeemable->getKey())
+            ->lockForUpdate()
+            ->first();
     }
 }

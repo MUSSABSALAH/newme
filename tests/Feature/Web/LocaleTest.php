@@ -51,4 +51,21 @@ final class LocaleTest extends TestCase
             ->assertSee('lang="ar"', false)
             ->assertSee('dir="rtl"', false);
     }
+
+    public function test_first_visit_opens_in_arabic_for_any_user(): void
+    {
+        $this->get(route('website.home'), ['Accept-Language' => 'en-US,en;q=0.9'])
+            ->assertOk()
+            ->assertSee('lang="ar"', false)
+            ->assertSee('dir="rtl"', false);
+    }
+
+    public function test_explicit_english_choice_is_still_honoured(): void
+    {
+        $this->withUnencryptedCookie(SetWebLocale::COOKIE, 'en')
+            ->get(route('website.home'))
+            ->assertOk()
+            ->assertSee('lang="en"', false)
+            ->assertSee('dir="ltr"', false);
+    }
 }

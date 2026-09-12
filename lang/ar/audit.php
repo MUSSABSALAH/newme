@@ -76,6 +76,9 @@ return [
             'updated' => 'تعديل وصفة',
             'archived' => 'أرشفة وصفة',
         ],
+        'homepage_content' => [
+            'updated' => 'تحديث محتوى الصفحة الرئيسية',
+        ],
         'category' => [
             'created' => 'إنشاء فئة',
             'updated' => 'تعديل فئة',

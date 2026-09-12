@@ -16,21 +16,43 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="cart-url" content="{{ route('website.cart.store') }}">
 <title>@yield('title', __('website.home.title'))</title>
+@include('partials.favicons')
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ $siteCss['website.css'] }}">
 <link rel="stylesheet" href="{{ $siteCss['website-v30.css'] }}">
 <link rel="stylesheet" href="{{ $siteCss['website-iphone.css'] }}">
 @stack('styles')
+<style>
+@media (max-width: 819.98px) {
+  :root {
+    --font: 'Cairo', Tahoma, Arial, sans-serif;
+    --w-font: 'Cairo', Tahoma, Arial, sans-serif;
+    --mono: 'Cairo', Tahoma, Arial, sans-serif;
+    --w-mono: 'Cairo', Tahoma, Arial, sans-serif;
+  }
+  html[lang="ar"],
+  html[lang="ar"] body,
+  html[lang="ar"] button,
+  html[lang="ar"] input,
+  html[lang="ar"] textarea,
+  html[lang="ar"] select,
+  html[lang="ar"] .nm-ip,
+  html[lang="ar"] .nm-chrome,
+  html[lang="ar"] .v30-mob-only {
+    font-family: 'Cairo', Tahoma, Arial, sans-serif;
+  }
+}
+</style>
 @if ($rtl)
 <style>
 html[lang="ar"]{
   --font:'Cairo',Tahoma,Arial,sans-serif;
   --w-font:'Cairo',Tahoma,Arial,sans-serif;
-  --mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --w-mono:'Cairo',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --mono:'Cairo',Tahoma,Arial,sans-serif;
+  --w-mono:'Cairo',Tahoma,Arial,sans-serif;
   font-family:'Cairo',Tahoma,Arial,sans-serif;
 }
 html[lang="ar"] body,

@@ -5,11 +5,14 @@
   $phones = preg_split('/\s*[·•|]\s*/u', (string) __('website.site.contact.phone')) ?: [];
   $phones = array_values(array_filter(array_map('trim', $phones)));
   $socialHandle = __('website.site.contact.social_handle');
+  $linkedinUrl = trim((string) __('website.site.contact.social_linkedin_url'));
   $socials = [
+    ['url' => 'https://wa.me/966533360317', 'aria' => __('website.site.contact.social_whatsapp_aria'), 'icon' => 'whatsapp'],
     ['url' => 'https://www.instagram.com/'.$socialHandle, 'aria' => __('website.site.contact.social_instagram_aria', ['handle' => $socialHandle]), 'icon' => 'instagram'],
     ['url' => 'https://www.tiktok.com/@'.$socialHandle, 'aria' => __('website.site.contact.social_tiktok_aria', ['handle' => $socialHandle]), 'icon' => 'tiktok'],
     ['url' => 'https://www.snapchat.com/add/'.$socialHandle, 'aria' => __('website.site.contact.social_snapchat_aria', ['handle' => $socialHandle]), 'icon' => 'snapchat'],
     ['url' => 'https://x.com/'.$socialHandle, 'aria' => __('website.site.contact.social_x_aria', ['handle' => $socialHandle]), 'icon' => 'x'],
+    ['url' => $linkedinUrl !== '' ? $linkedinUrl : route('website.main'), 'aria' => __('website.site.contact.social_linkedin_aria'), 'icon' => 'linkedin'],
   ];
 @endphp
 @once
@@ -18,6 +21,14 @@ footer.w-foot-full.site-footer,
 footer.w-foot-simple.site-footer {
   text-align: start !important;
   font-family: 'Cairo', Tahoma, Arial, sans-serif;
+}
+footer.site-footer a,
+footer.site-footer a:hover,
+footer.site-footer a:focus,
+footer.site-footer a:active,
+footer.site-footer a:visited {
+  text-decoration: none !important;
+  border-bottom: none !important;
 }
 html[lang="ar"] footer.site-footer,
 html[lang="ar"] footer.site-footer h4,
@@ -142,7 +153,7 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
 
     <div class="f-col">
       <h4>{{ __('website.footer.contact_title') }}</h4>
-      <a href="https://wa.me/966539603302">{{ __('website.site.contact.phone_label') }}</a>
+      <a href="https://wa.me/966533360317">{{ __('website.site.contact.phone_label') }}</a>
       <span class="f-muted f-phones">
         @foreach ($phones as $phone)
           <bdi class="f-num" dir="ltr">{{ $phone }}</bdi>
@@ -155,12 +166,16 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
         <div class="f-social-icons">
           @foreach ($socials as $social)
           <a href="{{ $social['url'] }}" rel="noopener noreferrer" target="_blank" aria-label="{{ $social['aria'] }}"@if($social['icon'] === 'snapchat') data-net="snapchat"@endif>
-            @if ($social['icon'] === 'instagram')
+            @if ($social['icon'] === 'whatsapp')
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .16 5.33.16 11.88c0 2.1.55 4.14 1.6 5.95L0 24l6.3-1.65a11.9 11.9 0 0 0 5.73 1.46h.01c6.54 0 11.88-5.33 11.88-11.88 0-3.17-1.24-6.16-3.4-8.45zM12.04 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.74.98 1-3.64-.24-.37a9.86 9.86 0 0 1-1.51-5.3C2.14 6.44 6.59 2 12.04 2c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.98c0 5.45-4.44 9.92-9.88 9.92zm5.43-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+            @elseif ($social['icon'] === 'instagram')
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @elseif ($social['icon'] === 'tiktok')
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
             @elseif ($social['icon'] === 'snapchat')
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3.7 0 6.4 3.2 6.4 7.3c0 1.5-.2 2.6.9 3.2c.9.5 1.5 1.1 1.5 2c0 1.3-1.8 2-4 2.4c-.5 1.5-2.3 3.1-4.8 3.1s-4.3-1.6-4.8-3.1c-2.2-.4-4-1.1-4-2.4c0-.9.6-1.5 1.5-2c1.1-.6.9-1.7.9-3.2C5.6 6.2 8.3 3 12 3z"/></svg>
+            @elseif ($social['icon'] === 'linkedin')
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
             @else
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
             @endif
@@ -202,7 +217,7 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
     <a href="{{ route('website.store') }}">{{ __('website.nav.store') }}</a>
     <a href="{{ route('website.subscribe') }}">{{ __('website.nav.subscribe') }}</a>
     <a href="{{ route('website.consult') }}">{{ __('website.nav.consult') }}</a>
-    <a href="https://wa.me/966539603302">{{ __('website.footer.whatsapp') }}</a>
+    <a href="https://wa.me/966533360317">{{ __('website.footer.whatsapp') }}</a>
   </div>
   <div class="legal">{!! __('website.footer.legal') !!}</div>
 </footer>

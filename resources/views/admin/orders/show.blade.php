@@ -43,25 +43,22 @@
 
                 @can('update', $order)
                     @if (! $order->status->isTerminal())
-                        <form method="POST" action="{{ route('admin.orders.status', $order) }}" class="record-section__form">
+                        <form method="POST" action="{{ route('admin.orders.status', $order) }}" class="record-section__form order-status-form">
                             @csrf
                             @method('PATCH')
 
-                            <div class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
-                                <x-form.field :label="__('orders.show.change_status')" name="status" style="margin:0;flex:1;min-width:220px;">
-                                    <x-form.select name="status">
-                                        @foreach ($statusOptions as $option)
-                                            <option value="{{ $option->value }}" @selected($order->status === $option)>
-                                                {{ $option->label() }}
-                                            </option>
-                                        @endforeach
-                                    </x-form.select>
-                                </x-form.field>
+                            <label class="field__label" for="order-status-{{ $order->getKey() }}">{{ __('orders.show.change_status') }}</label>
+                            <select name="status" id="order-status-{{ $order->getKey() }}" class="select">
+                                @foreach ($statusOptions as $option)
+                                    <option value="{{ $option->value }}" @selected($order->status === $option)>
+                                        {{ $option->label() }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                                <x-ui.button type="submit">
-                                    <x-ui.icon name="check" size="sm" /> {{ __('messages.actions.save') }}
-                                </x-ui.button>
-                            </div>
+                            <x-ui.button type="submit">
+                                <x-ui.icon name="check" size="sm" /> {{ __('messages.actions.save') }}
+                            </x-ui.button>
                         </form>
                     @else
                         <p class="text-muted" style="margin: 12px 0 0;">{{ __('orders.show.status_locked') }}</p>

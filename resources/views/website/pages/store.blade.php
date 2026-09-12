@@ -59,7 +59,7 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .phead aside div span{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.04em}
 
 /* ===== premium tabs (mobile store only — do not leak onto desktop shop-bar) ===== */
-.v30-mob-only .filters{position:sticky;top:calc(66px + var(--sat));z-index:80;background:rgba(248,246,241,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-block:1px solid var(--line)}
+.v30-mob-only .filters{position:sticky;top:calc(var(--ip-topbar,52px) + var(--ip-sat,var(--sat)));z-index:80;background:rgba(248,246,241,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-block:1px solid var(--line)}
 .v30-mob-only .tabs{display:flex;gap:30px;overflow-x:auto;padding:0 24px;max-width:1280px;margin:0 auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .v30-mob-only .tabs::-webkit-scrollbar{display:none}
 .v30-mob-only .tab{flex-shrink:0;background:none;border:none;padding:16px 2px 14px;font-weight:900;font-size:14px;color:var(--muted);transition:color .2s;position:relative;display:inline-flex;align-items:baseline;gap:7px;letter-spacing:.01em}
@@ -100,6 +100,7 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .meta{padding-top:14px;display:flex;flex-direction:column;flex:1}
 .meta .cat{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-family:var(--mono);margin-bottom:5px}
 .meta h3{font-size:16px;font-weight:900;line-height:1.4}
+.meta .blurb{font-size:12.5px;font-weight:700;color:var(--body);margin:4px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .meta .pline{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
 .meta .pr{font-family:var(--mono);font-size:14.5px;font-weight:700;color:var(--ink)}
 .meta .pr small{font-size:10px;color:var(--muted);font-family:var(--font);font-weight:800}
@@ -110,21 +111,42 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 
 /* Mobile store: full product cards (image + details + CTA) */
 @media(max-width:819.98px){
-  .v30-mob-only .filters{display:none!important}
+  .v30-mob-only .filters{
+    display:block!important;
+    position:sticky;
+    top:calc(var(--ip-topbar,52px) + var(--ip-sat,0px));
+    z-index:90;
+    background:rgba(247,245,241,.96);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border:0;
+    border-bottom:1px solid var(--line);
+    padding:10px 0 8px;
+  }
+  .v30-mob-only .tabs{gap:7px;padding:0 16px}
+  .v30-mob-only .tab{
+    background:#fff;border:1.5px solid var(--line-2);border-radius:999px;
+    padding:9px 14px;font-size:12.5px;color:var(--body)
+  }
+  .v30-mob-only .tab::after{display:none}
+  .v30-mob-only .tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .v30-mob-only .tab.on sup{color:rgba(255,255,255,.75)}
+  .v30-mob-only .subs-row{padding:8px 16px 0;border-top:0}
   .js .aiimg,.js .aiimg.loaded,.tilelink img{opacity:1!important;visibility:visible!important}
   .shop-wrap{padding:22px 16px 72px}
   .grid{grid-template-columns:1fr 1fr;gap:16px 12px}
-  .card,.card.feat:not(.hide){grid-column:auto;background:#F3EEE6;border-radius:18px;overflow:hidden;padding:0 0 12px;box-shadow:0 4px 16px rgba(16,38,63,.06)}
+  .card,.card.feat:not(.hide){grid-column:auto;height:100%;background:#F3EEE6;border-radius:18px;overflow:hidden;padding:0 0 12px;box-shadow:0 4px 16px rgba(16,38,63,.06)}
   .card.feat .tilelink{aspect-ratio:1/1;height:auto;min-height:0}
   .tilelink{border-radius:18px 18px 0 0;aspect-ratio:1/1}
   .kchip,.tilelink .quick,.meta .pline .arrow,.meta .p-specs{display:none!important}
   .flag{top:10px;inset-inline-start:10px;background:rgba(255,255,255,.95);border-radius:999px;padding:5px 10px;font-size:10px;letter-spacing:0;text-transform:none;font-weight:800}
-  .meta{padding:12px 12px 0;gap:0}
+  .meta{padding:12px 12px 0;gap:0;flex:1;min-height:0}
   .meta h3{font-size:14px;font-weight:900;color:var(--ink);order:1;margin:0}
-  .meta .cat{order:2;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;font-family:var(--font);color:var(--body);margin:4px 0 0}
-  .meta .pline{order:4;border:0;padding:0;margin:10px 0}
+  .meta .blurb{order:2;margin:4px 0 0}
+  .meta .cat{order:3;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;font-family:var(--font);color:var(--body);margin:4px 0 0}
+  .meta .pline{order:4;border:0;padding:0;margin:0;margin-top:auto}
   .meta .pr{font-family:var(--font);font-size:18px;font-weight:900}
-  .meta .p-view{display:flex;order:5;justify-content:center;align-items:center;background:var(--navy);color:#fff;font-weight:800;font-size:13px;border-radius:999px;padding:12px;min-height:44px;margin-top:2px}
+  .meta .p-view{display:flex;order:5;justify-content:center;align-items:center;background:var(--navy);color:#fff;font-weight:800;font-size:13px;border-radius:999px;padding:12px;min-height:44px;margin-top:8px;flex-shrink:0}
 }
 
 /* ===== transparent nutrition rollover ===== */
@@ -163,11 +185,6 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 
 .empty{text-align:center;padding:70px 20px;font-weight:800;color:var(--muted);display:none;letter-spacing:.04em}
 
-footer{background:var(--navy);color:#9FB4D2;padding:44px 24px calc(48px + var(--sab));text-align:center}
-footer .flinks{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-size:12.5px;font-weight:800;margin-bottom:16px;letter-spacing:.02em}
-footer .flinks a:hover{color:var(--orange-hi)}
-footer .legal{font-size:10.5px;font-weight:600;color:#6E84A5;line-height:2;letter-spacing:.03em}
-
 /* ===== iPhone menu (design unchanged on desktop) ===== */
 .burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line,var(--gray-2,#E2DCCE));background:transparent;color:var(--ink,var(--navy,#122B4A));flex-shrink:0}
 .burger svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
@@ -205,11 +222,6 @@ body.menu-open{overflow:hidden}
       <h1>{!! __('website.store.heading') !!}</h1>
       <p class="lead">{{ __('website.store.lead') }}</p>
     </div>
-    <aside>
-      <div><b>{{ $total }}</b><span>{{ __('website.store.stat_products') }}</span></div>
-      <div><b>05:00</b><span>{{ __('website.store.stat_bake') }}</span></div>
-      <div><b>≤48h</b><span>{{ __('website.store.stat_delivery') }}</span></div>
-    </aside>
   </div>
 </header>
 
@@ -267,6 +279,9 @@ body.menu-open{overflow:hidden}
         <button type="button" class="nut-toggle" aria-label="{{ __('website.store.nutrition_aria') }}">i</button>
         <div class="meta">
           <h3>{{ $p['name'] }}</h3>
+          @if (!empty($p['caption']))
+            <p class="blurb">{{ $p['caption'] }}</p>
+          @endif
           <span class="cat">{{ $p['cat_label'] }}</span>
           <div class="p-specs">
             @if ($p['protein'] !== '' && $p['protein'] !== null)

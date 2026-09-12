@@ -102,6 +102,9 @@
         </div>
         <div class="bd">
           <h3><a href="{{ $href }}">{{ $p['name'] }}</a></h3>
+          @if (!empty($p['sub']))
+            <p class="p-sub">{{ $p['sub'] }}</p>
+          @endif
           <p class="pr">{{ $p['price'] }} <x-ui.sar /></p>
         </div>
       </article>

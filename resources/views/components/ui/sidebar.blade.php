@@ -43,6 +43,7 @@
             'label' => __('messages.nav.groups.cms'),
             'icon' => 'newspaper',
             'items' => [
+                ['label' => __('messages.nav.homepage'), 'route' => 'admin.homepage.edit', 'icon' => 'house', 'permission' => PermissionName::CmsView],
                 ['label' => __('messages.nav.articles'), 'route' => 'admin.articles.index', 'icon' => 'file-text', 'permission' => PermissionName::CmsView],
                 ['label' => __('messages.nav.recipes'), 'route' => 'admin.recipes.index', 'icon' => 'chef-hat', 'permission' => PermissionName::CmsView],
             ],

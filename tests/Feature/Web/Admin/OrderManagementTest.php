@@ -211,7 +211,7 @@ final class OrderManagementTest extends TestCase
         $this->actingAs($this->admin())
             ->from(route('admin.orders.show', $order))
             ->patch(route('admin.orders.status', $order), [
-                'status' => OrderStatus::Delivered->value,
+                'status' => OrderStatus::Pending->value,
             ])
             ->assertRedirect(route('admin.orders.show', $order))
             ->assertSessionHasErrors('status');
@@ -249,6 +249,17 @@ final class OrderManagementTest extends TestCase
         $this->assertSame(OrderStatus::Confirmed, $order->refresh()->status);
     }
 
+    public function test_the_index_does_not_offer_status_controls(): void
+    {
+        Order::factory()->create(['status' => OrderStatus::Confirmed]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.orders.index'))
+            ->assertOk()
+            ->assertDontSee(__('orders.show.change_status'), false)
+            ->assertDontSee('name="status" id="order-status-', false);
+    }
+
     public function test_the_detail_page_offers_status_controls(): void
     {
         $order = Order::factory()->create(['status' => OrderStatus::Confirmed]);
@@ -259,6 +270,7 @@ final class OrderManagementTest extends TestCase
             ->assertSee(__('orders.show.fulfillment'))
             ->assertSee(__('orders.show.change_status'))
             ->assertSee(__('orders.statuses.preparing'))
-            ->assertDontSee(__('orders.statuses.out_for_delivery'));
+            ->assertSee(__('orders.statuses.out_for_delivery'))
+            ->assertSee(__('orders.statuses.delivered'));
     }
 }

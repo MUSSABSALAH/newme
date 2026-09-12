@@ -12,8 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
  * Resolves the locale for web requests.
  *
  * Priority: an explicit user choice persisted in a long-lived cookie (so it
- * survives logout/session invalidation), then the session, then the browser's
- * Accept-Language header, then the default. Locale affects presentation only.
+ * survives logout/session invalidation), then the session, then Arabic.
+ * The browser Accept-Language header is ignored so every first visit opens
+ * in Arabic. Locale affects presentation only.
  */
 final class SetWebLocale
 {
@@ -21,7 +22,7 @@ final class SetWebLocale
 
     public const COOKIE = 'locale';
 
-    private const DEFAULT_LOCALE = 'en';
+    private const DEFAULT_LOCALE = 'ar';
 
     public function handle(Request $request, Closure $next): Response
     {
@@ -44,10 +45,6 @@ final class SetWebLocale
             return $session;
         }
 
-        $preferred = $request->getPreferredLanguage(self::SUPPORTED_LOCALES);
-
-        return is_string($preferred) && in_array($preferred, self::SUPPORTED_LOCALES, true)
-            ? $preferred
-            : self::DEFAULT_LOCALE;
+        return self::DEFAULT_LOCALE;
     }
 }

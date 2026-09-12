@@ -14,8 +14,8 @@ use Illuminate\Validation\Validator;
 /**
  * Moves a store order along from the shipping board.
  *
- * Only the two fulfillment steps are accepted here: confirming, preparing and
- * cancelling an order belong to the order desk, not to the person carrying it.
+ * Shipping can mark an order confirmed, out for delivery, or delivered.
+ * Preparing and cancelling stay on the order desk.
  */
 final class AdvanceOrderRequest extends FormRequest
 {
@@ -34,6 +34,7 @@ final class AdvanceOrderRequest extends FormRequest
             'status' => [
                 'required',
                 Rule::in([
+                    OrderStatus::Confirmed->value,
                     OrderStatus::OutForDelivery->value,
                     OrderStatus::Delivered->value,
                 ]),

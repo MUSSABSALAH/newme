@@ -73,6 +73,7 @@ return [
         'view_all_consultations' => 'كل الاستشارات',
         'view_all_customers' => 'كل العملاء',
         'view_all_products' => 'كل المنتجات',
+        'edit_homepage' => 'محتوى الصفحة الرئيسية',
         'view_all_articles' => 'كل المقالات',
         'view_all_recipes' => 'كل الوصفات',
         'empty_orders' => 'لا توجد طلبات بعد.',

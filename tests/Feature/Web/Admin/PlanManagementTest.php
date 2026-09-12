@@ -125,6 +125,24 @@ final class PlanManagementTest extends TestCase
         $this->assertSame('Updated Plan', $plan->refresh()->getTranslation('name', 'en'));
     }
 
+    public function test_admin_can_mark_a_plan_as_most_chosen(): void
+    {
+        $previous = Plan::factory()->create(['is_most_chosen' => true]);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.plans.store'), $this->payload([
+                'name' => ['ar' => 'الأشهر', 'en' => 'Most Chosen Plan'],
+                'is_most_chosen' => '1',
+            ]))
+            ->assertRedirect();
+
+        $chosen = Plan::query()->where('is_most_chosen', true)->get();
+
+        $this->assertCount(1, $chosen);
+        $this->assertSame('Most Chosen Plan', $chosen->first()?->getTranslation('name', 'en'));
+        $this->assertFalse($previous->refresh()->is_most_chosen);
+    }
+
     public function test_admin_can_archive_a_plan(): void
     {
         $this->actingAs($this->admin())->post(route('admin.plans.store'), $this->payload());

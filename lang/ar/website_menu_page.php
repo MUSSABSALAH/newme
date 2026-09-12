@@ -10,7 +10,7 @@ return [
     'target_prefix' => 'الهدف اليومي التقريبي:',
     'target_suffix' => 'سعرة',
     'cta_start' => 'ابدأ الاشتراك ←',
-    'cta_sub_default' => 'خصم حتى 31% · إلغاء في أي وقت',
+    'cta_sub_default' => 'إلغاء في أي وقت',
     'js' => [
         'brand_suffix' => 'نيو مي',
         'title_prefix' => 'قائمة',
@@ -24,7 +24,7 @@ return [
         'cta_ready' => 'جاهز؟ اشترك في برنامج :plan',
         'cta_start' => 'ابدأ الاشتراك ←',
         'cta_continue' => 'متابعة الاشتراك ←',
-        'cta_sub_default' => 'خصم حتى 31% · إلغاء في أي وقت',
+        'cta_sub_default' => 'إلغاء في أي وقت',
         'cta_sub_wizard' => 'ستعود لخطوات الاشتراك: الأيام ثم المدة ثم الدفع',
         'cta_picked' => 'اخترت :n :dishes — أكمل التواريخ والدفع',
         'cta_picked_zero' => 'أكمل اختيارك ثم تابع التواريخ والدفع',

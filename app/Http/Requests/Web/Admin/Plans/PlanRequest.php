@@ -39,6 +39,7 @@ abstract class PlanRequest extends FormRequest
             'min_delivery_days_per_week' => ['required', 'integer', 'min:1', 'max:7'],
             'delivery_fee' => ['required', 'numeric', 'min:0'],
             'is_active' => ['boolean'],
+            'is_most_chosen' => ['boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'image' => ['nullable', 'image', 'max:2048'],
 

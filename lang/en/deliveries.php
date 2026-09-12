@@ -42,6 +42,7 @@ return [
     ],
 
     'actions' => [
+        'confirm' => 'Confirmed',
         'dispatch' => 'Out for delivery',
         'deliver' => 'Delivered',
         'fail' => 'Not delivered',
@@ -50,6 +51,7 @@ return [
 
     'statuses' => [
         'pending' => 'Waiting',
+        'confirmed' => 'Confirmed',
         'dispatched' => 'Out for delivery',
         'delivered' => 'Delivered',
         'failed' => 'Not delivered',

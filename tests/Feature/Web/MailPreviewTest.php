@@ -31,7 +31,9 @@ final class MailPreviewTest extends TestCase
                 ->assertSee('assets/images/mail/renew-strip.jpg', false)
                 ->assertSee(__('website.brand'), false)
                 ->assertSee('جدد حياتك', false)
-                ->assertSee('PREP - BAKE - RENEW', false);
+                ->assertSee('PREP - BAKE - RENEW', false)
+                ->assertSee("family=Cairo", false)
+                ->assertSee("'Cairo', Tahoma, Arial, sans-serif", false);
         }
     }
 

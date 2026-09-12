@@ -110,6 +110,24 @@ final class DeliveryBoardTest extends TestCase
             ->assertDontSee('Open queue');
     }
 
+    public function test_the_officer_can_confirm_a_subscription_stop(): void
+    {
+        $subscription = $this->stopForToday('Lina Fahad', 'Jeddah');
+
+        $this->actingAs($this->officer())
+            ->patch(route('admin.deliveries.stops.update', $subscription), [
+                'date' => now()->toDateString(),
+                'status' => DeliveryStatus::Confirmed->value,
+            ])
+            ->assertRedirect(route('admin.deliveries.index'))
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseHas('subscription_deliveries', [
+            'subscription_id' => $subscription->getKey(),
+            'status' => DeliveryStatus::Confirmed->value,
+        ]);
+    }
+
     public function test_the_officer_can_dispatch_and_deliver_a_subscription_stop(): void
     {
         $subscription = $this->stopForToday('Lina Fahad', 'Jeddah');
@@ -185,9 +203,57 @@ final class DeliveryBoardTest extends TestCase
             ->assertSessionHasErrors('date');
     }
 
-    public function test_the_officer_can_take_a_store_order_onto_the_road_and_hand_it_over(): void
+    public function test_newer_orders_and_subscriptions_appear_first(): void
     {
-        $order = $this->openOrder('Sara Ali', 'Riyadh', OrderStatus::Preparing);
+        $older = $this->openOrder('Older order', 'Riyadh', OrderStatus::Confirmed);
+        $older->forceFill(['placed_at' => now()->subHours(3)])->save();
+
+        $newer = $this->openOrder('Newer order', 'Jeddah', OrderStatus::Confirmed);
+        $newer->forceFill(['placed_at' => now()->subHour()])->save();
+
+        $olderStop = $this->stopForToday('Older subscription', 'Riyadh');
+        $olderStop->forceFill(['created_at' => now()->subHours(2)])->save();
+
+        $newerStop = $this->stopForToday('Newer subscription', 'Jeddah');
+        $newerStop->forceFill(['created_at' => now()->subHour()])->save();
+
+        $this->actingAs($this->officer())
+            ->get(route('admin.deliveries.index'))
+            ->assertOk()
+            ->assertSeeInOrder(['Newer order', 'Older order'])
+            ->assertSeeInOrder(['Newer subscription', 'Older subscription']);
+    }
+
+    public function test_the_store_order_cards_offer_a_status_control(): void
+    {
+        $this->openOrder('Sara Ali', 'Riyadh', OrderStatus::Confirmed);
+
+        $this->actingAs($this->officer())
+            ->get(route('admin.deliveries.index'))
+            ->assertOk()
+            ->assertSee(__('orders.show.change_status'))
+            ->assertSee(__('orders.statuses.out_for_delivery'))
+            ->assertSee(__('orders.statuses.delivered'));
+    }
+
+    public function test_an_order_officer_can_update_status_from_the_board(): void
+    {
+        $order = $this->openOrder('Sara Ali', 'Riyadh', OrderStatus::Confirmed);
+
+        $this->actingAs($this->staff(RoleName::OrderOfficer))
+            ->from(route('admin.deliveries.index'))
+            ->patch(route('admin.orders.status', $order), [
+                'status' => OrderStatus::Preparing->value,
+            ])
+            ->assertRedirect(route('admin.deliveries.index'))
+            ->assertSessionHas('success');
+
+        $this->assertSame(OrderStatus::Preparing, $order->refresh()->status);
+    }
+
+    public function test_the_officer_can_take_a_confirmed_store_order_onto_the_road_and_hand_it_over(): void
+    {
+        $order = $this->openOrder('Sara Ali', 'Riyadh', OrderStatus::Confirmed);
         $officer = $this->officer();
 
         $this->actingAs($officer)

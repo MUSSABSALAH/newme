@@ -55,7 +55,7 @@ final class AccountController extends Controller
             ->get();
 
         $subscriptions = $user->subscriptions()
-            ->with('plan')
+            ->with(['plan', 'deliveries'])
             ->latest()
             ->get();
 
@@ -145,7 +145,7 @@ final class AccountController extends Controller
     {
         abort_unless($subscription->user_id === Auth::id(), 404);
 
-        $subscription->load('plan.meals');
+        $subscription->load(['plan.meals', 'deliveries']);
 
         return view('website.account.subscription', [
             'subscription' => $subscription,

@@ -76,7 +76,13 @@
                             @method('PATCH')
                             <input type="hidden" name="date" value="{{ $stop->date->toDateString() }}">
 
-                            @if ($status->canTransitionTo(DeliveryStatus::Dispatched))
+                            @if ($status !== DeliveryStatus::Confirmed && $status->canTransitionTo(DeliveryStatus::Confirmed))
+                                <x-ui.button type="submit" name="status" value="{{ DeliveryStatus::Confirmed->value }}" variant="ghost" class="btn--sm">
+                                    {{ __('deliveries.actions.confirm') }}
+                                </x-ui.button>
+                            @endif
+
+                            @if ($status !== DeliveryStatus::Dispatched && $status->canTransitionTo(DeliveryStatus::Dispatched))
                                 <x-ui.button type="submit" name="status" value="{{ DeliveryStatus::Dispatched->value }}" variant="ghost" class="btn--sm">
                                     {{ __('deliveries.actions.dispatch') }}
                                 </x-ui.button>

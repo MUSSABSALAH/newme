@@ -25,13 +25,13 @@ class StoreCatalogSeeder extends Seeder
         'shabura' => ['ar' => 'الشابورة', 'en' => 'Shabura'],
         'crackers' => ['ar' => 'المقرمشات', 'en' => 'Crackers'],
         'samosa' => ['ar' => 'السمبوسه', 'en' => 'Samosa'],
-        'flour' => ['ar' => 'دقيق', 'en' => 'Flour'],
+        'flour' => ['ar' => 'دقيق ومعكرونة', 'en' => 'Flour & Pasta'],
         'sandwiches' => ['ar' => 'الساندويشات', 'en' => 'Sandwiches'],
         'hot_dishes' => ['ar' => 'أطباق ساخنة', 'en' => 'Hot dishes'],
         'salads' => ['ar' => 'السلطات', 'en' => 'Salads'],
         'fermented' => ['ar' => 'مخمرات', 'en' => 'Pickles'],
         'sweets' => ['ar' => 'الحلى', 'en' => 'Sweets'],
-        'others' => ['ar' => 'اخرى', 'en' => 'Other'],
+        'pantry' => ['ar' => 'المؤن', 'en' => 'Pantry'],
     ];
 
     /**
@@ -41,6 +41,7 @@ class StoreCatalogSeeder extends Seeder
      */
     private array $slugAliases = [
         'rusk' => 'shabura',
+        'others' => 'pantry',
     ];
 
     public function run(): void
@@ -85,7 +86,7 @@ class StoreCatalogSeeder extends Seeder
 
             $slug = (string) $item['slug'];
             $keep[] = $slug;
-            $category = $categories[(string) ($item['category'] ?? '')] ?? $categories['others'] ?? null;
+            $category = $categories[(string) ($item['category'] ?? '')] ?? $categories['pantry'] ?? null;
             if ($category === null) {
                 continue;
             }
@@ -135,7 +136,7 @@ class StoreCatalogSeeder extends Seeder
      */
     private function retireUnknownCategories(array $keep): void
     {
-        $fallback = $keep['bakery'] ?? $keep['others'] ?? null;
+        $fallback = $keep['bakery'] ?? $keep['pantry'] ?? null;
         $keepIds = array_map(static fn (Category $category): int => $category->id, $keep);
 
         Category::query()

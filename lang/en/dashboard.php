@@ -73,6 +73,7 @@ return [
         'view_all_consultations' => 'All consultations',
         'view_all_customers' => 'All customers',
         'view_all_products' => 'All products',
+        'edit_homepage' => 'Homepage content',
         'view_all_articles' => 'All articles',
         'view_all_recipes' => 'All recipes',
         'empty_orders' => 'No orders yet.',

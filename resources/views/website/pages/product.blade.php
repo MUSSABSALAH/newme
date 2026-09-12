@@ -226,11 +226,6 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 .rel h3{font-size:13.5px;margin-bottom:2px}
 .rel .pr{font-size:13px;font-weight:900;color:var(--navy);font-family:var(--mono)}
 .rel .pr small{color:var(--muted);font-weight:700;font-family:var(--font)}
-/* footer + sticky */
-footer{background:#0C1F38;color:#9FB4D2;padding:36px 20px 40px;text-align:center;margin-top:20px}
-footer .flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;font-weight:800;margin-bottom:12px}
-footer .flinks a:hover{color:var(--orange-hi)}
-footer .legal{font-size:11px;font-weight:600;color:#6E84A5;line-height:2}
 .sticky-cta{position:fixed;bottom:0;inset-inline:0;z-index:95;background:rgba(247,245,241,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--gray-2);padding:10px 16px calc(10px + var(--sab));display:flex;align-items:center;gap:12px}
 .sticky-cta .info b{display:block;font-size:14px;color:var(--navy);font-weight:900;font-family:var(--mono)}
 .sticky-cta .info small{font-size:10.5px;color:var(--green);font-weight:800}

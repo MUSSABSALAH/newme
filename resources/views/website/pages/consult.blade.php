@@ -131,11 +131,6 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 .done-sum .r span:last-child{font-family:var(--mono);color:var(--navy);font-weight:700}
 .done-acts{display:grid;gap:10px;max-width:340px;margin:0 auto}
 
-footer{background:#0C1F38;color:#9FB4D2;padding:34px 20px calc(38px + var(--sab));text-align:center}
-footer .flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;font-weight:800;margin-bottom:12px}
-footer .flinks a:hover{color:var(--orange-hi)}
-footer .legal{font-size:11px;font-weight:600;color:#6E84A5;line-height:2}
-
 /* mobile menu */
 .mmenu{position:fixed;inset:0;z-index:220;background:var(--bg);display:flex;flex-direction:column;padding:calc(16px + var(--sat)) 24px calc(28px + var(--sab));transform:translateY(-103%);transition:transform .55s cubic-bezier(.77,0,.18,1);overflow-y:auto}
 .mmenu.open{transform:none}

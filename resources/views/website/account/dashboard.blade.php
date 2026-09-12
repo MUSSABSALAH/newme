@@ -291,6 +291,10 @@
                 @endif
               </div>
               <div class="side">
+                @php $shipmentStatus = $subscription->visibleShipmentStatus(); @endphp
+                @if ($shipmentStatus)
+                  <span class="pill {{ $shipmentStatus->value }}">{{ $shipmentStatus->label() }}</span>
+                @endif
                 <span class="pill {{ $subscription->status->value }}">{{ $subscription->status->label() }}</span>
                 <span class="amt">{{ $subscription->totalDisplay() }} <x-ui.sar /></span>
               </div>
@@ -339,6 +343,7 @@
             </div>
             <div class="side">
               <span class="pill {{ $order->status->value }}">{{ $order->status->label() }}</span>
+              <small class="ship-status">{{ __('account.delivery.shipping_status') }}</small>
               <span class="amt">{{ $order->totalDisplay() }} <x-ui.sar /></span>
             </div>
           </a>

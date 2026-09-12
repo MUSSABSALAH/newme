@@ -42,6 +42,7 @@ return [
     ],
 
     'actions' => [
+        'confirm' => 'مؤكد',
         'dispatch' => 'خرج للتوصيل',
         'deliver' => 'تم التسليم',
         'fail' => 'لم يتم التسليم',
@@ -50,6 +51,7 @@ return [
 
     'statuses' => [
         'pending' => 'في الانتظار',
+        'confirmed' => 'مؤكد',
         'dispatched' => 'خرج للتوصيل',
         'delivered' => 'تم التسليم',
         'failed' => 'لم يتم التسليم',

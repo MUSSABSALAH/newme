@@ -241,6 +241,38 @@ final class CouponRedemptionServiceTest extends TestCase
         $this->service()->redeem($coupon, $customer, $this->order($customer), Money::fromMinor(500));
     }
 
+    public function test_redeeming_the_same_order_twice_does_not_double_count(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $coupon = Coupon::factory()->code('SAVE10')->percentage(10)->create();
+        $order = $this->order($customer);
+
+        $first = $this->service()->redeem($coupon, $customer, $order, Money::fromMinor(1000));
+        $second = $this->service()->redeem($coupon, $customer, $order, Money::fromMinor(1000));
+
+        $this->assertTrue($first->is($second));
+        $this->assertSame(1, $coupon->refresh()->redemptions_count);
+        $this->assertSame(1, $coupon->redemptions()->count());
+    }
+
+    public function test_redeeming_on_a_second_order_is_refused_at_the_per_user_limit(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $coupon = Coupon::factory()->code('ONCE')->create(['max_redemptions_per_user' => 1]);
+
+        $this->service()->redeem($coupon, $customer, $this->order($customer), Money::fromMinor(500));
+
+        try {
+            $this->service()->redeem($coupon, $customer, $this->order($customer), Money::fromMinor(500));
+            $this->fail('Expected the per-user limit to be enforced at redeem.');
+        } catch (CouponRejectedException $e) {
+            $this->assertSame(CouponRejection::AlreadyUsed, $e->reason);
+        }
+
+        $this->assertSame(1, $coupon->refresh()->redemptions_count);
+        $this->assertSame(1, $coupon->redemptions()->count());
+    }
+
     private function order(User $user): Order
     {
         $order = new Order;

@@ -1,18 +1,35 @@
 @php
-  /** @var \App\Modules\Orders\Models\Order|\App\Modules\Subscriptions\Models\Subscription $payable */
+  use App\Modules\Orders\Models\Order;
+  use App\Modules\Subscriptions\Models\Subscription;
+
+  /** @var Order|Subscription $payable */
   $address = $payable->deliveryAddress();
   $payment = $payable->payments()->latest()->first();
   $heading = $heading ?? null;
   $headingN = $heading_n ?? null;
+  $orderShipping = $payable instanceof Order ? $payable->status : null;
+  $subscriptionShipping = $payable instanceof Subscription ? $payable->visibleShipmentStatus() : null;
 @endphp
 
-@if ($address || $payable->payment_method)
+@if ($address || $payable->payment_method || $orderShipping || $subscriptionShipping)
   <div class="card">
     @if ($heading)
       <h2>
         @if ($headingN)<span class="n">{{ $headingN }}</span>@endif
         {{ $heading }}
       </h2>
+    @endif
+
+    @if ($orderShipping)
+      <div class="kv">
+        <span>{{ __('account.delivery.shipping_status') }}</span>
+        <b><span class="pill {{ $orderShipping->value }}">{{ $orderShipping->label() }}</span></b>
+      </div>
+    @elseif ($subscriptionShipping)
+      <div class="kv">
+        <span>{{ __('account.delivery.shipping_status') }}</span>
+        <b><span class="pill {{ $subscriptionShipping->value }}">{{ $subscriptionShipping->label() }}</span></b>
+      </div>
     @endif
 
     @if ($address)

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Web;
 
 use App\Modules\Cms\Models\Article;
+use App\Modules\Cms\Models\PageContent;
 use App\Modules\Cms\Models\Recipe;
+use App\Modules\Cms\Support\HomepageContentRegistry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -35,14 +37,14 @@ final class WebsiteCmsContentTest extends TestCase
 
         $this->get(route('website.blog'))
             ->assertOk()
-            ->assertSee('Lupin Article', false)
-            ->assertSee('Toast Recipe', false)
+            ->assertSee('مقال الترمس', false)
+            ->assertSee('وصفة التوست', false)
             ->assertSee('article-test-lupin', false)
             ->assertSee('recipe-test-toast', false)
             ->assertSee(route('website.article', ['article' => 'test-lupin']), false)
             ->assertSee(route('website.recipe', ['recipe' => 'test-toast']), false)
-            ->assertDontSee('Hidden Article', false)
-            ->assertDontSee('Hidden Recipe', false);
+            ->assertDontSee('مخفي', false)
+            ->assertDontSee('وصفة مخفية', false);
 
         $this->assertNotNull($article->id);
         $this->assertNotNull($recipe->id);
@@ -59,8 +61,8 @@ final class WebsiteCmsContentTest extends TestCase
 
         $this->get(route('website.article', ['article' => $article->slug]))
             ->assertOk()
-            ->assertSee('Lupin Detail Title', false)
-            ->assertSee('Detail first paragraph.', false);
+            ->assertSee('مقال الترمس', false)
+            ->assertSee('الفقرة الأولى.', false);
     }
 
     public function test_inactive_article_is_not_found(): void
@@ -85,9 +87,9 @@ final class WebsiteCmsContentTest extends TestCase
 
         $this->get(route('website.recipe', ['recipe' => $recipe->slug]))
             ->assertOk()
-            ->assertSee('Toast Detail Title', false)
-            ->assertSee('Eggs', false)
-            ->assertSee('Bake it', false);
+            ->assertSee('وصفة التوست', false)
+            ->assertSee('بيض', false)
+            ->assertSee('اخبز', false);
     }
 
     public function test_inactive_recipe_is_not_found(): void
@@ -120,9 +122,47 @@ final class WebsiteCmsContentTest extends TestCase
 
         $this->get(route('website.main'))
             ->assertOk()
-            ->assertSee('Home Article Title', false)
-            ->assertSee('Home Recipe Title', false)
+            ->assertSee('مقال الرئيسية', false)
+            ->assertSee('وصفة الرئيسية', false)
             ->assertSee('article-home-article', false)
             ->assertSee('recipe-home-recipe', false);
+    }
+
+    public function test_main_page_leads_with_free_delivery_over_200(): void
+    {
+        $this->get(route('website.main'))
+            ->assertOk()
+            ->assertSee(__('website.site.announce.shipping'), false)
+            ->assertSee(__('website.site.announce.partners'), false)
+            ->assertSee(__('website.site.announce.consult'), false)
+            ->assertSee('ship-announce', false);
+    }
+
+    public function test_main_page_shows_saved_announce_shipping_text(): void
+    {
+        PageContent::query()->create([
+            'page' => HomepageContentRegistry::PAGE,
+            'key' => HomepageContentRegistry::ANNOUNCE_SHIPPING,
+            'value' => [
+                'ar' => 'التوصيل مجاني فوق <b>350 ريال</b>',
+                'en' => 'Free delivery on orders over <b>SAR 350</b>',
+            ],
+        ]);
+
+        PageContent::query()->create([
+            'page' => HomepageContentRegistry::PAGE,
+            'key' => HomepageContentRegistry::ANNOUNCE_PARTNERS,
+            'value' => [
+                'ar' => 'شركاء محدثون',
+                'en' => 'Updated partners line',
+            ],
+        ]);
+
+        $this->get(route('website.main'))
+            ->assertOk()
+            ->assertSee('التوصيل مجاني فوق <b>350 ريال</b>', false)
+            ->assertSee('شركاء محدثون', false)
+            ->assertSee(__('website.site.announce.consult'), false)
+            ->assertSee('ship-announce', false);
     }
 }

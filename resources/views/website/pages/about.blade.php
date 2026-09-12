@@ -4,8 +4,21 @@
 @section('theme', '#122B4A')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/website-v30.css') }}">
 <style>
+.v30-page .steps .tcard h4{
+  display:flex;align-items:baseline;gap:8px;margin:0 0 8px;line-height:1.3;
+}
+.v30-page .steps .tcard .n{
+  position:static;display:inline-block;flex:none;margin:0;
+  direction:ltr;unicode-bidi:isolate;letter-spacing:.04em;
+}
+@media (min-width: 1020px) {
+  .v30-page .steps .tcard:not(:last-child)::after{
+    top:50%;inset-inline-end:-16px;width:16px;
+    transform:translateY(-50%);
+  }
+}
+
 @media (max-width: 819.98px) {
   .v30-page { padding: 16px 16px 56px; }
   .v30-page .rv { opacity: 1 !important; transform: none !important; }
@@ -111,7 +124,7 @@
   .v30-page .tcard, .v30-page .ecard, .v30-page .gitem {
     background: #fff; border: 1px solid #E8E4DC; border-radius: 16px; padding: 16px; position: relative;
   }
-  .v30-page .tcard .n { display: block; font-size: 11px; font-weight: 800; color: #DD6516; letter-spacing: .08em; margin-bottom: 6px; }
+  .v30-page .tcard .n { position: static; display: inline-block; font-size: 11px; font-weight: 800; color: #DD6516; letter-spacing: .04em; margin: 0; }
   .v30-page .tcard .ic {
     width: 42px; height: 42px; border-radius: 12px; background: #FFF0E1; color: #DD6516;
     display: grid; place-items: center; margin-bottom: 10px;
@@ -198,7 +211,7 @@
       </div>
       <div class="media-card rv">
         <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-        <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-about-team.jpg') }}" alt="{{ __('website.site.about.alt_team') }}" onerror="this.remove()">
+        <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-about-team.png') }}?v={{ filemtime(public_path('assets/images/v30-about-team.png')) }}" alt="{{ __('website.site.about.alt_team') }}" onerror="this.remove()">
         <span class="cap">{{ __('website.site.about.cap') }}</span>
       </div>
     </div>
@@ -265,8 +278,10 @@
       <p class="about-lead rv">{{ __('website.site.about.lead') }}</p>
       <div class="steps">
         @foreach (__('website.site.about.stages') as $stage)
-        <div class="tcard rv"><span class="n">{{ $stage['n'] }}</span><h4>{{ $stage['title'] }}</h4>
-          <p>{{ $stage['body'] }}</p></div>
+        <div class="tcard rv">
+          <h4><span class="n">{{ $stage['n'] }}</span>{{ $stage['title'] }}</h4>
+          <p>{{ $stage['body'] }}</p>
+        </div>
         @endforeach
       </div>
     </div>
@@ -292,8 +307,8 @@
             $edgeImgs = [
               'v30-value-review.jpg',
               'v30-value-health.jpg',
-              'v30-value-system.jpg',
-              'v30-value-ip.jpg',
+              'v30-value-system.png',
+              'v30-value-ip.png',
             ];
             $edgeIcons = ['#i-clipboard', '#i-target', '#i-layers', '#i-shield'];
           @endphp

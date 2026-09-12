@@ -17,7 +17,7 @@ return [
 
     'announce' => [
         'partners' => 'Partners we’re proud of — Diet Center · Daily Meals',
-        'shipping' => 'Free delivery on orders over <b>SAR 150</b>',
+        'shipping' => 'Free delivery on orders over <b>SAR 200</b>',
         'consult' => 'A complimentary first nutrition consultation with every subscription',
     ],
 
@@ -280,7 +280,7 @@ return [
         'items' => [
             [
                 'q' => 'Where do you deliver?',
-                'a' => 'Within Riyadh — our own fleet delivers straight to your door. Eastern Province and Jeddah — our baked goods are available at Diet Center branches. Through delivery platforms — Jahez · HungerStation · Keeta · The Chefs · Ninja.',
+                'a' => 'In Riyadh, our own fleet delivers straight to your door, and through delivery platforms (Jahez - HungerStation - Keeta - The Chefs - Ninja). For the Eastern Province and Jeddah, our baked goods are available only at Diet Center branches.',
             ],
             [
                 'q' => 'How are nutrition values calculated?',
@@ -319,19 +319,22 @@ return [
 
     'contact' => [
         'company' => 'New Me',
-        'about' => 'A Saudi healthy-nutrition company producing healthy bakery and ready meals, founded in Riyadh in 2020.',
+        'about' => 'A Saudi nutrition company, founded in Riyadh in 2020.',
         'address_label' => 'Address',
         'address' => 'Ma’ather Square, Takhassusi Street, Riyadh, Saudi Arabia',
         'phone_label' => 'Customer service — phone and WhatsApp',
-        'phone' => '+966 53 960 3302 · +966 53 240 6566',
+        'phone' => '+966533360317',
         'web_label' => 'Website',
         'web' => 'www.newme.com.sa',
         'social_label' => 'Follow us',
         'social_handle' => 'NewMeKSA',
+        'social_whatsapp_aria' => 'WhatsApp',
         'social_instagram_aria' => 'Instagram — @:handle',
         'social_tiktok_aria' => 'TikTok — @:handle',
         'social_snapchat_aria' => 'Snapchat — @:handle',
         'social_x_aria' => 'X — @:handle',
+        'social_linkedin_aria' => 'LinkedIn',
+        'social_linkedin_url' => '',
         'vat_label' => 'VAT number',
         'vat' => '312782087600003',
         'copyright' => '© :year New Me. All rights reserved.',

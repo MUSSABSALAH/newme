@@ -15,6 +15,7 @@ namespace App\Modules\Delivery\Enums;
 enum DeliveryStatus: string
 {
     case Pending = 'pending';
+    case Confirmed = 'confirmed';
     case Dispatched = 'dispatched';
     case Delivered = 'delivered';
     case Failed = 'failed';
@@ -36,6 +37,7 @@ enum DeliveryStatus: string
     {
         return match ($this) {
             self::Pending => 'neutral',
+            self::Confirmed => 'info',
             self::Dispatched => 'warning',
             self::Delivered => 'success',
             self::Failed => 'danger',
@@ -56,10 +58,11 @@ enum DeliveryStatus: string
     public function nextStatuses(): array
     {
         return match ($this) {
-            self::Pending => [self::Dispatched, self::Delivered, self::Failed],
-            self::Dispatched => [self::Delivered, self::Failed],
-            // A failed run is re-attempted by dispatching it again.
-            self::Failed => [self::Dispatched, self::Delivered],
+            self::Pending => [self::Confirmed, self::Dispatched, self::Delivered, self::Failed],
+            self::Confirmed => [self::Dispatched, self::Delivered, self::Failed],
+            self::Dispatched => [self::Delivered, self::Confirmed, self::Failed],
+            // A failed run is re-attempted by confirming or dispatching it again.
+            self::Failed => [self::Confirmed, self::Dispatched, self::Delivered],
             self::Delivered => [],
         };
     }

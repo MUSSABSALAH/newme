@@ -10,7 +10,7 @@ return [
     'target_prefix' => 'Approx. daily target:',
     'target_suffix' => 'kcal',
     'cta_start' => 'Start subscription →',
-    'cta_sub_default' => 'Save up to 31% · cancel anytime',
+    'cta_sub_default' => 'Cancel anytime',
     'js' => [
         'brand_suffix' => 'New Me',
         'title_prefix' => 'Menu',
@@ -24,7 +24,7 @@ return [
         'cta_ready' => 'Ready? Subscribe to the :plan program',
         'cta_start' => 'Start subscription →',
         'cta_continue' => 'Continue subscription →',
-        'cta_sub_default' => 'Save up to 31% · cancel anytime',
+        'cta_sub_default' => 'Cancel anytime',
         'cta_sub_wizard' => 'You’ll return to subscription steps: days, then duration, then payment',
         'cta_picked' => 'You picked :n :dishes — finish dates and payment',
         'cta_picked_zero' => 'Finish your picks, then continue to dates and payment',

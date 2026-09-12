@@ -16,7 +16,12 @@
             @foreach ($plans as $plan)
                 @php $published = $plan->publishedVersion(); @endphp
                 <tr>
-                    <td><strong>{{ $plan->label() }}</strong></td>
+                    <td>
+                        <strong>{{ $plan->label() }}</strong>
+                        @if ($plan->is_most_chosen)
+                            <x-ui.badge variant="info">{{ __('plans.status.most_chosen') }}</x-ui.badge>
+                        @endif
+                    </td>
                     <td>{{ $plan->goal->label() }}</td>
                     <td>
                         <x-ui.badge :variant="$plan->is_active ? 'success' : 'neutral'">

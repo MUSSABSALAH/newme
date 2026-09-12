@@ -173,6 +173,7 @@ final class PlanSeeder extends Seeder
         $plan->min_delivery_days_per_week = self::DeliveryDaysPerWeek;
         $plan->delivery_fee = 0;
         $plan->is_active = true;
+        $plan->is_most_chosen = $goal === PlanGoal::Keto;
         $plan->sort_order = is_array($copy)
             ? $copy['sort']
             : (self::DisplayOrder[$goal->value] ?? ($sortOrder + 1));

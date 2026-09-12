@@ -154,10 +154,11 @@ a.pick-row:hover{border-color:var(--orange);background:var(--orange-soft);transf
 .pick-row .amt{font-family:var(--mono);font-weight:900;color:var(--navy);font-size:14px;white-space:nowrap}
 
 .pill{display:inline-block;font-size:11px;font-weight:900;padding:4px 10px;border-radius:999px}
-.pill.pending,.pill.out_for_delivery{background:var(--orange-soft);color:var(--orange-deep)}
+.pill.pending,.pill.out_for_delivery,.pill.dispatched{background:var(--orange-soft);color:var(--orange-deep)}
 .pill.confirmed,.pill.preparing{background:#E8F0FE;color:#1B4F9C}
 .pill.active,.pill.completed,.pill.delivered{background:var(--green-soft);color:var(--green-ink)}
-.pill.cancelled,.pill.paused,.pill.no_show{background:#EFF1F4;color:var(--muted)}
+.pill.cancelled,.pill.paused,.pill.no_show,.pill.failed{background:#EFF1F4;color:var(--muted)}
+.pick-row .side .ship-status{display:block;font-size:10px;font-weight:800;color:var(--muted);margin-top:4px}
 
 body.acc-modal-open{overflow:hidden}
 .acc-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:18px}

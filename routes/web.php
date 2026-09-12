@@ -22,6 +22,7 @@ use App\Http\Controllers\Web\Admin\CouponController;
 use App\Http\Controllers\Web\Admin\CustomerController;
 use App\Http\Controllers\Web\Admin\DashboardController;
 use App\Http\Controllers\Web\Admin\DeliveryController;
+use App\Http\Controllers\Web\Admin\HomepageContentController;
 use App\Http\Controllers\Web\Admin\InvitationController as AdminInvitationController;
 use App\Http\Controllers\Web\Admin\InvoiceController;
 use App\Http\Controllers\Web\Admin\MealController;
@@ -210,7 +211,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Meals: shared catalog available to plans.
         Route::resource('meals', MealController::class)->except('show');
 
-        // CMS: website articles & recipes.
+        // CMS: homepage copy, articles & recipes.
+        Route::get('homepage', [HomepageContentController::class, 'edit'])->name('homepage.edit');
+        Route::put('homepage', [HomepageContentController::class, 'update'])->name('homepage.update');
         Route::resource('articles', ArticleController::class)->except('show');
         Route::resource('recipes', RecipeController::class)->except('show');
 

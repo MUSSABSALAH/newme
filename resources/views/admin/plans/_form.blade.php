@@ -51,6 +51,17 @@
                 </label>
             </x-form.field>
 
+            <x-form.field :label="__('plans.fields.is_most_chosen')" name="is_most_chosen">
+                <label class="switch-row">
+                    <input type="hidden" name="is_most_chosen" value="0">
+                    <input type="checkbox" name="is_most_chosen" value="1" @checked(old('is_most_chosen', $plan?->is_most_chosen ?? false))>
+                    <span>
+                        <span class="switch-row__title">{{ __('plans.status.most_chosen') }}</span>
+                        <span class="field__hint">{{ __('plans.fields.is_most_chosen_hint') }}</span>
+                    </span>
+                </label>
+            </x-form.field>
+
             <x-form.field :label="__('plans.fields.name_ar')" name="name.ar">
                 <x-form.input name="name[ar]" :value="$planName('ar')" required minlength="2" />
             </x-form.field>

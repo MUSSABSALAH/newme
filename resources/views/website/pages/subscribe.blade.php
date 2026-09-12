@@ -3,6 +3,7 @@
 @section('title', __('website.subscribe.title'))
 @section('theme', '#122B4A')
 @section('body_class', 'is-subscribe sub-on-1')
+@section('hide_site_footer', '1')
 
 @push('styles')
 @php
@@ -100,23 +101,25 @@ body.sub-on-1 .rv{opacity:1!important;transform:none!important}
   body.is-subscribe.sub-on-1{background:var(--navy);padding-bottom:var(--ip-tabbar,64px)}
   .nm-chrome .brand img{height:34px!important;width:auto!important;max-width:148px;object-fit:contain!important}
   .sub-step-desk .rv{opacity:1!important;transform:none!important}
-  .sub-step-desk .subs{padding:22px 0 calc(32px + var(--ip-tabbar,64px) + var(--sab))}
+  .sub-step-desk .subs{padding:22px 0 calc(32px + var(--ip-tabbar,64px) + var(--sab));overflow:visible}
   .sub-step-desk .sec-head{max-width:none;margin:0 auto 22px;padding:0 18px;text-align:center}
   .sub-step-desk .sec-head .kick{color:var(--orange-hi)!important}
   .sub-step-desk .sec-head h2{font-size:28px;color:#fff!important;margin:8px 0 10px}
   .sub-step-desk .sec-head h2 em{color:var(--orange-hi)!important;font-style:normal}
   .sub-step-desk .sec-head p{display:block;color:#B9C9E2!important;font-size:13.5px;font-weight:600;line-height:1.8}
-  .sub-grid{grid-template-columns:1fr;gap:28px;padding:0 16px}
+  .sub-grid{grid-template-columns:1fr;gap:28px;padding:14px 16px 0}
   .splan,.splan.pop{
-    display:flex!important;flex-direction:column;
-    padding:26px 20px 20px;border-radius:22px
+    display:flex!important;flex-direction:column;position:relative;
+    padding:26px 20px 20px;border-radius:22px;overflow:visible
   }
   .splan{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.16)}
   .splan.pop{background:linear-gradient(165deg,rgba(240,127,45,.18),rgba(255,255,255,.05));border:2px solid var(--orange)}
   .splan:hover{transform:none}
   .splan .tag{
-    display:inline-flex;position:absolute;top:-10px;left:50%;right:auto;inset-inline:auto;
-    transform:translateX(-50%);white-space:nowrap
+    display:inline-flex;align-items:center;position:absolute;top:-12px;left:50%;
+    transform:translateX(-50%);z-index:4;white-space:nowrap;
+    background:var(--grad);color:#fff;font-size:11px;font-weight:900;
+    padding:5px 14px;border-radius:999px;box-shadow:0 8px 18px rgba(240,127,45,.4)
   }
   .splan h3,.splan .goal,.splan .splan-lead,.splan .pline,.splan .per,.splan .plan-fuel{min-height:0!important}
   .splan h3{font-size:22px;color:#fff!important;line-height:1.3}
@@ -137,7 +140,6 @@ body.sub-on-1 .rv{opacity:1!important;transform:none!important}
   }
   .splan .btn:not(.navy){background:var(--grad);border-color:var(--orange);box-shadow:0 12px 28px rgba(240,127,45,.35)}
   .splan .btn.navy{background:#0C1F38;border-color:rgba(255,255,255,.22);box-shadow:none}
-  .sub-guarantee{display:flex;color:#C7D6EC;font-size:13px;padding:0 18px;margin-top:22px}
   .sub-trust{display:flex;color:#8FA4C4;font-size:12px;padding:0 18px}
 }
 @media(min-width:820px){
@@ -285,9 +287,6 @@ body.sub-on-1 .rv{opacity:1!important;transform:none!important}
 .buy-trust{display:grid;gap:6px;margin-top:14px;font-size:11.5px;font-weight:800;color:var(--muted)}
 .buy-trust span{display:flex;align-items:center;gap:7px}
 .buy-trust .i{width:15px;height:15px;color:var(--green)}
-.helpline{text-align:center;margin-top:16px;font-size:12.5px;font-weight:800;color:var(--muted)}
-.helpline a{color:var(--orange-deep);border-bottom:1.5px solid var(--orange)}
-
 /* ===== wizard bottom bar ===== */
 .wbar{position:fixed;bottom:0;inset-inline:0;z-index:95;background:rgba(247,245,241,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--gray-2);padding:11px 16px calc(11px + var(--sab))}
 @media(max-width:819.98px){
@@ -307,12 +306,7 @@ body.sub-on-1 .rv{opacity:1!important;transform:none!important}
 .wbar .btn{min-width:150px;min-height:48px;padding:12px 22px;font-size:14px}
 @media(min-width:700px){.wbar .btn{min-width:220px}}
 
-/* footer */
 footer.w-foot-full{width:100%;margin-top:auto}
-footer{background:#0C1F38;color:#9FB4D2;padding:36px 20px 40px;text-align:center;margin-top:auto}
-footer .flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;font-weight:800;color:#9FB4D2;margin-bottom:12px}
-footer .flinks a:hover{color:var(--orange-hi)}
-footer .legal{font-size:11px;font-weight:600;color:#6E84A5;line-height:2}
 
 @media (prefers-reduced-motion: reduce){
   .js .wstep.active{animation:none}
@@ -409,7 +403,6 @@ body.menu-open{overflow:hidden}
 
 <!-- PAGE HEAD -->
 <header class="phead" id="wizard">
-  <span class="off-pill">{{ __('website.subscribe.off_pill') }}</span>
   <h1>{!! __('website.subscribe.heading') !!}</h1>
   <p>{{ __('website.subscribe.lead') }}</p>
 </header>
@@ -587,7 +580,6 @@ body.menu-open{overflow:hidden}
           </div>
         </div>
       </div>
-      <div class="helpline">{!! __('website.subscribe.helpline') !!}</div>
     </div>
   </section>
 </div>
@@ -595,20 +587,15 @@ body.menu-open{overflow:hidden}
 <!-- WIZARD BOTTOM BAR -->
 <div class="wbar">
   <div class="inner">
-    <button class="back" id="wBack" disabled aria-label="{{ __('website.subscribe.back_aria') }}">→</button>
+    <button type="button" class="back" id="wBack" disabled aria-label="{{ __('website.subscribe.back_aria') }}">→</button>
     <div class="tot">
       <div class="wbar-amount">
         <span class="wbar-label">{{ __('website.subscribe.sum_total') }}</span>
         <b id="wTotal">—</b>
       </div>
     </div>
-    <button class="btn" id="wNext">{{ __('website.subscribe.next') }}</button>
+    <button type="button" class="btn" id="wNext">{{ __('website.subscribe.next') }}</button>
   </div>
-</div>
-
-<!-- FOOTER -->
-<div class="v30-desk">
-  @include('website.partials.v30-closing')
 </div>
 
 
@@ -641,11 +628,13 @@ window.NM_CSRF = @json(csrf_token());
 
 function failOpen(){
   try{
-    document.querySelectorAll('.wstep').forEach(function(s){s.classList.add('active');});
     document.querySelectorAll('img.aiimg').forEach(function(i){i.classList.add('loaded');});
   }catch(_){}
 }
-window.addEventListener('error',failOpen);
+window.addEventListener('error',function(e){
+  if(e&&e.target&&e.target!==window)return;
+  failOpen();
+});
 try{
 'use strict';
 
@@ -858,7 +847,7 @@ function renderDayDishes(){
   });
   var note=document.createElement('div');
   note.className='ddays-note';
-  note.innerHTML=t('dishes_note',{n:all.length,picked:dates.length});
+  note.innerHTML=t('dishes_note',{n:Math.max(0, all.length - dates.length),picked:dates.length});
   wrap.appendChild(note);
 }
 
@@ -1013,7 +1002,7 @@ function goStep(n){
   });
   document.querySelectorAll('#stepper .sline').forEach(function(l,i){l.classList.toggle('ok',i+1<cur);});
   if(n===3)renderDurations();
-  if(n===6)renderDayDishes();
+  if(n===6){try{renderDayDishes();}catch(_){}}
   var anchor=document.getElementById('wizard')||document.getElementById('stepper');
   if(anchor){ try{anchor.scrollIntoView({behavior:'smooth',block:'start'});}catch(_){window.scrollTo({top:0,behavior:'smooth'});} }
   else window.scrollTo({top:0,behavior:'smooth'});
@@ -1163,6 +1152,17 @@ render();
 document.body.classList.add('sub-on-1');
 var wrap0=document.getElementById('wwrap');
 if(wrap0)wrap0.classList.add('is-plan-step');
+
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[href]');
+  if(!a||cur<=1)return;
+  try{
+    var dest=new URL(a.getAttribute('href'),location.href);
+    if(dest.pathname===location.pathname&&!dest.hash){
+      e.preventDefault();
+    }
+  }catch(_){}
+},true);
 
 (function(){
   var h=(location.hash||'').replace('#','');

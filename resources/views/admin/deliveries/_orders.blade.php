@@ -1,5 +1,4 @@
 @php
-    use App\Modules\Orders\Enums\OrderStatus;
     use App\Modules\Payments\Enums\PaymentStatus;
 
     /** @var \App\Modules\Delivery\DTOs\DeliveryBoard $board */
@@ -74,25 +73,11 @@
                         </p>
                     @endif
 
-                    @if ($canRecord && ! $order->status->isTerminal())
-                        <form method="POST" action="{{ route('admin.deliveries.orders.update', $order) }}" class="ship-item__actions">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="date" value="{{ $board->date->toDateString() }}">
-
-                            @if ($order->status->canTransitionTo(OrderStatus::OutForDelivery))
-                                <x-ui.button type="submit" name="status" value="{{ OrderStatus::OutForDelivery->value }}" variant="ghost" class="btn--sm">
-                                    {{ __('deliveries.actions.dispatch') }}
-                                </x-ui.button>
-                            @endif
-
-                            @if ($order->status->canTransitionTo(OrderStatus::Delivered))
-                                <x-ui.button type="submit" name="status" value="{{ OrderStatus::Delivered->value }}" class="btn--sm">
-                                    <x-ui.icon name="check" size="sm" /> {{ __('deliveries.actions.deliver') }}
-                                </x-ui.button>
-                            @endif
-                        </form>
-                    @endif
+                    @include('admin.orders._status_form', [
+                        'order' => $order,
+                        'canShipOrder' => $canRecord,
+                        'boardDate' => $board->date->toDateString(),
+                    ])
                 </article>
             @endforeach
         </div>

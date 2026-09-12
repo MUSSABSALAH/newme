@@ -38,6 +38,7 @@ class PlanFactory extends Factory
             'min_delivery_days_per_week' => 5,
             'delivery_fee' => 0,
             'is_active' => true,
+            'is_most_chosen' => false,
             'sort_order' => 0,
         ];
     }

@@ -7,6 +7,9 @@ namespace App\Modules\Subscriptions\Models;
 use App\Models\User;
 use App\Modules\Addresses\DTOs\AddressSnapshot;
 use App\Modules\Addresses\Models\Address;
+use App\Modules\Delivery\Enums\DeliveryStatus;
+use App\Modules\Delivery\Models\SubscriptionDelivery;
+use App\Modules\Delivery\Support\ScheduledDay;
 use App\Modules\Payments\Enums\PaymentMethod;
 use App\Modules\Payments\Enums\PaymentStatus;
 use App\Modules\Payments\Models\Payment;
@@ -19,6 +22,7 @@ use Database\Factories\SubscriptionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -201,6 +205,31 @@ class Subscription extends Model
     public function payments(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
+    }
+
+    /**
+     * @return HasMany<SubscriptionDelivery, $this>
+     */
+    public function deliveries(): HasMany
+    {
+        return $this->hasMany(SubscriptionDelivery::class)->orderByDesc('delivery_date');
+    }
+
+    public function visibleShipmentStatus(): ?DeliveryStatus
+    {
+        $latest = $this->relationLoaded('deliveries')
+            ? $this->deliveries->first()
+            : $this->deliveries()->first();
+
+        if ($latest instanceof SubscriptionDelivery) {
+            return $latest->status;
+        }
+
+        if (ScheduledDay::exists($this, now()->toDateString())) {
+            return DeliveryStatus::Pending;
+        }
+
+        return null;
     }
 
     /**

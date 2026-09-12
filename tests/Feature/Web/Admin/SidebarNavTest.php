@@ -49,6 +49,7 @@ final class SidebarNavTest extends TestCase
             'admin.subscriptions.index',
             'admin.plans.index',
             'admin.meals.index',
+            'admin.homepage.edit',
             'admin.articles.index',
             'admin.recipes.index',
             'admin.deliveries.index',

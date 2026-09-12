@@ -28,6 +28,7 @@ use Spatie\Translatable\HasTranslations;
  * @property int $min_delivery_days_per_week
  * @property int $delivery_fee
  * @property bool $is_active
+ * @property bool $is_most_chosen
  * @property int $sort_order
  */
 class Plan extends Model
@@ -50,6 +51,7 @@ class Plan extends Model
         'min_delivery_days_per_week',
         'delivery_fee',
         'is_active',
+        'is_most_chosen',
         'sort_order',
     ];
 
@@ -84,6 +86,7 @@ class Plan extends Model
             'min_delivery_days_per_week' => 'integer',
             'delivery_fee' => 'integer',
             'is_active' => 'boolean',
+            'is_most_chosen' => 'boolean',
             'sort_order' => 'integer',
         ];
     }

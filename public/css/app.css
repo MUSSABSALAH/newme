@@ -1283,11 +1283,43 @@ html[dir="rtl"] .select {
 .ship-item__actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid var(--color-border);
+}
+
+.order-status-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: 8px 10px;
+    width: 100%;
+}
+
+.order-status-form > .field__label {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+.order-status-form > .select,
+.order-status-form > .btn {
+    box-sizing: border-box;
+    height: 2.75rem;
+}
+
+.order-status-form > .select {
+    width: 100%;
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.order-status-form > .btn {
+    white-space: nowrap;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .ship-fail summary {

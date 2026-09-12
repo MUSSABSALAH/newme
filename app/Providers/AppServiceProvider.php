@@ -8,9 +8,12 @@ use App\Models\User;
 use App\Modules\Audit\Models\AuditLog;
 use App\Modules\Audit\Policies\AuditLogPolicy;
 use App\Modules\Cms\Models\Article;
+use App\Modules\Cms\Models\PageContent;
 use App\Modules\Cms\Models\Recipe;
 use App\Modules\Cms\Policies\ArticlePolicy;
+use App\Modules\Cms\Policies\PageContentPolicy;
 use App\Modules\Cms\Policies\RecipePolicy;
+use App\Modules\Cms\Services\HomepageContentService;
 use App\Modules\Consultations\Models\Consultation;
 use App\Modules\Consultations\Policies\ConsultationPolicy;
 use App\Modules\Delivery\Models\SubscriptionDelivery;
@@ -98,6 +101,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Plan::class, PlanPolicy::class);
         Gate::policy(Meal::class, MealPolicy::class);
         Gate::policy(Article::class, ArticlePolicy::class);
+        Gate::policy(PageContent::class, PageContentPolicy::class);
         Gate::policy(Recipe::class, RecipePolicy::class);
         Gate::policy(Consultation::class, ConsultationPolicy::class);
         Gate::policy(Category::class, CategoryPolicy::class);
@@ -108,9 +112,29 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Invoice::class, InvoicePolicy::class);
         Gate::policy(SubscriptionDelivery::class, SubscriptionDeliveryPolicy::class);
 
+        View::composer(['mail.*', 'mail.operations.*', 'mail.partials.*'], function ($view): void {
+            $view->with(
+                'mailFont',
+                app()->getLocale() === 'ar'
+                    ? "'Cairo', Tahoma, Arial, sans-serif"
+                    : 'Tahoma, Arial, sans-serif',
+            );
+        });
+
         // Expose the live cart count to the shared website navigation.
         View::composer('website.partials.nav', function ($view): void {
             $view->with('cartCount', app(CartService::class)->count());
+        });
+
+        View::composer([
+            'website.partials.v30-announce',
+            'website.partials.mobile-chrome',
+        ], function ($view): void {
+            $homepage = app(HomepageContentService::class);
+            $view->with([
+                'announceShipping' => $homepage->announceShipping(),
+                'announceMessages' => $homepage->announceMessages(),
+            ]);
         });
 
         // The admin topbar bell needs the signed-in staff member's inbox.

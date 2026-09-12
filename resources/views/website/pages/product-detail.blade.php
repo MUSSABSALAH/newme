@@ -78,6 +78,7 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 .kcal-badge{display:inline-flex;align-items:center;gap:7px;color:var(--green-ink);font-size:13px;font-weight:800;margin-bottom:16px}
 .kcal-badge .i{width:16px;height:16px;color:var(--green)}
 .desc{font-size:14.5px;font-weight:600;color:var(--body);margin-bottom:14px;max-width:56ch}
+.desc--line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .weight{font-size:14px;font-weight:800;color:var(--muted);margin-bottom:14px}
 .price{font-size:26px;font-weight:900;color:var(--navy);font-family:var(--mono);margin-bottom:20px}
 .price small{font-size:14px;color:var(--muted);font-weight:800;font-family:var(--font)}
@@ -129,10 +130,6 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 .nutbox .cell .v small{display:block;margin-top:2px;font-size:10px;color:var(--muted);font-weight:700;font-family:var(--font)}
 .nutbox .note{margin-top:12px;text-align:center;font-size:10.5px;font-weight:700;color:var(--muted)}
 .nutbox .note.real{color:var(--green-ink)}
-
-/* terms */
-.terms h4{font-size:13.5px;color:var(--navy);margin-bottom:8px}
-.terms p{font-size:12.5px;font-weight:700;color:var(--muted);line-height:1.9}
 
 /* iPhone menu */
 .burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-2);background:transparent;color:var(--navy);flex-shrink:0}
@@ -215,11 +212,7 @@ body.menu-open{overflow:hidden}
     @endif
 
     @if ($p['description'] !== '')
-      <p class="desc">{{ $p['description'] }}</p>
-    @endif
-
-    @if ($p['serving'] !== '')
-      <div class="weight">{{ $p['serving'] }}</div>
+      <p class="desc desc--line">{{ $p['description'] }}</p>
     @endif
 
     <div class="price">{{ $p['price'] }} <x-ui.sar /></div>
@@ -270,11 +263,6 @@ body.menu-open{overflow:hidden}
         <div class="note{{ $p['note'] === 'real' ? ' real' : '' }}">{{ $p['note'] === 'real' ? __('website.product_detail.note_real') : __('website.product_detail.note_est') }}</div>
       </div>
     @endif
-
-    <div class="terms">
-      <h4>{{ __('website.product_detail.terms_title') }}</h4>
-      <p>{{ __('website.product_detail.terms_refund') }}<br>{{ __('website.product_detail.terms_shipping') }}</p>
-    </div>
   </div>
 </div>
 </section>

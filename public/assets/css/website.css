@@ -107,8 +107,10 @@ footer.w-foot-full .f-brand b{display:block;font-size:19px;font-weight:900;color
 footer.w-foot-full .f-brand p{font-size:13px;margin-top:10px;line-height:1.95;color:#8296B2;font-weight:600;max-width:38ch}
 footer.w-foot-full .f-col h4{color:#fff;font-size:13.5px;font-weight:900;margin-bottom:13px;letter-spacing:0;text-transform:none;font-family:inherit}
 footer.w-foot-full .f-col a,
-footer.w-foot-full .f-col .f-muted{display:block;font-size:13px;font-weight:600;padding:5px 0;color:#8296B2}
-footer.w-foot-full .f-col a:hover{color:#fff}
+footer.w-foot-full .f-col .f-muted{display:block;font-size:13px;font-weight:600;padding:5px 0;color:#8296B2;text-decoration:none}
+footer.w-foot-full .f-col a:hover{color:#fff;text-decoration:none}
+footer.w-foot-simple a,
+footer.w-foot-simple a:hover{text-decoration:none}
 footer.w-foot-full .f-bottom{max-width:1160px;margin:36px auto 0;padding:22px 20px 0;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;font-weight:700;color:#7A8DA8}
 .totop{position:fixed;inset-inline-start:16px;bottom:16px;z-index:75;width:46px;height:46px;border-radius:50%;border:1.5px solid #D5D0C6;background:#fff;color:#122B4A;display:none;place-items:center;box-shadow:0 10px 26px rgba(18,43,74,.18);transition:.2s;cursor:pointer;padding:0}
 .totop.show{display:grid}

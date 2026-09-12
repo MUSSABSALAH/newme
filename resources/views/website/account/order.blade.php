@@ -22,6 +22,7 @@
     <h1>{{ __('account.order.ref') }} #{{ $order->reference() }}</h1>
     <p>
       <span class="pill {{ $order->status->value }}">{{ $order->status->label() }}</span>
+      <span class="text-muted">{{ __('account.delivery.shipping_status') }}</span>
       · {{ $order->placed_at?->translatedFormat('d M Y') }}
     </p>
   </div>

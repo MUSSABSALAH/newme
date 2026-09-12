@@ -120,11 +120,6 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .rbox ul li:last-child{border-bottom:none}
 .rbox ol{padding-inline-start:18px}
 .rbox ol li{padding:5px 0;font-size:13.5px;font-weight:600}
-footer{background:var(--navy);color:#9FB4D2;padding:44px 24px calc(48px + var(--sab));text-align:center;margin-top:56px}
-footer .flinks{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-size:12.5px;font-weight:800;margin-bottom:16px}
-footer .flinks a:hover{color:var(--orange-hi)}
-footer .legal{font-size:10.5px;font-weight:600;color:#6E84A5;line-height:2}
-
 /* ===== iPhone menu (design unchanged on desktop) ===== */
 .burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line,var(--gray-2,#E2DCCE));background:transparent;color:var(--ink,var(--navy,#122B4A));flex-shrink:0}
 .burger svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}

@@ -76,6 +76,9 @@ return [
             'updated' => 'Recipe updated',
             'archived' => 'Recipe archived',
         ],
+        'homepage_content' => [
+            'updated' => 'Homepage content updated',
+        ],
         'category' => [
             'created' => 'Category created',
             'updated' => 'Category updated',

@@ -93,11 +93,6 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 .toTop{position:fixed;bottom:calc(22px + var(--sab));inset-inline-start:22px;z-index:95;width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;border:none;font-size:17px;box-shadow:0 14px 34px rgba(18,43,74,.35);opacity:0;pointer-events:none;transition:.3s}
 .toTop.show{opacity:1;pointer-events:auto}
 
-footer{background:#0C1F38;color:#9FB4D2;padding:34px 20px calc(38px + var(--sab));text-align:center}
-footer .flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;font-weight:800;margin-bottom:12px}
-footer .flinks a:hover{color:var(--orange-hi)}
-footer .legal{font-size:11px;font-weight:600;color:#6E84A5;line-height:2}
-
 .mmenu{position:fixed;inset:0;z-index:220;background:var(--bg);display:flex;flex-direction:column;padding:calc(16px + var(--sat)) 24px calc(28px + var(--sab));transform:translateY(-103%);transition:transform .55s cubic-bezier(.77,0,.18,1);overflow-y:auto}
 .mmenu.open{transform:none}
 .mmenu .mtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:6vh}
@@ -166,14 +161,11 @@ body.mlock{overflow:hidden}
 
 <header class="thero">
   <div class="in">
-    <span class="kick">{{ __('website.terms.kick') }}</span>
     <h1>{{ __('website.terms.h1') }}</h1>
     <p>{{ __('website.terms.lead') }}</p>
     <div class="tfacts">
       <span class="tf">CR <b>7043404750</b></span>
       <span class="tf">VAT <b>312782087600003</b></span>
-      <span class="tf">EFFECTIVE <b>10.06.2026</b></span>
-      <span class="tf">SECTIONS <b>{{ count(__('website.terms.sections')) }}</b></span>
     </div>
   </div>
 </header>

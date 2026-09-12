@@ -40,6 +40,7 @@
 
 <x-ui.card>
     <div class="row">
+        <a href="{{ route('admin.homepage.edit') }}" class="link-btn">{{ __('dashboard.sections.edit_homepage') }}</a>
         <a href="{{ route('admin.articles.index') }}" class="link-btn">{{ __('dashboard.sections.view_all_articles') }}</a>
         <a href="{{ route('admin.recipes.index') }}" class="link-btn">{{ __('dashboard.sections.view_all_recipes') }}</a>
     </div>

@@ -87,10 +87,9 @@ final class DeliveryBoardService
             );
         }
 
-        // Grouping by area first turns the sheet into something close to a route.
         usort($stops, static function (SubscriptionStop $a, SubscriptionStop $b): int {
-            return [$a->address()?->city ?? '', $a->customerName()]
-                <=> [$b->address()?->city ?? '', $b->customerName()];
+            return [$b->subscription->created_at?->timestamp ?? 0, $b->subscription->getKey()]
+                <=> [$a->subscription->created_at?->timestamp ?? 0, $a->subscription->getKey()];
         });
 
         return $stops;
@@ -121,8 +120,8 @@ final class DeliveryBoardService
                     $query->orWhereIn('status', $open);
                 }
             })
-            ->orderBy('placed_at')
-            ->orderBy('id')
+            ->orderByDesc('placed_at')
+            ->orderByDesc('id')
             ->get();
     }
 }
