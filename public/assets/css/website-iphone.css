@@ -53,7 +53,12 @@
   .nm-ip .sec { padding: 26px 0; }
   .nm-ip .sec.tile { background: var(--ip-tile); }
   .nm-ip .sec h2 { font-size: 23px; margin-bottom: 8px; }
-  .nm-ip .sec h2 em { font-style: normal; color: var(--ip-orange-deep); }
+  .nm-ip .sec h2 em,
+  .nm-ip .sec-head h2 em,
+  .nm-ip h2 em {
+    font-style: normal;
+    color: var(--ip-orange);
+  }
   .nm-ip .lead { font-size: 13.5px; color: var(--ip-muted); font-weight: 600; line-height: 1.9; }
   .nm-ip .btn, .nm-ip a.btn {
     display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
@@ -350,33 +355,40 @@
     background: var(--ip-navy);
     color: #fff;
     text-align: center;
-    min-height: calc(40px + var(--ip-sat));
-    padding: var(--ip-sat) 16px 0;
-    font-size: 12.5px;
+    min-height: calc(56px + var(--ip-sat));
+    padding: var(--ip-sat) 14px 0;
+    font-size: 12px;
     font-weight: 800;
-    line-height: 1.4;
+    line-height: 1.35;
     letter-spacing: 0;
   }
   .nm-chrome .ship-announce > span {
     display: none;
     position: static;
-    width: auto;
+    width: 100%;
     margin: 0;
-    padding: 10px 0;
-    line-height: 1.4;
+    padding: 8px 0;
+    line-height: 1.35;
     text-align: center;
   }
   .nm-chrome .ship-announce > span.on {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .nm-chrome .ship-announce .ship-line {
-    display: inline-block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    width: 100%;
     max-width: 100%;
     font-style: normal;
     font-weight: inherit;
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
     letter-spacing: 0;
-    word-spacing: 0.15em;
+    word-spacing: 0;
     unicode-bidi: isolate;
   }
   .nm-chrome .ship-announce b {

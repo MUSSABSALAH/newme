@@ -12,6 +12,10 @@
   .v30-page .sec-head { margin-bottom: 18px; text-align: center; }
   .v30-page .sec-head .chapter { display: inline-block; font-size: 11px; font-weight: 800; color: #7C8799; margin-bottom: 6px; }
   .v30-page h1, .v30-page h2 { font-size: 1.6rem; }
+  .v30-page .sec-head h2 em {
+    font-style: normal;
+    color: #F07F2D;
+  }
   .v30-page .section { padding: 28px 0 36px; }
   .v30-page .wide-hero {
     position: relative;
@@ -97,6 +101,38 @@
   .v30-page .flourshow .spec > span:not(.ic) {
     display: block; font-size: 13px; color: #9FB4D2; font-weight: 600; line-height: 1.85;
   }
+  .v30-page .closing {
+    margin: 0 -16px -48px;
+    padding: 32px 20px 36px;
+    background: linear-gradient(105deg, #FFA05C, #F07F2D 55%, #DD6516);
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .v30-page .closing .in { position: relative; z-index: 2; }
+  .v30-page .closing h2 { color: #fff; font-size: 26px; margin: 0; }
+  .v30-page .closing .tag {
+    margin-top: 6px; font-size: 11px; letter-spacing: .2em;
+    color: rgba(255,255,255,.88); font-weight: 800;
+  }
+  .v30-page .closing p.k {
+    margin: 10px 0 0; font-size: 13.5px; font-weight: 700;
+    color: rgba(255,255,255,.96); line-height: 1.7;
+  }
+  .v30-page .closing .fine {
+    margin: 10px 0 0; font-size: 11.5px; font-weight: 700;
+    color: rgba(255,255,255,.8);
+  }
+  .v30-page .closing .btn,
+  .v30-page .closing a.btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; max-width: 320px; margin: 16px auto 0;
+    min-height: 52px; border-radius: 999px;
+    background: #fff; border: 2px solid #fff;
+    color: #DD6516; font-size: 15px; font-weight: 900;
+    box-shadow: 0 12px 28px rgba(0,0,0,.18);
+  }
 }
 </style>
 @endpush
@@ -159,8 +195,6 @@
     </div>
   </section>
 
-  <div class="v30-desk">
-    @include('website.partials.v30-closing')
-  </div>
+  @include('website.partials.v30-closing')
 </div>
 @endsection

@@ -60,6 +60,19 @@
             __('website.site.announce.partners'),
             __('website.site.announce.consult'),
         ];
+        $announceMessages = array_map(static function (int $i, string $line): string {
+            if ($i !== 0 || str_contains($line, '<br')) {
+                return $line;
+            }
+
+            $lead = app()->getLocale() === 'ar' ? 'التوصيل مجاني' : 'Free delivery';
+
+            if (str_starts_with(strip_tags($line), $lead)) {
+                return preg_replace('/^('.preg_quote($lead, '/').')\s+/u', '$1<br>', $line, 1) ?? $line;
+            }
+
+            return $line;
+        }, array_keys($announceMessages), $announceMessages);
       @endphp
       <div class="announce ship-announce" id="nmAnnounce">
         @foreach ($announceMessages as $i => $line)
