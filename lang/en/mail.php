@@ -8,13 +8,6 @@ return [
         'distributed' => 'DISTRIBUTED BY / موزّع بواسطة',
     ],
 
-    'preview' => [
-        'title' => 'Email templates',
-        'lead' => 'Preview the branded New Me emails before they go out. This page does not send anything.',
-        'open' => 'Open preview',
-        'sample' => 'Sample data',
-    ],
-
     'headings' => [
         'invoice' => 'Your invoice is ready',
         'invoice_sub' => 'Simplified tax invoice',
@@ -30,15 +23,5 @@ return [
         'invitation_sub' => 'Join the New Me team',
         'consultation' => 'Consultation booked',
         'consultation_sub' => 'Your appointment is reserved',
-    ],
-
-    'catalog' => [
-        'invoice' => 'Invoice issued',
-        'order' => 'Order confirmation',
-        'subscription' => 'Subscription confirmation',
-        'consultation' => 'Consultation confirmation',
-        'otp' => 'Email verification code',
-        'password' => 'Password reset',
-        'invitation' => 'Staff invitation',
     ],
 ];

@@ -177,9 +177,19 @@
             b.classList.add('on');
             var c = b.getAttribute('data-cat');
             [].forEach.call(rail.querySelectorAll('.prod'), function(pr){
-              pr.classList.toggle('hide', c !== 'all' && pr.getAttribute('data-cat') !== c);
+              var hide = window.nmStoreLine
+                ? !window.nmStoreLine.match(pr.getAttribute('data-cat'), c)
+                : (c !== 'all' && pr.getAttribute('data-cat') !== c);
+              pr.classList.toggle('hide', hide);
               pr.classList.add('in');
             });
+          });
+          document.addEventListener('DOMContentLoaded', function(){
+            if (!window.nmStoreLine) return;
+            var on = tabs.querySelector('.tab.on');
+            var start = on ? on.getAttribute('data-cat') : 'all';
+            window.nmStoreLine.apply(start);
+            [].forEach.call(rail.querySelectorAll('.prod'), function(pr){ pr.classList.add('in'); });
           });
         }
         return;
@@ -241,7 +251,10 @@
           b.classList.add('on');
           var c = b.getAttribute('data-cat');
           [].forEach.call(rail.querySelectorAll('.prod'), function(pr){
-            pr.classList.toggle('hide', c !== 'all' && pr.getAttribute('data-cat') !== c);
+            var hide = window.nmStoreLine
+              ? !window.nmStoreLine.match(pr.getAttribute('data-cat'), c)
+              : (c !== 'all' && pr.getAttribute('data-cat') !== c);
+            pr.classList.toggle('hide', hide);
             pr.classList.add('in');
           });
           rail.scrollTo({ left: 0, behavior: 'smooth' });

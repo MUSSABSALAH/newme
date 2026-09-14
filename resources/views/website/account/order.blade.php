@@ -39,15 +39,23 @@
         <div class="amt">{{ $item->lineTotalDisplay() }} <x-ui.sar /></div>
       </div>
     @endforeach
-    @if ($order->hasDiscount())
+    @if ($order->hasDiscount() || $order->hasDeliveryFee())
       <div class="kv" style="margin-top:14px;border-top:1.5px solid var(--gray-2);padding-top:14px">
         <span>{{ __('account.order.subtotal') }}</span>
         <b>{{ $order->subtotalDisplay() }}</b>
       </div>
-      <div class="kv">
-        <span>{{ __('account.order.discount') }}{{ $order->coupon_code ? ' ('.$order->coupon_code.')' : '' }}</span>
-        <b>−{{ $order->discountDisplay() }}</b>
-      </div>
+      @if ($order->hasDiscount())
+        <div class="kv">
+          <span>{{ __('account.order.discount') }}{{ $order->coupon_code ? ' ('.$order->coupon_code.')' : '' }}</span>
+          <b>−{{ $order->discountDisplay() }}</b>
+        </div>
+      @endif
+      @if ($order->hasDeliveryFee())
+        <div class="kv">
+          <span>{{ __('account.order.delivery_fee') }}</span>
+          <b>{{ $order->deliveryFeeDisplay() }}</b>
+        </div>
+      @endif
       <div class="kv kv--total">
         <span>{{ __('account.order.total') }}</span>
         <b>{{ $order->totalDisplay() }}</b>

@@ -7,6 +7,7 @@ namespace App\Modules\Plans\Models;
 use App\Models\User;
 use App\Modules\Plans\Enums\PlanVersionStatus;
 use Database\Factories\PlanVersionFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -78,6 +79,27 @@ class PlanVersion extends Model
         return $this->hasMany(PlanPricingRule::class)
             ->orderBy('meal_types_key')
             ->orderBy('sort_order');
+    }
+
+    /**
+     * The rules a customer can actually be quoted, named so a list of versions
+     * can eager-load them instead of querying once per version.
+     *
+     * @return HasMany<PlanPricingRule, $this>
+     */
+    public function activePricingRules(): HasMany
+    {
+        return $this->pricingRules()->where('is_active', true);
+    }
+
+    /**
+     * @return Collection<int, PlanPricingRule>
+     */
+    public function resolveActivePricingRules(): Collection
+    {
+        return $this->relationLoaded('activePricingRules')
+            ? $this->getRelation('activePricingRules')
+            : $this->activePricingRules()->get();
     }
 
     public function isDraft(): bool

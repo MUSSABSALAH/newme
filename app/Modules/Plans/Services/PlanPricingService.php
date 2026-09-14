@@ -68,7 +68,7 @@ final class PlanPricingService
     {
         $options = [];
 
-        foreach ($version->pricingRules()->where('is_active', true)->get() as $rule) {
+        foreach ($version->resolveActivePricingRules() as $rule) {
             $options[$rule->meal_types_key] ??= [
                 'key' => $rule->meal_types_key,
                 'meal_types' => $rule->meal_types,
@@ -87,7 +87,7 @@ final class PlanPricingService
     {
         $matrix = [];
 
-        foreach ($version->pricingRules()->where('is_active', true)->get() as $rule) {
+        foreach ($version->resolveActivePricingRules() as $rule) {
             $matrix[$rule->meal_types_key][] = $rule;
         }
 

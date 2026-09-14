@@ -22,7 +22,6 @@ use App\Modules\Identity\Contracts\SmsSender;
 use App\Modules\Identity\Models\Role;
 use App\Modules\Identity\Policies\RolePolicy;
 use App\Modules\Identity\Policies\UserPolicy;
-use App\Modules\Identity\Support\LogSmsSender;
 use App\Modules\Identity\Support\RecordingSmsSender;
 use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Invoices\Policies\InvoicePolicy;
@@ -40,6 +39,7 @@ use App\Modules\Promotions\Models\Coupon;
 use App\Modules\Promotions\Policies\CouponPolicy;
 use App\Modules\Settings\Models\Setting;
 use App\Modules\Settings\Policies\SettingsPolicy;
+use App\Modules\Settings\Services\SettingsService;
 use App\Modules\Store\Models\Category;
 use App\Modules\Store\Models\Product;
 use App\Modules\Store\Policies\CategoryPolicy;
@@ -62,7 +62,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(SmsSender::class, LogSmsSender::class);
+        // Both services keep a per-request copy of their cache entry, which only
+        // helps if the whole request shares one instance. Scoped, not singleton,
+        // so a queue worker starts each job with a clean copy.
+        $this->app->scoped(HomepageContentService::class);
+        $this->app->scoped(SettingsService::class);
+
+        // Resolved from config the same way the payment gateway is, so pointing
+        // OTP at a real provider is a config change rather than a code change.
+        $this->app->bind(SmsSender::class, function (): SmsSender {
+            $driver = (string) config('sms.driver', 'log');
+            $sender = config('sms.drivers.'.$driver);
+
+            if (! is_string($sender) || ! class_exists($sender)) {
+                throw new InvalidArgumentException("Unknown SMS driver [{$driver}].");
+            }
+
+            return $this->app->make($sender);
+        });
 
         if ($this->app->environment('testing')) {
             $this->app->singleton(SmsSender::class, RecordingSmsSender::class);

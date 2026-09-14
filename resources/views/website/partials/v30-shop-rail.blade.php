@@ -36,8 +36,15 @@
       $lineIcons = ['#i-bread', '#i-cookie', '#i-box'];
       $lineImgs = ['v30-line-bakery.jpg', 'v30-line-support.jpg', 'v30-line-subs.jpg'];
     @endphp
+    @php
+      $lineHrefs = [
+        route('website.store', ['line' => 'bakery']).'#shop',
+        route('website.store', ['line' => 'support']).'#shop',
+        route('website.subscribe'),
+      ];
+    @endphp
     @foreach (__('website.site.lines.items') as $i => $line)
-    <article class="lcard rv">
+    <a class="lcard rv" href="{{ $lineHrefs[$i] }}">
       <div class="media"><span class="n">{{ $line['n'] }}</span>
         <div class="ph"><svg><use href="{{ $lineIcons[$i] ?? '#i-bread' }}"/></svg></div>
         <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/'.$lineImgs[$i]) }}?v={{ filemtime(public_path('assets/images/'.$lineImgs[$i])) }}" alt="{{ $line['alt'] }}" onerror="this.remove()"></div>
@@ -46,7 +53,7 @@
         <p>{{ $line['body'] }}</p>
         <div class="tags">@foreach ($line['tags'] as $tag)<span>{{ $tag }}</span>@endforeach</div>
       </div>
-    </article>
+    </a>
     @endforeach
   </div>
   <p class="lines-hint">{{ __('website.site.lines.hint') }}</p>

@@ -10,7 +10,6 @@ use App\Modules\Payments\DTOs\ChargeResult;
 use App\Modules\Payments\DTOs\PayerDetails;
 use App\Modules\Payments\DTOs\PaymentCallback;
 use App\Modules\Payments\Enums\PaymentDecline;
-use App\Modules\Payments\Enums\PaymentMethod;
 use App\Modules\Payments\Exceptions\InvalidPaymentCallbackException;
 use Illuminate\Support\Facades\Log;
 use Paytabs\Laravel\Exceptions\InvalidPayloadException;
@@ -65,7 +64,7 @@ final class PayTabsSdkClient implements PayTabsClient
             ->buildHideShipping(true)
             ->buildURLs($returnUrl, $request->callbackUrl, true)
             ->buildPaypageConfig($request->language === 'ar' ? Language::Arabic : Language::English)
-            ->buildPaymentMethod($this->paymentMethod($request->method));
+            ->buildPaymentMethod($this->paymentMethod());
 
         try {
             $response = Paytabs::submitRequest(RequestsFactory::createPaymentRequest($payload));
@@ -118,12 +117,8 @@ final class PayTabsSdkClient implements PayTabsClient
         }
     }
 
-    private function paymentMethod(PaymentMethod $method): AbstractMethod
+    private function paymentMethod(): AbstractMethod
     {
-        return match ($method) {
-            PaymentMethod::Mada => PaymentMethodsFactory::createMadaMethod(),
-            PaymentMethod::ApplePay => PaymentMethodsFactory::createApplePayMethod(),
-            default => PaymentMethodsFactory::createCardMethod(),
-        };
+        return PaymentMethodsFactory::createPayTabsAllMethod();
     }
 }

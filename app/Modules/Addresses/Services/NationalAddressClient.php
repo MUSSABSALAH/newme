@@ -24,6 +24,7 @@ final class NationalAddressClient
 
         try {
             $response = Http::timeout(8)
+                ->connectTimeout(2)
                 ->acceptJson()
                 ->get(rtrim((string) config('services.saudi_address.url'), '/').'/address/address-geocode', [
                     'language' => app()->getLocale() === 'ar' ? 'A' : 'E',
@@ -62,7 +63,6 @@ final class NationalAddressClient
     }
 
     /**
-     * @param  mixed  $payload
      * @return array<string, mixed>|null
      */
     private function firstAddress(mixed $payload): ?array

@@ -4,13 +4,28 @@ declare(strict_types=1);
 
 namespace App\Modules\Notifications\Notifications;
 
+use App\Modules\Notifications\Enums\MessageQueue;
 use App\Modules\Notifications\Enums\NotificationEvent;
+use App\Modules\Notifications\Support\CapturesRequestLocale;
 use App\Modules\Subscriptions\Models\Subscription;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\SerializesModels;
 
-final class NewSubscriptionNotification extends Notification
+/**
+ * Queued for the same reason as NewOrderNotification: a subscription should not
+ * wait on one insert per member of staff.
+ */
+final class NewSubscriptionNotification extends Notification implements ShouldQueue
 {
-    public function __construct(private readonly Subscription $subscription) {}
+    use CapturesRequestLocale, Queueable, SerializesModels;
+
+    public function __construct(private readonly Subscription $subscription)
+    {
+        $this->onQueue(MessageQueue::Default->value);
+        $this->captureRequestLocale();
+    }
 
     /**
      * @return list<string>

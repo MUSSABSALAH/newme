@@ -497,6 +497,12 @@
     padding: 6px 18px 14px; border-bottom: 1px solid rgba(255,255,255,.08); flex-shrink: 0;
   }
   .nm-chrome .drawer .hd h3 { font-size: 20px; color: #fff; margin: 0; font-weight: 900; }
+  .nm-chrome .drawer .hd-acts { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .nm-chrome .drawer .hd-acts .lang-toggle {
+    min-width: 36px; height: 36px; margin: 0;
+    background: transparent; border-color: rgba(255,255,255,.28); color: #fff;
+  }
+  .nm-chrome .drawer .hd-acts .lang-toggle:hover { border-color: #FFA05C; color: #FFA05C; }
   .nm-chrome .drawer .x {
     width: 36px; height: 36px; border-radius: 50%;
     background: transparent; border: 1.5px solid rgba(255,255,255,.28); color: #fff;

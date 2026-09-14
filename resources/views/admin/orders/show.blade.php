@@ -34,6 +34,10 @@
             <x-ui.card :title="__('orders.show.fulfillment')">
                 <div class="detail-list">
                     <div class="detail-row">
+                        <span class="detail-row__label">{{ __('orders.fields.fulfillment_method') }}</span>
+                        <span class="detail-row__value">{{ $order->fulfillment_method->label() }}</span>
+                    </div>
+                    <div class="detail-row">
                         <span class="detail-row__label">{{ __('orders.fields.status') }}</span>
                         <span class="detail-row__value">
                             <x-ui.badge :variant="$order->status->badge()">{{ $order->status->label() }}</x-ui.badge>
@@ -137,6 +141,13 @@
                                 @endif
                             </span>
                             <span class="detail-row__value">−{{ $order->discountDisplay() }} <x-ui.sar /></span>
+                        </div>
+                    @endif
+
+                    @if ($order->hasDeliveryFee())
+                        <div class="detail-row">
+                            <span class="detail-row__label">{{ __('orders.fields.delivery_fee') }}</span>
+                            <span class="detail-row__value">{{ $order->deliveryFeeDisplay() }} <x-ui.sar /></span>
                         </div>
                     @endif
 

@@ -42,6 +42,13 @@ class WebsiteController extends Controller
         'carnivore' => 'i-flame',
     ];
 
+    /**
+     * Resolved once per request; the controller is built fresh for each one.
+     *
+     * @var Collection<int, Plan>|null
+     */
+    private ?Collection $activePlans = null;
+
     public function __construct(
         private readonly PlanPricingService $pricing,
         private readonly SettingsService $settings,
@@ -161,23 +168,26 @@ class WebsiteController extends Controller
 
         $product->loadMissing('category.parent');
 
-        $topCategories = Category::query()
+        $parents = Category::query()
             ->where('is_active', true)
             ->whereNull('parent_id')
             ->with(['children' => fn ($query) => $query->select('id', 'parent_id')])
             ->orderBy('sort_order')
             ->orderBy('id')
-            ->get()
-            ->map(function (Category $category): array {
-                $scopeIds = $category->children->pluck('id')->push($category->id)->all();
+            ->get();
 
-                $thumb = Product::query()
-                    ->where('is_active', true)
-                    ->whereIn('category_id', $scopeIds)
-                    ->whereNotNull('image_path')
-                    ->orderBy('sort_order')
-                    ->orderBy('id')
-                    ->first();
+        $thumbs = $this->categoryThumbnailCandidates($parents);
+
+        $topCategories = $parents
+            ->map(function (Category $category) use ($thumbs): array {
+                $scopeIds = $category->children->pluck('id')->push($category->id);
+
+                // Kept as a scan over the ordered list rather than a lookup by
+                // category, so the winner is still the first product in
+                // (sort_order, id) across the whole subtree.
+                $thumb = $thumbs->first(
+                    fn (Product $product): bool => $scopeIds->contains($product->category_id),
+                );
 
                 return [
                     'slug' => $category->slug,
@@ -389,11 +399,7 @@ class WebsiteController extends Controller
             $grouped[$type->value] = [];
         }
 
-        $meals = $plan->meals()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get();
+        $meals = $plan->resolveActiveMeals();
 
         foreach ($meals as $meal) {
             $grouped[$meal->meal_type->value][] = [
@@ -443,8 +449,18 @@ class WebsiteController extends Controller
      */
     private function activePublishedPlans(): Collection
     {
-        return Plan::query()
+        // The /subscribe page asks for this set twice, once for the plan cards
+        // and once for the pricing payload, so it is resolved once per request.
+        if ($this->activePlans instanceof Collection) {
+            return $this->activePlans;
+        }
+
+        // The filter below and every caller afterwards ask each plan for its
+        // published version, its pricing rules and its meals, which was a query
+        // per plan each time.
+        return $this->activePlans = Plan::query()
             ->where('is_active', true)
+            ->with(['publishedVersions.activePricingRules', 'activeMeals'])
             ->orderBy('sort_order')
             ->orderBy('id')
             ->get()
@@ -624,6 +640,33 @@ class WebsiteController extends Controller
      *
      * @return array<string, mixed>
      */
+    /**
+     * Every product that could stand in as a category thumbnail, in one query
+     * instead of one per category, ordered the way the per-category query was.
+     *
+     * @param  Collection<int, Category>  $parents
+     * @return Collection<int, Product>
+     */
+    private function categoryThumbnailCandidates(Collection $parents): Collection
+    {
+        $scopeIds = $parents
+            ->flatMap(fn (Category $category): array => $category->children->pluck('id')->push($category->id)->all())
+            ->unique()
+            ->all();
+
+        if ($scopeIds === []) {
+            return new Collection;
+        }
+
+        return Product::query()
+            ->where('is_active', true)
+            ->whereIn('category_id', $scopeIds)
+            ->whereNotNull('image_path')
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get(['id', 'category_id', 'image_path']);
+    }
+
     private function websiteProductDetail(Product $product): array
     {
         $category = $product->category;

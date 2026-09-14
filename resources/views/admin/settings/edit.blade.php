@@ -18,6 +18,10 @@
                             $name = 'settings[' . $definition->fieldName() . ']';
                             $current = $values[$definition->key] ?? null;
                             $isWide = in_array($definition->type, [SettingType::Text, SettingType::MultiSelect], true);
+                            $locked = $definition->locked;
+                            if ($definition->key === 'delivery.fee_mode') {
+                                $current = 'fixed';
+                            }
                         @endphp
 
                         @if ($definition->type === SettingType::Boolean)
@@ -74,8 +78,15 @@
                                 :hint="Lang::has($definition->hintKey()) ? __($definition->hintKey()) : null"
                                 :class="$isWide ? 'field--full' : ''"
                             >
+                                @if ($locked)
+                                    <input type="hidden" name="{{ $name }}" value="{{ old($field, $current) }}">
+                                @endif
                                 @if ($definition->type === SettingType::Select)
-                                    <x-form.select :name="$name" :selected="old($field, $current)">
+                                    <x-form.select
+                                        :name="$name"
+                                        :selected="old($field, $current)"
+                                        :disabled="$locked"
+                                    >
                                         @foreach ($definition->options as $option)
                                             <option value="{{ $option }}" @selected((string) old($field, $current) === (string) $option)>
                                                 {{ Lang::has('settings.options.' . $definition->key . '.' . $option)
@@ -85,7 +96,7 @@
                                         @endforeach
                                     </x-form.select>
                                 @elseif ($definition->type === SettingType::Text)
-                                    <x-form.textarea :name="$name" :value="old($field, $current)" rows="3" />
+                                    <x-form.textarea :name="$name" :value="old($field, $current)" rows="3" :disabled="$locked" />
                                 @else
                                     <x-form.input
                                         :name="$name"
@@ -94,6 +105,7 @@
                                             : ($definition->type === SettingType::Time ? 'time' : 'text')"
                                         :step="$definition->type === SettingType::Decimal ? '0.01' : ($definition->type === SettingType::Time ? '60' : null)"
                                         :value="old($field, $current)"
+                                        :disabled="$locked"
                                     />
                                 @endif
                             </x-form.field>

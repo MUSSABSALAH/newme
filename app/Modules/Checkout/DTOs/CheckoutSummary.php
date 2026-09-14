@@ -24,6 +24,7 @@ final readonly class CheckoutSummary
         public array $lines,
         public Money $total,
         public ?string $couponCode,
+        public ?StoreFulfillmentQuote $storeQuote = null,
     ) {}
 
     public function totalDisplay(): string

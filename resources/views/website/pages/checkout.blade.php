@@ -8,9 +8,13 @@
 
   $isSubscription = $summary->source === CheckoutSource::Subscription;
   $chosen = old('address', $selectedAddress?->public_id);
-  $chosenMethod = old('payment_method', $methods[0]->value ?? 'mada');
+  $chosenMethod = old('payment_method', $methods[0]->value ?? 'online');
+  $chosenFulfillment = old('fulfillment', 'delivery');
   $hasAddress = $addresses->contains(fn ($address) => $address->isDeliverable());
+  $needsAddress = $isSubscription || $chosenFulfillment !== 'pickup';
+  $canPlace = ! $needsAddress || $hasAddress;
   $hostedCheckout = $hostedCheckout ?? false;
+  $storeQuote = $summary->storeQuote;
 @endphp
 
 @push('styles')
@@ -172,15 +176,15 @@ body.menu-open{overflow:hidden}
   <div class="cohead">
     <div class="kick">{{ $summary->source->label() }}</div>
     <h1>{{ __('checkout.heading') }}</h1>
-    <p>{{ __('checkout.subtitle') }}</p>
+    <p>{{ $isSubscription ? __('checkout.subtitle') : __('checkout.subtitle_store') }}</p>
   </div>
 
   <div class="costeps">
     <div class="costep done"><span class="n">✓</span>{{ __('checkout.steps.account') }}</div>
     <span class="bar"></span>
-    <div class="costep {{ $hasAddress ? 'done' : 'on' }}"><span class="n">{{ $hasAddress ? '✓' : 2 }}</span>{{ __('checkout.steps.address') }}</div>
+    <div class="costep {{ $canPlace ? 'done' : 'on' }}"><span class="n">{{ $canPlace ? '✓' : 2 }}</span>{{ $isSubscription ? __('checkout.steps.address') : __('checkout.steps.fulfillment') }}</div>
     <span class="bar"></span>
-    <div class="costep {{ $hasAddress ? 'on' : '' }}"><span class="n">3</span>{{ __('checkout.steps.payment') }}</div>
+    <div class="costep {{ $canPlace ? 'on' : '' }}"><span class="n">3</span>{{ __('checkout.steps.payment') }}</div>
     <span class="bar"></span>
     <div class="costep"><span class="n">4</span>{{ __('checkout.steps.review') }}</div>
   </div>
@@ -209,11 +213,45 @@ body.menu-open{overflow:hidden}
         </div>
       </div>
 
-      {{-- STEP 2: where it goes --}}
+      {{-- STEP 2: how it arrives --}}
       <div class="card">
-        <h2><span class="n">2</span>{{ __('checkout.address.heading') }}</h2>
-        <p class="hint">{{ __('checkout.steps.address') }}</p>
+        <h2><span class="n">2</span>{{ $isSubscription ? __('checkout.address.heading') : __('checkout.fulfillment.heading') }}</h2>
+        <p class="hint">{{ $isSubscription ? __('checkout.steps.address') : __('checkout.steps.fulfillment') }}</p>
 
+        @unless ($isSubscription)
+          @error('fulfillment')<div class="alert bad" style="margin-bottom:14px">{{ $message }}</div>@enderror
+          <div class="addr" style="margin-bottom:16px">
+            <label class="pick {{ $chosenFulfillment === 'delivery' ? 'on' : '' }}" data-fulfill>
+              <input type="radio" name="fulfillment" value="delivery" form="placeOrder"
+                     @checked($chosenFulfillment === 'delivery')>
+              <span class="body">
+                <b>{{ __('checkout.fulfillment.delivery') }}</b>
+                <p>{{ __('checkout.fulfillment.delivery_hint') }}</p>
+              </span>
+            </label>
+            <label class="pick {{ $chosenFulfillment === 'pickup' ? 'on' : '' }}" data-fulfill>
+              <input type="radio" name="fulfillment" value="pickup" form="placeOrder"
+                     @checked($chosenFulfillment === 'pickup')>
+              <span class="body">
+                <b>{{ __('checkout.fulfillment.pickup') }}</b>
+                <p>{{ __('checkout.fulfillment.pickup_hint') }}</p>
+              </span>
+              <span class="flag">{{ __('checkout.fulfillment.free') }}</span>
+            </label>
+          </div>
+
+          <div class="note-sim" data-pickup-branch @if ($chosenFulfillment !== 'pickup') hidden @endif>
+            <svg class="i"><use href="#i-info"/></svg>
+            <span>
+              <b>{{ __('checkout.fulfillment.branch') }}</b>
+              @if ($storeQuote?->branchAddress)
+                — {{ $storeQuote->branchAddress }}
+              @endif
+            </span>
+          </div>
+        @endunless
+
+        <div data-delivery-address @if (! $isSubscription && $chosenFulfillment === 'pickup') hidden @endif>
         @unless ($hasAddress)
           <div class="alert bad" style="margin-bottom:14px">{{ __('checkout.address.empty') }}</div>
         @endunless
@@ -301,6 +339,7 @@ body.menu-open{overflow:hidden}
           </label>
           <button type="submit" class="btn ghost" style="width:auto">{{ __('checkout.address.save') }}</button>
         </form>
+        </div>
       </div>
 
       {{-- STEP 3 + 4: pay and place --}}
@@ -370,7 +409,7 @@ body.menu-open{overflow:hidden}
 
         <div class="card">
           <h2><span class="n">4</span>{{ __('checkout.review.heading') }}</h2>
-          <p class="hint">{{ __('checkout.subtitle') }}</p>
+          <p class="hint">{{ $isSubscription ? __('checkout.subtitle') : __('checkout.subtitle_store') }}</p>
 
           <div class="f">
             <label for="note">{{ __('checkout.review.note') }}</label>
@@ -384,7 +423,7 @@ body.menu-open{overflow:hidden}
           </label>
           @error('terms')<div class="alert bad" style="margin-bottom:14px">{{ $message }}</div>@enderror
 
-          <button type="submit" class="btn" @disabled(! $hasAddress) data-submit data-busy="{{ $hostedCheckout ? __('checkout.review.redirecting') : __('checkout.review.placing') }}">
+          <button type="submit" class="btn" @disabled(! $canPlace) data-submit data-busy="{{ $hostedCheckout ? __('checkout.review.redirecting') : __('checkout.review.placing') }}">
             <svg class="i"><use href="#i-lock"/></svg>
             <span data-submit-label>{{ $hostedCheckout ? __('checkout.review.pay') : __('checkout.review.place') }}</span>
           </button>
@@ -409,12 +448,23 @@ body.menu-open{overflow:hidden}
         @endif
 
         @foreach ($summary->lines as $line)
-          <div class="r"><span>{{ $line['label'] }}</span><span class="v">{{ $line['value'] }} <x-ui.sar /></span></div>
+          @php $isDeliveryLine = ! $isSubscription && $line['label'] === __('checkout.summary.delivery'); @endphp
+          <div class="r">
+            <span>{{ $line['label'] }}</span>
+            <span class="v">
+              @if ($isDeliveryLine)
+                <span data-delivery-fee>{{ $line['value'] }}</span>
+                <span data-fee-currency @if (($storeQuote?->deliveryFeeMinor ?? 0) === 0) hidden @endif> <x-ui.sar /></span>
+              @else
+                {{ $line['value'] }} <x-ui.sar />
+              @endif
+            </span>
+          </div>
         @endforeach
 
         <div class="r tot">
           <span>{{ __('checkout.summary.total') }}</span>
-          <span class="v">{{ $summary->totalDisplay() }} <x-ui.sar /></span>
+          <span class="v"><span data-order-total>{{ $summary->totalDisplay() }}</span> <x-ui.sar /></span>
         </div>
 
         @if ($isSubscription)
@@ -431,6 +481,16 @@ body.menu-open{overflow:hidden}
   </div>
 </div>
 
+  @unless ($isSubscription)
+    <div hidden
+         data-store-quotes
+         data-has-address="{{ $hasAddress ? '1' : '0' }}"
+         data-fee-delivery="{{ $storeQuote?->feeDisplay() }}"
+         data-fee-pickup="{{ __('checkout.summary.free') }}"
+         data-fee-charged="{{ ($storeQuote?->deliveryFeeMinor ?? 0) > 0 ? '1' : '0' }}"
+         data-total-delivery="{{ $storeQuote?->deliveryTotalDisplay() }}"
+         data-total-pickup="{{ $storeQuote?->pickupTotalDisplay() }}"></div>
+  @endunless
 @endsection
 
 @push('scripts')
@@ -454,6 +514,7 @@ try{
   }
   group('[data-pick]');
   group('[data-pay]');
+  group('[data-fulfill]');
 
   // Card fields only matter for card methods.
   var box=document.querySelector('[data-cardbox]');
@@ -466,6 +527,45 @@ try{
     i.addEventListener('change',syncCard);
   });
   syncCard();
+
+  // Delivery needs an address; pickup does not.
+  var quotes=document.querySelector('[data-store-quotes]');
+  if(quotes){
+    var addressBox=document.querySelector('[data-delivery-address]');
+    var pickupBox=document.querySelector('[data-pickup-branch]');
+    var submit=document.querySelector('[data-submit]');
+    var deliveryFee=document.querySelector('[data-delivery-fee]');
+    var feeCurrency=document.querySelector('[data-fee-currency]');
+    var orderTotal=document.querySelector('[data-order-total]');
+    var hasAddress=quotes.getAttribute('data-has-address')==='1';
+    function fulfillment(){
+      var on=document.querySelector('input[name="fulfillment"]:checked');
+      return on?on.value:'delivery';
+    }
+    function syncFulfillment(){
+      var pickup=fulfillment()==='pickup';
+      if(addressBox)addressBox.hidden=pickup;
+      if(pickupBox)pickupBox.hidden=!pickup;
+      if(submit)submit.disabled=pickup?false:!hasAddress;
+      if(deliveryFee){
+        deliveryFee.textContent=pickup
+          ?quotes.getAttribute('data-fee-pickup')
+          :quotes.getAttribute('data-fee-delivery');
+      }
+      if(feeCurrency){
+        feeCurrency.hidden=pickup||quotes.getAttribute('data-fee-charged')!=='1';
+      }
+      if(orderTotal){
+        orderTotal.textContent=pickup
+          ?quotes.getAttribute('data-total-pickup')
+          :quotes.getAttribute('data-total-delivery');
+      }
+    }
+    document.querySelectorAll('input[name="fulfillment"]').forEach(function(i){
+      i.addEventListener('change',syncFulfillment);
+    });
+    syncFulfillment();
+  }
 
   // Reveal the new-address form on demand.
   var toggle=document.querySelector('[data-toggle-address]');

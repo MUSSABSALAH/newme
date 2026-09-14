@@ -865,6 +865,15 @@ return [
         ],
     ],
 
+    'not_found' => [
+        'title' => 'الصفحة غير موجودة — نيو مي',
+        'kick' => 'ERROR 404',
+        'heading' => 'الصفحة <em>غير موجودة</em>',
+        'lead' => 'الرابط غير صحيح أو الصفحة اتنقلت. تقدر ترجع للرئيسية أو تتصفّح المتجر.',
+        'cta_home' => 'الرئيسية',
+        'cta_store' => 'تصفّح المتجر',
+    ],
+
     'blog' => require __DIR__.'/website_blog.php',
     'menu_page' => require __DIR__.'/website_menu_page.php',
     'product' => require __DIR__.'/website_product.php',

@@ -52,9 +52,15 @@ final class HostedCheckoutFulfillment
         $method = PaymentMethod::tryFrom((string) ($intent['method'] ?? $payment->method->value))
             ?? $payment->method;
 
-        $placed = (($intent['source'] ?? '') === CheckoutSource::Subscription->value)
-            ? $this->fulfillSubscription($user, $address, $method, $intent)
-            : $this->orders->placeFromSnapshot($user, $address, $method, $intent);
+        if (($intent['source'] ?? '') === CheckoutSource::Subscription->value) {
+            if (! $address instanceof Address) {
+                throw (new ModelNotFoundException)->setModel(Address::class);
+            }
+
+            $placed = $this->fulfillSubscription($user, $address, $method, $intent);
+        } else {
+            $placed = $this->orders->placeFromSnapshot($user, $address, $method, $intent);
+        }
 
         $payment->payable()->associate($placed);
         $payment->checkout_intent = null;
@@ -95,11 +101,17 @@ final class HostedCheckoutFulfillment
     /**
      * @param  array<string, mixed>  $intent
      */
-    private function address(User $user, array $intent): Address
+    private function address(User $user, array $intent): ?Address
     {
+        $id = (int) ($intent['address_id'] ?? 0);
+
+        if ($id <= 0) {
+            return null;
+        }
+
         $address = Address::query()
             ->where('user_id', $user->getKey())
-            ->whereKey((int) ($intent['address_id'] ?? 0))
+            ->whereKey($id)
             ->first();
 
         if (! $address instanceof Address) {

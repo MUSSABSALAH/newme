@@ -91,6 +91,56 @@ final class SettingsRegistry
             new SettingDefinition('finance.tax_rate', SettingGroup::Finance, SettingType::Decimal, '15.00', ['required', 'numeric', 'min:0', 'max:100']),
             new SettingDefinition('finance.prices_include_tax', SettingGroup::Finance, SettingType::Boolean, false, ['boolean']),
 
+            // Delivery — store checkout uses the fixed amount and free-above
+            // threshold. Distance fields stay stored for a later step.
+            new SettingDefinition(
+                'delivery.fee_mode',
+                SettingGroup::Delivery,
+                SettingType::Select,
+                'fixed',
+                ['required', 'in:fixed,distance'],
+                ['fixed', 'distance'],
+                locked: true,
+            ),
+            new SettingDefinition(
+                'delivery.free_above',
+                SettingGroup::Delivery,
+                SettingType::Decimal,
+                '0.00',
+                ['required', 'numeric', 'min:0'],
+            ),
+            new SettingDefinition(
+                'delivery.fixed_amount',
+                SettingGroup::Delivery,
+                SettingType::Decimal,
+                '0.00',
+                ['required', 'numeric', 'min:0'],
+            ),
+            new SettingDefinition(
+                'delivery.included_km',
+                SettingGroup::Delivery,
+                SettingType::Decimal,
+                '0',
+                ['required', 'numeric', 'min:0'],
+                locked: true,
+            ),
+            new SettingDefinition(
+                'delivery.included_price',
+                SettingGroup::Delivery,
+                SettingType::Decimal,
+                '0.00',
+                ['required', 'numeric', 'min:0'],
+                locked: true,
+            ),
+            new SettingDefinition(
+                'delivery.price_per_km',
+                SettingGroup::Delivery,
+                SettingType::Decimal,
+                '0.00',
+                ['required', 'numeric', 'min:0'],
+                locked: true,
+            ),
+
             // Operations
             new SettingDefinition('operations.stock_reservation_minutes', SettingGroup::Operations, SettingType::Integer, 30, ['required', 'integer', 'min:1', 'max:1440']),
             new SettingDefinition('operations.payment_timeout_minutes', SettingGroup::Operations, SettingType::Integer, 30, ['required', 'integer', 'min:1', 'max:1440']),

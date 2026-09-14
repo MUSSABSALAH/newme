@@ -7,6 +7,7 @@ namespace App\Modules\Orders\Models;
 use App\Models\User;
 use App\Modules\Addresses\DTOs\AddressSnapshot;
 use App\Modules\Addresses\Models\Address;
+use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Payments\Enums\PaymentMethod;
 use App\Modules\Payments\Enums\PaymentStatus;
@@ -26,6 +27,7 @@ use Illuminate\Support\Str;
  * @property string $public_id
  * @property int $user_id
  * @property int|null $address_id
+ * @property FulfillmentMethod $fulfillment_method
  * @property array<string, mixed>|null $shipping_address
  * @property OrderStatus $status
  * @property string $currency
@@ -33,6 +35,7 @@ use Illuminate\Support\Str;
  * @property string|null $coupon_code
  * @property int $subtotal_minor
  * @property int $discount_minor
+ * @property int $delivery_fee_minor
  * @property int $total_minor
  * @property PaymentMethod|null $payment_method
  * @property PaymentStatus $payment_status
@@ -52,6 +55,7 @@ class Order extends Model
         'public_id',
         'user_id',
         'address_id',
+        'fulfillment_method',
         'shipping_address',
         'status',
         'currency',
@@ -59,6 +63,7 @@ class Order extends Model
         'coupon_code',
         'subtotal_minor',
         'discount_minor',
+        'delivery_fee_minor',
         'total_minor',
         'payment_method',
         'payment_status',
@@ -88,11 +93,13 @@ class Order extends Model
     {
         return [
             'status' => OrderStatus::class,
+            'fulfillment_method' => FulfillmentMethod::class,
             'shipping_address' => 'array',
             'payment_method' => PaymentMethod::class,
             'payment_status' => PaymentStatus::class,
             'subtotal_minor' => 'integer',
             'discount_minor' => 'integer',
+            'delivery_fee_minor' => 'integer',
             'total_minor' => 'integer',
             'placed_at' => 'datetime',
             'delivered_at' => 'datetime',
@@ -167,5 +174,20 @@ class Order extends Model
     public function hasDiscount(): bool
     {
         return $this->discount_minor > 0;
+    }
+
+    public function hasDeliveryFee(): bool
+    {
+        return $this->delivery_fee_minor > 0;
+    }
+
+    public function isPickup(): bool
+    {
+        return $this->fulfillment_method === FulfillmentMethod::Pickup;
+    }
+
+    public function deliveryFeeDisplay(): string
+    {
+        return Money::fromMinor($this->delivery_fee_minor)->format();
     }
 }

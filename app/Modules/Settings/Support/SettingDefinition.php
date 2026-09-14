@@ -21,6 +21,7 @@ final class SettingDefinition
      * @param  list<string>  $rules  Laravel validation rules for the value.
      * @param  list<string>  $options  Allowed values for Select / MultiSelect settings.
      * @param  string|int|bool|array<int, string>|null  $default
+     * @param  bool  $locked  Shown in the admin form but not editable.
      */
     public function __construct(
         public readonly string $key,
@@ -30,6 +31,7 @@ final class SettingDefinition
         public readonly array $rules = [],
         public readonly array $options = [],
         public readonly bool $encrypted = false,
+        public readonly bool $locked = false,
     ) {}
 
     public function labelKey(): string

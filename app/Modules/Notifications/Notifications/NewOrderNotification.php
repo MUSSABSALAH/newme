@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 namespace App\Modules\Notifications\Notifications;
 
+use App\Modules\Notifications\Enums\MessageQueue;
 use App\Modules\Notifications\Enums\NotificationEvent;
+use App\Modules\Notifications\Support\CapturesRequestLocale;
 use App\Modules\Orders\Models\Order;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\SerializesModels;
 
-final class NewOrderNotification extends Notification
+/**
+ * Queued so a purchase is not held up by a permission lookup plus one insert
+ * per member of staff. Sent on the default queue so it never competes with an
+ * OTP, and stamped with the request locale so the wording is unchanged.
+ */
+final class NewOrderNotification extends Notification implements ShouldQueue
 {
-    public function __construct(private readonly Order $order) {}
+    use CapturesRequestLocale, Queueable, SerializesModels;
+
+    public function __construct(private readonly Order $order)
+    {
+        $this->onQueue(MessageQueue::Default->value);
+        $this->captureRequestLocale();
+    }
 
     /**
      * @return list<string>

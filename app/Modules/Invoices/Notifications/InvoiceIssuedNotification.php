@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Invoices\Notifications;
 
 use App\Modules\Invoices\Models\Invoice;
-use App\Modules\Invoices\Services\InvoicePdfRenderer;
+use App\Modules\Invoices\Services\InvoicePdfStore;
 use App\Modules\Notifications\Enums\MessageQueue;
 use App\Modules\Notifications\Support\BrandMail;
 use App\Modules\Notifications\Support\CapturesRequestLocale;
@@ -41,7 +41,7 @@ final class InvoiceIssuedNotification extends Notification implements ShouldQueu
 
     public function toMail(object $notifiable): MailMessage
     {
-        $pdf = app(InvoicePdfRenderer::class)->render($this->invoice);
+        $pdf = app(InvoicePdfStore::class)->bytes($this->invoice);
         $subject = (string) __('invoices.mail.subject', ['number' => $this->invoice->number]);
         $greeting = (string) __('invoices.mail.greeting');
         $intro = (string) __('invoices.mail.intro', [

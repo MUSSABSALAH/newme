@@ -175,9 +175,15 @@ final class InvoiceService
 
         $linesTotal = $net + $discount;
 
+        $feeInclusive = max(0, (int) $order->delivery_fee_minor);
+        $feeNet = $feeInclusive === 0
+            ? 0
+            : Rounding::divide($feeInclusive * 10000, 10000 + $bps);
+        $productLinesTotal = max(0, $linesTotal - $feeNet);
+
         $items = $order->items()->orderBy('id')->get();
         $weights = $items->map(static fn ($item): int => (int) $item->line_total_minor)->all();
-        $amounts = $this->allocate($linesTotal, array_values($weights));
+        $amounts = $this->allocate($productLinesTotal, array_values($weights));
 
         $lines = [];
 
@@ -190,6 +196,15 @@ final class InvoiceService
                 quantity: $quantity,
                 unitPriceMinor: Rounding::divide($lineTotal, $quantity),
                 lineTotalMinor: $lineTotal,
+            );
+        }
+
+        if ($feeNet > 0) {
+            $lines[] = new InvoiceLine(
+                description: (string) __('invoices.pdf.delivery_line'),
+                quantity: 1,
+                unitPriceMinor: $feeNet,
+                lineTotalMinor: $feeNet,
             );
         }
 

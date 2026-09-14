@@ -49,6 +49,7 @@ final class MapGeocoder
     {
         try {
             $response = Http::timeout(6)
+                ->connectTimeout(2)
                 ->withUserAgent('NewMe/1.0 (address-lookup; https://newme.sa)')
                 ->acceptJson()
                 ->get('https://nominatim.openstreetmap.org/reverse', [

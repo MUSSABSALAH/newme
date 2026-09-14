@@ -13,10 +13,13 @@ use App\Modules\Addresses\DTOs\AddressData;
 use App\Modules\Addresses\Models\Address;
 use App\Modules\Addresses\Services\AddressService;
 use App\Modules\Checkout\DTOs\SubscriptionDraft;
+use App\Modules\Checkout\Enums\CheckoutSource;
+use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Checkout\Exceptions\NothingToCheckoutException;
 use App\Modules\Checkout\Services\CheckoutDraftService;
 use App\Modules\Checkout\Services\CheckoutService;
 use App\Modules\Orders\Exceptions\EmptyCartException;
+use App\Modules\Orders\Models\Order;
 use App\Modules\Payments\Contracts\PaymentGateway;
 use App\Modules\Payments\DTOs\CardDetails;
 use App\Modules\Payments\Enums\PaymentMethod;
@@ -113,10 +116,18 @@ final class CheckoutController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $address = Address::query()
-            ->where('user_id', $user->getKey())
-            ->where('public_id', $request->validated('address'))
-            ->firstOrFail();
+        $fulfillment = $this->checkout->source() === CheckoutSource::Subscription
+            ? FulfillmentMethod::Delivery
+            : $request->fulfillment();
+
+        $address = null;
+
+        if ($fulfillment->requiresAddress()) {
+            $address = Address::query()
+                ->where('user_id', $user->getKey())
+                ->where('public_id', $request->validated('address'))
+                ->firstOrFail();
+        }
 
         $method = $request->paymentMethod();
         $card = $method->requiresCard() && ! $this->gateway->usesHostedCheckout()
@@ -130,6 +141,7 @@ final class CheckoutController extends Controller
                 $method,
                 $card,
                 $request->validated('note'),
+                $fulfillment,
             );
         } catch (PaymentDeclinedException $e) {
             return back()
@@ -151,10 +163,14 @@ final class CheckoutController extends Controller
                 ->with('error', __('payments.messages.return_failed'));
         }
 
-        return redirect($this->checkout->confirmationRoute($placed))
-            ->with('success', $placed instanceof Subscription
-                ? __('subscriptions.messages.created')
+        $message = $placed instanceof Subscription
+            ? __('subscriptions.messages.created')
+            : ($placed instanceof Order && $placed->isPickup()
+                ? __('orders.messages.placed_pickup')
                 : __('orders.messages.placed'));
+
+        return redirect($this->checkout->confirmationRoute($placed))
+            ->with('success', $message);
     }
 
     /**
@@ -164,6 +180,10 @@ final class CheckoutController extends Controller
      */
     private function methods(): array
     {
+        if ($this->gateway->usesHostedCheckout()) {
+            return [PaymentMethod::Online];
+        }
+
         $configured = config('payments.methods', []);
 
         $methods = array_map(

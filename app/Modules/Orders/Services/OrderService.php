@@ -7,6 +7,7 @@ namespace App\Modules\Orders\Services;
 use App\Models\User;
 use App\Modules\Addresses\Models\Address;
 use App\Modules\Audit\Enums\AuditAction;
+use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Audit\Services\AuditService;
 use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Orders\Exceptions\EmptyCartException;
@@ -45,9 +46,11 @@ final class OrderService
     public function placeFromCart(
         User $user,
         CartService $cart,
-        Address $address,
+        ?Address $address,
         PaymentMethod $method,
         ?string $note = null,
+        FulfillmentMethod $fulfillment = FulfillmentMethod::Delivery,
+        int $deliveryFeeMinor = 0,
     ): Order {
         $items = $cart->items();
 
@@ -55,7 +58,7 @@ final class OrderService
             throw new EmptyCartException;
         }
 
-        return DB::transaction(function () use ($user, $cart, $items, $address, $method, $note): Order {
+        return DB::transaction(function () use ($user, $cart, $items, $address, $method, $note, $fulfillment, $deliveryFeeMinor): Order {
             $subtotal = $cart->subtotalMinor();
             $code = $cart->couponCode();
 
@@ -67,18 +70,22 @@ final class OrderService
             );
 
             $discount = $applied?->discount->toMinor() ?? 0;
+            $goods = max(0, $subtotal - $discount);
+            $fee = max(0, $deliveryFeeMinor);
 
             $order = new Order;
             $order->user_id = $user->getKey();
-            $order->address_id = $address->getKey();
-            $order->shipping_address = $address->snapshot();
+            $order->address_id = $address?->getKey();
+            $order->fulfillment_method = $fulfillment;
+            $order->shipping_address = $address?->snapshot();
             $order->status = OrderStatus::Pending;
             $order->currency = 'SAR';
             $order->coupon_id = $applied?->coupon->getKey();
             $order->coupon_code = $applied?->code();
             $order->subtotal_minor = $subtotal;
             $order->discount_minor = $discount;
-            $order->total_minor = max(0, $subtotal - $discount);
+            $order->delivery_fee_minor = $fee;
+            $order->total_minor = $goods + $fee;
             $order->payment_method = $method;
             $order->payment_status = PaymentStatus::Pending;
             $order->note = $note;
@@ -102,6 +109,8 @@ final class OrderService
             $this->audit->log(AuditAction::OrderPlaced, $order, [], [
                 'subtotal_minor' => $subtotal,
                 'discount_minor' => $discount,
+                'delivery_fee_minor' => $fee,
+                'fulfillment' => $fulfillment->value,
                 'total_minor' => $order->total_minor,
                 'coupon_code' => $order->coupon_code,
                 'payment_method' => $method->value,
@@ -122,7 +131,7 @@ final class OrderService
      */
     public function placeFromSnapshot(
         User $user,
-        Address $address,
+        ?Address $address,
         PaymentMethod $method,
         array $intent,
         ?string $note = null,
@@ -136,11 +145,15 @@ final class OrderService
         $note = is_string($intent['note'] ?? null) ? $intent['note'] : $note;
         $subtotal = (int) ($intent['subtotal_minor'] ?? 0);
         $discount = (int) ($intent['discount_minor'] ?? 0);
-        $total = max(0, (int) ($intent['total_minor'] ?? max(0, $subtotal - $discount)));
+        $fee = max(0, (int) ($intent['delivery_fee_minor'] ?? 0));
+        $goods = max(0, $subtotal - $discount);
+        $total = max(0, (int) ($intent['total_minor'] ?? ($goods + $fee)));
+        $fulfillment = FulfillmentMethod::tryFrom((string) ($intent['fulfillment'] ?? ''))
+            ?? FulfillmentMethod::Delivery;
         $code = $intent['coupon_code'] ?? null;
         $code = is_string($code) && $code !== '' ? $code : null;
 
-        return DB::transaction(function () use ($user, $address, $method, $note, $items, $subtotal, $discount, $total, $code): Order {
+        return DB::transaction(function () use ($user, $address, $method, $note, $items, $subtotal, $discount, $fee, $total, $fulfillment, $code): Order {
             $applied = $code === null ? null : $this->coupons->resolveQuietly(
                 $code,
                 CouponScope::Store,
@@ -150,14 +163,16 @@ final class OrderService
 
             $order = new Order;
             $order->user_id = $user->getKey();
-            $order->address_id = $address->getKey();
-            $order->shipping_address = $address->snapshot();
+            $order->address_id = $address?->getKey();
+            $order->fulfillment_method = $fulfillment;
+            $order->shipping_address = $address?->snapshot();
             $order->status = OrderStatus::Pending;
             $order->currency = 'SAR';
             $order->coupon_id = $applied?->coupon->getKey();
             $order->coupon_code = $applied?->code() ?? $code;
             $order->subtotal_minor = $subtotal;
             $order->discount_minor = $discount;
+            $order->delivery_fee_minor = $fee;
             $order->total_minor = $total;
             $order->payment_method = $method;
             $order->payment_status = PaymentStatus::Pending;
@@ -191,6 +206,8 @@ final class OrderService
             $this->audit->log(AuditAction::OrderPlaced, $order, [], [
                 'subtotal_minor' => $subtotal,
                 'discount_minor' => $discount,
+                'delivery_fee_minor' => $fee,
+                'fulfillment' => $fulfillment->value,
                 'total_minor' => $order->total_minor,
                 'coupon_code' => $order->coupon_code,
                 'payment_method' => $method->value,

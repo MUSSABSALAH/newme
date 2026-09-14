@@ -6,6 +6,7 @@ namespace App\Modules\Payments\Enums;
 
 enum PaymentMethod: string
 {
+    case Online = 'online';
     case Mada = 'mada';
     case Visa = 'visa';
     case ApplePay = 'apple_pay';

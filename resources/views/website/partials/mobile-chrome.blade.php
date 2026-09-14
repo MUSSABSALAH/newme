@@ -5,7 +5,6 @@
   $nmTab = $active ?? ($nmTab ?? null);
   $isAr = app()->getLocale() === 'ar';
   $wa = 'https://wa.me/966533360317';
-  $nmLangTarget = $isAr ? 'en' : 'ar';
   $nmItems = [
     ['href' => route('website.main'), 'icon' => 't-home', 'title' => __('website.site.nav.home'), 'sub' => __('website.site.nav.sub_home')],
     ['href' => route('website.about'), 'icon' => 't-about', 'title' => __('website.site.nav.about'), 'sub' => __('website.site.nav.sub_about')],
@@ -21,7 +20,6 @@
   } else {
     $nmItems[] = ['href' => route('website.login'), 'icon' => 't-user', 'title' => __('account.nav.login'), 'sub' => $isAr ? 'دخول حسابك' : 'Sign in to your account'];
   }
-  $nmItems[] = ['href' => route('locale.switch', $nmLangTarget), 'icon' => 't-lang', 'title' => $nmLangTarget === 'en' ? 'EN · English' : 'AR · العربية', 'sub' => $isAr ? 'تغيير لغة الموقع' : 'Switch site language', 'hreflang' => $nmLangTarget];
 @endphp
 
 <style>
@@ -118,7 +116,10 @@
   <aside class="drawer" id="nmChromeDrawer">
     <div class="hd">
       <h3>{{ $isAr ? 'القائمة' : 'Menu' }}</h3>
-      <button class="x" type="button" id="nmChromeX" aria-label="{{ $isAr ? 'إغلاق' : 'Close' }}">×</button>
+      <div class="hd-acts">
+        @include('website.partials.lang-toggle', ['class' => 'on-dark'])
+        <button class="x" type="button" id="nmChromeX" aria-label="{{ $isAr ? 'إغلاق' : 'Close' }}">×</button>
+      </div>
     </div>
     <nav>
       @foreach ($nmItems as $item)

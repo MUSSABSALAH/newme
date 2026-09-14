@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Invoices\Models\Invoice;
-use App\Modules\Invoices\Services\InvoicePdfRenderer;
+use App\Modules\Invoices\Services\InvoicePdfStore;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
 use Illuminate\Contracts\View\View;
@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 
 final class InvoiceController extends Controller
 {
-    public function __construct(private readonly InvoicePdfRenderer $pdf) {}
+    public function __construct(private readonly InvoicePdfStore $pdf) {}
 
     public function index(Request $request): View
     {
@@ -50,7 +50,7 @@ final class InvoiceController extends Controller
     {
         $this->authorize('view', $invoice);
 
-        return response($this->pdf->render($invoice), 200, [
+        return response($this->pdf->bytes($invoice), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="'.$invoice->fileName().'"',
         ]);

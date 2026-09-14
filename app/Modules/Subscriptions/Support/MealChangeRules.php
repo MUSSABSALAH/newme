@@ -9,7 +9,11 @@ use App\Support\Time\DisplayTime;
 use Illuminate\Support\Carbon;
 
 /**
- * When a customer may still change dishes for a delivery day.
+ * A rolling window of upcoming calendar days the customer may still change.
+ *
+ * The setting is how many days ahead are open, starting tomorrow — not a
+ * cutoff after which every later delivery stays editable. Today is never
+ * included: 2 on 14 Sep opens 15 Sep and 16 Sep; 3 also opens 17 Sep.
  */
 final class MealChangeRules
 {
@@ -22,7 +26,12 @@ final class MealChangeRules
 
     public static function earliestEditableDate(): Carbon
     {
-        return Carbon::now(DisplayTime::timezone())->startOfDay()->addDays(self::leadDays());
+        return self::today()->addDay();
+    }
+
+    public static function latestEditableDate(): Carbon
+    {
+        return self::today()->addDays(self::leadDays());
     }
 
     public static function earliestEditableDateString(): string
@@ -30,12 +39,28 @@ final class MealChangeRules
         return self::earliestEditableDate()->toDateString();
     }
 
+    public static function latestEditableDateString(): string
+    {
+        return self::latestEditableDate()->toDateString();
+    }
+
     public static function isEditable(string $date): bool
     {
+        if (self::leadDays() < 1) {
+            return false;
+        }
+
         try {
-            return Carbon::parse($date)->startOfDay()->gte(self::earliestEditableDate());
+            $day = Carbon::parse($date, DisplayTime::timezone())->startOfDay();
         } catch (\Throwable) {
             return false;
         }
+
+        return $day->gte(self::earliestEditableDate()) && $day->lte(self::latestEditableDate());
+    }
+
+    private static function today(): Carbon
+    {
+        return Carbon::now(DisplayTime::timezone())->startOfDay();
     }
 }

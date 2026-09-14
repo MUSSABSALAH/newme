@@ -12,6 +12,7 @@ return [
 
     'messages' => [
         'placed' => 'Your order has been placed. We will contact you to arrange delivery.',
+        'placed_pickup' => 'Your order has been placed. It is ready for pickup at the branch.',
         'status_updated' => 'Order status updated.',
     ],
 
@@ -55,6 +56,8 @@ return [
         'unit_price' => 'Unit price',
         'line_total' => 'Line total',
         'note' => 'Customer note',
+        'fulfillment_method' => 'Fulfillment',
+        'delivery_fee' => 'Delivery fee',
     ],
 
     'show' => [

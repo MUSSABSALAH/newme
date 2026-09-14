@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Web\Checkout;
 
 use App\Modules\Addresses\Models\Address;
+use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Payments\Contracts\PaymentGateway;
 use App\Modules\Payments\Enums\PaymentMethod;
 use Illuminate\Contracts\Validation\Validator;
@@ -46,7 +47,8 @@ final class PlaceOrderRequest extends FormRequest
         ));
 
         return [
-            'address' => ['required', 'string', 'max:40'],
+            'fulfillment' => ['nullable', Rule::in(FulfillmentMethod::values())],
+            'address' => ['required_unless:fulfillment,'.FulfillmentMethod::Pickup->value, 'nullable', 'string', 'max:40'],
             'payment_method' => ['required', Rule::in(PaymentMethod::values())],
             'card_number' => [$this->cardRule($cardMethods), 'nullable', 'digits_between:12,19'],
             'card_holder' => [$this->cardRule($cardMethods), 'nullable', 'string', 'max:120'],
@@ -64,6 +66,7 @@ final class PlaceOrderRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'fulfillment' => (string) __('checkout.fields.fulfillment'),
             'address' => (string) __('checkout.fields.address'),
             'payment_method' => (string) __('checkout.fields.payment_method'),
             'card_number' => (string) __('checkout.fields.card_number'),
@@ -91,6 +94,10 @@ final class PlaceOrderRequest extends FormRequest
     {
         return [
             function (Validator $validator): void {
+                if ($this->fulfillmentInput() === FulfillmentMethod::Pickup) {
+                    return;
+                }
+
                 $publicId = $this->input('address');
                 if (! is_string($publicId) || $publicId === '') {
                     return;
@@ -108,9 +115,19 @@ final class PlaceOrderRequest extends FormRequest
         ];
     }
 
+    public function fulfillment(): FulfillmentMethod
+    {
+        return $this->fulfillmentInput() ?? FulfillmentMethod::Delivery;
+    }
+
     public function paymentMethod(): PaymentMethod
     {
         return PaymentMethod::from((string) $this->validated('payment_method'));
+    }
+
+    private function fulfillmentInput(): ?FulfillmentMethod
+    {
+        return FulfillmentMethod::tryFrom((string) $this->input('fulfillment'));
     }
 
     /**

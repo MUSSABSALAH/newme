@@ -19,6 +19,14 @@ final class SettingsService
 
     private const REDACTED = '********';
 
+    /**
+     * Every get() went through all() and so re-read the cache and re-ran
+     * Crypt::decryptString on the encrypted rows. Held for one request only.
+     *
+     * @var array<string, string|null>|null
+     */
+    private ?array $memo = null;
+
     public function __construct(private readonly AuditService $audit) {}
 
     /**
@@ -101,7 +109,9 @@ final class SettingsService
             }
         });
 
-        Cache::forget(self::CACHE_KEY);
+        // recordAudit() re-reads the settings to log what they became, so the
+        // in-request copy has to go at the same time as the cache entry.
+        $this->flush();
 
         $this->recordAudit($before, $changed);
     }
@@ -111,6 +121,10 @@ final class SettingsService
      */
     private function storedValues(): array
     {
+        if ($this->memo !== null) {
+            return $this->memo;
+        }
+
         /** @var array<string, string|null> $values */
         $values = Cache::rememberForever(self::CACHE_KEY, function (): array {
             $resolved = [];
@@ -128,7 +142,13 @@ final class SettingsService
             return $resolved;
         });
 
-        return $values;
+        return $this->memo = $values;
+    }
+
+    private function flush(): void
+    {
+        Cache::forget(self::CACHE_KEY);
+        $this->memo = null;
     }
 
     /**

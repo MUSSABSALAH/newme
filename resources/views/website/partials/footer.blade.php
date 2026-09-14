@@ -138,8 +138,8 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
 
     <div class="f-col">
       <h4>{{ __('website.footer.products_title') }}</h4>
-      <a href="{{ route('website.store') }}">{{ __('website.footer.link_bakery') }}</a>
-      <a href="{{ route('website.store') }}">{{ __('website.footer.link_support') }}</a>
+      <a href="{{ route('website.store', ['line' => 'bakery']) }}#shop">{{ __('website.footer.link_bakery') }}</a>
+      <a href="{{ route('website.store', ['line' => 'support']) }}#shop">{{ __('website.footer.link_support') }}</a>
       <a href="{{ route('website.subscribe') }}">{{ __('website.footer.link_subs') }}</a>
     </div>
 

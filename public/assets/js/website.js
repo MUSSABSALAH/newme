@@ -154,4 +154,81 @@
             }, opts.duration || 2800);
         }
     };
+
+    window.nmStoreLine = {
+        groups: {
+            bakery: ["bakery"],
+            support: ["fermented", "pantry", "samosa", "hot_dishes", "salads", "sandwiches"]
+        },
+        allowed: function () {
+            var line = new URLSearchParams(window.location.search).get("line");
+            return this.groups[line] || null;
+        },
+        match: function (slug, selected) {
+            var allowed = this.allowed();
+            selected = selected || "all";
+            if (allowed) {
+                if (selected === "all") {
+                    return allowed.indexOf(slug) !== -1;
+                }
+                return selected === slug && allowed.indexOf(slug) !== -1;
+            }
+            return selected === "all" || selected === slug;
+        },
+        hideExtraTabs: function () {
+            var allowed = this.allowed();
+            if (!allowed) {
+                return;
+            }
+            document.querySelectorAll("#tabs .tab, #v30Tabs .tab").forEach(function (tab) {
+                var slug = tab.getAttribute("data-cat");
+                if (slug && slug !== "all" && allowed.indexOf(slug) === -1) {
+                    tab.hidden = true;
+                }
+            });
+        },
+        selectSingleTab: function () {
+            var allowed = this.allowed();
+            if (!allowed || allowed.length !== 1) {
+                return;
+            }
+            document.querySelectorAll("#tabs .tab, #v30Tabs .tab").forEach(function (tab) {
+                tab.classList.toggle("on", tab.getAttribute("data-cat") === allowed[0]);
+            });
+        },
+        scrollCatalog: function () {
+            var ids = ["shop", "store-catalog", "grid"];
+            var i, el;
+            for (i = 0; i < ids.length; i++) {
+                el = document.getElementById(ids[i]);
+                if (el && el.offsetParent !== null) {
+                    el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    return;
+                }
+            }
+        },
+        apply: function (selected) {
+            var self = this;
+            var allowed = this.allowed();
+            this.hideExtraTabs();
+            this.selectSingleTab();
+            if (!selected) {
+                var on = document.querySelector("#tabs .tab.on, #v30Tabs .tab.on");
+                selected = on ? on.getAttribute("data-cat") : "all";
+            }
+            document.querySelectorAll("#grid .card, #v30Rail .prod").forEach(function (el) {
+                el.classList.toggle("hide", !self.match(el.getAttribute("data-cat"), selected));
+            });
+            var empty = document.getElementById("empty");
+            if (empty) {
+                var shown = document.querySelectorAll("#grid .card:not(.hide)").length;
+                empty.style.display = shown ? "none" : "block";
+            }
+            if (allowed || location.hash === "#shop" || location.hash === "#store-catalog") {
+                window.setTimeout(function () { self.scrollCatalog(); }, 80);
+            }
+        }
+    };
+
+    window.nmStoreLine.apply();
 })();

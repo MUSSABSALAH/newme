@@ -28,6 +28,7 @@ use App\Modules\Store\Models\Product;
 use App\Modules\Subscriptions\Enums\HandlingStatus;
 use App\Modules\Subscriptions\Enums\SubscriptionStatus;
 use App\Modules\Subscriptions\Models\Subscription;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -86,15 +87,23 @@ final class DashboardService
 
     private function finance(Carbon $startOfDay, Carbon $startOfMonth): FinancePanelData
     {
-        $invoicesMonth = Invoice::query()->where('issued_at', '>=', $startOfMonth)->count();
-        $salesMonthMinor = $this->salesSince($startOfMonth);
+        // Today is a slice of this month, so one indexed pass over the month's
+        // invoices answers all four figures.
+        $tally = $this->tally(Invoice::query()->toBase()->where('issued_at', '>=', $startOfMonth), [
+            'invoices_month' => ['COUNT(*)', []],
+            'invoices_today' => [$this->countIf('issued_at >= ?'), [$startOfDay]],
+            'sales_month' => ['COALESCE(SUM(total_minor), 0)', []],
+            'sales_today' => [$this->sumIf('total_minor', 'issued_at >= ?'), [$startOfDay]],
+        ]);
 
         return new FinancePanelData(
-            salesTodayMinor: $this->salesSince($startOfDay),
-            salesMonthMinor: $salesMonthMinor,
-            invoicesToday: Invoice::query()->where('issued_at', '>=', $startOfDay)->count(),
-            invoicesMonth: $invoicesMonth,
-            averageInvoiceMinor: $invoicesMonth > 0 ? intdiv($salesMonthMinor, $invoicesMonth) : 0,
+            salesTodayMinor: $tally['sales_today'],
+            salesMonthMinor: $tally['sales_month'],
+            invoicesToday: $tally['invoices_today'],
+            invoicesMonth: $tally['invoices_month'],
+            averageInvoiceMinor: $tally['invoices_month'] > 0
+                ? intdiv($tally['sales_month'], $tally['invoices_month'])
+                : 0,
             recentInvoices: Invoice::query()
                 ->with('user')
                 ->latest('issued_at')
@@ -106,11 +115,22 @@ final class DashboardService
 
     private function orders(Carbon $startOfDay, Carbon $startOfMonth): OrdersPanelData
     {
+        [$byStatus, $tally] = $this->statusCounts(
+            Order::query()->toBase(),
+            'status',
+            OrderStatus::values(),
+            [
+                'today' => ['placed_at >= ?', [$startOfDay]],
+                'month' => ['placed_at >= ?', [$startOfMonth]],
+            ],
+        );
+
         return new OrdersPanelData(
-            today: Order::query()->where('placed_at', '>=', $startOfDay)->count(),
-            month: Order::query()->where('placed_at', '>=', $startOfMonth)->count(),
-            pending: Order::query()->where('status', OrderStatus::Pending->value)->count(),
-            byStatus: $this->statusCounts(Order::query()->toBase(), 'status', OrderStatus::values()),
+            today: $tally['today'],
+            month: $tally['month'],
+            // The breakdown already counted every status, pending included.
+            pending: $byStatus[OrderStatus::Pending->value],
+            byStatus: $byStatus,
             recent: Order::query()
                 ->with('user')
                 ->latest('placed_at')
@@ -122,14 +142,22 @@ final class DashboardService
 
     private function subscriptions(Carbon $startOfMonth): SubscriptionsPanelData
     {
+        [$byStatus, $tally] = $this->statusCounts(
+            Subscription::query()->toBase(),
+            'status',
+            SubscriptionStatus::values(),
+            [
+                'attention' => ['handling_status <> ?', [HandlingStatus::Handled->value]],
+                'new_month' => ['created_at >= ?', [$startOfMonth]],
+            ],
+        );
+
         return new SubscriptionsPanelData(
-            active: Subscription::query()->where('status', SubscriptionStatus::Active->value)->count(),
-            paused: Subscription::query()->where('status', SubscriptionStatus::Paused->value)->count(),
-            needingAttention: Subscription::query()
-                ->where('handling_status', '!=', HandlingStatus::Handled->value)
-                ->count(),
-            newMonth: Subscription::query()->where('created_at', '>=', $startOfMonth)->count(),
-            byStatus: $this->statusCounts(Subscription::query()->toBase(), 'status', SubscriptionStatus::values()),
+            active: $byStatus[SubscriptionStatus::Active->value],
+            paused: $byStatus[SubscriptionStatus::Paused->value],
+            needingAttention: $tally['attention'],
+            newMonth: $tally['new_month'],
+            byStatus: $byStatus,
             recent: Subscription::query()
                 ->with(['user', 'handler'])
                 ->latest('id')
@@ -142,17 +170,24 @@ final class DashboardService
     {
         $today = $now->copy()->startOfDay();
 
+        [$byStatus, $tally] = $this->statusCounts(
+            Consultation::query()->toBase(),
+            'status',
+            ConsultationStatus::values(),
+            [
+                'today' => ['date(scheduled_on) = ?', [$today->toDateString()]],
+                'week' => [
+                    'scheduled_on between ? and ?',
+                    [$today, $now->copy()->addDays(7)->endOfDay()],
+                ],
+            ],
+        );
+
         return new ConsultationsPanelData(
-            pending: Consultation::query()->where('status', ConsultationStatus::Pending->value)->count(),
-            today: Consultation::query()->whereDate('scheduled_on', $today)->count(),
-            week: Consultation::query()
-                ->whereBetween('scheduled_on', [$today, $now->copy()->addDays(7)->endOfDay()])
-                ->count(),
-            byStatus: $this->statusCounts(
-                Consultation::query()->toBase()->whereNull('deleted_at'),
-                'status',
-                ConsultationStatus::values(),
-            ),
+            pending: $byStatus[ConsultationStatus::Pending->value],
+            today: $tally['today'],
+            week: $tally['week'],
+            byStatus: $byStatus,
             upcoming: Consultation::query()
                 ->whereIn('status', ConsultationStatus::occupyingValues())
                 ->where('scheduled_on', '>=', $today)
@@ -165,11 +200,18 @@ final class DashboardService
 
     private function catalog(): CatalogPanelData
     {
+        $tally = $this->tally(Product::query()->toBase(), [
+            'products' => ['COUNT(*)', []],
+            'active' => [$this->countIf('is_active = ?'), [true]],
+            'hidden' => [$this->countIf('is_active = ?'), [false]],
+            'featured' => [$this->countIf('is_featured = ?'), [true]],
+        ]);
+
         return new CatalogPanelData(
-            products: Product::query()->count(),
-            activeProducts: Product::query()->where('is_active', true)->count(),
-            hiddenProducts: Product::query()->where('is_active', false)->count(),
-            featuredProducts: Product::query()->where('is_featured', true)->count(),
+            products: $tally['products'],
+            activeProducts: $tally['active'],
+            hiddenProducts: $tally['hidden'],
+            featuredProducts: $tally['featured'],
             categories: Category::query()
                 ->withCount('products')
                 ->orderBy('sort_order')
@@ -181,10 +223,16 @@ final class DashboardService
 
     private function customers(Carbon $startOfDay, Carbon $startOfMonth): CustomersPanelData
     {
+        $tally = $this->tally(User::query()->customers()->toBase(), [
+            'total' => ['COUNT(*)', []],
+            'new_today' => [$this->countIf('created_at >= ?'), [$startOfDay]],
+            'new_month' => [$this->countIf('created_at >= ?'), [$startOfMonth]],
+        ]);
+
         return new CustomersPanelData(
-            total: User::query()->customers()->count(),
-            newToday: User::query()->customers()->where('created_at', '>=', $startOfDay)->count(),
-            newMonth: User::query()->customers()->where('created_at', '>=', $startOfMonth)->count(),
+            total: $tally['total'],
+            newToday: $tally['new_today'],
+            newMonth: $tally['new_month'],
             recent: User::query()
                 ->customers()
                 ->latest('id')
@@ -195,39 +243,92 @@ final class DashboardService
 
     private function content(): ContentPanelData
     {
+        $published = [
+            'total' => ['COUNT(*)', []],
+            'live' => [$this->countIf('is_active = ?'), [true]],
+        ];
+
+        $articles = $this->tally(Article::query()->toBase(), $published);
+        $recipes = $this->tally(Recipe::query()->toBase(), $published);
+
         return new ContentPanelData(
-            articles: Article::query()->count(),
-            publishedArticles: Article::query()->where('is_active', true)->count(),
-            recipes: Recipe::query()->count(),
-            publishedRecipes: Recipe::query()->where('is_active', true)->count(),
+            articles: $articles['total'],
+            publishedArticles: $articles['live'],
+            recipes: $recipes['total'],
+            publishedRecipes: $recipes['live'],
         );
     }
 
-    private function salesSince(Carbon $since): int
+    /**
+     * The status breakdown, plus any extra tallies folded into the same pass.
+     *
+     * A panel used to ask its table once per figure, so six numbers meant six
+     * scans of the same rows. The breakdown has to walk every row anyway, so
+     * the extra tallies ride along as conditional sums and cost nothing beyond
+     * the arithmetic. Rows are still grouped and filtered exactly as before,
+     * which is why the figures cannot move.
+     *
+     * @param  list<string>  $keys
+     * @param  array<string, array{string, list<mixed>}>  $tallies  alias => [condition, bindings]
+     * @return array{0: array<string, int>, 1: array<string, int>}
+     */
+    private function statusCounts(QueryBuilder $query, string $column, array $keys, array $tallies = []): array
     {
-        return (int) Invoice::query()
-            ->where('issued_at', '>=', $since)
-            ->sum('total_minor');
+        $query->select($column, DB::raw('COUNT(*) as aggregate'));
+
+        foreach ($tallies as $alias => [$condition, $bindings]) {
+            $query->selectRaw($this->countIf($condition).' as '.$alias, $bindings);
+        }
+
+        $counts = array_fill_keys($keys, 0);
+        $totals = array_fill_keys(array_keys($tallies), 0);
+
+        foreach ($query->groupBy($column)->get() as $row) {
+            $status = (string) $row->{$column};
+
+            if (array_key_exists($status, $counts)) {
+                $counts[$status] = (int) $row->aggregate;
+            }
+
+            // Tallies are never filtered by status, so every group counts
+            // towards them — including any status the enum no longer lists.
+            foreach (array_keys($totals) as $alias) {
+                $totals[$alias] += (int) $row->{$alias};
+            }
+        }
+
+        return [$counts, $totals];
     }
 
     /**
-     * @param  list<string>  $keys
+     * Several figures read from one pass over a table.
+     *
+     * @param  array<string, array{string, list<mixed>}>  $columns  alias => [expression, bindings]
      * @return array<string, int>
      */
-    private function statusCounts(\Illuminate\Database\Query\Builder $query, string $column, array $keys): array
+    private function tally(QueryBuilder $query, array $columns): array
     {
-        $counts = $query
-            ->select($column, DB::raw('COUNT(*) as aggregate'))
-            ->groupBy($column)
-            ->pluck('aggregate', $column)
-            ->all();
+        foreach ($columns as $alias => [$expression, $bindings]) {
+            $query->selectRaw($expression.' as '.$alias, $bindings);
+        }
 
+        $row = $query->first();
         $result = [];
 
-        foreach ($keys as $key) {
-            $result[$key] = (int) ($counts[$key] ?? 0);
+        foreach (array_keys($columns) as $alias) {
+            $result[$alias] = (int) ($row->{$alias} ?? 0);
         }
 
         return $result;
+    }
+
+    private function countIf(string $condition): string
+    {
+        return 'SUM(CASE WHEN '.$condition.' THEN 1 ELSE 0 END)';
+    }
+
+    private function sumIf(string $column, string $condition): string
+    {
+        return 'COALESCE(SUM(CASE WHEN '.$condition.' THEN '.$column.' ELSE 0 END), 0)';
     }
 }

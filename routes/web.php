@@ -44,7 +44,6 @@ use App\Http\Controllers\Web\CheckoutController;
 use App\Http\Controllers\Web\ConsultationBookingController;
 use App\Http\Controllers\Web\InvitationController;
 use App\Http\Controllers\Web\LocaleController;
-use App\Http\Controllers\Web\MailPreviewController;
 use App\Http\Controllers\Web\PayTabsReturnController;
 use App\Http\Controllers\Web\WebsiteController;
 use Illuminate\Support\Facades\Route;
@@ -160,11 +159,6 @@ Route::middleware('guest')->group(function () {
 
 // Temporary design-system preview (removed once real admin screens land).
 Route::view('/design', 'admin.styleguide')->name('design');
-
-// Branded email HTML previews — these pages do not send mail.
-Route::get('/mail/preview', [MailPreviewController::class, 'index'])->name('mail.preview');
-Route::get('/mail/preview/{template}', [MailPreviewController::class, 'show'])->name('mail.preview.show');
-
 /*
 |--------------------------------------------------------------------------
 | Admin control panel (auth-protected)

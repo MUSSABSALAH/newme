@@ -20,6 +20,13 @@
       </h2>
     @endif
 
+    @if ($payable instanceof Order)
+      <div class="kv">
+        <span>{{ __('account.delivery.fulfillment') }}</span>
+        <b>{{ $payable->fulfillment_method->label() }}</b>
+      </div>
+    @endif
+
     @if ($orderShipping)
       <div class="kv">
         <span>{{ __('account.delivery.shipping_status') }}</span>
@@ -32,7 +39,17 @@
       </div>
     @endif
 
-    @if ($address)
+    @if ($payable instanceof Order && $payable->isPickup())
+      @php
+        $branch = app(\App\Modules\Checkout\Services\StoreDeliveryFee::class)->branchAddress();
+      @endphp
+      @if ($branch !== '')
+        <div class="kv" style="align-items:flex-start">
+          <span>{{ __('account.delivery.pickup_at') }}</span>
+          <b style="text-align:end;font-weight:800;font-family:var(--font)">{{ $branch }}</b>
+        </div>
+      @endif
+    @elseif ($address)
       <div class="kv" style="align-items:flex-start">
         <span>{{ __('account.delivery.address') }}</span>
         <b style="text-align:end;font-weight:800;font-family:var(--font)">

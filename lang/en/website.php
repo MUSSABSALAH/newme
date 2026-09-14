@@ -865,6 +865,15 @@ return [
         ],
     ],
 
+    'not_found' => [
+        'title' => 'Page not found — New Me',
+        'kick' => 'ERROR 404',
+        'heading' => 'This page <em>isn’t here</em>',
+        'lead' => 'The link is wrong or the page has moved. Head home or browse the store.',
+        'cta_home' => 'Home',
+        'cta_store' => 'Browse the store',
+    ],
+
     'blog' => require __DIR__.'/website_blog.php',
     'menu_page' => require __DIR__.'/website_menu_page.php',
     'product' => require __DIR__.'/website_product.php',

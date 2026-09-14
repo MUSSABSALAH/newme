@@ -93,34 +93,40 @@ class StoreCatalogSeeder extends Seeder
 
             $name = is_array($item['name'] ?? null) ? $item['name'] : [];
             $serving = is_string($item['serving'] ?? null) ? $item['serving'] : null;
+            $existing = Product::withTrashed()->where('slug', $slug)->first();
+
+            $attributes = [
+                'category_id' => $category->id,
+                'name' => [
+                    'ar' => (string) ($name['ar'] ?? $slug),
+                    'en' => (string) ($name['en'] ?? $slug),
+                ],
+                'description' => [
+                    'ar' => $serving !== null ? 'الحصة: '.$serving : '',
+                    'en' => $serving !== null ? 'Serving: '.$serving : '',
+                ],
+                'image_path' => $this->exactCatalogImagePath($this->stringOrNull($item['image'] ?? null)),
+                'external_url' => null,
+                'price' => $this->toMinor($item['price'] ?? null),
+                'calories' => $this->intOrZero($item['calories'] ?? null),
+                'serving_size' => $this->stringOrNull($item['serving_size'] ?? null),
+                'protein_g' => $this->decimalOrZero($item['protein_g'] ?? null),
+                'carbs_g' => $this->decimalOrZero($item['carbs_g'] ?? null),
+                'fat_g' => $this->decimalOrZero($item['fat_g'] ?? null),
+                'nutrition_note' => $this->stringOrNull($item['nutrition_note'] ?? null),
+                'flag' => null,
+                'is_featured' => false,
+                'sort_order' => (int) ($item['n'] ?? 0),
+                'deleted_at' => null,
+            ];
+
+            if ($existing === null || $existing->trashed()) {
+                $attributes['is_active'] = true;
+            }
 
             Product::withTrashed()->updateOrCreate(
                 ['slug' => $slug],
-                [
-                    'category_id' => $category->id,
-                    'name' => [
-                        'ar' => (string) ($name['ar'] ?? $slug),
-                        'en' => (string) ($name['en'] ?? $slug),
-                    ],
-                    'description' => [
-                        'ar' => $serving !== null ? 'الحصة: '.$serving : '',
-                        'en' => $serving !== null ? 'Serving: '.$serving : '',
-                    ],
-                    'image_path' => $this->stringOrNull($item['image'] ?? null),
-                    'external_url' => null,
-                    'price' => $this->toMinor($item['price'] ?? null),
-                    'calories' => $this->intOrZero($item['calories'] ?? null),
-                    'serving_size' => $this->stringOrNull($item['serving_size'] ?? null),
-                    'protein_g' => $this->decimalOrZero($item['protein_g'] ?? null),
-                    'carbs_g' => $this->decimalOrZero($item['carbs_g'] ?? null),
-                    'fat_g' => $this->decimalOrZero($item['fat_g'] ?? null),
-                    'nutrition_note' => $this->stringOrNull($item['nutrition_note'] ?? null),
-                    'flag' => null,
-                    'is_featured' => false,
-                    'is_active' => true,
-                    'sort_order' => (int) ($item['n'] ?? 0),
-                    'deleted_at' => null,
-                ],
+                $attributes,
             );
         }
 
@@ -205,6 +211,47 @@ class StoreCatalogSeeder extends Seeder
         }
 
         return $category->refresh();
+    }
+
+    /**
+     * Persist the filename exactly as it exists on disk. Linux is
+     * case-sensitive, so "Zaatar-Croissant.jpg" must stay mixed-case.
+     */
+    private function exactCatalogImagePath(?string $path): ?string
+    {
+        if ($path === null) {
+            return null;
+        }
+
+        $dir = storage_path('app/public/store/products');
+        $base = basename($path);
+        $folder = str_contains($path, '/')
+            ? trim(str_replace('\\', '/', dirname($path)), '/')
+            : 'store/products';
+
+        if (! is_dir($dir)) {
+            return $folder.'/'.$base;
+        }
+
+        $exact = null;
+        $ignoreCase = null;
+
+        foreach (scandir($dir) ?: [] as $file) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            if ($file === $base) {
+                $exact = $file;
+                break;
+            }
+
+            if ($ignoreCase === null && strcasecmp($file, $base) === 0) {
+                $ignoreCase = $file;
+            }
+        }
+
+        return $folder.'/'.($exact ?? $ignoreCase ?? $base);
     }
 
     /**

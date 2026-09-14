@@ -8,6 +8,7 @@ use App\Modules\Delivery\DTOs\DeliveryBoard;
 use App\Modules\Delivery\DTOs\SubscriptionStop;
 use App\Modules\Delivery\Models\SubscriptionDelivery;
 use App\Modules\Delivery\Support\ScheduledDay;
+use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Enums\SubscriptionStatus;
@@ -56,17 +57,23 @@ final class DeliveryBoardService
     {
         $key = $date->toDateString();
 
+        // Wrapping start_date in DATE() made the column unindexable for no
+        // gain. Comparing against the day after instead keeps the same rows and
+        // lets the status/start_date index be used. It is written as "< next
+        // day" rather than "<= today" because a plain <= would miss a
+        // subscription starting today wherever the value carries a 00:00:00
+        // time, which is how SQLite stores it.
         $subscriptions = Subscription::query()
             ->with('user')
             ->whereIn('status', [SubscriptionStatus::Active->value, SubscriptionStatus::Paused->value])
             ->where(fn ($query) => $query
                 ->whereNull('start_date')
-                ->orWhereDate('start_date', '<=', $key))
+                ->orWhere('start_date', '<', $date->copy()->addDay()->toDateString()))
             ->get();
 
         $records = SubscriptionDelivery::query()
             ->with('handler')
-            ->whereDate('delivery_date', $key)
+            ->where('delivery_date', $key)
             ->get()
             ->keyBy('subscription_id');
 
@@ -113,6 +120,7 @@ final class DeliveryBoardService
         return Order::query()
             ->with('user')
             ->withCount('items')
+            ->where('fulfillment_method', '!=', FulfillmentMethod::Pickup->value)
             ->where(function ($query) use ($date, $open): void {
                 $query->whereDate('delivered_at', $date);
 

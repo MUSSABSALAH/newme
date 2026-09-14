@@ -16,6 +16,15 @@ final class HomepageContentService
 
     private const ALLOWED_HTML = '<b><strong><em><br>';
 
+    /**
+     * A view composer asks this service for every section of the page, so the
+     * same cache entry was being read eight times per request. Held for the
+     * length of one request only.
+     *
+     * @var array<string, array<string, string>>|null
+     */
+    private ?array $memo = null;
+
     public function __construct(private readonly AuditService $audit) {}
 
     /**
@@ -89,7 +98,9 @@ final class HomepageContentService
             $changed[$key] = $row;
         }
 
-        Cache::forget(self::CACHE_KEY);
+        // The audit trail below re-reads the values to record what they became,
+        // so the in-request copy has to go at the same time as the cache entry.
+        $this->flush();
 
         if ($changed === []) {
             return;
@@ -135,6 +146,10 @@ final class HomepageContentService
      */
     private function stored(): array
     {
+        if ($this->memo !== null) {
+            return $this->memo;
+        }
+
         /** @var array<string, array<string, string>> $values */
         $values = Cache::rememberForever(self::CACHE_KEY, function (): array {
             $resolved = [];
@@ -150,7 +165,13 @@ final class HomepageContentService
             return $resolved;
         });
 
-        return $values;
+        return $this->memo = $values;
+    }
+
+    private function flush(): void
+    {
+        Cache::forget(self::CACHE_KEY);
+        $this->memo = null;
     }
 
     private function sanitizeHtml(string $html): string

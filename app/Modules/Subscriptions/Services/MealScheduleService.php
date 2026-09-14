@@ -9,7 +9,7 @@ use App\Modules\Subscriptions\Support\MealChangeRules;
 use App\Modules\Subscriptions\Support\MealSchedule;
 
 /**
- * Updates a subscription's per-day dish picks, honouring the meal-change cutoff.
+ * Updates a subscription's per-day dish picks, honouring the upcoming-days window.
  */
 final class MealScheduleService
 {

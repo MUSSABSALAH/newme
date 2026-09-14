@@ -7,6 +7,7 @@ namespace App\Modules\Plans\Models;
 use App\Modules\Plans\Enums\PlanGoal;
 use App\Modules\Plans\Enums\PlanVersionStatus;
 use Database\Factories\PlanFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -115,10 +116,59 @@ class Plan extends Model
     }
 
     /**
+     * The meals actually shown to customers, in display order. Named so a list
+     * of plans can eager-load them; the plain meals() relation is unfiltered and
+     * eager-loading that would have returned inactive dishes too.
+     *
+     * @return BelongsToMany<Meal, $this>
+     */
+    public function activeMeals(): BelongsToMany
+    {
+        return $this->meals()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    /**
+     * @return Collection<int, Meal>
+     */
+    public function resolveActiveMeals(): Collection
+    {
+        return $this->relationLoaded('activeMeals')
+            ? $this->getRelation('activeMeals')
+            : $this->activeMeals()->get();
+    }
+
+    /**
+     * Published versions, highest version_number first, so a list of plans can
+     * eager-load them in one query instead of one query per plan.
+     *
+     * Deliberately a HasMany rather than a one-of-many subquery: taking the
+     * first row of this ordered set is the same operation publishedVersion()
+     * has always performed, which keeps the resolved version provably identical.
+     *
+     * @return HasMany<PlanVersion, $this>
+     */
+    public function publishedVersions(): HasMany
+    {
+        return $this->versions()
+            ->where('status', PlanVersionStatus::Published->value)
+            ->orderByDesc('version_number');
+    }
+
+    /**
      * The single published (customer-facing) version, if any.
+     *
+     * Reads the eager-loaded relation when the caller loaded it and falls back
+     * to its own query otherwise, so every existing call site keeps working.
      */
     public function publishedVersion(): ?PlanVersion
     {
+        if ($this->relationLoaded('publishedVersions')) {
+            return $this->getRelation('publishedVersions')->first();
+        }
+
         return $this->versions()
             ->where('status', PlanVersionStatus::Published->value)
             ->latest('version_number')

@@ -7,6 +7,7 @@ return [
     'title' => 'Checkout',
     'heading' => 'Complete your order',
     'subtitle' => 'Confirm the delivery address, choose how to pay, then place your order.',
+    'subtitle_store' => 'Choose delivery or branch pickup, then confirm payment.',
     'sign_in_required' => 'Sign in or create an account to complete your order — we need your details for delivery.',
 
     'sources' => [
@@ -17,6 +18,7 @@ return [
     'steps' => [
         'account' => 'Account',
         'address' => 'Delivery address',
+        'fulfillment' => 'Fulfillment',
         'payment' => 'Payment',
         'review' => 'Review & place',
     ],
@@ -25,6 +27,16 @@ return [
         'signed_in_as' => 'Signed in as',
         'change' => 'Not you?',
         'logout' => 'Sign out',
+    ],
+
+    'fulfillment' => [
+        'heading' => 'How would you like to receive your order?',
+        'delivery' => 'Delivery',
+        'pickup' => 'Pickup from the branch',
+        'delivery_hint' => 'We deliver to your address in Riyadh.',
+        'pickup_hint' => 'Branch pickup is free.',
+        'branch' => 'Branch address',
+        'free' => 'Free',
     ],
 
     'address' => [
@@ -65,6 +77,7 @@ return [
         'discount' => 'Discount',
         'plan_discount' => 'Plan discount (:percent%)',
         'delivery' => 'Delivery',
+        'free' => 'Free',
         'tax' => 'VAT (:rate%)',
         'total' => 'Total',
         'meals' => 'Meals',
@@ -76,6 +89,7 @@ return [
     ],
 
     'fields' => [
+        'fulfillment' => 'fulfillment',
         'address' => 'delivery address',
         'payment_method' => 'payment method',
         'card_number' => 'card number',

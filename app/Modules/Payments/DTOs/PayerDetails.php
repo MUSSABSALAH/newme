@@ -23,7 +23,7 @@ final readonly class PayerDetails
         public string $zip,
     ) {}
 
-    public static function fromCustomer(User $user, Address $address): self
+    public static function fromCustomer(User $user, ?Address $address): self
     {
         $host = parse_url((string) config('app.url'), PHP_URL_HOST);
         $host = is_string($host) && $host !== '' ? $host : 'localhost';
@@ -32,17 +32,30 @@ final readonly class PayerDetails
             ? $user->email
             : 'customer-'.$user->getKey().'@'.$host;
 
-        $phone = self::internationalPhone($address->phone !== '' ? $address->phone : (string) $user->phone);
+        if ($address instanceof Address) {
+            $phone = self::internationalPhone($address->phone !== '' ? $address->phone : (string) $user->phone);
+
+            return new self(
+                name: $address->recipient_name !== '' ? $address->recipient_name : $user->name,
+                email: $email,
+                phone: $phone,
+                street: $address->street !== '' ? $address->street : $address->district,
+                city: $address->city,
+                state: $address->district,
+                country: 'SAU',
+                zip: $address->national_address ?: '00000',
+            );
+        }
 
         return new self(
-            name: $address->recipient_name !== '' ? $address->recipient_name : $user->name,
+            name: $user->name,
             email: $email,
-            phone: $phone,
-            street: $address->street !== '' ? $address->street : $address->district,
-            city: $address->city,
-            state: $address->district,
+            phone: self::internationalPhone((string) $user->phone),
+            street: 'Branch pickup',
+            city: 'Riyadh',
+            state: 'Riyadh',
             country: 'SAU',
-            zip: $address->national_address ?: '00000',
+            zip: '11564',
         );
     }
 

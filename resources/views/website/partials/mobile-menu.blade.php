@@ -1,5 +1,8 @@
 <div class="mmenu" id="mmenu">
-  <button class="mclose" aria-label="{{ __('website.menu.close') }}">×</button>
+  <div class="mbar">
+    @include('website.partials.lang-toggle')
+    <button class="mclose" aria-label="{{ __('website.menu.close') }}">×</button>
+  </div>
   <div class="mkick">{{ __('website.menu.kick') }}</div>
   <a class="mlink" href="{{ route('website.main') }}">{{ __('website.site.nav.home') }}</a>
   <a class="mlink" href="{{ route('website.about') }}">{{ __('website.site.nav.about') }}</a>
@@ -19,6 +22,5 @@
     @endunless
   @endif
   <a class="mcta" href="{{ route('website.subscribe') }}">{{ __('website.menu.cta') }}</a>
-  @include('website.partials.lang-toggle')
   <div class="mfoot">{{ __('website.menu.foot') }} <a href="https://wa.me/966533360317" style="color:#FFA05C">+966533360317</a></div>
 </div>

@@ -13,9 +13,21 @@
 
 <x-ui.card :title="$title">
     <div class="detail-list">
+        @if ($payable instanceof \App\Modules\Orders\Models\Order)
+            <div class="detail-row">
+                <span class="detail-row__label">{{ __('orders.fields.fulfillment_method') }}</span>
+                <span class="detail-row__value">{{ $payable->fulfillment_method->label() }}</span>
+            </div>
+        @endif
+
         <div class="detail-row" style="align-items: flex-start;">
-            <span class="detail-row__label">{{ __('addresses.fields.address') }}</span>
-            @if ($address)
+            <span class="detail-row__label">{{ $payable instanceof \App\Modules\Orders\Models\Order && $payable->isPickup() ? __('account.delivery.pickup_at') : __('addresses.fields.address') }}</span>
+            @if ($payable instanceof \App\Modules\Orders\Models\Order && $payable->isPickup())
+                @php
+                    $branch = app(\App\Modules\Checkout\Services\StoreDeliveryFee::class)->branchAddress();
+                @endphp
+                <span class="detail-row__value">{{ $branch !== '' ? $branch : $noAddress }}</span>
+            @elseif ($address)
                 <span class="detail-row__value">
                     @foreach ($address->lines() as $line)
                         <span style="display: block;">{{ $line }}</span>

@@ -222,7 +222,7 @@ body.menu-open{overflow:hidden}
   </div>
 </header>
 
-<div class="filters">
+<div class="filters" id="store-catalog">
   <div class="tabs" id="tabs">
     @foreach ($tabs as $i => $tab)
       <button
@@ -251,6 +251,11 @@ body.menu-open{overflow:hidden}
           default => null,
         };
         $flagClass = ($p['flag'] ?? null) === 'sale' ? 'flag sale' : 'flag';
+
+        // The first row is on screen immediately, so those images stay eager and
+        // everything below loads as the shopper scrolls. Same images, same order,
+        // same layout — only the moment the browser fetches them changes.
+        $eagerImage = $loop->index < 4;
       @endphp
       <article class="card{{ !empty($p['feat']) ? ' feat' : '' }}" data-cat="{{ $p['cat'] }}" data-sub="{{ $p['sub'] }}">
         <a class="tilelink" href="{{ $p['href'] }}">
@@ -261,7 +266,7 @@ body.menu-open{overflow:hidden}
             </span>
           @endif
           <span class="kchip">{{ $p['kcal'] }} kcal</span>
-          @if ($p['image_url'])<img class="aiimg" src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif
+          @if ($p['image_url'])<img class="aiimg" src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}"{!! $eagerImage ? '' : ' loading="lazy" decoding="async"' !!} onerror="this.remove()">@endif
           <span class="nutov" aria-hidden="true">
             <span class="nv-h">{!! __('website.store.nutrition_heading', ['serving' => $p['serving']]) !!}</span>
             <span class="nv-r"><span>{{ __('website.store.calories') }}</span><b>{{ $p['kcal'] }} <small>kcal</small></b></span>
@@ -329,7 +334,9 @@ function apply(){
   var label=activeTab?activeTab.getAttribute('data-label'):'';
   var n=0;
   cards.forEach(function(c){
-    var okCat=(cat==='all')||c.getAttribute('data-cat')===cat;
+    var okCat=window.nmStoreLine
+      ? window.nmStoreLine.match(c.getAttribute('data-cat'),cat)
+      :(cat==='all')||c.getAttribute('data-cat')===cat;
     var okSub=!hasSubs||sub==='all'||c.getAttribute('data-sub')===sub;
     var show=okCat&&okSub;
     c.classList.toggle('hide',!show);
@@ -378,6 +385,14 @@ document.querySelectorAll('img.aiimg').forEach(function(img){
   img.loading='lazy'; img.decoding='async';
   if(img.complete&&img.naturalWidth>0)img.classList.add('loaded');
   else img.addEventListener('load',function(){img.classList.add('loaded');});
+});
+document.addEventListener('DOMContentLoaded',function(){
+  if(!window.nmStoreLine)return;
+  var lineCats=window.nmStoreLine.allowed();
+  if(lineCats&&lineCats.length===1){
+    cat=lineCats[0];
+  }
+  apply();
 });
 }catch(err){ failOpen(); }
 

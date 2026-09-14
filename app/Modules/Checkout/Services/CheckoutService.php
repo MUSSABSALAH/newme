@@ -9,8 +9,10 @@ use App\Modules\Addresses\Models\Address;
 use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Audit\Services\AuditService;
 use App\Modules\Checkout\DTOs\CheckoutSummary;
+use App\Modules\Checkout\DTOs\StoreFulfillmentQuote;
 use App\Modules\Checkout\DTOs\SubscriptionDraft;
 use App\Modules\Checkout\Enums\CheckoutSource;
+use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Checkout\Exceptions\NothingToCheckoutException;
 use App\Modules\Identity\Services\CustomerProfileService;
 use App\Modules\Invoices\Services\InvoiceService;
@@ -60,6 +62,7 @@ final class CheckoutService
         private readonly CustomerNotifier $customerNotifier,
         private readonly InvoiceService $invoices,
         private readonly CustomerProfileService $profiles,
+        private readonly StoreDeliveryFee $storeDelivery,
     ) {}
 
     public function source(): CheckoutSource
@@ -95,16 +98,21 @@ final class CheckoutService
      */
     public function place(
         User $user,
-        Address $address,
+        ?Address $address,
         PaymentMethod $method,
         ?CardDetails $card = null,
         ?string $note = null,
+        FulfillmentMethod $fulfillment = FulfillmentMethod::Delivery,
     ): Order|Subscription|null {
         $this->hostedRedirectUrl = null;
         $draft = $this->drafts->subscription();
 
+        if ($draft instanceof SubscriptionDraft && ! $address instanceof Address) {
+            throw new NothingToCheckoutException;
+        }
+
         if ($this->payments->usesHostedCheckout() && ! $method->isDeferred()) {
-            $this->startHosted($user, $address, $method, $draft, $note);
+            $this->startHosted($user, $address, $method, $draft, $note, $fulfillment);
 
             return null;
         }
@@ -113,7 +121,7 @@ final class CheckoutService
             if ($draft instanceof SubscriptionDraft) {
                 [$placed, $this->hostedRedirectUrl] = $this->placeSubscription($user, $draft, $address, $method, $card);
             } else {
-                [$placed, $this->hostedRedirectUrl] = $this->placeOrder($user, $address, $method, $card, $note);
+                [$placed, $this->hostedRedirectUrl] = $this->placeOrder($user, $address, $method, $card, $note, $fulfillment);
             }
         } catch (PaymentDeclinedException $e) {
             // The transaction rolled back with the payment row, so keep a trace
@@ -158,14 +166,19 @@ final class CheckoutService
      */
     private function startHosted(
         User $user,
-        Address $address,
+        ?Address $address,
         PaymentMethod $method,
         ?SubscriptionDraft $draft,
         ?string $note,
+        FulfillmentMethod $fulfillment = FulfillmentMethod::Delivery,
     ): void {
         $payer = PayerDetails::fromCustomer($user, $address);
 
         if ($draft instanceof SubscriptionDraft) {
+            if (! $address instanceof Address) {
+                throw new NothingToCheckoutException;
+            }
+
             $plan = $this->plan($draft);
             $quote = $this->quote($plan, $draft);
             $intent = [
@@ -188,14 +201,18 @@ final class CheckoutService
                 throw new NothingToCheckoutException;
             }
 
+            [$subtotal, $discount, , $fee, $total] = $this->storeCharge($fulfillment);
+
             $intent = [
                 'source' => CheckoutSource::Cart->value,
-                'address_id' => $address->getKey(),
+                'address_id' => $address?->getKey(),
                 'method' => $method->value,
                 'note' => $note,
-                'subtotal_minor' => $this->cart->subtotalMinor(),
-                'discount_minor' => $this->cart->discountMinor(),
-                'total_minor' => $this->cart->totalMinor(),
+                'fulfillment' => $fulfillment->value,
+                'subtotal_minor' => $subtotal,
+                'discount_minor' => $discount,
+                'delivery_fee_minor' => $fee,
+                'total_minor' => $total,
                 'coupon_code' => $this->cart->couponCode(),
                 'items' => $this->cart->items()->map(static fn (array $item): array => [
                     'product_id' => $item['id'],
@@ -209,7 +226,7 @@ final class CheckoutService
             $attempt = $this->payments->startHostedCheckout(
                 $user,
                 $method,
-                Money::fromMinor($this->cart->totalMinor()),
+                Money::fromMinor($total),
                 $payer,
                 'Store checkout',
                 $intent,
@@ -250,13 +267,24 @@ final class CheckoutService
      */
     private function placeOrder(
         User $user,
-        Address $address,
+        ?Address $address,
         PaymentMethod $method,
         ?CardDetails $card,
         ?string $note,
+        FulfillmentMethod $fulfillment = FulfillmentMethod::Delivery,
     ): array {
-        return DB::transaction(function () use ($user, $address, $method, $card, $note): array {
-            $order = $this->orders->placeFromCart($user, $this->cart, $address, $method, $note);
+        return DB::transaction(function () use ($user, $address, $method, $card, $note, $fulfillment): array {
+            [, , $goods, $fee] = $this->storeCharge($fulfillment);
+
+            $order = $this->orders->placeFromCart(
+                $user,
+                $this->cart,
+                $address,
+                $method,
+                $note,
+                $fulfillment,
+                $fee,
+            );
 
             $attempt = $this->payments->charge(
                 $order,
@@ -317,11 +345,23 @@ final class CheckoutService
         });
     }
 
+    /**
+     * @return array{0: int, 1: int, 2: int, 3: int, 4: int}
+     */
+    private function storeCharge(FulfillmentMethod $fulfillment): array
+    {
+        $subtotal = $this->cart->subtotalMinor();
+        $discount = $this->cart->discountMinor();
+        $goods = max(0, $subtotal - $discount);
+        $fee = $this->storeDelivery->quote($fulfillment, $goods);
+
+        return [$subtotal, $discount, $goods, $fee, $goods + $fee];
+    }
+
     private function cartSummary(): CheckoutSummary
     {
         $items = $this->cart->items();
-        $subtotal = $this->cart->subtotalMinor();
-        $discount = $this->cart->discountMinor();
+        [$subtotal, $discount, $goods, $fee, $total] = $this->storeCharge(FulfillmentMethod::Delivery);
 
         $lines = [
             ['label' => __('checkout.summary.subtotal'), 'value' => Money::fromMinor($subtotal)->format()],
@@ -336,6 +376,18 @@ final class CheckoutService
             ];
         }
 
+        $quote = new StoreFulfillmentQuote(
+            goodsMinor: $goods,
+            deliveryFeeMinor: $fee,
+            thresholdMinor: $this->storeDelivery->thresholdMinor(),
+            branchAddress: $this->storeDelivery->branchAddress(),
+        );
+
+        $lines[] = [
+            'label' => __('checkout.summary.delivery'),
+            'value' => $quote->feeDisplay(),
+        ];
+
         return new CheckoutSummary(
             source: CheckoutSource::Cart,
             title: (string) __('checkout.summary.cart_title', ['count' => $items->count()]),
@@ -344,8 +396,9 @@ final class CheckoutService
                 'value' => (string) $item['line_total_display'],
             ])->values()->all(),
             lines: $lines,
-            total: Money::fromMinor($this->cart->totalMinor()),
+            total: Money::fromMinor($total),
             couponCode: $code,
+            storeQuote: $quote,
         );
     }
 

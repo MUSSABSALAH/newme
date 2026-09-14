@@ -7,6 +7,7 @@ return [
     'title' => 'Payment',
 
     'methods' => [
+        'online' => 'mada · Visa / Mastercard · Apple Pay',
         'mada' => 'mada',
         'visa' => 'Visa / Mastercard',
         'apple_pay' => 'Apple Pay',
@@ -14,6 +15,7 @@ return [
     ],
 
     'method_notes' => [
+        'online' => 'Choose how to pay on the next page',
         'mada' => 'Saudi debit cards',
         'visa' => 'Credit and debit cards',
         'apple_pay' => 'Confirm with Face ID or Touch ID',

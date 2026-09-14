@@ -663,6 +663,7 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 .lines-rail::-webkit-scrollbar{display:none}
 @media(min-width:760px){.lines-rail{grid-auto-flow:row;grid-template-columns:repeat(3,1fr);
   grid-auto-columns:auto;overflow:visible;gap:18px}}
+a.lcard{color:inherit;text-decoration:none;cursor:pointer}
 .lcard{background:#fff;border:1.5px solid var(--gray-2);border-radius:22px;overflow:hidden;
   scroll-snap-align:start;display:flex;flex-direction:column;height:100%;
   transition:transform .22s,box-shadow .22s;min-width:0}

@@ -10,6 +10,7 @@ enum SettingGroup: string
     case Localization = 'localization';
     case Authentication = 'authentication';
     case Finance = 'finance';
+    case Delivery = 'delivery';
     case Operations = 'operations';
     case Policies = 'policies';
 
