@@ -1,22 +1,92 @@
 *.log
 .DS_Store
+Thumbs.db
+
+# Environment / secrets
 .env
-.env.backup
-.env.production
+.env.*
+!.env.example
+auth.json
+
+# Dependencies
+/node_modules/
+/vendor/
+
+# Vite
+/public/hot
+
+# IMPORTANT:
+# public/build MUST stay tracked because production has no Node.js
+# Do NOT add /public/build here
+
+# Public storage symlink - recreated on server with artisan storage:link
+/public/storage
+
+# Keep these project assets tracked:
+# /public/assets
+# /public/images
+# /public/css
+# /public/js
+# /public/build
+
+# Laravel private/runtime data
+/storage/*.key
+/storage/app/private/*
+!/storage/app/private/.gitignore
+
+/storage/app/mpdf/
+/storage/perf/
+
+/storage/logs/*
+!/storage/logs/.gitignore
+
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+
+# IMPORTANT:
+# Do NOT ignore /storage/app/public yet.
+# Existing CMS/products/meals/subscription images must deploy initially.
+
+# IDE / development
 .phpactor.json
 .phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/public/build
-/public/hot
-# Keep /public/assets (css + images) in git. Do not ignore them.
-/vendor
+/.phpunit.cache/
+/.fleet/
+/.idea/
+/.nova/
+/.vscode/
+/.zed/
+
+# Project extras
+/docs/
+/tests/
+
 Homestead.json
 Homestead.yaml
-Thumbs.db
+
+# Database / backups
+*.sql
+*.sql.gz
+*.dump
+*.bak
+*.backup
+
+# Private certificates / keys
+*.pem
+*.key
+*.p12
+*.pfx
+/scripts/
+
+# Design HTML mockups — Blade pages are the live templates
+/resources/views/website/*.html
+/resources/views/website/_v30_ref/
+
+# Local build / analysis caches
+/build/
