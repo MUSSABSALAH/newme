@@ -26,7 +26,6 @@ return [
         'phone_dial' => 'Country code',
         'phone_national' => 'Number only',
         'phone_national_placeholder' => '5xxxxxxxx',
-        'phone_split_hint' => 'Choose the country code from the list, then type the mobile number only — no leading zero and no country code.',
         'phone_combined' => 'Full number',
         'optional' => 'optional',
         'birth_date' => 'Date of birth',

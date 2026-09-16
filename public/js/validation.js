@@ -54,6 +54,9 @@
     function showError(input, message) {
         input.classList.add("is-invalid");
         input.setAttribute("aria-invalid", "true");
+        if (input.closest("[data-phone-split]")) {
+            return;
+        }
         var wrap = wrapperOf(input);
         var el = wrap.querySelector(".field__error[data-client-error]");
         if (!el) {

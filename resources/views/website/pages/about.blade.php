@@ -236,10 +236,11 @@
       <p>{{ $cms->text('about', 'vision_p') }}</p>
       <p class="kpi-intro" style="margin-top:18px;font-weight:800">{{ $cms->text('about', 'kpi_intro') }}</p>
       <div class="kpis">
+        @php $kpiArrow = app()->getLocale() === 'ar' ? '←' : '→'; @endphp
         <div class="kpi rv">
           <div class="kfig">
             <i class="from">510</i>
-            <i class="arrow">←</i>
+            <i class="arrow">{{ $kpiArrow }}</i>
             <i class="to" data-from="510" data-to="324">324</i>
             <small>{{ $cms->text('about', 'kpi_from') }}</small>
             <small></small>
@@ -249,7 +250,7 @@
         <div class="kpi rv">
           <div class="kfig">
             <i class="from">74</i>
-            <i class="arrow">←</i>
+            <i class="arrow">{{ $kpiArrow }}</i>
             <i class="to" data-from="74" data-to="80">80</i>
             <small>{{ $cms->text('about', 'kpi_from') }}</small>
             <small></small>

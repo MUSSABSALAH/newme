@@ -12,7 +12,6 @@
     $dial = old('phone_dial', $parsed['dial']);
     $national = old('phone_national', $parsed['national']);
     $invalid = $errors->has('phone') || $errors->has('phone_national') || $errors->has('phone_dial');
-    $hintId = 'phone-split-hint-'.uniqid();
 @endphp
 
 <div {{ $attributes->class(['phone-field']) }} data-phone-split>
@@ -21,14 +20,12 @@
       <span class="muted-note" style="display:inline;font-weight:700">({{ __('account.fields.optional') }})</span>
     @endif
   </span>
-  <p class="phone-field__hint" id="{{ $hintId }}">{{ __('account.fields.phone_split_hint') }}</p>
 
   <div class="phone-split">
     <div class="phone-split__dial">
       <label for="phone_dial">{{ __('account.fields.phone_dial') }}</label>
       <select id="phone_dial" name="phone_dial" dir="ltr"
               data-phone-dial
-              aria-describedby="{{ $hintId }}"
               class="{{ $invalid ? 'is-invalid' : '' }}"
               @if ($invalid) aria-invalid="true" @endif
               @required($required)
@@ -48,7 +45,6 @@
              inputmode="numeric" autocomplete="tel-national" dir="ltr"
              maxlength="15"
              placeholder="{{ __('account.fields.phone_national_placeholder') }}"
-             aria-describedby="{{ $hintId }}"
              @required($required)
              @if ($autofocus) autofocus @endif
              @if ($invalid) aria-invalid="true" @endif>
@@ -58,9 +54,6 @@
     {{ __('account.fields.phone_combined') }}
     <strong dir="ltr"></strong>
   </p>
-  @error('phone')<div class="err">{{ $message }}</div>@enderror
-  @error('phone_national')<div class="err">{{ $message }}</div>@enderror
-  @error('phone_dial')<div class="err">{{ $message }}</div>@enderror
 </div>
 
 @once

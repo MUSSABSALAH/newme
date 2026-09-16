@@ -26,7 +26,6 @@ return [
         'phone_dial' => 'مفتاح الدولة',
         'phone_national' => 'الرقم فقط',
         'phone_national_placeholder' => '5xxxxxxxx',
-        'phone_split_hint' => 'اختَر مفتاح الدولة من القائمة، ثم اكتب رقم الجوال فقط — بدون صفر البداية وبدون المفتاح.',
         'phone_combined' => 'الرقم الكامل',
         'optional' => 'اختياري',
         'birth_date' => 'تاريخ الميلاد',
