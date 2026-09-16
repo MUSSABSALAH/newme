@@ -35,7 +35,8 @@ img{display:block;max-width:100%}
 .acc-user__meta{min-width:0}
 .acc-user__meta b{display:block;font-size:14px;color:var(--navy);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acc-user__meta span{display:block;font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.acc-user__meta span[dir=ltr]{font-family:var(--mono)}
+.acc-user__meta span[dir=ltr]{font-family:var(--mono);unicode-bidi:isolate}
+html[dir="rtl"] .acc-user__meta span[dir=ltr]{text-align:right}
 .acc-user__out{display:none}
 
 .acc-nav{display:flex;flex-direction:column;gap:4px}
