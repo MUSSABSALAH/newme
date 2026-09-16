@@ -83,8 +83,8 @@ final class SettingsRegistry
             new SettingDefinition('localization.timezone', SettingGroup::Localization, SettingType::Select, 'Asia/Riyadh', ['required', 'timezone'], ['Asia/Riyadh', 'Asia/Dubai', 'UTC']),
 
             // Authentication
-            new SettingDefinition('authentication.sms_otp', SettingGroup::Authentication, SettingType::Boolean, false, ['boolean']),
-            new SettingDefinition('authentication.email_otp', SettingGroup::Authentication, SettingType::Boolean, false, ['boolean']),
+            new SettingDefinition('authentication.sms_otp', SettingGroup::Authentication, SettingType::Boolean, (bool) config('auth.otp.sms'), ['boolean']),
+            new SettingDefinition('authentication.email_otp', SettingGroup::Authentication, SettingType::Boolean, (bool) config('auth.otp.email'), ['boolean']),
 
             // Finance
             new SettingDefinition('finance.currency', SettingGroup::Finance, SettingType::Select, 'SAR', ['required', 'in:SAR'], ['SAR']),

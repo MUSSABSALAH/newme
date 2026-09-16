@@ -56,7 +56,7 @@ final class SendSmsJob implements ShouldQueue
         if ($number === null) {
             // Retrying will not make the number valid, so this stops here and
             // says why instead of burning three attempts on it.
-            Log::error('sms.unsendable_number', ['phone' => $this->phone]);
+            Log::stack(['single', 'stderr'])->error('sms.unsendable_number', ['phone' => $this->phone]);
 
             return;
         }
@@ -71,7 +71,7 @@ final class SendSmsJob implements ShouldQueue
      */
     public function failed(?Throwable $e): void
     {
-        Log::error('sms.delivery_failed', [
+        Log::stack(['single', 'stderr'])->error('sms.delivery_failed', [
             'phone' => $this->phone,
             'queue' => $this->queue,
             'error' => $e?->getMessage(),

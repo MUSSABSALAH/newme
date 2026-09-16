@@ -121,4 +121,19 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Customer OTP channel defaults
+    |--------------------------------------------------------------------------
+    |
+    | Used until an admin saves Authentication in the panel. After that the
+    | stored settings win: SMS OTP, email OTP, or both.
+    |
+    */
+
+    'otp' => [
+        'sms' => filter_var(env('AUTH_SMS_OTP', false), FILTER_VALIDATE_BOOLEAN),
+        'email' => filter_var(env('AUTH_EMAIL_OTP', false), FILTER_VALIDATE_BOOLEAN),
+    ],
+
 ];

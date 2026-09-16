@@ -84,6 +84,9 @@ Homestead.yaml
 *.pfx
 /scripts/
 
+# Local-only Artisan commands (sms:ping / sms:status)
+/routes/console.local.php
+
 # Design HTML mockups — Blade pages are the live templates
 /resources/views/website/*.html
 /resources/views/website/_v30_ref/

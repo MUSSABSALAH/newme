@@ -64,8 +64,8 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 .summary .row{display:flex;justify-content:space-between;align-items:baseline;font-size:16px;font-weight:800;color:var(--ink);margin-bottom:16px}
 .summary .row .amt{font-family:var(--mono);font-weight:900;color:var(--navy);font-size:19px;display:inline-flex;align-items:center;gap:6px}
 .summary .row .amt small{font-size:12px;color:var(--muted);font-weight:800;font-family:var(--font)}
-.summary .row.disc{color:var(--green-ink)}
-.summary .row.disc .amt{color:var(--green-ink)}
+.summary .row.is-discount{color:var(--green-ink)}
+.summary .row.is-discount .amt{color:var(--green-ink)}
 .summary .row.total{padding-top:14px;border-top:1.5px dashed var(--gray-2)}
 .summary .row.total .amt{font-size:22px}
 
@@ -195,7 +195,7 @@ body.menu-open{overflow:hidden}
         <p class="cpn-err" data-coupon-error hidden></p>
       </div>
 
-      <div class="row disc" data-discount-row @unless ($couponCode) hidden @endunless>
+      <div class="row is-discount" data-discount-row @unless ($couponCode) hidden @endunless>
         <span>{{ __('website.cart.discount') }}</span>
         <span class="amt">−<span id="discount">{{ $discount }}</span> <x-ui.sar /></span>
       </div>

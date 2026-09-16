@@ -14,9 +14,11 @@ final class LogSmsSender implements SmsSender
 {
     public function send(string $phone, string $message): void
     {
-        Log::info('sms.sent', [
+        Log::info('sms.logged_not_sent', [
+            'driver' => 'log',
             'phone' => $phone,
             'message' => $message,
+            'hint' => 'Set SMS_DRIVER=cequens, CEQUENS_USERNAME and CEQUENS_API_KEY to deliver to a handset.',
         ]);
     }
 }
