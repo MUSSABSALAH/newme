@@ -22,6 +22,8 @@ final class PlanData extends Data
         public readonly array $description,
         public readonly array $features,
         public readonly ?string $imagePath,
+        public readonly ?int $caloriesFrom,
+        public readonly ?int $caloriesTo,
         public readonly bool $requiresDaySelection,
         public readonly bool $allowsPause,
         public readonly int $minDeliveryDaysPerWeek,
@@ -45,6 +47,8 @@ final class PlanData extends Data
             description: self::localeStrings($attributes['description'] ?? []),
             features: self::localeLists($attributes['features'] ?? []),
             imagePath: self::nullableString($attributes['image_path'] ?? null),
+            caloriesFrom: self::nullableInt($attributes['calories_from'] ?? null),
+            caloriesTo: self::nullableInt($attributes['calories_to'] ?? null),
             requiresDaySelection: (bool) ($attributes['requires_day_selection'] ?? false),
             allowsPause: (bool) ($attributes['allows_pause'] ?? true),
             minDeliveryDaysPerWeek: max(1, (int) ($attributes['min_delivery_days_per_week'] ?? 5)),
@@ -103,6 +107,20 @@ final class PlanData extends Data
         }
 
         return $result;
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    private static function nullableInt($value): ?int
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        $int = (int) $value;
+
+        return $int > 0 ? $int : null;
     }
 
     /**

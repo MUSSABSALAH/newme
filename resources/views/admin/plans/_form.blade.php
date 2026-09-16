@@ -69,6 +69,14 @@
             <x-form.field :label="__('plans.fields.name_en')" name="name.en">
                 <x-form.input name="name[en]" :value="$planName('en')" required minlength="2" dir="ltr" />
             </x-form.field>
+
+            <x-form.field :label="__('plans.fields.calories_from')" name="calories_from" :hint="__('plans.fields.calories_hint')">
+                <x-form.input type="number" name="calories_from" :value="old('calories_from', $plan?->calories_from)" min="200" max="6000" dir="ltr" />
+            </x-form.field>
+
+            <x-form.field :label="__('plans.fields.calories_to')" name="calories_to">
+                <x-form.input type="number" name="calories_to" :value="old('calories_to', $plan?->calories_to)" min="200" max="6000" dir="ltr" />
+            </x-form.field>
         </div>
     </x-ui.card>
 

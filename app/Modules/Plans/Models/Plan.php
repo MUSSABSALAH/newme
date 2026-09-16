@@ -24,6 +24,8 @@ use Spatie\Translatable\HasTranslations;
  * @property array<string, string>|null $description
  * @property array<string, list<string>>|null $features
  * @property string|null $image_path
+ * @property int|null $calories_from
+ * @property int|null $calories_to
  * @property bool $requires_day_selection
  * @property bool $allows_pause
  * @property int $min_delivery_days_per_week
@@ -47,6 +49,8 @@ class Plan extends Model
         'description',
         'features',
         'image_path',
+        'calories_from',
+        'calories_to',
         'requires_day_selection',
         'allows_pause',
         'min_delivery_days_per_week',
@@ -184,6 +188,50 @@ class Plan extends Model
             ->where('status', PlanVersionStatus::Draft->value)
             ->latest('version_number')
             ->first();
+    }
+
+    /**
+     * Daily calorie figure shown on public plan cards (range or a single value).
+     */
+    public function calorieLabel(): string
+    {
+        $from = $this->calories_from !== null ? (int) $this->calories_from : 0;
+        $to = $this->calories_to !== null ? (int) $this->calories_to : 0;
+
+        if ($from > 0 && $to > 0 && $from !== $to) {
+            $low = min($from, $to);
+            $high = max($from, $to);
+
+            return $low.' - '.$high;
+        }
+
+        if ($to > 0) {
+            return (string) $to;
+        }
+
+        if ($from > 0) {
+            return (string) $from;
+        }
+
+        return (string) $this->goal->dailyCalorieTarget();
+    }
+
+    /**
+     * Numeric calorie used for bars and fallbacks (the upper bound when a range).
+     */
+    public function calorieValue(): int
+    {
+        $to = $this->calories_to !== null ? (int) $this->calories_to : 0;
+        if ($to > 0) {
+            return $to;
+        }
+
+        $from = $this->calories_from !== null ? (int) $this->calories_from : 0;
+        if ($from > 0) {
+            return $from;
+        }
+
+        return $this->goal->dailyCalorieTarget();
     }
 
     /**

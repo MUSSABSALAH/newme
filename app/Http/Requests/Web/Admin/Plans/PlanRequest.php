@@ -42,6 +42,14 @@ abstract class PlanRequest extends FormRequest
             'is_most_chosen' => ['boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'image' => ['nullable', 'image', 'max:2048'],
+            'calories_from' => ['nullable', 'integer', 'min:200', 'max:6000'],
+            'calories_to' => [
+                'nullable',
+                'integer',
+                'min:200',
+                'max:6000',
+                Rule::when($this->filled('calories_from'), ['gte:calories_from']),
+            ],
 
             // Pricing matrix (saved to the plan's draft version).
             'rules' => ['nullable', 'array'],
@@ -74,6 +82,8 @@ abstract class PlanRequest extends FormRequest
             'min_delivery_days_per_week' => (string) __('plans.fields.min_delivery_days_per_week'),
             'delivery_fee' => (string) __('plans.fields.delivery_fee'),
             'sort_order' => (string) __('plans.fields.sort_order'),
+            'calories_from' => (string) __('plans.fields.calories_from'),
+            'calories_to' => (string) __('plans.fields.calories_to'),
             'rules.*.meal_types' => (string) __('plans.pricing.meal_types'),
             'rules.*.duration_unit' => (string) __('plans.pricing.duration_unit'),
             'rules.*.duration_length' => (string) __('plans.pricing.duration_length'),

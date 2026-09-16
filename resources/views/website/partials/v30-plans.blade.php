@@ -18,7 +18,8 @@
           $pop = !empty($plan['pop']);
           $icon = '#'.($plan['icon'] ?? 'i-target');
           $kcal = $plan['kcal'] ?? null;
-          $fuel = $kcal ? min(100, (int) round(((int) $kcal / 2000) * 100)) : 40;
+          $kcalValue = (int) ($plan['kcal_value'] ?? 0);
+          $fuel = $kcalValue > 0 ? min(100, (int) round(($kcalValue / 2000) * 100)) : 40;
         @endphp
         <div class="splan rv{{ $pop ? ' pop' : '' }}">
           @if ($pop)
@@ -32,10 +33,10 @@
             <p class="splan-lead">{{ $plan['desc'] }}</p>
           @endif
           @if ($kcal)
-            <div class="pline"><b>{{ $kcal }}</b><small>kcal</small></div>
+            <div class="pline"><b class="kcal-n">{{ $kcal }}</b><small>kcal</small></div>
             <span class="per">{{ __('website.subscribe.daily_target') }}</span>
             <div class="plan-fuel">
-              <div class="hd"><span>{{ __('website.subscribe.daily_energy') }}</span><b>{{ $kcal }} KCAL</b></div>
+              <div class="hd"><span>{{ __('website.subscribe.daily_energy') }}</span><b class="kcal-n">{{ $kcal }} KCAL</b></div>
               <div class="fuel-bar fuel" data-v="{{ $fuel }}" style="--v: {{ $fuel }}%"><i></i></div>
             </div>
           @endif

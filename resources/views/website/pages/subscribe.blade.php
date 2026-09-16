@@ -122,7 +122,7 @@ body.sub-on-1 .rv{opacity:1!important;transform:none!important}
   .splan .goal .i{width:16px;height:16px;flex-shrink:0;margin-top:2px;color:var(--orange-hi)}
   .splan .splan-lead{font-size:13px;line-height:1.75;margin-top:8px;color:#C7D6EC}
   .splan .pline{margin-top:16px}
-  .splan .pline b{font-size:40px;color:#fff!important}
+  .splan .pline b{font-size:clamp(26px,8vw,40px);color:#fff!important}
   .splan .pline small{font-size:15px;color:#C7D6EC}
   .splan .per{font-size:12px;padding:7px 14px;margin-top:12px;color:#DCE7F5}
   .splan .plan-fuel{margin-top:16px;padding:14px;min-height:0;background:rgba(255,255,255,.06)}

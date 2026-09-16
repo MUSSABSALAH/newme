@@ -260,6 +260,9 @@ final class PlanService
         if ($data->imagePath !== null) {
             $plan->image_path = $data->imagePath;
         }
+
+        $plan->calories_from = $data->caloriesFrom;
+        $plan->calories_to = $data->caloriesTo;
     }
 
     /**
@@ -291,6 +294,8 @@ final class PlanService
             'allows_pause' => $plan->allows_pause,
             'min_delivery_days_per_week' => $plan->min_delivery_days_per_week,
             'delivery_fee' => $plan->delivery_fee,
+            'calories_from' => $plan->calories_from,
+            'calories_to' => $plan->calories_to,
         ];
     }
 }

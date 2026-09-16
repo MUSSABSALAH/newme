@@ -212,7 +212,7 @@ function render(){
   var pl=PLANS.filter(function(p){return p[0]===plan;})[0];
   if(!pl)return;
   document.getElementById('hPlan').textContent=pl[1];
-  document.getElementById('hKcal').textContent='~'+fmt(pl[2]);
+  document.getElementById('hKcal').textContent='~'+(typeof pl[2]==='number'?fmt(pl[2]):String(pl[2]||''));
   document.getElementById('ctaTxt').textContent=tpl(I18N.cta_ready,{plan:pl[1]});
   document.getElementById('ctaBtn').href='/subscribe#plan='+pl[0];
   document.title=(I18N.title_prefix||'')+' '+pl[1]+' — '+(I18N.brand_suffix||'');

@@ -297,7 +297,8 @@ class WebsiteController extends Controller
             'icon' => self::PLAN_ICONS[$slug] ?? 'i-target',
             'pop' => $plan->is_most_chosen,
             'f' => '1',
-            'kcal' => $plan->goal->dailyCalorieTarget(),
+            'kcal' => $plan->calorieLabel(),
+            'kcal_value' => $plan->calorieValue(),
             'public_id' => $plan->public_id,
         ];
     }

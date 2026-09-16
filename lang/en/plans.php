@@ -63,6 +63,9 @@ return [
         'is_most_chosen_hint' => 'Shows the “★ Most chosen” badge on this plan on the subscriptions page. Only one plan at a time.',
         'sort_order' => 'Sort order',
         'image_hint' => 'PNG or JPG, up to 2 MB.',
+        'calories_from' => 'Calories from',
+        'calories_to' => 'Calories to',
+        'calories_hint' => 'Shown on the public plan card. Leave both empty to use the goal default, or enter two numbers for a range such as 1500–1800.',
     ],
 
     'goals' => [
