@@ -33,7 +33,7 @@ final class PlanController extends Controller
         // The listing prints the published version per row, which was a query
         // per plan on top of the versions already being loaded.
         $plans = Plan::query()
-            ->with(['versions', 'latestPublishedVersion'])
+            ->with(['versions', 'publishedVersions'])
             ->orderBy('sort_order')
             ->orderBy('id')
             ->paginate(20);
