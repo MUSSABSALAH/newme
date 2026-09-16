@@ -117,6 +117,20 @@ html[dir="rtl"] .card > .hint,html[dir="rtl"] .card-head .hint{margin:0 35px 18p
   border-color:#C0392B;background:#FDECEA;
   box-shadow:0 0 0 3px rgba(192,57,43,.16)
 }
+.phone-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+.phone-field__title{font-size:12.5px;font-weight:800;color:var(--ink)}
+.phone-field__hint{font-size:12px;font-weight:700;color:var(--muted);line-height:1.55;margin:0}
+.phone-split{display:grid;grid-template-columns:minmax(7.8rem,11.8rem) minmax(0,1fr);gap:8px;align-items:end}
+.phone-split__dial,.phone-split__num{display:flex;flex-direction:column;gap:5px;min-width:0}
+.phone-split label{font-size:11.5px;font-weight:800;color:var(--muted)}
+.phone-split select,.phone-split input{font-family:var(--font);font-size:14px;font-weight:700;color:var(--navy);background:var(--tile);border:1.5px solid var(--gray-2);border-radius:12px;padding:12px 14px;width:100%}
+.phone-split select{padding-inline-end:28px}
+.phone-split select:focus,.phone-split input:focus{outline:none;border-color:var(--orange);background:#fff;box-shadow:0 0 0 3px rgba(240,127,45,.12)}
+.phone-split select.is-invalid,.phone-split input.is-invalid{border-color:#C0392B;background:#FDECEA;box-shadow:0 0 0 3px rgba(192,57,43,.12)}
+.phone-field__combined{margin:2px 0 0;font-size:12.5px;font-weight:700;color:var(--navy);background:var(--tile);border-radius:10px;padding:8px 12px}
+.phone-field__combined strong{font-weight:800;letter-spacing:.03em;margin-inline-start:6px}
+.phone-field__combined[hidden]{display:none!important}
+.phone-field .err{color:#C0392B;font-size:12px;font-weight:700}
 .check{display:flex;align-items:flex-start;gap:9px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;margin-bottom:12px}
 .check input{width:17px;height:17px;accent-color:var(--orange);margin-top:3px;flex-shrink:0}
 

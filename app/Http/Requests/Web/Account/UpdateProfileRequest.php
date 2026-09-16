@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Web\Account;
 
+use App\Http\Requests\Concerns\MergesInternationalPhone;
 use App\Modules\Identity\DTOs\HealthProfile;
+use App\Modules\Identity\Support\CountryCallingCodes;
 use App\Modules\Identity\Support\CustomerAuthChannels;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -12,6 +14,8 @@ use Illuminate\Validation\Rules\Password;
 
 final class UpdateProfileRequest extends FormRequest
 {
+    use MergesInternationalPhone;
+
     public function authorize(): bool
     {
         return true;
@@ -35,11 +39,23 @@ final class UpdateProfileRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email')->ignore($userId),
             ],
+            'phone_dial' => [
+                $channels->requiresPhoneOnProfile() ? 'required' : 'nullable',
+                'string',
+                'in:'.implode(',', CountryCallingCodes::dials()),
+                'required_with:phone_national',
+            ],
+            'phone_national' => [
+                $channels->requiresPhoneOnProfile() ? 'required' : 'nullable',
+                'string',
+                'max:15',
+            ],
             'phone' => [
                 $channels->requiresPhoneOnProfile() ? 'required' : 'nullable',
                 'string',
-                'max:32',
-                'regex:/^[0-9+()\-\s]{6,32}$/',
+                'max:16',
+                'required_with:phone_national',
+                'regex:/^\+\d{8,15}$/',
                 Rule::unique('users', 'phone')->ignore($userId),
             ],
             // Health details the subscribe wizard reuses; all optional here.
@@ -65,6 +81,8 @@ final class UpdateProfileRequest extends FormRequest
             'name' => (string) __('account.fields.name'),
             'email' => (string) __('account.fields.email'),
             'phone' => (string) __('account.fields.phone'),
+            'phone_dial' => (string) __('account.fields.phone_dial'),
+            'phone_national' => (string) __('account.fields.phone_national'),
             'birth_date' => (string) __('account.fields.birth_date'),
             'allergies' => (string) __('account.fields.allergies'),
             'medications' => (string) __('account.fields.medications'),
@@ -75,6 +93,8 @@ final class UpdateProfileRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        $this->mergeInternationalPhone();
+
         foreach (['email', 'phone'] as $field) {
             $value = $this->input($field);
             if (is_string($value) && trim($value) === '') {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Web\Account;
 
+use App\Http\Requests\Concerns\MergesInternationalPhone;
+use App\Modules\Identity\Support\CountryCallingCodes;
 use App\Modules\Identity\Support\CustomerAuthChannels;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -11,6 +13,8 @@ use Illuminate\Validation\Rules\Password;
 
 final class RegisterRequest extends FormRequest
 {
+    use MergesInternationalPhone;
+
     public function authorize(): bool
     {
         return true;
@@ -32,12 +36,14 @@ final class RegisterRequest extends FormRequest
         }
 
         if ($channels->asksPhoneOnRegister()) {
-            $phone = ['required', 'string', 'max:32', 'regex:/^[0-9+()\-\s]{6,32}$/'];
+            $phone = ['required', 'string', 'max:16', 'regex:/^\+\d{8,15}$/'];
 
             if ($channels->sms()) {
                 $phone[] = Rule::unique('users', 'phone');
             }
 
+            $rules['phone_dial'] = ['required', 'string', 'in:'.implode(',', CountryCallingCodes::dials())];
+            $rules['phone_national'] = ['required', 'string', 'max:15'];
             $rules['phone'] = $phone;
         }
 
@@ -57,7 +63,14 @@ final class RegisterRequest extends FormRequest
             'name' => (string) __('account.fields.name'),
             'email' => (string) __('account.fields.email'),
             'phone' => (string) __('account.fields.phone'),
+            'phone_dial' => (string) __('account.fields.phone_dial'),
+            'phone_national' => (string) __('account.fields.phone_national'),
             'password' => (string) __('account.fields.password'),
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->mergeInternationalPhone();
     }
 }

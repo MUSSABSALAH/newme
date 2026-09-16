@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.site.faq.title'))
+@section('title', $cms->text('help', 'title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -73,11 +73,11 @@
 <div class="v30-page nm-ip">
   <section class="section alt" id="faq">
     <div class="sec-head rv">
-      <span class="kick">{{ __('website.site.faq.kick') }}</span>
-      <h2>{!! __('website.site.faq.h2') !!}</h2>
+      <span class="kick">{{ $cms->text('help', 'kick') }}</span>
+      <h2>{!! $cms->html('help', 'h2') !!}</h2>
     </div>
     <div class="faq-wrap rv">
-      @foreach (__('website.site.faq.items') as $i => $item)
+      @foreach ($cms->group('help', 'faq', 7, ['q', 'a']) as $i => $item)
       <div class="fitem{{ $i === 0 ? ' open' : '' }}">
         <button class="fq" type="button">{{ $item['q'] }}<span class="x">+</span></button>
         <div class="fa"><p>{{ $item['a'] }}</p></div>

@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.menu_page.title'))
+@section('title', $cms->text('menu', 'title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -136,8 +136,8 @@ body.mlock{overflow:hidden}
 </defs></svg>
 
 <header class="phead">
-  <h1>{{ __('website.menu_page.h1_prefix') }} <em id="hPlan"></em></h1>
-  <p>{{ __('website.menu_page.sub') }}</p>
+  <h1>{{ $cms->text('menu', 'h1_prefix') }} <em id="hPlan"></em></h1>
+  <p>{{ $cms->text('menu', 'sub') }}</p>
   <div class="target">{{ __('website.menu_page.target_prefix') }} <b id="hKcal">~1,600</b> {{ __('website.menu_page.target_suffix') }}</div>
 </header>
 
@@ -150,8 +150,8 @@ body.mlock{overflow:hidden}
 
 <div class="mcta-bar">
   <div class="inner">
-    <div class="txt"><b id="ctaTxt"></b><small id="ctaSub">{{ __('website.menu_page.cta_sub_default') }}</small></div>
-    <a class="btn" id="ctaBtn" href="{{ route('website.subscribe') }}#plan=balance">{{ __('website.menu_page.cta_start') }}</a>
+    <div class="txt"><b id="ctaTxt"></b><small id="ctaSub">{{ $cms->text('menu', 'cta_sub_default') }}</small></div>
+    <a class="btn" id="ctaBtn" href="{{ route('website.subscribe') }}#plan=balance">{{ $cms->text('menu', 'cta_start') }}</a>
   </div>
 </div>
 

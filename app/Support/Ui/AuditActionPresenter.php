@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Support\Ui;
 
 use App\Models\User;
+use App\Modules\Cms\Models\PageContent;
 use App\Modules\Identity\Models\Role;
 use App\Modules\Identity\Models\UserInvitation;
 use App\Modules\Plans\Models\Meal;
@@ -39,6 +40,7 @@ final class AuditActionPresenter
             UserInvitation::class => 'audit.targets.invitation',
             Plan::class => 'audit.targets.plan',
             Meal::class => 'audit.targets.meal',
+            PageContent::class => 'audit.targets.page_content',
             default => null,
         };
 

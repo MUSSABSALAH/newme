@@ -11,6 +11,7 @@ use App\Modules\Identity\Jobs\SendSmsJob;
 use App\Modules\Identity\Models\CustomerOtp;
 use App\Modules\Identity\Notifications\EmailOtpNotification;
 use App\Modules\Identity\Support\CustomerAuthChannels;
+use App\Modules\Identity\Support\InternationalPhone;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -48,7 +49,7 @@ final class CustomerOtpService
         }
 
         if ($phone !== null) {
-            $query->where('phone', $phone);
+            $query->whereIn('phone', InternationalPhone::lookupValues($phone));
         }
 
         $user = $query->first();

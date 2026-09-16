@@ -27,27 +27,29 @@
 
 <section class="section tile" id="lines">
   <div class="sec-head rv">
-    <span class="chapter">{!! __('website.site.lines.chapter') !!}</span>
-    <span class="kick">{{ __('website.site.lines.kick') }}</span>
-    <h2>{!! __('website.site.lines.title') !!}</h2>
+    <span class="chapter">{!! $cms->html('homepage', 'lines_chapter') !!}</span>
+    <span class="kick">{{ $cms->text('homepage', 'lines_kick') }}</span>
+    <h2>{!! $cms->html('homepage', 'lines_title') !!}</h2>
   </div>
   <div class="lines-rail" id="linesRail">
     @php
       $lineIcons = ['#i-bread', '#i-cookie', '#i-box'];
-      $lineImgs = ['v30-line-bakery.jpg', 'v30-line-support.jpg', 'v30-line-subs.jpg'];
-    @endphp
-    @php
       $lineHrefs = [
         route('website.store', ['line' => 'bakery']).'#shop',
         route('website.store', ['line' => 'support']).'#shop',
         route('website.subscribe'),
       ];
+      $lineImages = [
+        $cms->image('homepage', 'line_1_image'),
+        $cms->image('homepage', 'line_2_image'),
+        $cms->image('homepage', 'line_3_image'),
+      ];
     @endphp
-    @foreach (__('website.site.lines.items') as $i => $line)
+    @foreach ($cms->group('homepage', 'line', 3, ['n', 'title', 'body', 'tags', 'alt']) as $i => $line)
     <a class="lcard rv" href="{{ $lineHrefs[$i] }}">
       <div class="media"><span class="n">{{ $line['n'] }}</span>
         <div class="ph"><svg><use href="{{ $lineIcons[$i] ?? '#i-bread' }}"/></svg></div>
-        <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/'.$lineImgs[$i]) }}?v={{ filemtime(public_path('assets/images/'.$lineImgs[$i])) }}" alt="{{ $line['alt'] }}" onerror="this.remove()"></div>
+        <img class="aiimg" loading="lazy" decoding="async" src="{{ $lineImages[$i] }}" alt="{{ $line['alt'] }}" onerror="this.remove()"></div>
       <div class="bd">
         <h4>{{ $line['title'] }}</h4>
         <p>{{ $line['body'] }}</p>
@@ -56,15 +58,15 @@
     </a>
     @endforeach
   </div>
-  <p class="lines-hint">{{ __('website.site.lines.hint') }}</p>
+  <p class="lines-hint">{{ $cms->text('homepage', 'lines_hint') }}</p>
 </section>
 
 <section class="section" id="shop">
   <div class="sec-head rv">
-    <span class="kick">{{ __('website.site.shop.kick') }}</span>
-    <h2>{!! __('website.site.shop.title') !!}</h2>
-    <p>{{ __('website.site.shop.sub') }}</p>
-    <p>{{ __('website.site.shop.know') }}</p>
+    <span class="kick">{{ $cms->text('homepage', 'shop_kick') }}</span>
+    <h2>{!! $cms->html('homepage', 'shop_title') !!}</h2>
+    <p>{{ $cms->text('homepage', 'shop_sub') }}</p>
+    <p>{{ $cms->text('homepage', 'shop_know') }}</p>
   </div>
 
   @if (count($products) > 0)
@@ -173,26 +175,26 @@
     </div>
     @if ($preview)
     <div class="railbar"><i id="v30Railbar"></i></div>
-    <p class="rail-hint">{{ __('website.site.shop.rail_hint') }}</p>
+    <p class="rail-hint">{{ $cms->text('homepage', 'shop_rail_hint') }}</p>
     @endif
   </div>
   @if ($preview)
-    <div class="shop-cta"><a href="{{ route('website.store') }}" class="btn inv">{{ __('website.site.shop.all_products') }}</a></div>
+    <div class="shop-cta"><a href="{{ route('website.store') }}" class="btn inv">{{ $cms->text('homepage', 'shop_all_products') }}</a></div>
   @endif
   @endif
 </section>
 
 <section class="section alt" id="nutrition">
   <div class="sec-head rv">
-    <span class="kick">{{ __('website.site.nutrition.kick') }}</span>
-    <h2>{!! __('website.site.nutrition.title') !!}</h2>
-    <p>{{ __('website.site.nutrition.sub') }}</p>
+    <span class="kick">{{ $cms->text('homepage', 'nutrition_kick') }}</span>
+    <h2>{!! $cms->html('homepage', 'nutrition_title') !!}</h2>
+    <p>{{ $cms->text('homepage', 'nutrition_sub') }}</p>
   </div>
   <div class="split">
     <div class="media-card rv">
       <div class="ph"><svg><use href="#i-bread"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-flour.jpg') }}?v={{ filemtime(public_path('assets/images/v30-flour.jpg')) }}" alt="{{ __('website.main.nutrition.alt') }}" onerror="this.remove()">
-      <span class="cap">{{ __('website.main.nutrition.cap') }}</span>
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('homepage', 'nutrition_image') }}" alt="{{ $cms->text('homepage', 'nutrition_alt') }}" onerror="this.remove()">
+      <span class="cap">{{ $cms->text('homepage', 'nutrition_cap') }}</span>
     </div>
     @php
       $n = 'website.main.nutrition';

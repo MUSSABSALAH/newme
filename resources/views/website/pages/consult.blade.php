@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.consult.title'))
+@section('title', $cms->text('consult', 'title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -153,22 +153,22 @@ body.mlock{overflow:hidden}
 
 <div class="wrap">
   <div class="copy rv">
-    <span class="kick">{{ __('website.consult.kick') }}</span>
-    <h1>{!! __('website.consult.h1') !!}</h1>
-    <p class="lead">{{ __('website.consult.lead') }}</p>
+    <span class="kick">{{ $cms->text('consult', 'kick') }}</span>
+    <h1>{!! $cms->html('consult', 'h1') !!}</h1>
+    <p class="lead">{{ $cms->text('consult', 'lead') }}</p>
     <div class="ticks">
-      <div class="tick"><span class="c">✓</span><div>{{ __('website.consult.tick1') }}<small>{{ __('website.consult.tick1_sub') }}</small></div></div>
-      <div class="tick"><span class="c">✓</span><div>{{ __('website.consult.tick2') }}<small>{{ __('website.consult.tick2_sub') }}</small></div></div>
-      <div class="tick"><span class="c">✓</span><div>{{ __('website.consult.tick3') }}<small>{{ __('website.consult.tick3_sub') }}</small></div></div>
+      <div class="tick"><span class="c">✓</span><div>{{ $cms->text('consult', 'tick1') }}<small>{{ $cms->text('consult', 'tick1_sub') }}</small></div></div>
+      <div class="tick"><span class="c">✓</span><div>{{ $cms->text('consult', 'tick2') }}<small>{{ $cms->text('consult', 'tick2_sub') }}</small></div></div>
+      <div class="tick"><span class="c">✓</span><div>{{ $cms->text('consult', 'tick3') }}<small>{{ $cms->text('consult', 'tick3_sub') }}</small></div></div>
     </div>
     <div class="expert">
-      <span class="av"><img class="aiimg" src="{{ asset('assets/images/p211_200x200.jpg') }}" alt="{{ __('website.consult.expert_alt') }}" onerror="this.remove()"></span>
-      <div><b>{{ __('website.consult.expert_name') }}</b><span>{{ __('website.consult.expert_sub') }}</span><div class="stars">★★★★★</div></div>
+      <span class="av"><img class="aiimg" src="{{ $cms->image('consult', 'expert_image') }}" alt="{{ $cms->text('consult', 'expert_alt') }}" onerror="this.remove()"></span>
+      <div><b>{{ $cms->text('consult', 'expert_name') }}</b><span>{{ $cms->text('consult', 'expert_sub') }}</span><div class="stars">★★★★★</div></div>
     </div>
   </div>
 
   <div class="book rv" id="book">
-    <div class="head"><b>{{ __('website.consult.book_title') }}</b><span>{{ __('website.consult.book_step') }}</span></div>
+    <div class="head"><b>{{ $cms->text('consult', 'book_title') }}</b><span>{{ __('website.consult.book_step') }}</span></div>
     <div class="bodyc">
       <div class="frow">
         <div class="f" id="fName">

@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.site.make.title'))
+@section('title', $cms->text('make', 'make_title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -142,22 +142,22 @@
 <div class="v30-page nm-ip">
   <section class="section tile" id="journey">
     <div class="sec-head rv">
-      <span class="chapter">{!! __('website.site.make.chapter') !!}</span>
-      <span class="kick">{{ __('website.site.make.kick') }}</span>
-      <h2>{!! __('website.site.make.h2') !!}</h2>
-      <p>{{ __('website.site.make.sub') }}</p>
+      <span class="chapter">{!! $cms->html('make', 'chapter') !!}</span>
+      <span class="kick">{{ $cms->text('make', 'kick') }}</span>
+      <h2>{!! $cms->html('make', 'h2') !!}</h2>
+      <p>{{ $cms->text('make', 'sub') }}</p>
     </div>
     <div class="wide-hero rv">
       <div class="ph"><svg><use href="#i-bread"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-craft.jpg') }}?v={{ filemtime(public_path('assets/images/v30-craft.jpg')) }}" alt="{{ __('website.site.make.alt_journey') }}" onerror="this.remove()">
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('make', 'craft_image') }}" alt="{{ $cms->text('make', 'alt_journey') }}" onerror="this.remove()">
       <div class="wh-in">
-        <span class="wh-kick">{{ __('website.site.make.banner_kick') }}</span>
-        <b>{{ __('website.site.make.banner') }}</b>
+        <span class="wh-kick">{{ $cms->text('make', 'banner_kick') }}</span>
+        <b>{{ $cms->text('make', 'banner') }}</b>
       </div>
     </div>
     <div class="steps">
       @php $stepIcons = ['#i-wheat', '#i-bread', '#i-clipboard', '#i-box']; @endphp
-      @foreach (__('website.site.make.steps') as $i => $step)
+      @foreach ($cms->group('make', 'step', 4, ['n', 'title', 'body']) as $i => $step)
       <div class="tcard rv"><span class="n">{{ $step['n'] }}</span>
         <span class="ic"><svg class="i"><use href="{{ $stepIcons[$i] ?? '#i-wheat' }}"/></svg></span>
         <h4>{{ $step['title'] }}</h4>
@@ -170,24 +170,24 @@
   <section class="flourshow" id="flour">
     <div class="fs-banner rv">
       <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-      <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-nutrition.jpg') }}?v={{ filemtime(public_path('assets/images/v30-nutrition.jpg')) }}" alt="{{ __('website.site.make.flour_alt') }}" onerror="this.remove()">
+      <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('make', 'flour_image') }}" alt="{{ $cms->text('make', 'flour_alt') }}" onerror="this.remove()">
       <div class="fsb-in">
-        <span class="kick">{{ __('website.site.make.flour_kick') }}</span>
-        <h2>{!! __('website.site.make.flour_h2') !!}</h2>
-        <p>{{ __('website.site.make.flour_p') }}</p>
-        <span class="fsb-stamp"><b>{{ __('website.site.make.flour_stamp') }}</b><small>{{ __('website.site.make.flour_stamp_sub') }}</small></span>
+        <span class="kick">{{ $cms->text('make', 'flour_kick') }}</span>
+        <h2>{!! $cms->html('make', 'flour_h2') !!}</h2>
+        <p>{{ $cms->text('make', 'flour_p') }}</p>
+        <span class="fsb-stamp"><b>{{ $cms->text('make', 'flour_stamp') }}</b><small>{{ $cms->text('make', 'flour_stamp_sub') }}</small></span>
       </div>
     </div>
 
     <div class="fs-kpis rv">
-      @foreach (__('website.site.make.kpis') as $kpi)
+      @foreach ($cms->group('make', 'kpi', 3, ['b', 's']) as $kpi)
       <div><b>{{ $kpi['b'] }}</b><span>{{ $kpi['s'] }}</span></div>
       @endforeach
     </div>
 
     <div class="specstrip rv">
       @php $specIcons = ['#i-wheat', '#i-drop', '#i-protein', '#i-leaf', '#i-shield', '#i-clock']; @endphp
-      @foreach (__('website.site.make.specs') as $i => $spec)
+      @foreach ($cms->group('make', 'spec', 6, ['title', 'body']) as $i => $spec)
       <div class="spec"><span class="ic"><svg class="i"><use href="{{ $specIcons[$i] ?? '#i-wheat' }}"/></svg></span>
         <b>{{ $spec['title'] }}</b><span>{{ $spec['body'] }}</span></div>
       @endforeach

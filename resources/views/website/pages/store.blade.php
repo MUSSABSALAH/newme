@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.store.title'))
+@section('title', $cms->text('store', 'title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -215,9 +215,9 @@ body.menu-open{overflow:hidden}
   <div class="wrap" style="display:block"><div class="rule"></div></div>
   <div class="wrap">
     <div>
-      <span class="kick">{{ __('website.store.kick') }}</span>
-      <h1>{!! __('website.store.heading') !!}</h1>
-      <p class="lead">{{ __('website.store.lead') }}</p>
+      <span class="kick">{{ $cms->text('store', 'kick') }}</span>
+      <h1>{!! $cms->html('store', 'heading') !!}</h1>
+      <p class="lead">{{ $cms->text('store', 'lead') }}</p>
     </div>
   </div>
 </header>

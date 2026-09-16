@@ -25,6 +25,7 @@ return [
         'invitation' => 'Invitation',
         'plan' => 'Plan',
         'meal' => 'Meal',
+        'page_content' => 'Page content',
     ],
 
     'actions' => [
@@ -78,6 +79,9 @@ return [
         ],
         'homepage_content' => [
             'updated' => 'Homepage content updated',
+        ],
+        'page_content' => [
+            'updated' => 'Website page content updated',
         ],
         'category' => [
             'created' => 'Category created',

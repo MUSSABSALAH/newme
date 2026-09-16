@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.site.about.title'))
+@section('title', $cms->text('about', 'about_title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -199,25 +199,25 @@
 <div class="v30-page nm-ip">
   <section class="section alt" id="about">
     <div class="sec-head rv">
-      <span class="kick">{{ __('website.site.about.story_kick') }}</span>
-      <h2>{!! __('website.site.about.story_h2') !!}</h2>
+      <span class="kick">{{ $cms->text('about', 'story_kick') }}</span>
+      <h2>{!! $cms->html('about', 'story_h2') !!}</h2>
     </div>
     <div class="split">
       <div class="copy rv">
         <div class="quote">
-          <p>{{ __('website.site.about.quote') }}</p>
-          <p class="sig">{{ __('website.site.about.quote_by') }}<span>{{ __('website.site.about.quote_cred') }}</span></p>
+          <p>{{ $cms->text('about', 'quote') }}</p>
+          <p class="sig">{{ $cms->text('about', 'quote_by') }}<span>{{ $cms->text('about', 'quote_cred') }}</span></p>
         </div>
       </div>
       <div class="media-card rv">
         <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-        <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-about-team.png') }}?v={{ filemtime(public_path('assets/images/v30-about-team.png')) }}" alt="{{ __('website.site.about.alt_team') }}" onerror="this.remove()">
-        <span class="cap">{{ __('website.site.about.cap') }}</span>
+        <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('about', 'team_image') }}" alt="{{ $cms->text('about', 'alt_team') }}" onerror="this.remove()">
+        <span class="cap">{{ $cms->text('about', 'cap') }}</span>
       </div>
     </div>
     <div class="stats">
       @php $statIcons = ['#i-calendar', '#i-flask', '#i-layers']; @endphp
-      @foreach (__('website.site.about.stats') as $i => $stat)
+      @foreach ($cms->group('about', 'stat', 3, ['b', 's']) as $i => $stat)
       <div class="stat rv"><span class="sic"><svg class="i"><use href="{{ $statIcons[$i] ?? '#i-calendar' }}"/></svg></span>
         <b>{{ $stat['b'] }}</b><span>{{ $stat['s'] }}</span></div>
       @endforeach
@@ -227,35 +227,35 @@
   <section class="band" id="vision" style="margin-top:0">
     <div class="band-bg">
       <img class="aiimg" loading="lazy" decoding="async" width="2400" height="1000"
-           src="{{ asset('assets/images/v30-vision.jpg') }}"
-           alt="{{ __('website.site.about.alt_vision') }}">
+           src="{{ $cms->image('about', 'vision_image') }}"
+           alt="{{ $cms->text('about', 'alt_vision') }}">
     </div>
     <div class="inner">
-      <span class="kick">{{ __('website.site.about.vision_kick') }}</span>
-      <h3>{{ __('website.site.about.vision_h3') }}</h3>
-      <p>{{ __('website.site.about.vision_p') }}</p>
-      <p class="kpi-intro" style="margin-top:18px;font-weight:800">{{ __('website.site.about.kpi_intro') }}</p>
+      <span class="kick">{{ $cms->text('about', 'vision_kick') }}</span>
+      <h3>{{ $cms->text('about', 'vision_h3') }}</h3>
+      <p>{{ $cms->text('about', 'vision_p') }}</p>
+      <p class="kpi-intro" style="margin-top:18px;font-weight:800">{{ $cms->text('about', 'kpi_intro') }}</p>
       <div class="kpis">
         <div class="kpi rv">
           <div class="kfig">
             <i class="from">510</i>
             <i class="arrow">←</i>
             <i class="to" data-from="510" data-to="324">324</i>
-            <small>{{ __('website.site.about.kpi_from') }}</small>
+            <small>{{ $cms->text('about', 'kpi_from') }}</small>
             <small></small>
-            <small>{{ __('website.site.about.kpi_to') }}</small>
+            <small>{{ $cms->text('about', 'kpi_to') }}</small>
           </div>
-          <span class="klabel">{{ __('website.site.about.kpi1') }}</span></div>
+          <span class="klabel">{{ $cms->text('about', 'kpi1') }}</span></div>
         <div class="kpi rv">
           <div class="kfig">
             <i class="from">74</i>
             <i class="arrow">←</i>
             <i class="to" data-from="74" data-to="80">80</i>
-            <small>{{ __('website.site.about.kpi_from') }}</small>
+            <small>{{ $cms->text('about', 'kpi_from') }}</small>
             <small></small>
-            <small>{{ __('website.site.about.kpi_to') }}</small>
+            <small>{{ $cms->text('about', 'kpi_to') }}</small>
           </div>
-          <span class="klabel">{{ __('website.site.about.kpi2') }}</span></div>
+          <span class="klabel">{{ $cms->text('about', 'kpi2') }}</span></div>
       </div>
     </div>
   </section>
@@ -263,21 +263,21 @@
 
   <section class="section alt" id="company">
     <div class="sec-head rv">
-      <span class="kick">{{ __('website.site.about.company_kick') }}</span>
-      <h2>{!! __('website.site.about.company_h2') !!}</h2>
+      <span class="kick">{{ $cms->text('about', 'company_kick') }}</span>
+      <h2>{!! $cms->html('about', 'company_h2') !!}</h2>
     </div>
 
     <div class="hubtabs" id="hubtabs">
-      <button class="tab on" data-t="t1">{{ __('website.site.about.tabs.t1') }}</button>
-      <button class="tab" data-t="t2">{{ __('website.site.about.tabs.t2') }}</button>
-      <button class="tab" data-t="t3">{{ __('website.site.about.tabs.t3') }}</button>
-      <button class="tab" data-t="t4">{{ __('website.site.about.tabs.t4') }}</button>
+      <button class="tab on" data-t="t1">{{ $cms->text('about', 'tab_t1') }}</button>
+      <button class="tab" data-t="t2">{{ $cms->text('about', 'tab_t2') }}</button>
+      <button class="tab" data-t="t3">{{ $cms->text('about', 'tab_t3') }}</button>
+      <button class="tab" data-t="t4">{{ $cms->text('about', 'tab_t4') }}</button>
     </div>
 
     <div class="hubpanel on" id="t1">
-      <p class="about-lead rv">{{ __('website.site.about.lead') }}</p>
+      <p class="about-lead rv">{{ $cms->text('about', 'lead') }}</p>
       <div class="steps">
-        @foreach (__('website.site.about.stages') as $stage)
+        @foreach ($cms->group('about', 'stage', 4, ['n', 'title', 'body']) as $stage)
         <div class="tcard rv">
           <h4><span class="n">{{ $stage['n'] }}</span>{{ $stage['title'] }}</h4>
           <p>{{ $stage['body'] }}</p>
@@ -291,32 +291,32 @@
         <article class="edge-hero rv">
           <div class="eh-media">
             <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-            <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-about-flour.jpg') }}?v={{ filemtime(public_path('assets/images/v30-about-flour.jpg')) }}" alt="{{ __('website.site.about.edge1_kick') }}" onerror="this.remove()">
-            <span class="eh-stamp"><b>01</b><small>{{ __('website.site.about.tabs.t2') }}</small></span>
+            <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('about', 'edge1_image') }}" alt="{{ $cms->text('about', 'edge1_kick') }}" onerror="this.remove()">
+            <span class="eh-stamp"><b>01</b><small>{{ $cms->text('about', 'tab_t2') }}</small></span>
           </div>
           <div class="eh-copy">
-            <span class="eh-kick">{{ __('website.site.about.edge1_kick') }}</span>
-            <h3>{{ __('website.site.about.edge1_h3') }}</h3>
-            <p>{{ __('website.site.about.edge1_p') }}</p>
-            <div class="eh-chips">@foreach (__('website.site.about.edge1_chips') as $chip)<span>{{ $chip }}</span>@endforeach</div>
+            <span class="eh-kick">{{ $cms->text('about', 'edge1_kick') }}</span>
+            <h3>{{ $cms->text('about', 'edge1_h3') }}</h3>
+            <p>{{ $cms->text('about', 'edge1_p') }}</p>
+            <div class="eh-chips">@foreach ($cms->items('about', 'edge1_chips') as $chip)<span>{{ $chip }}</span>@endforeach</div>
           </div>
         </article>
 
         <div class="edge-grid">
           @php
-            $edgeImgs = [
-              'v30-value-review.jpg',
-              'v30-value-health.jpg',
-              'v30-value-system.png',
-              'v30-value-ip.png',
+            $edgeImages = [
+              $cms->image('about', 'edge_1_image'),
+              $cms->image('about', 'edge_2_image'),
+              $cms->image('about', 'edge_3_image'),
+              $cms->image('about', 'edge_4_image'),
             ];
             $edgeIcons = ['#i-clipboard', '#i-target', '#i-layers', '#i-shield'];
           @endphp
-          @foreach (__('website.site.about.edges') as $i => $edge)
+          @foreach ($cms->group('about', 'edge', 4, ['n', 'title', 'body']) as $i => $edge)
           <article class="ecard rv"><span class="ghost">{{ $edge['n'] }}</span>
             <div class="ethumb">
               <div class="ph"><svg><use href="{{ $edgeIcons[$i] ?? '#i-clipboard' }}"/></svg></div>
-              <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/'.$edgeImgs[$i]) }}?v={{ filemtime(public_path('assets/images/'.$edgeImgs[$i])) }}" alt="{{ $edge['title'] }}" onerror="this.remove()">
+              <img class="aiimg" loading="lazy" decoding="async" src="{{ $edgeImages[$i] }}" alt="{{ $edge['title'] }}" onerror="this.remove()">
               <span class="ethumb-n">{{ $edge['n'] }}</span>
             </div>
             <div class="ebody">
@@ -330,7 +330,7 @@
     <div class="hubpanel" id="t3">
       <div class="grid g3">
         @php $valueIcons = ['#i-check', '#i-shield', '#i-bolt', '#i-leaf', '#i-clipboard']; @endphp
-        @foreach (__('website.site.about.values') as $i => $value)
+        @foreach ($cms->group('about', 'value', 5, ['title', 'body']) as $i => $value)
         <div class="tcard rv"><span class="ic"><svg class="i"><use href="{{ $valueIcons[$i] ?? '#i-check' }}"/></svg></span>
           <h4>{{ $value['title'] }}</h4><p>{{ $value['body'] }}</p></div>
         @endforeach
@@ -341,24 +341,24 @@
       <div class="diptych">
         <article class="dpanel photo rv">
           <div class="ph"><svg><use href="#i-target"/></svg></div>
-          <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-expert.jpg') }}" alt="{{ __('website.site.about.alt_expert') }}" onerror="this.remove()">
+          <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('about', 'expert_image') }}" alt="{{ $cms->text('about', 'alt_expert') }}" onerror="this.remove()">
           <div class="dp-in">
-            <span class="dp-kick">{{ __('website.site.about.vision_label') }}</span>
-            <p>{{ __('website.site.about.vision_text') }}</p>
+            <span class="dp-kick">{{ $cms->text('about', 'vision_label') }}</span>
+            <p>{{ $cms->text('about', 'vision_text') }}</p>
           </div>
         </article>
         <article class="dpanel photo rv">
           <div class="ph"><svg><use href="#i-box"/></svg></div>
-          <img class="aiimg" loading="lazy" decoding="async" src="{{ asset('assets/images/v30-mission.jpg') }}" alt="{{ __('website.site.about.alt_mission') }}" onerror="this.remove()">
+          <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('about', 'mission_image') }}" alt="{{ $cms->text('about', 'alt_mission') }}" onerror="this.remove()">
           <div class="dp-in">
-            <span class="dp-kick">{{ __('website.site.about.mission_label') }}</span>
-            <p>{{ __('website.site.about.mission_text') }}</p>
+            <span class="dp-kick">{{ $cms->text('about', 'mission_label') }}</span>
+            <p>{{ $cms->text('about', 'mission_text') }}</p>
           </div>
         </article>
       </div>
       <div class="goalstrip">
-        @foreach (__('website.site.about.goals') as $i => $goal)
-        <div class="gitem rv"><b>{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</b><span>{{ $goal }}</span></div>
+        @foreach ($cms->group('about', 'goal', 5, ['text']) as $i => $goal)
+        <div class="gitem rv"><b>{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</b><span>{{ $goal['text'] }}</span></div>
         @endforeach
       </div>
     </div>

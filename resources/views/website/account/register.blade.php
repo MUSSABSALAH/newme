@@ -42,11 +42,7 @@
     @endif
 
     @if ($channels->asksPhoneOnRegister())
-      <div class="field">
-        <label for="phone">{{ __('account.fields.phone') }}</label>
-        <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required autocomplete="tel" dir="ltr">
-        @error('phone')<div class="err">{{ $message }}</div>@enderror
-      </div>
+      <x-website.phone-field required />
     @endif
 
     @if ($channels->asksPassword())

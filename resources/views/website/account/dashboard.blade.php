@@ -133,21 +133,12 @@
                 @error('email')<div class="err">{{ $message }}</div>@enderror
               </div>
 
-              <div class="f">
-                <label for="phone">
-                  {{ __('account.fields.phone') }}
-                  @unless ($channels->requiresPhoneOnProfile())
-                    <span class="muted-note" style="display:inline;font-weight:700">({{ __('account.fields.optional') }})</span>
-                  @endunless
-                </label>
-                <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone) }}"
-                       class="{{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                       pattern="[0-9+() \-]{6,32}"
-                       @required($channels->requiresPhoneOnProfile())
-                       @if ($errors->has('phone')) aria-invalid="true" @endif
-                       dir="ltr">
-                @error('phone')<div class="err">{{ $message }}</div>@enderror
-              </div>
+              <x-website.phone-field
+                class="f"
+                :value="$user->phone"
+                :required="$channels->requiresPhoneOnProfile()"
+                :optional="! $channels->requiresPhoneOnProfile()"
+              />
             </div>
 
             <div class="divider-label">{{ __('account.dashboard.health_hint') }}</div>

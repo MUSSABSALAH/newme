@@ -47,15 +47,10 @@
     @endif
 
     @if ($channels->asksPhoneOnLogin())
-      <div class="field">
-        <label for="phone">{{ __('account.fields.phone') }}</label>
-        <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
-               class="{{ $errors->has('phone') ? 'is-invalid' : '' }}"
-               @unless ($channels->asksEmail()) required autofocus @endunless
-               @if ($errors->has('phone')) aria-invalid="true" @endif
-               autocomplete="tel" dir="ltr">
-        @error('phone')<div class="err">{{ $message }}</div>@enderror
-      </div>
+      <x-website.phone-field
+        :required="! $channels->asksEmail()"
+        :autofocus="! $channels->asksEmail()"
+      />
     @endif
 
     @if ($channels->asksPassword())

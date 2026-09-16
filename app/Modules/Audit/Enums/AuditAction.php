@@ -33,6 +33,7 @@ enum AuditAction: string
     case RecipeUpdated = 'recipe.updated';
     case RecipeArchived = 'recipe.archived';
     case HomepageContentUpdated = 'homepage_content.updated';
+    case PageContentUpdated = 'page_content.updated';
     case CategoryCreated = 'category.created';
     case CategoryUpdated = 'category.updated';
     case CategoryArchived = 'category.archived';

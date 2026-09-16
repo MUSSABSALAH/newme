@@ -15,22 +15,22 @@
 <div class="home-mobile nm-ip" id="nmMobileHome">
   <div class="hero">
     <div class="ph"><svg><use href="#i-bread"/></svg></div>
-    <img src="{{ asset('assets/images/v30-home-hero.jpg') }}" alt="{{ __('website.main.hero.alt') }}" onerror="this.remove()">
+    <img src="{{ $cms->image('homepage', 'hero_image') }}" alt="{{ $cms->text('homepage', 'hero_alt') }}" onerror="this.remove()">
     <div class="hero-in">
-      <span class="pill">{{ __('website.site.hero.pill') }}</span>
-      <h1>{!! __('website.site.hero.h1') !!}</h1>
-      <p>{{ __('website.site.hero.lead') }}</p>
+      <span class="pill">{{ $cms->text('homepage', 'hero_pill') }}</span>
+      <h1>{!! $cms->html('homepage', 'hero_h1') !!}</h1>
+      <p>{{ $cms->text('homepage', 'hero_lead') }}</p>
       <div class="stack">
-        <a class="btn" href="{{ route('website.subscribe') }}">{{ __('website.site.hero.cta_plan') }}</a>
-        <a class="btn ghost" href="{{ route('website.store') }}">{{ __('website.site.hero.cta_store') }}</a>
+        <a class="btn" href="{{ route('website.subscribe') }}">{{ $cms->text('homepage', 'hero_cta_plan') }}</a>
+        <a class="btn ghost" href="{{ route('website.store') }}">{{ $cms->text('homepage', 'hero_cta_store') }}</a>
       </div>
     </div>
   </div>
 
-  <div class="trust">{{ __('website.site.partners') }}</div>
+  <div class="trust">{{ $cms->text('homepage', 'partners') }}</div>
 
   <div class="uspbar">
-    @foreach (__('website.site.usp') as $i => $usp)
+    @foreach ($cms->group('homepage', 'usp', 4, ['title', 'sub']) as $i => $usp)
       @php $icons = ['#i-wheat', '#i-clipboard', '#i-shield', '#i-clock']; @endphp
       <div class="usp"><span class="ic"><svg class="i"><use href="{{ $icons[$i] ?? '#i-wheat' }}"/></svg></span>
         <b>{{ $usp['title'] }}</b><small>{{ $usp['sub'] }}</small></div>
@@ -38,12 +38,12 @@
   </div>
 
   <div class="sec wrap">
-    <span class="kick">{{ __('website.site.why.kick') }}</span>
-    <h2>{!! __('website.site.why.title') !!}</h2>
-    <p class="lead">{{ __('website.site.why.p1') }}</p>
+    <span class="kick">{{ $cms->text('homepage', 'why_kick') }}</span>
+    <h2>{!! $cms->html('homepage', 'why_title') !!}</h2>
+    <p class="lead">{{ $cms->text('homepage', 'why_p1') }}</p>
     <div class="pill-list">
       @php $pillarIcons = ['#i-target', '#i-box', '#i-shield']; @endphp
-      @foreach (__('website.site.why.pillars') as $i => $pillar)
+      @foreach ($cms->group('homepage', 'why_pillar', 3, ['title', 'body']) as $i => $pillar)
       <div class="pl"><span class="ic"><svg class="i"><use href="{{ $pillarIcons[$i] ?? '#i-target' }}"/></svg></span>
         <div><b>{{ $pillar['title'] }}</b><span>{{ $pillar['body'] }}</span></div></div>
       @endforeach
@@ -52,15 +52,15 @@
 
   <div class="photoblock">
     <div class="ph"><svg><use href="#i-wheat"/></svg></div>
-    <img src="{{ asset('assets/images/v30-why-seeds.jpg') }}" alt="" onerror="this.remove()">
-    <span class="cap">{{ __('website.site.why.cap') }}</span>
+    <img src="{{ $cms->image('homepage', 'why_image') }}" alt="" onerror="this.remove()">
+    <span class="cap">{{ $cms->text('homepage', 'why_cap') }}</span>
   </div>
 
   @if (count($shopProducts) > 0)
   <div class="sec wrap" style="padding-bottom:0">
-    <span class="kick">{{ __('website.site.shop.kick') }}</span>
-    <h2>{!! __('website.site.shop.title') !!}</h2>
-    <p class="lead">{{ __('website.site.shop.sub') }}</p>
+    <span class="kick">{{ $cms->text('homepage', 'shop_kick') }}</span>
+    <h2>{!! $cms->html('homepage', 'shop_title') !!}</h2>
+    <p class="lead">{{ $cms->text('homepage', 'shop_sub') }}</p>
   </div>
   <div class="rail" id="nmHomeRail">
     @foreach ($shopProducts as $p)
@@ -111,7 +111,7 @@
     @endforeach
   </div>
   <div class="wrap shop-more">
-    <a class="btn inv" href="{{ route('website.store') }}">{{ __('website.site.hero.cta_store') }}</a>
+    <a class="btn inv" href="{{ route('website.store') }}">{{ $cms->text('homepage', 'hero_cta_store') }}</a>
   </div>
   @endif
 
@@ -120,10 +120,10 @@
   <div class="trust">{{ $isAr ? 'توصيل مبرَّد داخل الرياض · دايت سنتر بالشرقية وجدة · جاهز · هنقرستيشن · كيتا · ذا شيفز · نينجا' : 'Chilled delivery in Riyadh · Diet Center · Jahez · HungerStation · Keeta · The Chefz · Ninja' }}</div>
 
   <div class="closing">
-    <h2>{{ __('website.site.closing.h2') }}</h2>
-    <p class="tag">{{ __('website.site.closing.tag') }}</p>
-    <p>{{ __('website.site.closing.k') }}</p>
-    <a class="btn" href="{{ route('website.subscribe') }}">{{ __('website.site.closing.btn') }}</a>
+    <h2>{{ $cms->text('homepage', 'closing_h2') }}</h2>
+    <p class="tag">{{ $cms->text('homepage', 'closing_tag') }}</p>
+    <p>{{ $cms->text('homepage', 'closing_k') }}</p>
+    <a class="btn" href="{{ route('website.subscribe') }}">{{ $cms->text('homepage', 'closing_btn') }}</a>
   </div>
 
 </div>

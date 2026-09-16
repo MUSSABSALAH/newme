@@ -46,6 +46,7 @@ return [
         'roles' => 'Roles',
         'plans' => 'Plans',
         'meals' => 'Meals',
+        'pages' => 'Website pages',
         'homepage' => 'Homepage',
         'articles' => 'Articles',
         'recipes' => 'Recipes',

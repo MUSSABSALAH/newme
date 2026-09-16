@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.blog.title'))
+@section('title', $cms->text('blog', 'title'))
 @section('theme', '#122B4A')
 
 @push('styles')

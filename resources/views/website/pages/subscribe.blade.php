@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.subscribe.title'))
+@section('title', $cms->text('subscribe', 'title'))
 @section('theme', '#122B4A')
 @section('body_class', 'is-subscribe sub-on-1')
 @section('hide_site_footer', '1')
@@ -398,8 +398,8 @@ body.menu-open{overflow:hidden}
 
 <!-- PAGE HEAD -->
 <header class="phead" id="wizard">
-  <h1>{!! __('website.subscribe.heading') !!}</h1>
-  <p>{{ __('website.subscribe.lead') }}</p>
+  <h1>{!! $cms->html('subscribe', 'heading') !!}</h1>
+  <p>{{ $cms->text('subscribe', 'lead') }}</p>
 </header>
 
 <!-- STEPPER -->

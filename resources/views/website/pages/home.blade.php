@@ -185,7 +185,7 @@ body.is-home-intro .nm-chrome{display:none!important}
     @include('website.partials.logo', ['tone' => 'light', 'href' => route('website.home')])
     <div class="io-top__actions">
       @include('website.partials.lang-toggle', ['class' => 'on-dark'])
-      <a class="intro-skip" id="skip" href="{{ route('website.main') }}">{{ __('website.site.intro.skip') }}</a>
+      <a class="intro-skip" id="skip" href="{{ route('website.main') }}">{{ $cms->text('intro', 'intro_skip') }}</a>
     </div>
   </div>
 
@@ -197,28 +197,28 @@ body.is-home-intro .nm-chrome{display:none!important}
       <div class="io-core">
         <div class="ph" aria-hidden="true">●</div>
         <img class="aiimg" loading="eager" decoding="async"
-             src="{{ asset('assets/images/v30-intro.jpg') }}"
-             alt="{{ $isAr ? 'رغيف نيومي بالبذور' : 'New Me seeded loaf' }}">
+             src="{{ $cms->image('intro', 'intro_image') }}"
+             alt="{{ $cms->text('intro', 'intro_alt') }}">
   </div>
 </div>
 
     <div class="io-copy">
       <div class="beats" id="beats">
-        @foreach (__('website.site.intro.beats') as $i => $beat)
+        @foreach ($cms->items('intro', 'intro_beats') as $i => $beat)
           <span data-b="{{ $i + 1 }}">{{ $beat }}</span>
         @endforeach
       </div>
-      <h1>{!! __('website.site.intro.title') !!}</h1>
-      <p>{{ __('website.site.intro.lead') }}</p>
+      <h1>{!! $cms->html('intro', 'intro_title') !!}</h1>
+      <p>{{ $cms->text('intro', 'intro_lead') }}</p>
       <div class="io-ctas">
-        <a href="{{ route('website.main') }}" class="io-enter">{{ __('website.site.intro.cta_taste') }}</a>
-        <a href="{{ route('website.subscribe') }}" class="io-ghost">{{ __('website.site.intro.cta_plans') }}</a>
+        <a href="{{ route('website.main') }}" class="io-enter">{{ $cms->text('intro', 'intro_cta_taste') }}</a>
+        <a href="{{ route('website.subscribe') }}" class="io-ghost">{{ $cms->text('intro', 'intro_cta_plans') }}</a>
       </div>
     </div>
   </div>
 
   <div class="io-strip">
-    <p>{{ __('website.site.intro.strip') }}</p>
+    <p>{{ $cms->text('intro', 'intro_strip') }}</p>
   </div>
 </section>
 @endsection

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Identity\Jobs;
 
 use App\Modules\Identity\Contracts\SmsSender;
+use App\Modules\Identity\Support\InternationalPhone;
 use App\Modules\Identity\Support\SaudiMobileNumber;
 use App\Modules\Notifications\Enums\MessageQueue;
 use Illuminate\Bus\Queueable;
@@ -51,7 +52,7 @@ final class SendSmsJob implements ShouldQueue
 
     public function handle(SmsSender $sms): void
     {
-        $number = SaudiMobileNumber::e164($this->phone);
+        $number = InternationalPhone::e164($this->phone) ?? SaudiMobileNumber::e164($this->phone);
 
         if ($number === null) {
             // Retrying will not make the number valid, so this stops here and

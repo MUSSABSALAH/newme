@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', __('website.terms.title'))
+@section('title', $cms->text('terms', 'title'))
 @section('theme', '#122B4A')
 
 @push('styles')
@@ -161,8 +161,8 @@ body.mlock{overflow:hidden}
 
 <header class="thero">
   <div class="in">
-    <h1>{{ __('website.terms.h1') }}</h1>
-    <p>{{ __('website.terms.lead') }}</p>
+    <h1>{{ $cms->text('terms', 'h1') }}</h1>
+    <p>{{ $cms->text('terms', 'lead') }}</p>
     <div class="tfacts">
       <span class="tf">CR <b>7043404750</b></span>
       <span class="tf">VAT <b>312782087600003</b></span>
@@ -171,15 +171,20 @@ body.mlock{overflow:hidden}
 </header>
 
 <div class="tl">
-  <aside class="toc" id="toc"><h3>{{ __('website.terms.toc_title') }}</h3></aside>
+  <aside class="toc" id="toc"><h3>{{ $cms->text('terms', 'toc_title') }}</h3></aside>
   <main id="tmain">
-    @foreach (__('website.terms.sections') as $i => $sec)
-    <section class="tsec" id="{{ $sec['id'] ?? ('s'.($i + 1)) }}"><div class="th"><span class="num">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span><h2>{{ $sec['title'] }}</h2></div>
-      {!! $sec['html'] !!}
+    @foreach ([1, 2, 3] as $i)
+    @php
+      $secId = $cms->text('terms', 'section_'.$i.'_id');
+      $secTitle = $cms->text('terms', 'section_'.$i.'_title');
+      $secHtml = $cms->html('terms', 'section_'.$i.'_html');
+    @endphp
+    <section class="tsec" id="{{ $secId !== '' ? $secId : 's'.$i }}"><div class="th"><span class="num">{{ str_pad((string) $i, 2, '0', STR_PAD_LEFT) }}</span><h2>{{ $secTitle }}</h2></div>
+      {!! $secHtml !!}
     </section>
     @endforeach
 
-    <div class="tnote">{{ __('website.terms.note') }}</div>
+    <div class="tnote">{{ $cms->text('terms', 'note') }}</div>
   </main>
 </div>
 

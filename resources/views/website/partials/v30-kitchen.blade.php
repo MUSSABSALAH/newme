@@ -7,14 +7,14 @@
 
 <section class="section tile" id="articles">
   <div class="sec-head rv">
-    <span class="chapter">{{ __('website.site.kitchen.chapter') }}</span>
-    <span class="kick">{{ __('website.site.kitchen.kick') }}</span>
-    <h2>{!! __('website.site.kitchen.h2') !!}</h2>
-    <p>{{ __('website.site.kitchen.sub') }}</p>
+    <span class="chapter">{{ $cms->text('blog', 'chapter') }}</span>
+    <span class="kick">{{ $cms->text('blog', 'kick') }}</span>
+    <h2>{!! $cms->html('blog', 'h2') !!}</h2>
+    <p>{{ $cms->text('blog', 'sub') }}</p>
   </div>
   <div class="hubtabs" id="kittabs">
-    <button type="button" class="tab on" data-t="k1">{{ __('website.blog.toc_articles') }}</button>
-    <button type="button" class="tab" data-t="k2">{{ __('website.blog.toc_recipes') }}</button>
+    <button type="button" class="tab on" data-t="k1">{{ $cms->text('blog', 'toc_articles') }}</button>
+    <button type="button" class="tab" data-t="k2">{{ $cms->text('blog', 'toc_recipes') }}</button>
   </div>
 
   <div class="hubpanel on" id="k1">

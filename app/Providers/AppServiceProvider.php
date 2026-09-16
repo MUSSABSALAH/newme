@@ -14,6 +14,7 @@ use App\Modules\Cms\Policies\ArticlePolicy;
 use App\Modules\Cms\Policies\PageContentPolicy;
 use App\Modules\Cms\Policies\RecipePolicy;
 use App\Modules\Cms\Services\HomepageContentService;
+use App\Modules\Cms\Services\PageContentService;
 use App\Modules\Consultations\Models\Consultation;
 use App\Modules\Consultations\Policies\ConsultationPolicy;
 use App\Modules\Delivery\Models\SubscriptionDelivery;
@@ -65,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
         // Both services keep a per-request copy of their cache entry, which only
         // helps if the whole request shares one instance. Scoped, not singleton,
         // so a queue worker starts each job with a clean copy.
+        $this->app->scoped(PageContentService::class);
         $this->app->scoped(HomepageContentService::class);
         $this->app->scoped(SettingsService::class);
 
@@ -136,6 +138,10 @@ class AppServiceProvider extends ServiceProvider
         // Expose the live cart count to the shared website navigation.
         View::composer('website.partials.nav', function ($view): void {
             $view->with('cartCount', app(CartService::class)->count());
+        });
+
+        View::composer('website.*', function ($view): void {
+            $view->with('cms', app(PageContentService::class));
         });
 
         View::composer([

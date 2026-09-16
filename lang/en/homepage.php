@@ -24,7 +24,7 @@ return [
     ],
     'hints' => [
         'announce' => 'These three lines rotate in the top bar (web and mobile).',
-        'highlight' => 'Wrap the highlighted amount in <b>...</b> so it shows in orange.',
+        'highlight' => 'To highlight a number or phrase, wrap it in asterisks, like: *200 SAR*.',
     ],
     'messages' => [
         'saved' => 'Homepage content saved.',

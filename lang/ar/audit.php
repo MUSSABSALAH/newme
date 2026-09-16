@@ -25,6 +25,7 @@ return [
         'invitation' => 'دعوة',
         'plan' => 'باقة',
         'meal' => 'وجبة',
+        'page_content' => 'محتوى صفحة',
     ],
 
     'actions' => [
@@ -78,6 +79,9 @@ return [
         ],
         'homepage_content' => [
             'updated' => 'تحديث محتوى الصفحة الرئيسية',
+        ],
+        'page_content' => [
+            'updated' => 'تحديث محتوى صفحة الموقع',
         ],
         'category' => [
             'created' => 'إنشاء فئة',
