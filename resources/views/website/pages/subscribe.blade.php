@@ -83,7 +83,8 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .wstep[data-step="1"].active{padding:0;max-width:none}
 .wstep[data-step="1"] .sub-step-desk .subs{margin:0;border-radius:0;border-top:0}
 .splan.is-picked{outline:2px solid var(--orange);outline-offset:3px}
-.splan .fuel-bar{background:rgba(255,255,255,.14)}
+.splan .fuel-bar{background-color:rgba(255,255,255,.14)}
+.splan .fuel-bar .fuel-fill{display:block;height:11px;background:#F07F2D;background:linear-gradient(105deg,#FFA05C,#F07F2D 55%,#DD6516)}
 body.is-subscribe.sub-on-1{background:var(--navy)}
 body.sub-on-1 .wbar,
 body.sub-on-1 .phead,
@@ -122,13 +123,15 @@ body.sub-on-1 .rv{opacity:1!important;transform:none!important}
   .splan .goal .i{width:16px;height:16px;flex-shrink:0;margin-top:2px;color:var(--orange-hi)}
   .splan .splan-lead{font-size:13px;line-height:1.75;margin-top:8px;color:#C7D6EC}
   .splan .pline{margin-top:16px}
-  .splan .pline b{font-size:clamp(26px,8vw,40px);color:#fff!important}
+  .splan .pline .kcal-run{flex-wrap:nowrap}
+  .splan .pline b,.splan .pline .kcal-dash{font-size:clamp(22px,6.4vw,34px);color:#fff!important}
   .splan .pline small{font-size:15px;color:#C7D6EC}
   .splan .per{font-size:12px;padding:7px 14px;margin-top:12px;color:#DCE7F5}
   .splan .plan-fuel{margin-top:16px;padding:14px;min-height:0;background:rgba(255,255,255,.06)}
-  .splan .plan-fuel .hd{font-size:12px;margin-bottom:9px;color:#C7D6EC}
+  .splan .plan-fuel .hd{font-size:12px;margin-bottom:9px;color:#C7D6EC;gap:12px}
   .splan .plan-fuel .hd b{font-size:13px;color:var(--orange-hi)}
-  .splan .fuel-bar{height:8px;background:rgba(255,255,255,.14)}
+  .splan .fuel-bar{height:11px;background-color:rgba(255,255,255,.14)}
+  .splan .fuel-bar .fuel-fill{height:11px}
   .splan .btn{
     margin-top:20px;width:100%;font-size:15px;font-weight:900;min-height:50px;padding:14px 18px;
     border-radius:999px

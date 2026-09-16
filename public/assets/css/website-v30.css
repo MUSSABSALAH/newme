@@ -77,12 +77,14 @@ h1,h2,h3,h4{color:var(--navy);font-weight:900;line-height:1.18;letter-spacing:-.
 .btn.sm{padding:12px 22px;min-height:46px;font-size:13.5px}
 .btn.full{width:100%}
 
-/* fuel bars */
-.fuel{--v:0%}
-.fuel-bar{height:9px;background:rgba(18,43,74,.1);border-radius:99px;overflow:hidden;position:relative}
-.fuel-bar i{position:absolute;inset-block:0;inset-inline-start:0;width:var(--v);
-  background:var(--grad);border-radius:99px;box-shadow:0 0 12px rgba(240,127,45,.55);
-  transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+/* fuel bars — block fill with an inline width; empty absolute spans vanish on mobile */
+.fuel-bar{height:11px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden}
+.fuel-bar .fuel-fill{display:block;height:11px;width:0;border-radius:99px;
+  background:#F07F2D;background:linear-gradient(105deg,#FFA05C,#F07F2D 55%,#DD6516);
+  box-shadow:0 0 12px rgba(240,127,45,.55)}
+@media(min-width:820px){
+  html[dir="rtl"] .fuel-bar .fuel-fill{margin-left:auto}
+}
 
 /* ========== 01 · INTRO ========== */
 .intro{background:var(--navy);color:#fff;min-height:100svh;display:grid;place-items:center;
@@ -352,16 +354,22 @@ nav.main .bar{max-width:var(--max);margin:0 auto;display:flex;align-items:center
   font-weight:800;margin-top:6px;line-height:1.55;white-space:normal}
 .splan .goal .i{width:16px;height:16px;color:var(--orange-hi);flex-shrink:0;margin-top:2px}
 .splan-lead{margin:8px 0 0;font-size:12.5px;line-height:1.75;font-weight:600;color:#C7D6EC}
-.pline{display:flex;align-items:baseline;gap:7px;margin-top:18px}
+.pline{display:flex;align-items:baseline;justify-content:flex-start;gap:7px;margin-top:18px}
+.kcal-run{display:inline-flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;
+  gap:.35em;white-space:nowrap}
+.kcal-run b{direction:ltr;unicode-bidi:isolate}
 .pline b{font-family:var(--mono);font-size:clamp(26px,4.4vw,44px);font-weight:900;color:#fff;line-height:1;letter-spacing:-.03em}
-html[dir="ltr"] .kcal-n{direction:ltr;unicode-bidi:isolate}
-html[dir="rtl"] .kcal-n{direction:rtl;unicode-bidi:isolate}
-.pline small{font-size:15px;color:#C7D6EC;font-weight:800}
+.pline .kcal-dash{color:#fff;font-family:var(--mono);font-size:clamp(26px,4.4vw,44px);font-weight:900;line-height:1}
+.pline small{font-size:15px;color:#C7D6EC;font-weight:800;flex-shrink:0}
+.plan-fuel .hd .kcal-run{flex:0 0 auto;color:var(--orange-hi);font-family:var(--mono);font-size:12.5px;font-weight:800}
+.plan-fuel .hd .kcal-run b{font-size:inherit;font-weight:inherit;color:inherit}
+.plan-fuel .hd .kcal-run small{font-size:inherit;font-weight:inherit;color:inherit}
 .per{display:inline-flex;align-self:flex-start;background:rgba(255,255,255,.1);color:#DCE7F5;
   font-size:11.5px;font-weight:800;padding:7px 14px;border-radius:999px;margin-top:12px;line-height:1.6}
 .plan-fuel{margin-top:18px;background:rgba(255,255,255,.05);border-radius:14px;padding:14px}
-.plan-fuel .hd{display:flex;justify-content:space-between;align-items:center;
+.plan-fuel .hd{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;
   font-size:11.5px;font-weight:800;color:#C7D6EC;margin-bottom:9px}
+.plan-fuel .hd .fuel-lbl{min-width:0;unicode-bidi:isolate}
 .plan-fuel .hd b{font-family:var(--mono);color:var(--orange-hi);font-size:12.5px}
 .meals{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
 .meals span{font-size:10.5px;font-weight:800;color:#7E93B0;background:rgba(255,255,255,.06);

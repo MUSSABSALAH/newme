@@ -299,6 +299,8 @@ class WebsiteController extends Controller
             'f' => '1',
             'kcal' => $plan->calorieLabel(),
             'kcal_value' => $plan->calorieValue(),
+            'kcal_from' => $plan->calories_from !== null ? (int) $plan->calories_from : 0,
+            'kcal_to' => $plan->calories_to !== null ? (int) $plan->calories_to : 0,
             'public_id' => $plan->public_id,
         ];
     }
