@@ -76,10 +76,9 @@ final class CequensSmsSender implements SmsSender
             ->withToken($this->accessToken())
             ->post($url, [
                 'senderName' => $sender,
-                'senderID' => $sender,
-                'messageType' => $this->messageType($message),
+                'messageType' => 'text',
                 'messageText' => $message,
-                'recipients' => $recipient,
+                'recipients' => [$recipient],
                 'shortURL' => false,
             ]);
 
@@ -209,10 +208,5 @@ final class CequensSmsSender implements SmsSender
         }
 
         return $token;
-    }
-
-    private function messageType(string $message): string
-    {
-        return preg_match('/[^\x00-\x7F]/u', $message) === 1 ? 'unicode' : 'text';
     }
 }
