@@ -203,6 +203,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('plans', PlanController::class);
 
         // Meals: shared catalog available to plans.
+        Route::post('meals/bulk-destroy', [MealController::class, 'bulkDestroy'])->name('meals.bulk-destroy');
         Route::resource('meals', MealController::class)->except('show');
 
         // CMS: per-page copy & images, articles & recipes.

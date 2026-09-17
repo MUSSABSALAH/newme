@@ -9,10 +9,21 @@ use App\Modules\Audit\Services\AuditService;
 use App\Modules\Plans\DTOs\MealData;
 use App\Modules\Plans\Models\Meal;
 use App\Modules\Plans\Models\Plan;
+use App\Modules\Subscriptions\Enums\SubscriptionStatus;
+use App\Modules\Subscriptions\Models\Subscription;
+use App\Modules\Subscriptions\Support\MealSchedule;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 final class MealService
 {
+    /**
+     * Lowercased dish names currently picked on an active customer subscription.
+     *
+     * @var array<string, true>|null
+     */
+    private ?array $activeDishNames = null;
+
     public function __construct(private readonly AuditService $audit) {}
 
     public function create(MealData $data): Meal
@@ -51,6 +62,97 @@ final class MealService
 
             $this->audit->log(AuditAction::MealArchived, $meal, $old);
         });
+    }
+
+    /**
+     * Archive meals that are not currently picked on an active subscription.
+     *
+     * @param  Collection<int, Meal>  $meals
+     * @return array{deleted: Collection<int, Meal>, blocked: Collection<int, Meal>}
+     */
+    public function deleteMany(Collection $meals): array
+    {
+        $deleted = new Collection;
+        $blocked = new Collection;
+
+        foreach ($meals as $meal) {
+            if ($this->isLinkedToActiveSubscription($meal)) {
+                $blocked->push($meal);
+
+                continue;
+            }
+
+            $this->delete($meal);
+            $deleted->push($meal);
+        }
+
+        return [
+            'deleted' => $deleted,
+            'blocked' => $blocked,
+        ];
+    }
+
+    /**
+     * True when a live customer currently has this dish on their meal schedule.
+     */
+    public function isLinkedToActiveSubscription(Meal $meal): bool
+    {
+        $used = $this->activeDishNames();
+
+        foreach ($meal->getTranslations('name') as $translated) {
+            if (! is_string($translated)) {
+                continue;
+            }
+
+            $key = mb_strtolower(trim($translated));
+
+            if ($key !== '' && isset($used[$key])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return array<string, true>
+     */
+    private function activeDishNames(): array
+    {
+        if ($this->activeDishNames !== null) {
+            return $this->activeDishNames;
+        }
+
+        $names = [];
+
+        Subscription::query()
+            ->where('status', SubscriptionStatus::Active)
+            ->whereNotNull('meal_schedule')
+            ->select(['id', 'meal_schedule'])
+            ->orderBy('id')
+            ->chunkById(100, function (Collection $subscriptions) use (&$names): void {
+                foreach ($subscriptions as $subscription) {
+                    if (! $subscription instanceof Subscription) {
+                        continue;
+                    }
+
+                    foreach (MealSchedule::normalize($subscription->meal_schedule) as $day) {
+                        foreach ($day['meals'] as $dish) {
+                            if (! is_string($dish)) {
+                                continue;
+                            }
+
+                            $key = mb_strtolower(trim($dish));
+
+                            if ($key !== '') {
+                                $names[$key] = true;
+                            }
+                        }
+                    }
+                }
+            });
+
+        return $this->activeDishNames = $names;
     }
 
     /**

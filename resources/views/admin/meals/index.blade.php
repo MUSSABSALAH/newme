@@ -12,49 +12,148 @@
             <div class="dropdown__empty">{{ __('meals.no_meals') }}</div>
         </x-ui.card>
     @else
-        <x-ui.table :headers="[__('meals.columns.meal'), __('meals.columns.type'), __('meals.columns.calories'), __('meals.columns.status'), '']">
-            @foreach ($meals as $meal)
-                <tr>
-                    <td><strong>{{ $meal->label() }}</strong></td>
-                    <td>{{ $meal->meal_type->label() }}</td>
-                    <td>{{ $meal->calories !== null ? $meal->calories.' '.__('meals.units.kcal') : '—' }}</td>
-                    <td>
-                        <x-ui.badge :variant="$meal->is_active ? 'success' : 'neutral'">
-                            {{ $meal->is_active ? __('meals.status.active') : __('meals.status.inactive') }}
-                        </x-ui.badge>
-                    </td>
-                    <td>
-                        <div class="row" style="justify-content: flex-end; gap: 8px;">
-                            @can('update', $meal)
-                                <x-ui.button :href="route('admin.meals.edit', $meal)" variant="ghost" class="btn--sm">
-                                    <x-ui.icon name="pencil" size="sm" /> {{ __('messages.actions.edit') }}
-                                </x-ui.button>
-                            @endcan
+        @can('deleteAny', \App\Modules\Plans\Models\Meal::class)
+            <form
+                id="meal-bulk-form"
+                method="POST"
+                action="{{ route('admin.meals.bulk-destroy') }}"
+                data-confirm
+                data-confirm-type="danger"
+                data-confirm-title="{{ __('messages.confirm.delete_title') }}"
+                data-confirm-text="{{ __('meals.bulk.confirm_delete') }}"
+                data-confirm-button="{{ __('messages.confirm.delete_confirm') }}"
+                data-confirm-cancel="{{ __('messages.confirm.cancel') }}"
+            >
+                @csrf
+                <div class="bulk-bar">
+                    <span class="bulk-bar__meta">
+                        <span data-meal-bulk-count>0</span>
+                        {{ __('meals.bulk.selected') }}
+                    </span>
+                    <x-ui.button type="submit" variant="danger" class="btn--sm" data-meal-bulk-submit disabled>
+                        <x-ui.icon name="trash-2" size="sm" /> {{ __('meals.bulk.delete') }}
+                    </x-ui.button>
+                </div>
+            </form>
+        @endcan
 
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        @can('deleteAny', \App\Modules\Plans\Models\Meal::class)
+                            <th class="table-check-col">
+                                <label class="table-check">
+                                    <input type="checkbox" data-meal-bulk-all aria-label="{{ __('meals.bulk.select_all') }}">
+                                </label>
+                            </th>
+                        @endcan
+                        <th>{{ __('meals.columns.meal') }}</th>
+                        <th>{{ __('meals.columns.type') }}</th>
+                        <th>{{ __('meals.columns.calories') }}</th>
+                        <th>{{ __('meals.columns.status') }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($meals as $meal)
+                        <tr>
                             @can('delete', $meal)
-                                <form
-                                    method="POST"
-                                    action="{{ route('admin.meals.destroy', $meal) }}"
-                                    data-confirm
-                                    data-confirm-type="danger"
-                                    data-confirm-title="{{ __('messages.confirm.delete_title') }}"
-                                    data-confirm-text="{{ __('meals.confirm_delete') }}"
-                                    data-confirm-button="{{ __('messages.confirm.delete_confirm') }}"
-                                    data-confirm-cancel="{{ __('messages.confirm.cancel') }}"
-                                >
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-ui.button type="submit" variant="danger" class="btn--sm" title="{{ __('messages.actions.delete') }}">
-                                        <x-ui.icon name="trash-2" size="sm" />
-                                    </x-ui.button>
-                                </form>
+                                <td class="table-check-col">
+                                    <label class="table-check">
+                                        <input
+                                            form="meal-bulk-form"
+                                            type="checkbox"
+                                            name="ids[]"
+                                            value="{{ $meal->id }}"
+                                            data-meal-bulk-item
+                                            aria-label="{{ $meal->label() }}"
+                                        >
+                                    </label>
+                                </td>
+                            @elsecan('deleteAny', \App\Modules\Plans\Models\Meal::class)
+                                <td class="table-check-col"></td>
                             @endcan
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-        </x-ui.table>
+                            <td><strong>{{ $meal->label() }}</strong></td>
+                            <td>{{ $meal->meal_type->label() }}</td>
+                            <td>{{ $meal->calories !== null ? $meal->calories.' '.__('meals.units.kcal') : '—' }}</td>
+                            <td>
+                                <x-ui.badge :variant="$meal->is_active ? 'success' : 'neutral'">
+                                    {{ $meal->is_active ? __('meals.status.active') : __('meals.status.inactive') }}
+                                </x-ui.badge>
+                            </td>
+                            <td>
+                                <div class="row" style="justify-content: flex-end; gap: 8px;">
+                                    @can('update', $meal)
+                                        <x-ui.button :href="route('admin.meals.edit', $meal)" variant="ghost" class="btn--sm">
+                                            <x-ui.icon name="pencil" size="sm" /> {{ __('messages.actions.edit') }}
+                                        </x-ui.button>
+                                    @endcan
+
+                                    @can('delete', $meal)
+                                        <form
+                                            method="POST"
+                                            action="{{ route('admin.meals.destroy', $meal) }}"
+                                            data-confirm
+                                            data-confirm-type="danger"
+                                            data-confirm-title="{{ __('messages.confirm.delete_title') }}"
+                                            data-confirm-text="{{ __('meals.confirm_delete') }}"
+                                            data-confirm-button="{{ __('messages.confirm.delete_confirm') }}"
+                                            data-confirm-cancel="{{ __('messages.confirm.cancel') }}"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-ui.button type="submit" variant="danger" class="btn--sm" title="{{ __('messages.actions.delete') }}">
+                                                <x-ui.icon name="trash-2" size="sm" />
+                                            </x-ui.button>
+                                        </form>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
         <x-ui.pagination :paginator="$meals" />
     @endif
+
+    <script>
+    (function () {
+        var form = document.getElementById('meal-bulk-form');
+        if (!form) return;
+
+        var all = document.querySelector('[data-meal-bulk-all]');
+        var boxes = document.querySelectorAll('[data-meal-bulk-item]');
+        var count = form.querySelector('[data-meal-bulk-count]');
+        var submit = form.querySelector('[data-meal-bulk-submit]');
+
+        function sync() {
+            var n = 0;
+            boxes.forEach(function (box) { if (box.checked) n++; });
+            if (count) count.textContent = String(n);
+            if (submit) submit.disabled = n === 0;
+            if (all) {
+                all.checked = n > 0 && n === boxes.length;
+                all.indeterminate = n > 0 && n < boxes.length;
+            }
+        }
+
+        if (all) {
+            all.addEventListener('change', function () {
+                boxes.forEach(function (box) { box.checked = all.checked; });
+                sync();
+            });
+        }
+
+        boxes.forEach(function (box) { box.addEventListener('change', sync); });
+        form.addEventListener('submit', function (event) {
+            if ([].filter.call(boxes, function (box) { return box.checked; }).length === 0) {
+                event.preventDefault();
+            }
+        });
+        sync();
+    })();
+    </script>
 </x-layouts.admin>

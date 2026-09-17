@@ -34,4 +34,9 @@ final class MealPolicy
     {
         return $user->can(PermissionName::PlansManage->value);
     }
+
+    public function deleteAny(User $user): bool
+    {
+        return $user->can(PermissionName::PlansManage->value);
+    }
 }

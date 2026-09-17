@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\Admin\Meals\BulkDestroyMealsRequest;
 use App\Http\Requests\Web\Admin\Meals\StoreMealRequest;
 use App\Http\Requests\Web\Admin\Meals\UpdateMealRequest;
 use App\Modules\Plans\DTOs\MealData;
@@ -79,11 +80,59 @@ final class MealController extends Controller
     {
         $this->authorize('delete', $meal);
 
+        if ($this->meals->isLinkedToActiveSubscription($meal)) {
+            return redirect()
+                ->route('admin.meals.index')
+                ->with('error', __('meals.messages.in_use', ['meal' => $meal->label()]));
+        }
+
         $this->meals->delete($meal);
 
         return redirect()
             ->route('admin.meals.index')
             ->with('success', __('meals.messages.archived'));
+    }
+
+    public function bulkDestroy(BulkDestroyMealsRequest $request): RedirectResponse
+    {
+        $this->authorize('deleteAny', Meal::class);
+
+        $meals = Meal::query()
+            ->whereIn('id', $request->mealIds())
+            ->orderBy('id')
+            ->get();
+
+        foreach ($meals as $meal) {
+            $this->authorize('delete', $meal);
+        }
+
+        $result = $this->meals->deleteMany($meals);
+
+        $redirect = redirect()->route('admin.meals.index');
+
+        if ($result['deleted']->isNotEmpty()) {
+            $redirect->with('success', __('meals.messages.bulk_archived', [
+                'count' => $result['deleted']->count(),
+            ]));
+        }
+
+        if ($result['blocked']->isNotEmpty()) {
+            $names = $result['blocked']
+                ->map(static fn (Meal $meal): string => $meal->label())
+                ->filter()
+                ->values()
+                ->all();
+
+            $redirect->with('warning', __('meals.messages.bulk_blocked', [
+                'meals' => implode(', ', $names),
+            ]));
+        }
+
+        if ($result['deleted']->isEmpty() && $result['blocked']->isEmpty()) {
+            $redirect->with('error', __('meals.messages.bulk_none'));
+        }
+
+        return $redirect;
     }
 
     /**
