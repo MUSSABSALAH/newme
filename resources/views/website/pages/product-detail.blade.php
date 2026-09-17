@@ -77,8 +77,8 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 .sum h1{font-size:clamp(26px,5.4vw,38px);margin-bottom:8px;color:var(--green-ink)}
 .kcal-badge{display:inline-flex;align-items:center;gap:7px;color:var(--green-ink);font-size:13px;font-weight:800;margin-bottom:16px}
 .kcal-badge .i{width:16px;height:16px;color:var(--green)}
-.desc{font-size:14.5px;font-weight:600;color:var(--body);margin-bottom:14px;max-width:56ch}
-.desc--line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.desc{font-size:14.5px;font-weight:600;color:var(--body);margin-bottom:14px;max-width:56ch;
+  white-space:pre-wrap;overflow-wrap:break-word;line-height:1.75}
 .weight{font-size:14px;font-weight:800;color:var(--muted);margin-bottom:14px}
 .price{font-size:26px;font-weight:900;color:var(--navy);font-family:var(--mono);margin-bottom:20px}
 .price small{font-size:14px;color:var(--muted);font-weight:800;font-family:var(--font)}
@@ -212,7 +212,7 @@ body.menu-open{overflow:hidden}
     @endif
 
     @if ($p['description'] !== '')
-      <p class="desc desc--line">{{ $p['description'] }}</p>
+      <p class="desc">{{ $p['description'] }}</p>
     @endif
 
     <div class="price">{{ $p['price'] }} <x-ui.sar /></div>

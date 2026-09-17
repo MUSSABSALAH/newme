@@ -678,7 +678,7 @@ class WebsiteController extends Controller
         return [
             'id' => $product->id,
             'name' => $product->label(),
-            'description' => $this->productCaption($product),
+            'description' => trim((string) $product->getTranslation('description', app()->getLocale(), false)),
             'image_url' => $product->imageUrl(),
             'price' => Money::fromMinor($product->price)->format(),
             'kcal' => (int) $product->calories,
