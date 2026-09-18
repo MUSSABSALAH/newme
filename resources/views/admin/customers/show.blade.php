@@ -1,5 +1,23 @@
 <x-layouts.admin :title="$customer->name" :heading="$customer->name" :subtitle="__('customers.show.subtitle')">
     <x-slot:actions>
+        @can('delete', $customer)
+            <form
+                method="POST"
+                action="{{ route('admin.customers.destroy', $customer) }}"
+                data-confirm
+                data-confirm-type="danger"
+                data-confirm-title="{{ __('customers.confirm.delete_title') }}"
+                data-confirm-text="{{ __('customers.confirm.delete_text') }}"
+                data-confirm-button="{{ __('customers.confirm.delete_confirm') }}"
+                data-confirm-cancel="{{ __('messages.confirm.cancel') }}"
+            >
+                @csrf
+                @method('DELETE')
+                <x-ui.button type="submit" variant="danger">
+                    <x-ui.icon name="trash-2" size="sm" /> {{ __('messages.actions.delete') }}
+                </x-ui.button>
+            </form>
+        @endcan
         <x-ui.button :href="route('admin.customers.index')" variant="ghost">
             <x-ui.icon name="arrow-left" size="sm" /> {{ __('messages.actions.back') }}
         </x-ui.button>

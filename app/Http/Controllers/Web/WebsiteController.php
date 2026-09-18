@@ -23,6 +23,7 @@ use App\Modules\Store\Models\Product;
 use App\Modules\Subscriptions\Support\SubscriptionStartRules;
 use App\Support\Money\Money;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,9 +80,14 @@ class WebsiteController extends Controller
         ]);
     }
 
-    public function store(): View
+    public function store(Request $request): View
     {
-        return view('website.pages.store', $this->websiteStore());
+        $data = $this->websiteStore();
+        $cat = (string) $request->query('cat', 'all');
+        $slugs = array_column($data['tabs'], 'slug');
+        $data['activeCat'] = in_array($cat, $slugs, true) ? $cat : 'all';
+
+        return view('website.pages.store', $data);
     }
 
     public function make(): View
@@ -519,7 +525,7 @@ class WebsiteController extends Controller
                 'kcal' => $kcal > 0 ? $kcal : null,
                 'fat' => $this->trimDecimal($product->fat_g),
                 'carbs' => $this->trimDecimal($product->carbs_g),
-                'serving' => $product->serving_size?->label() ?? '',
+                'serving' => $product->servingLabel(),
                 'note' => $product->nutrition_note?->value,
                 'price' => $this->trimDecimal(Money::fromMinor($product->price)->format()),
             ];
@@ -626,7 +632,7 @@ class WebsiteController extends Controller
             'name' => $product->label(),
             'cat_label' => $catLabel,
             'kcal' => (int) $product->calories,
-            'serving' => $product->serving_size?->label() ?? '',
+            'serving' => $product->servingLabel(),
             'protein' => $this->trimDecimal($product->protein_g),
             'fat' => $this->trimDecimal($product->fat_g),
             'carbs' => $this->trimDecimal($product->carbs_g),
@@ -682,7 +688,7 @@ class WebsiteController extends Controller
             'image_url' => $product->imageUrl(),
             'price' => Money::fromMinor($product->price)->format(),
             'kcal' => (int) $product->calories,
-            'serving' => $product->serving_size?->label() ?? '',
+            'serving' => $product->servingLabel(),
             'protein' => $this->trimDecimal($product->protein_g),
             'fat' => $this->trimDecimal($product->fat_g),
             'carbs' => $this->trimDecimal($product->carbs_g),
@@ -710,7 +716,7 @@ class WebsiteController extends Controller
             return $description;
         }
 
-        return trim($product->serving_size?->label() ?? '');
+        return trim($product->servingLabel());
     }
 
     /**

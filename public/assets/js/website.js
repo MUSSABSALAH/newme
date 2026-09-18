@@ -164,6 +164,30 @@
             var line = new URLSearchParams(window.location.search).get("line");
             return this.groups[line] || null;
         },
+        requestedCat: function () {
+            var cat = new URLSearchParams(window.location.search).get("cat");
+            return cat && cat !== "all" ? cat : null;
+        },
+        selectRequestedTab: function () {
+            var slug = this.requestedCat();
+            if (!slug) {
+                return null;
+            }
+            var tabs = document.querySelectorAll("#tabs .tab, #v30Tabs .tab");
+            var found = false;
+            tabs.forEach(function (tab) {
+                if (tab.getAttribute("data-cat") === slug) {
+                    found = true;
+                }
+            });
+            if (!found) {
+                return null;
+            }
+            tabs.forEach(function (tab) {
+                tab.classList.toggle("on", tab.getAttribute("data-cat") === slug);
+            });
+            return slug;
+        },
         match: function (slug, selected) {
             var allowed = this.allowed();
             selected = selected || "all";
@@ -210,9 +234,13 @@
         apply: function (selected) {
             var self = this;
             var allowed = this.allowed();
+            var requested = this.requestedCat();
             this.hideExtraTabs();
             this.selectSingleTab();
-            if (!selected) {
+            var fromUrl = this.selectRequestedTab();
+            if (fromUrl) {
+                selected = fromUrl;
+            } else if (!selected) {
                 var on = document.querySelector("#tabs .tab.on, #v30Tabs .tab.on");
                 selected = on ? on.getAttribute("data-cat") : "all";
             }
@@ -224,7 +252,7 @@
                 var shown = document.querySelectorAll("#grid .card:not(.hide)").length;
                 empty.style.display = shown ? "none" : "block";
             }
-            if (allowed || location.hash === "#shop" || location.hash === "#store-catalog") {
+            if (allowed || requested || location.hash === "#shop" || location.hash === "#store-catalog") {
                 window.setTimeout(function () { self.scrollCatalog(); }, 80);
             }
         }

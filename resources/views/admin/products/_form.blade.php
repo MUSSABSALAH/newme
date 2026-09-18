@@ -5,6 +5,21 @@
     $prodDesc = fn (string $locale) => old("description.$locale", $product?->getTranslation('description', $locale, false) ?: '');
     $prodPrice = old('price', $product ? Money::fromMinor($product->price)->format() : '0.00');
     $catLabel = fn ($c) => ($c->parent ? $c->parent->label().' — ' : '').$c->label();
+
+    $servingRaw = old('serving_size', $product?->serving_size);
+    $servingChoice = old('serving_size_choice');
+    if ($servingChoice === null) {
+        if (! is_string($servingRaw) || $servingRaw === '') {
+            $servingChoice = '';
+        } else {
+            $servingChoice = \App\Modules\Store\Enums\ServingSize::tryFrom($servingRaw)?->value
+                ?? \App\Modules\Store\Enums\ServingSize::CUSTOM_CHOICE;
+        }
+    }
+    $servingCustom = old(
+        'serving_size_custom',
+        $servingChoice === \App\Modules\Store\Enums\ServingSize::CUSTOM_CHOICE ? (string) $servingRaw : '',
+    );
 @endphp
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data" data-validate novalidate class="stack">
@@ -77,16 +92,25 @@
                 <x-form.input name="calories" type="number" min="0" :value="old('calories', $product?->calories)" />
             </x-form.field>
 
-            <x-form.field :label="__('products.fields.serving_size')" name="serving_size">
-                <x-form.select name="serving_size" :selected="old('serving_size', $product?->serving_size?->value)">
+            <x-form.field :label="__('products.fields.serving_size')" name="serving_size_choice">
+                <x-form.select name="serving_size_choice" :selected="$servingChoice">
                     <option value="">{{ __('products.serving_none') }}</option>
                     @foreach ($servings as $serving)
-                        <option value="{{ $serving->value }}" @selected(old('serving_size', $product?->serving_size?->value) === $serving->value)>
+                        <option value="{{ $serving->value }}" @selected($servingChoice === $serving->value)>
                             {{ $serving->label() }}
                         </option>
                     @endforeach
+                    <option value="{{ \App\Modules\Store\Enums\ServingSize::CUSTOM_CHOICE }}" @selected($servingChoice === \App\Modules\Store\Enums\ServingSize::CUSTOM_CHOICE)>
+                        {{ __('products.serving_other') }}
+                    </option>
                 </x-form.select>
             </x-form.field>
+
+            <div id="serving-size-custom-wrap" class="field--full" @if ($servingChoice !== \App\Modules\Store\Enums\ServingSize::CUSTOM_CHOICE) hidden @endif>
+                <x-form.field :label="__('products.fields.serving_size_custom')" name="serving_size_custom" :hint="__('products.fields.serving_size_custom_hint')">
+                    <x-form.input name="serving_size_custom" :value="$servingCustom" maxlength="80" />
+                </x-form.field>
+            </div>
 
             <x-form.field :label="__('products.fields.protein_g')" name="protein_g">
                 <x-form.input name="protein_g" type="number" step="0.1" min="0" :value="old('protein_g', $product?->protein_g)" />
@@ -156,3 +180,23 @@
         <x-ui.button :href="route('admin.products.index')" variant="ghost">{{ __('messages.actions.cancel') }}</x-ui.button>
     </div>
 </form>
+<script>
+(function () {
+    var select = document.getElementById('serving_size_choice');
+    var wrap = document.getElementById('serving-size-custom-wrap');
+    var input = document.getElementById('serving_size_custom');
+    if (!select || !wrap) return;
+
+    function sync(focus) {
+        var other = select.value === @json(\App\Modules\Store\Enums\ServingSize::CUSTOM_CHOICE);
+        wrap.hidden = !other;
+        if (input) {
+            input.disabled = !other;
+            if (other && focus) input.focus();
+        }
+    }
+
+    select.addEventListener('change', function () { sync(true); });
+    sync(false);
+})();
+</script>

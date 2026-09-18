@@ -39,6 +39,7 @@ return [
             'updated' => 'User updated',
             'activated' => 'User activated',
             'deactivated' => 'User deactivated',
+            'archived' => 'User deleted',
             'password_reset' => 'Password reset',
         ],
         'invitation' => [

@@ -39,6 +39,7 @@ return [
             'updated' => 'تعديل مستخدم',
             'activated' => 'تفعيل مستخدم',
             'deactivated' => 'تعطيل مستخدم',
+            'archived' => 'حذف مستخدم',
             'password_reset' => 'إعادة تعيين كلمة المرور',
         ],
         'invitation' => [

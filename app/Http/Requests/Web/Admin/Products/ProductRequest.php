@@ -17,6 +17,29 @@ abstract class ProductRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $choice = (string) $this->input('serving_size_choice', '');
+
+        if ($choice === ServingSize::CUSTOM_CHOICE) {
+            $custom = trim((string) $this->input('serving_size_custom', ''));
+            if ($custom === ServingSize::CUSTOM_CHOICE) {
+                $custom = '';
+            }
+
+            $this->merge([
+                'serving_size_custom' => $custom,
+                'serving_size' => $custom !== '' ? $custom : null,
+            ]);
+
+            return;
+        }
+
+        $this->merge([
+            'serving_size' => in_array($choice, ServingSize::values(), true) ? $choice : null,
+        ]);
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -37,7 +60,14 @@ abstract class ProductRequest extends FormRequest
             'external_url' => ['nullable', 'url', 'max:255'],
             'price' => ['required', 'numeric', 'min:0', 'max:1000000'],
             'calories' => ['nullable', 'integer', 'min:0', 'max:20000'],
-            'serving_size' => ['nullable', Rule::in(ServingSize::values())],
+            'serving_size_choice' => ['nullable', 'string', Rule::in(array_merge(ServingSize::choiceValues(), ['']))],
+            'serving_size_custom' => [
+                'nullable',
+                'string',
+                'max:80',
+                Rule::requiredIf(fn (): bool => $this->input('serving_size_choice') === ServingSize::CUSTOM_CHOICE),
+            ],
+            'serving_size' => ['nullable', 'string', 'max:80'],
             'protein_g' => ['nullable', 'numeric', 'min:0', 'max:2000'],
             'carbs_g' => ['nullable', 'numeric', 'min:0', 'max:2000'],
             'fat_g' => ['nullable', 'numeric', 'min:0', 'max:2000'],
@@ -62,6 +92,9 @@ abstract class ProductRequest extends FormRequest
             'name.en' => (string) __('products.fields.name_en'),
             'price' => (string) __('products.fields.price'),
             'calories' => (string) __('products.fields.calories'),
+            'serving_size' => (string) __('products.fields.serving_size'),
+            'serving_size_choice' => (string) __('products.fields.serving_size'),
+            'serving_size_custom' => (string) __('products.fields.serving_size_custom'),
             'protein_g' => (string) __('products.fields.protein_g'),
             'carbs_g' => (string) __('products.fields.carbs_g'),
             'fat_g' => (string) __('products.fields.fat_g'),

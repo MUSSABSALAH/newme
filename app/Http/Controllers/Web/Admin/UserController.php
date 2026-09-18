@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\Admin\Users\BulkDestroyUsersRequest;
 use App\Http\Requests\Web\Admin\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Modules\Identity\DTOs\UserData;
 use App\Modules\Identity\Enums\RoleName;
 use App\Modules\Identity\Models\Role;
 use App\Modules\Identity\Services\UserService;
+use App\Modules\Orders\Enums\OrderStatus;
+use App\Modules\Subscriptions\Enums\SubscriptionStatus;
 use App\Support\Exceptions\DomainException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -86,6 +89,89 @@ final class UserController extends Controller
         return redirect()
             ->route('admin.users.index')
             ->with('success', __('users.messages.deactivated'));
+    }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        $this->authorize('delete', $user);
+        abort_unless($user->isStaff(), 404);
+
+        $reason = $this->userService->deletionBlocker($user, (int) Auth::id());
+
+        if ($reason !== null) {
+            return back()->with('error', $this->userService->deletionErrorMessage($user, $reason));
+        }
+
+        $this->userService->delete($user, (int) Auth::id());
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', __('users.messages.deleted'));
+    }
+
+    public function bulkDestroy(BulkDestroyUsersRequest $request): RedirectResponse
+    {
+        $this->authorize('deleteAny', User::class);
+
+        $users = User::query()
+            ->staff()
+            ->whereIn('id', $request->userIds())
+            ->withCount([
+                'subscriptions as active_subscriptions_count' => static fn ($query) => $query
+                    ->where('status', SubscriptionStatus::Active),
+                'orders as incomplete_orders_count' => static fn ($query) => $query
+                    ->whereNotIn('status', [
+                        OrderStatus::Delivered->value,
+                        OrderStatus::Cancelled->value,
+                    ]),
+            ])
+            ->orderBy('id')
+            ->get();
+
+        foreach ($users as $user) {
+            $this->authorize('delete', $user);
+        }
+
+        $result = $this->userService->deleteMany($users, (int) Auth::id());
+
+        return $this->bulkRedirect('admin.users.index', 'users', $result);
+    }
+
+    /**
+     * @param  array{deleted: \Illuminate\Support\Collection<int, User>, blocked: \Illuminate\Support\Collection<int, array{user: User, reason: string}>}  $result
+     */
+    private function bulkRedirect(string $route, string $lang, array $result): RedirectResponse
+    {
+        $redirect = redirect()->route($route);
+
+        if ($result['deleted']->isNotEmpty()) {
+            $redirect->with('success', __($lang.'.messages.bulk_deleted', [
+                'count' => $result['deleted']->count(),
+            ]));
+        }
+
+        if ($result['blocked']->isNotEmpty()) {
+            $people = $result['blocked']
+                ->map(function (array $item) use ($lang): string {
+                    $name = $item['user']->name;
+                    $reason = __($lang.'.blockers.'.$item['reason']);
+
+                    return $name.' ('.(is_string($reason) ? $reason : $item['reason']).')';
+                })
+                ->filter()
+                ->values()
+                ->all();
+
+            $redirect->with('warning', __($lang.'.messages.bulk_blocked', [
+                'people' => implode(', ', $people),
+            ]));
+        }
+
+        if ($result['deleted']->isEmpty() && $result['blocked']->isEmpty()) {
+            $redirect->with('error', __($lang.'.messages.bulk_none'));
+        }
+
+        return $redirect;
     }
 
     /**

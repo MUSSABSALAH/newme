@@ -116,6 +116,7 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 
 .cat-line{font-size:13.5px;font-weight:700;color:var(--body);margin-bottom:22px}
 .cat-line b{color:var(--navy);font-weight:900}
+.cat-line a:hover b{color:var(--orange-deep)}
 
 /* nutrition box */
 .nutbox{background:#fff;border:1.5px solid var(--gray-2);border-radius:20px;padding:18px;margin-bottom:22px;box-shadow:0 10px 28px rgba(18,43,74,.05)}
@@ -180,7 +181,7 @@ body.menu-open{overflow:hidden}
 
 <div class="cat-bar">
   @foreach ($categories as $cat)
-    <a class="cat-chip{{ $cat['slug'] === $p['cat_slug'] ? ' on' : '' }}" href="{{ route('website.store') }}">
+    <a class="cat-chip{{ $cat['slug'] === $p['cat_slug'] ? ' on' : '' }}" href="{{ route('website.store', ['cat' => $cat['slug']]) }}#shop">
       <span class="cat-thumb">
         @if (!empty($cat['image_url']))
           <img src="{{ $cat['image_url'] }}" alt="{{ $cat['label'] }}" loading="lazy" decoding="async">
@@ -231,7 +232,7 @@ body.menu-open{overflow:hidden}
     </div>
 
     @if ($p['cat_label'] !== '')
-      <div class="cat-line">{{ __('website.product_detail.category_label') }}: <b>{{ $p['cat_label'] }}</b></div>
+      <div class="cat-line">{{ __('website.product_detail.category_label') }}: <a href="{{ route('website.store', ['cat' => $p['cat_slug']]) }}#shop"><b>{{ $p['cat_label'] }}</b></a></div>
     @endif
 
     @if ($hasNutrition)

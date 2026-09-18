@@ -29,6 +29,7 @@ return [
             'create' => 'Create users',
             'update' => 'Update users',
             'deactivate' => 'Deactivate users',
+            'delete' => 'Delete users',
             'invite' => 'Invite users',
         ],
         'roles' => [
@@ -58,6 +59,7 @@ return [
             'view' => 'View customers',
             'create' => 'Create customers',
             'update' => 'Update customers',
+            'delete' => 'Delete customers',
         ],
         'orders' => [
             'view' => 'View orders',
@@ -115,6 +117,7 @@ return [
             'create' => 'Add new users to the system.',
             'update' => "Edit existing users' information.",
             'deactivate' => 'Activate or deactivate user accounts.',
+            'delete' => 'Permanently remove staff accounts from the admin list.',
             'invite' => 'Send invitations to join the platform.',
         ],
         'roles' => [
@@ -144,6 +147,7 @@ return [
             'view' => 'See the list and details of customers.',
             'create' => 'Add new customer accounts.',
             'update' => 'Edit customer information.',
+            'delete' => 'Permanently remove customer accounts from the admin list.',
         ],
         'orders' => [
             'view' => 'See the list and details of orders.',

@@ -17,6 +17,7 @@ return [
     'select_category' => 'اختر فئة',
     'flag_none' => 'بدون شارة',
     'serving_none' => 'غير محدد',
+    'serving_other' => 'أخرى',
     'note_none' => 'غير محدد',
 
     'columns' => [
@@ -52,6 +53,8 @@ return [
         'external_url' => 'رابط المنتج',
         'calories' => 'السعرات (سعرة)',
         'serving_size' => 'حجم الحصة',
+        'serving_size_custom' => 'حجم الحصة المخصص',
+        'serving_size_custom_hint' => 'مثال: لكل 80 جم',
         'protein_g' => 'البروتين (جم)',
         'carbs_g' => 'الكربوهيدرات (جم)',
         'fat_g' => 'الدهون (جم)',

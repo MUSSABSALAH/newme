@@ -26,7 +26,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string|null $external_url
  * @property int $price
  * @property int|null $calories
- * @property ServingSize|null $serving_size
+ * @property string|null $serving_size
  * @property string|null $protein_g
  * @property string|null $carbs_g
  * @property string|null $fat_g
@@ -92,7 +92,6 @@ class Product extends Model
         return [
             'price' => 'integer',
             'calories' => 'integer',
-            'serving_size' => ServingSize::class,
             'protein_g' => 'decimal:2',
             'carbs_g' => 'decimal:2',
             'fat_g' => 'decimal:2',
@@ -134,6 +133,14 @@ class Product extends Model
         }
 
         return $this->slug;
+    }
+
+    /**
+     * Localized label for a known serving, or the custom text the staff typed.
+     */
+    public function servingLabel(): string
+    {
+        return ServingSize::labelFor($this->serving_size);
     }
 
     /**

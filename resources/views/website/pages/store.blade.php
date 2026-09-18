@@ -205,7 +205,7 @@ body.menu-open{overflow:hidden}
 
 {{-- Desktop redesign --}}
 <div class="v30-desk">
-  @include('website.partials.v30-shop-rail', ['products' => $products, 'preview' => false])
+  @include('website.partials.v30-shop-rail', ['products' => $products, 'preview' => false, 'activeCat' => $activeCat ?? 'all'])
   @include('website.partials.v30-closing')
 </div>
 
@@ -224,9 +224,9 @@ body.menu-open{overflow:hidden}
 
 <div class="filters" id="store-catalog">
   <div class="tabs" id="tabs">
-    @foreach ($tabs as $i => $tab)
+    @foreach ($tabs as $tab)
       <button
-        class="tab{{ $i === 0 ? ' on' : '' }}"
+        class="tab{{ $tab['slug'] === ($activeCat ?? 'all') ? ' on' : '' }}"
         data-cat="{{ $tab['slug'] }}"
         data-subs="{{ $tab['has_subs'] ? '1' : '0' }}"
         data-label="{{ $tab['label'] }}"
@@ -257,7 +257,7 @@ body.menu-open{overflow:hidden}
         // same layout — only the moment the browser fetches them changes.
         $eagerImage = $loop->index < 4;
       @endphp
-      <article class="card{{ !empty($p['feat']) ? ' feat' : '' }}" data-cat="{{ $p['cat'] }}" data-sub="{{ $p['sub'] }}">
+      <article class="card{{ !empty($p['feat']) ? ' feat' : '' }}{{ ($activeCat ?? 'all') !== 'all' && $p['cat'] !== $activeCat ? ' hide' : '' }}" data-cat="{{ $p['cat'] }}" data-sub="{{ $p['sub'] }}">
         <a class="tilelink" href="{{ $p['href'] }}">
           @if ($flagText)
             <span class="{{ $flagClass }}">
@@ -326,6 +326,8 @@ window.addEventListener('error',failOpen);
 try{
 'use strict';
 var cat='all', sub='all';
+var startTab=document.querySelector('#tabs .tab.on');
+if(startTab) cat=startTab.getAttribute('data-cat')||'all';
 var cards=Array.prototype.slice.call(document.querySelectorAll('.card'));
 
 function apply(){
@@ -391,6 +393,9 @@ document.addEventListener('DOMContentLoaded',function(){
   var lineCats=window.nmStoreLine.allowed();
   if(lineCats&&lineCats.length===1){
     cat=lineCats[0];
+  } else {
+    var on=document.querySelector('#tabs .tab.on');
+    if(on) cat=on.getAttribute('data-cat')||'all';
   }
   apply();
 });

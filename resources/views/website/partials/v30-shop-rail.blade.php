@@ -12,6 +12,7 @@
     'occasions' => __('website.store.flag_occasions'),
   ];
   $showShopTabs = ! $preview;
+  $activeCat = $activeCat ?? 'all';
   $catMeta = [];
   if ($showShopTabs) {
     foreach ($products as $p) {
@@ -74,9 +75,9 @@
   <div class="shop-bar{{ $showShopTabs ? '' : ' shop-bar--end' }}">
     @if ($showShopTabs)
     <div class="tabs" id="v30Tabs">
-      <button class="tab on" data-cat="all">{{ __('website.site.shop.all') }} <i>{{ $total }}</i></button>
+      <button class="tab{{ $activeCat === 'all' ? ' on' : '' }}" data-cat="all">{{ __('website.site.shop.all') }} <i>{{ $total }}</i></button>
       @foreach ($catMeta as $slug => $meta)
-        <button class="tab" data-cat="{{ $slug }}">{{ $meta['label'] }} <i>{{ $meta['count'] }}</i></button>
+        <button class="tab{{ $activeCat === $slug ? ' on' : '' }}" data-cat="{{ $slug }}">{{ $meta['label'] }} <i>{{ $meta['count'] }}</i></button>
       @endforeach
     </div>
     @endif
@@ -116,7 +117,7 @@
           $hasNut = $kcalN !== null || $proteinN !== null || $fatN !== null || $carbsN !== null;
           $serving = $p['serving'] ?? '';
         @endphp
-        <article class="prod rv" data-cat="{{ $cat }}">
+        <article class="prod rv{{ $activeCat !== 'all' && $cat !== $activeCat ? ' hide' : '' }}" data-cat="{{ $cat }}">
           <div class="prod-tile">
             @if ($flagLabel)
               <span class="p-flag">

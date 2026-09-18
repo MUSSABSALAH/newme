@@ -6,7 +6,6 @@ namespace App\Modules\Store\DTOs;
 
 use App\Modules\Store\Enums\NutritionNote;
 use App\Modules\Store\Enums\ProductFlag;
-use App\Modules\Store\Enums\ServingSize;
 use App\Support\Dto\Data;
 use App\Support\Money\Money;
 
@@ -25,7 +24,7 @@ final class ProductData extends Data
         public readonly ?string $externalUrl,
         public readonly int $price,
         public readonly ?int $calories,
-        public readonly ?ServingSize $servingSize,
+        public readonly ?string $servingSize,
         public readonly ?string $proteinG,
         public readonly ?string $carbsG,
         public readonly ?string $fatG,
@@ -43,7 +42,6 @@ final class ProductData extends Data
     {
         $image = $attributes['image_path'] ?? null;
         $url = $attributes['external_url'] ?? null;
-        $serving = $attributes['serving_size'] ?? null;
         $note = $attributes['nutrition_note'] ?? null;
         $flag = $attributes['flag'] ?? null;
 
@@ -56,7 +54,7 @@ final class ProductData extends Data
             externalUrl: is_string($url) && trim($url) !== '' ? trim($url) : null,
             price: self::toMinor($attributes['price'] ?? null),
             calories: self::nullableInt($attributes['calories'] ?? null),
-            servingSize: self::toEnum(ServingSize::class, $serving),
+            servingSize: self::nullableString($attributes['serving_size'] ?? null),
             proteinG: self::nullableDecimal($attributes['protein_g'] ?? null),
             carbsG: self::nullableDecimal($attributes['carbs_g'] ?? null),
             fatG: self::nullableDecimal($attributes['fat_g'] ?? null),
@@ -102,6 +100,20 @@ final class ProductData extends Data
     private static function nullableInt($value): ?int
     {
         return $value === null || $value === '' ? null : (int) $value;
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    private static function nullableString($value): ?string
+    {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return $value === '' ? null : $value;
     }
 
     /**

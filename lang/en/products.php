@@ -17,6 +17,7 @@ return [
     'select_category' => 'Select a category',
     'flag_none' => 'No badge',
     'serving_none' => 'Not specified',
+    'serving_other' => 'Other',
     'note_none' => 'Not specified',
 
     'columns' => [
@@ -52,6 +53,8 @@ return [
         'external_url' => 'Product link',
         'calories' => 'Calories (kcal)',
         'serving_size' => 'Serving size',
+        'serving_size_custom' => 'Custom serving size',
+        'serving_size_custom_hint' => 'e.g. per 80g',
         'protein_g' => 'Protein (g)',
         'carbs_g' => 'Carbs (g)',
         'fat_g' => 'Fat (g)',

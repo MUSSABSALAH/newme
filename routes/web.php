@@ -186,12 +186,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('users/create', [AdminInvitationController::class, 'store'])->name('users.store');
         Route::post('invitations/{invitation}/resend', [AdminInvitationController::class, 'resend'])->name('users.invitations.resend');
 
-        Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
+        Route::post('users/bulk-destroy', [UserController::class, 'bulkDestroy'])->name('users.bulk-destroy');
+        Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
         Route::post('users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
         Route::post('users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
 
         // Store customers (separate from staff; same users table).
-        Route::resource('customers', CustomerController::class)->only(['index', 'show']);
+        Route::post('customers/bulk-destroy', [CustomerController::class, 'bulkDestroy'])->name('customers.bulk-destroy');
+        Route::resource('customers', CustomerController::class)->only(['index', 'show', 'destroy']);
 
         Route::resource('roles', RoleController::class)->except('show');
 

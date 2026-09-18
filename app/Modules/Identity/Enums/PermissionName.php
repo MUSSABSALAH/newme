@@ -19,6 +19,7 @@ enum PermissionName: string
     case UsersCreate = 'users.create';
     case UsersUpdate = 'users.update';
     case UsersDeactivate = 'users.deactivate';
+    case UsersDelete = 'users.delete';
     case UsersInvite = 'users.invite';
     case RolesView = 'roles.view';
     case RolesManage = 'roles.manage';
@@ -44,6 +45,7 @@ enum PermissionName: string
     case CustomersView = 'customers.view';
     case CustomersCreate = 'customers.create';
     case CustomersUpdate = 'customers.update';
+    case CustomersDelete = 'customers.delete';
 
     // Orders
     case OrdersView = 'orders.view';

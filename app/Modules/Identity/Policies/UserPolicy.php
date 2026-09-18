@@ -34,6 +34,29 @@ final class UserPolicy
         return $user->can(PermissionName::UsersDeactivate->value);
     }
 
+    public function delete(User $user, User $target): bool
+    {
+        if ($target->isStaff()) {
+            return $user->can(PermissionName::UsersDelete->value);
+        }
+
+        if ($target->isCustomer()) {
+            return $user->can(PermissionName::CustomersDelete->value);
+        }
+
+        return false;
+    }
+
+    public function deleteAny(User $user): bool
+    {
+        return $user->can(PermissionName::UsersDelete->value);
+    }
+
+    public function deleteAnyCustomer(User $user): bool
+    {
+        return $user->can(PermissionName::CustomersDelete->value);
+    }
+
     public function invite(User $user): bool
     {
         return $user->can(PermissionName::UsersInvite->value);

@@ -13,6 +13,7 @@ enum AuditAction: string
     case UserUpdated = 'user.updated';
     case UserActivated = 'user.activated';
     case UserDeactivated = 'user.deactivated';
+    case UserArchived = 'user.archived';
     case InvitationResent = 'invitation.resent';
     case InvitationAccepted = 'invitation.accepted';
     case PasswordReset = 'user.password_reset';
