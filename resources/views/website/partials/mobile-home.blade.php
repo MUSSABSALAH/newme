@@ -6,94 +6,9 @@
 
 <style>
 .home-mobile{display:none}
-@media(max-width:1179.98px){
+@media(max-width:819.98px){
   .home-desktop{display:none!important}
   .home-mobile{display:block}
-}
-#nmHomeRail{
-  display:grid !important;
-  grid-auto-flow:row !important;
-  grid-auto-columns:unset !important;
-  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  grid-template-rows:none !important;
-  gap:12px !important;
-  width:100%;
-  max-width:100%;
-  overflow:visible !important;
-  scroll-snap-type:none !important;
-  padding:14px 18px 0;
-  box-sizing:border-box;
-}
-#nmHomeRail > .card{
-  min-width:0 !important;
-  width:100% !important;
-  max-width:100% !important;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  background:#fff;
-  border:1px solid #E8E4DC;
-  border-radius:18px;
-}
-#nmHomeRail .media{
-  position:relative !important;
-  aspect-ratio:1/1 !important;
-  overflow:hidden !important;
-  background:#EFEBE3;
-}
-#nmHomeRail .media .ph{
-  position:absolute !important;
-  inset:0 !important;
-  display:grid !important;
-  place-items:center !important;
-  overflow:hidden !important;
-}
-#nmHomeRail .media .ph svg{
-  width:40px !important;
-  height:40px !important;
-  max-width:40px;
-  max-height:40px;
-  color:#D5D0C6;
-  fill:currentColor;
-}
-#nmHomeRail .nutov{
-  position:absolute !important;
-  inset:0 !important;
-  z-index:4;
-  opacity:0 !important;
-  pointer-events:none !important;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:12px 10px;
-  background:rgba(247,245,241,.88);
-}
-#nmHomeRail .card.showN .nutov{opacity:1 !important}
-#nmHomeRail .nut-toggle{
-  position:absolute;
-  top:8px;
-  inset-inline-end:8px;
-  z-index:5;
-}
-#nmHomeRail .bd{
-  display:flex;
-  flex-direction:column;
-  flex:1;
-  padding:13px;
-}
-#nmHomeRail .p-sub{
-  display:-webkit-box !important;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
-  line-clamp:2;
-  overflow:hidden !important;
-  white-space:normal !important;
-  text-overflow:ellipsis;
-  max-height:3.2em;
-  margin:4px 0 0;
-  font-size:11.5px;
-  font-weight:700;
-  color:#7C8799;
 }
 </style>
 
@@ -149,7 +64,7 @@
       <p class="lead">{{ $shopSub }}</p>
     @endif
   </div>
-  <div class="home-rail" id="nmHomeRail">
+  <div class="rail" id="nmHomeRail">
     @foreach ($shopProducts as $p)
       @php
         $kcalN = isset($p['kcal']) && $p['kcal'] !== '' && is_numeric($p['kcal']) ? (int) $p['kcal'] : null;
@@ -172,7 +87,7 @@
             $flagLabel = $flagRaw !== null && isset($homeFlags[$flagRaw]) ? $homeFlags[$flagRaw] : $flagRaw;
           @endphp
           @if (!empty($flagLabel))<span class="flag">{{ $flagLabel }}</span>@endif
-          <div class="ph"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bread"/></svg></div>
+          <div class="ph"><svg><use href="#i-bread"/></svg></div>
           <a class="shot" href="{{ $href }}" aria-label="{{ $p['name'] }}">
             @if (!empty($p['image_url']))<img src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif
           </a>
@@ -198,14 +113,8 @@
         </div>
         <div class="bd">
           <h3><a href="{{ $href }}">{{ $p['name'] }}</a></h3>
-          @php
-            $cardSub = trim((string) ($p['serving'] ?? ''));
-            if ($cardSub === '') {
-              $cardSub = trim((string) ($p['sub'] ?? ''));
-            }
-          @endphp
-          @if ($cardSub !== '')
-            <p class="p-sub">{{ $cardSub }}</p>
+          @if (!empty($p['sub']))
+            <p class="p-sub">{{ $p['sub'] }}</p>
           @endif
           <p class="pr">{{ $p['price'] }} <x-ui.sar /></p>
         </div>

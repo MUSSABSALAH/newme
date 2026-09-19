@@ -564,7 +564,7 @@ body.meal-cal-open{overflow:hidden}
   .meal-cal-cell__meal{font-size:8.5px}
 }
 
-@media(max-width:1179.98px){
+@media(max-width:819.98px){
   body:has(.cowrap) footer.w-foot-full{display:none!important}
   .cowrap{padding:14px 16px calc(28px + var(--ip-tabbar, 70px))}
 

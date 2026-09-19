@@ -153,7 +153,7 @@
 
 <script>
 (function(){
-  if(!window.matchMedia || !matchMedia('(max-width:1179.98px)').matches) return;
+  if(!window.matchMedia || !matchMedia('(max-width:819.98px)').matches) return;
   var scrim=document.getElementById('nmChromeScrim');
   var drawer=document.getElementById('nmChromeDrawer');
   var open=function(){if(drawer)drawer.classList.add('on');if(scrim)scrim.classList.add('on');document.body.style.overflow='hidden'};

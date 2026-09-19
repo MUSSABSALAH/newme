@@ -100,7 +100,7 @@ nav.main .bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;jus
 .iconbtn.wish{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 8px 18px rgba(57,180,120,.28)}
 .iconbtn.wish:hover{filter:brightness(1.06)}
 .iconbtn.wish.on{background:var(--green-ink);border-color:var(--green-ink)}
-@media(max-width:1179.98px){
+@media(max-width:819.98px){
   .cat-bar{display:none!important}
   .js .aiimg,.js .aiimg.loaded,.gmain img{opacity:1!important;visibility:visible!important}
 }

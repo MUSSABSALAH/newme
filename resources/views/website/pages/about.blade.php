@@ -19,7 +19,7 @@
   }
 }
 
-@media (max-width: 1179.98px) {
+@media (max-width: 819.98px) {
   .v30-page { padding: 16px 16px 56px; }
   .v30-page .rv { opacity: 1 !important; transform: none !important; }
   .v30-page .sec-head { margin-bottom: 16px; text-align: center; }

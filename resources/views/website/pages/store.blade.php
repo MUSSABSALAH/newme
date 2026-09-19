@@ -22,7 +22,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--body);line-height:
 a{text-decoration:none;color:inherit}
 h1,h2,h3{color:var(--ink);font-weight:900;line-height:1.15;letter-spacing:-.02em}
 button{font-family:var(--font);cursor:pointer}
-.v30-mob-only .tilelink img{display:block;width:100%;height:100%;object-fit:cover}
+img{display:block;width:100%;height:100%;object-fit:cover}
 .aiimg{transition:opacity 1s ease}
 .js .aiimg{opacity:0}
 .js .aiimg.loaded{opacity:1}
@@ -45,10 +45,11 @@ button{font-family:var(--font);cursor:pointer}
 .v30-mob-only .nav-cta:hover{background:var(--ink);color:#fff}
 
 /* ===== editorial hero ===== */
-.phead{padding:28px 0 20px;position:relative}
+.phead{padding:64px 0 44px;position:relative}
 .phead .wrap{display:grid;gap:20px}
-.phead .rule{height:1px;background:var(--line-2);margin-bottom:18px}
-.phead h1{font-size:clamp(32px,6vw,48px);line-height:1.05}
+@media(min-width:920px){.phead .wrap{grid-template-columns:1.4fr 1fr;align-items:end}}
+.phead .rule{height:1px;background:var(--line-2);margin-bottom:26px}
+.phead h1{font-size:clamp(52px,11vw,110px);line-height:.95}
 .phead h1 em{font-style:normal;color:var(--orange-deep)}
 .phead .lead{font-size:15px;font-weight:600;max-width:400px;margin-top:14px}
 .phead aside{border-inline-start:1px solid var(--line-2);padding-inline-start:26px;display:grid;gap:14px}
@@ -74,35 +75,15 @@ button{font-family:var(--font);cursor:pointer}
 .v30-mob-only .sub.on{background:var(--ink);border-color:var(--ink);color:#fff}
 
 /* ===== grid ===== */
-.v30-mob-only .shop-wrap{max-width:1280px;margin:0 auto;padding:22px 16px 72px}
-.v30-mob-only .store-grid{
-  display:grid !important;
-  grid-auto-flow:row !important;
-  grid-auto-columns:unset !important;
-  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  gap:16px 12px !important;
-  max-width:none;
-  padding:0;
-}
-@media(min-width:700px){
-  .v30-mob-only .store-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:20px 16px !important}
-}
-.v30-mob-only .store-grid > .card{
-  display:flex;
-  flex-direction:column;
-  position:relative;
-  min-width:0;
-  width:100%;
-  max-width:100%;
-  grid-column:auto !important;
-  grid-row:auto !important;
-}
+.shop-wrap{max-width:1280px;margin:0 auto;padding:34px 24px 80px}
+.grid{display:grid;gap:38px 20px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1040px){.grid{grid-template-columns:repeat(4,1fr);gap:44px 24px}}
+.card{display:flex;flex-direction:column;position:relative}
 .card.hide{display:none}
-.v30-mob-only .store-grid .tilelink{
-  display:block;position:relative;overflow:hidden;background:var(--tile);
-  aspect-ratio:1/1 !important;height:auto !important;min-height:0 !important;
-  border-radius:18px 18px 0 0;
-}
+@media(min-width:700px){.card.feat:not(.hide){grid-column:span 2}}
+.tilelink{display:block;position:relative;overflow:hidden;background:var(--tile);aspect-ratio:1/1.04;border-radius:4px}
+.card.feat .tilelink{aspect-ratio:auto;height:100%;min-height:300px}
 @supports not (aspect-ratio:1){.tilelink{height:0;padding-bottom:104%}}
 .tilelink img{position:absolute;inset:0;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 .card:hover .tilelink img{transform:scale(1.05)}
@@ -126,7 +107,7 @@ button{font-family:var(--font);cursor:pointer}
 .kcal-box{display:inline-grid;place-items:center;min-width:38px;height:22px;border:1.8px solid var(--ink);border-radius:6px;font-family:var(--mono);font-size:9.5px;font-weight:700;color:var(--ink);padding:0 5px;flex-shrink:0}
 
 /* Mobile store: full product cards (image + details + CTA) */
-@media(max-width:1179.98px){
+@media(max-width:819.98px){
   .v30-mob-only .filters{
     display:block!important;
     position:sticky;
@@ -149,19 +130,16 @@ button{font-family:var(--font);cursor:pointer}
   .v30-mob-only .tab.on sup{color:rgba(255,255,255,.75)}
   .v30-mob-only .subs-row{padding:8px 16px 0;border-top:0}
   .js .aiimg,.js .aiimg.loaded,.tilelink img{opacity:1!important;visibility:visible!important}
-  .v30-mob-only .card,.v30-mob-only .card.feat:not(.hide){grid-column:auto;height:100%;background:#F3EEE6;border-radius:18px;overflow:hidden;padding:0 0 12px;box-shadow:0 4px 16px rgba(16,38,63,.06)}
-  .v30-mob-only .card.feat .tilelink{aspect-ratio:1/1;height:auto;min-height:0}
-  .v30-mob-only .tilelink{border-radius:18px 18px 0 0;aspect-ratio:1/1}
+  .shop-wrap{padding:22px 16px 72px}
+  .grid{grid-template-columns:1fr 1fr;gap:16px 12px}
+  .card,.card.feat:not(.hide){grid-column:auto;height:100%;background:#F3EEE6;border-radius:18px;overflow:hidden;padding:0 0 12px;box-shadow:0 4px 16px rgba(16,38,63,.06)}
+  .card.feat .tilelink{aspect-ratio:1/1;height:auto;min-height:0}
+  .tilelink{border-radius:18px 18px 0 0;aspect-ratio:1/1}
   .kchip,.tilelink .quick,.meta .pline .arrow,.meta .p-specs{display:none!important}
   .flag{top:10px;inset-inline-start:10px;background:rgba(255,255,255,.95);border-radius:999px;padding:5px 10px;font-size:10px;letter-spacing:0;text-transform:none;font-weight:800}
   .meta{padding:12px 12px 0;gap:0;flex:1;min-height:0}
   .meta h3{font-size:14px;font-weight:900;color:var(--ink);order:1;margin:0}
-  .meta .blurb{
-    order:2;margin:4px 0 0;
-    display:-webkit-box;-webkit-box-orient:vertical;
-    -webkit-line-clamp:2;line-clamp:2;
-    overflow:hidden;white-space:normal;text-overflow:ellipsis;
-  }
+  .meta .blurb{order:2;margin:4px 0 0}
   .meta .cat{order:3;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;font-family:var(--font);color:var(--body);margin:4px 0 0}
   .meta .pline{order:4;border:0;padding:0;margin:0;margin-top:auto}
   .meta .pr{font-family:var(--font);font-size:18px;font-weight:900}
@@ -188,7 +166,7 @@ button{font-family:var(--font);cursor:pointer}
   .kchip{inset-inline-end:50px}
   .card.showN .quick{opacity:1;transform:none;display:block;z-index:4}
 }
-@media(max-width:1179.98px){
+@media(max-width:819.98px){
   .v30-mob-only .nut-toggle{
     display:grid!important;place-items:center;
     top:10px;inset-inline-end:10px;width:28px;height:28px
@@ -263,7 +241,7 @@ body.menu-open{overflow:hidden}
 </div>
 
 <div class="shop-wrap">
-  <div class="store-grid" id="grid">
+  <div class="grid" id="grid">
     @foreach ($products as $p)
       @php
         $flagText = match ($p['flag'] ?? null) {
@@ -445,7 +423,7 @@ m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);})
 @verbatim
 
 try{
-if(window.gsap&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&!(window.matchMedia&&matchMedia('(max-width:1179.98px)').matches)){
+if(window.gsap&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&!(window.matchMedia&&matchMedia('(max-width:819.98px)').matches)){
   gsap.from('.phead .rule',{scaleX:0,transformOrigin:'right center',duration:1,ease:'power3.inOut',clearProps:'all'});
   gsap.from('.phead .kick,.phead h1,.phead .lead',{y:34,opacity:0,duration:.8,stagger:.12,delay:.2,ease:'power3.out',clearProps:'all'});
   gsap.from('.phead aside div',{y:20,opacity:0,duration:.6,stagger:.1,delay:.55,ease:'power2.out',clearProps:'all'});

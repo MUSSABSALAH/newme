@@ -40,7 +40,7 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 @media(min-width:960px){.v30-mob-only .nav-links{display:flex}}
 .v30-mob-only .nav-cta{font-size:12px;font-weight:900;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 16px;height:36px;display:inline-flex;align-items:center;transition:.2s;line-height:1}
 .v30-mob-only .nav-cta:hover{background:var(--ink);color:#fff}
-@media (max-width: 1179.98px) {
+@media (max-width: 819.98px) {
   #articles { padding: 18px 16px 56px; }
   #articles .sec-head { text-align: center; margin-bottom: 16px; }
   #articles .sec-head h2 { font-size: 1.65rem; margin: 8px 0 8px; }
