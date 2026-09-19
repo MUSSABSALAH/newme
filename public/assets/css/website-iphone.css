@@ -130,32 +130,34 @@
     overflow: visible;
     scroll-snap-type: none;
   }
-  .nm-ip .home-rail .card { background: #fff; border: 1px solid var(--ip-gray-2); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; color: inherit; min-width: 0; width: 100%; }
-  .nm-ip .home-rail .card .media { aspect-ratio: 1/1; position: relative; background: var(--ip-tile); overflow: hidden; }
-  .nm-ip .home-rail .card .media img {
+  #nmHomeRail .card,
+  .nm-ip #nmHomeRail .card,
+  .nm-ip .rail .card { background: #fff; border: 1px solid var(--ip-gray-2); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; color: inherit; min-width: 0; width: 100%; }
+  #nmHomeRail .card .media { aspect-ratio: 1/1; position: relative; background: var(--ip-tile); overflow: hidden; }
+  #nmHomeRail .card .media img {
     position: absolute; inset: 0; z-index: 2;
     width: 100%; height: 100%; object-fit: cover;
     opacity: 1 !important; visibility: visible !important;
   }
-  .nm-ip .home-rail .card .flag { position: absolute; top: 9px; inset-inline-start: 9px; z-index: 3; background: #fff; color: var(--ip-navy); font-size: 10px; font-weight: 900; border-radius: 999px; padding: 4px 10px; }
-  .nm-ip .home-rail .card .bd { padding: 13px; display: flex; flex-direction: column; flex: 1; }
-  .nm-ip .home-rail .card h3 { font-size: 13.5px; line-height: 1.4; }
-  .nm-ip .home-rail .card .p-sub {
+  #nmHomeRail .card .flag { position: absolute; top: 9px; inset-inline-start: 9px; z-index: 3; background: #fff; color: var(--ip-navy); font-size: 10px; font-weight: 900; border-radius: 999px; padding: 4px 10px; }
+  #nmHomeRail .card .bd { padding: 13px; display: flex; flex-direction: column; flex: 1; }
+  #nmHomeRail .card h3 { font-size: 13.5px; line-height: 1.4; }
+  #nmHomeRail .card .p-sub {
     font-size: 11.5px; font-weight: 700; color: var(--ip-muted);
     margin: 4px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .nm-ip .home-rail .card .why { font-size: 10.5px; color: var(--ip-orange-deep); font-weight: 800; margin-top: 4px; line-height: 1.6; min-height: 3.6em; }
-  .nm-ip .home-rail .card .nut { display: flex; gap: 8px; font-size: 10px; color: var(--ip-muted); font-weight: 700; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--ip-gray-2); }
-  .nm-ip .home-rail .card .pr {
+  #nmHomeRail .card .why { font-size: 10.5px; color: var(--ip-orange-deep); font-weight: 800; margin-top: 4px; line-height: 1.6; min-height: 3.6em; }
+  #nmHomeRail .card .nut { display: flex; gap: 8px; font-size: 10px; color: var(--ip-muted); font-weight: 700; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--ip-gray-2); }
+  #nmHomeRail .card .pr {
     display: flex; align-items: center; gap: 5px;
     font-size: 14px; font-weight: 900; color: var(--ip-navy);
     margin-top: auto; padding-top: 10px;
   }
-  .nm-ip .home-rail .card .pr .icon-saudi-riyal { width: 14px; height: 15px; }
-  .nm-ip .home-rail .card .media .shot {
+  #nmHomeRail .card .pr .icon-saudi-riyal { width: 14px; height: 15px; }
+  #nmHomeRail .card .media .shot {
     position: absolute; inset: 0; z-index: 2; display: block;
   }
-  .nm-ip .home-rail .card .nutov {
+  #nmHomeRail .card .nutov {
     position: absolute; inset: 0; z-index: 4;
     background: rgba(247,245,241,.88);
     backdrop-filter: blur(10px) saturate(1.1);
@@ -163,26 +165,26 @@
     display: flex; flex-direction: column; justify-content: center;
     padding: 12px 10px; opacity: 0; transition: opacity .3s ease; pointer-events: none;
   }
-  .nm-ip .home-rail .card.showN .nutov { opacity: 1; }
-  .nm-ip .home-rail .card .nutov { font-family: 'Cairo', Tahoma, Arial, sans-serif; }
-  .nm-ip .home-rail .card .nutov .nv-h {
+  #nmHomeRail .card.showN .nutov { opacity: 1; }
+  #nmHomeRail .card .nutov { font-family: 'Cairo', Tahoma, Arial, sans-serif; }
+  #nmHomeRail .card .nutov .nv-h {
     font-size: 11px; font-weight: 800; color: var(--ip-muted); letter-spacing: 0;
     text-transform: none; font-family: inherit; margin-bottom: 6px; text-align: center;
   }
-  .nm-ip .home-rail .card .nutov .nv-h em { font-style: normal; color: var(--ip-orange-deep); }
-  .nm-ip .home-rail .card .nutov .nv-r {
+  #nmHomeRail .card .nutov .nv-h em { font-style: normal; color: var(--ip-orange-deep); }
+  #nmHomeRail .card .nutov .nv-r {
     display: flex; justify-content: space-between; align-items: baseline;
     padding: 5px 1px; border-top: 1px solid rgba(18,43,74,.14);
     font-size: 11px; font-weight: 800; color: var(--ip-navy);
   }
-  .nm-ip .home-rail .card .nutov .nv-r:last-of-type { border-bottom: 1px solid rgba(18,43,74,.14); }
-  .nm-ip .home-rail .card .nutov .nv-r b { font-weight: 700; font-size: 11.5px; }
-  .nm-ip .home-rail .card .nutov .nv-r b small { font-size: 8.5px; color: var(--ip-muted); font-weight: 700; }
-  .nm-ip .home-rail .card .nutov .nv-note {
+  #nmHomeRail .card .nutov .nv-r:last-of-type { border-bottom: 1px solid rgba(18,43,74,.14); }
+  #nmHomeRail .card .nutov .nv-r b { font-weight: 700; font-size: 11.5px; }
+  #nmHomeRail .card .nutov .nv-r b small { font-size: 8.5px; color: var(--ip-muted); font-weight: 700; }
+  #nmHomeRail .card .nutov .nv-note {
     margin-top: 6px; font-size: 8px; font-weight: 800; color: var(--ip-muted); text-align: center;
   }
-  .nm-ip .home-rail .card .nutov .nv-note.real { color: var(--ip-green); }
-  .nm-ip .home-rail .card .nut-toggle {
+  #nmHomeRail .card .nutov .nv-note.real { color: var(--ip-green); }
+  #nmHomeRail .card .nut-toggle {
     position: absolute; top: 8px; inset-inline-end: 8px; z-index: 5;
     width: 28px; height: 28px; border-radius: 50%;
     border: 1.5px solid rgba(18,43,74,.45);
@@ -190,7 +192,7 @@
     font-weight: 900; font-size: 13px; font-family: 'Cairo', Tahoma, Arial, sans-serif;
     display: grid; place-items: center;
   }
-  .nm-ip .home-rail .card.showN .nut-toggle { background: var(--ip-navy); color: #fff; border-color: var(--ip-navy); }
+  #nmHomeRail .card.showN .nut-toggle { background: var(--ip-navy); color: #fff; border-color: var(--ip-navy); }
   .nm-ip .shop-more { padding-top: 14px; padding-bottom: 4px; }
 
   .nm-ip .spec { background: var(--ip-navy); border-radius: 20px; padding: 20px; color: #fff; margin-top: 14px; }
@@ -333,7 +335,9 @@
 
   .nm-ip .hero .ph,
   .nm-ip .photoblock .ph,
-  .nm-ip .home-rail .card .media .ph,
+  #nmHomeRail .card .media .ph,
+  .nm-ip #nmHomeRail .card .media .ph,
+  .nm-ip .rail .card .media .ph,
   .nm-ip .ac .media .ph,
   .v30-page .wide-hero .ph,
   .v30-page .fs-banner .ph,
@@ -350,7 +354,9 @@
   }
   .nm-ip .hero .ph svg,
   .nm-ip .photoblock .ph svg,
-  .nm-ip .home-rail .card .media .ph svg,
+  #nmHomeRail .card .media .ph svg,
+  .nm-ip #nmHomeRail .card .media .ph svg,
+  .nm-ip .rail .card .media .ph svg,
   .nm-ip .ac .media .ph svg,
   .v30-page .wide-hero .ph svg,
   .v30-page .fs-banner .ph svg,

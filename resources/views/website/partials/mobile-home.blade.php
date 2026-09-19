@@ -28,6 +28,58 @@
   min-width:0 !important;
   width:100% !important;
   max-width:100% !important;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  background:#fff;
+  border:1px solid #E8E4DC;
+  border-radius:18px;
+}
+#nmHomeRail .media{
+  position:relative !important;
+  aspect-ratio:1/1 !important;
+  overflow:hidden !important;
+  background:#EFEBE3;
+}
+#nmHomeRail .media .ph{
+  position:absolute !important;
+  inset:0 !important;
+  display:grid !important;
+  place-items:center !important;
+  overflow:hidden !important;
+}
+#nmHomeRail .media .ph svg{
+  width:40px !important;
+  height:40px !important;
+  max-width:40px;
+  max-height:40px;
+  color:#D5D0C6;
+  fill:currentColor;
+}
+#nmHomeRail .nutov{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:4;
+  opacity:0 !important;
+  pointer-events:none !important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:12px 10px;
+  background:rgba(247,245,241,.88);
+}
+#nmHomeRail .card.showN .nutov{opacity:1 !important}
+#nmHomeRail .nut-toggle{
+  position:absolute;
+  top:8px;
+  inset-inline-end:8px;
+  z-index:5;
+}
+#nmHomeRail .bd{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  padding:13px;
 }
 </style>
 
@@ -106,7 +158,7 @@
             $flagLabel = $flagRaw !== null && isset($homeFlags[$flagRaw]) ? $homeFlags[$flagRaw] : $flagRaw;
           @endphp
           @if (!empty($flagLabel))<span class="flag">{{ $flagLabel }}</span>@endif
-          <div class="ph"><svg><use href="#i-bread"/></svg></div>
+          <div class="ph"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bread"/></svg></div>
           <a class="shot" href="{{ $href }}" aria-label="{{ $p['name'] }}">
             @if (!empty($p['image_url']))<img src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif
           </a>
