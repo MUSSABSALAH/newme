@@ -14,7 +14,7 @@
 
 <div class="home-mobile nm-ip" id="nmMobileHome">
   <div class="hero">
-    <div class="ph"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-bread"/></svg></div>
+    <div class="ph"><svg><use href="#i-bread"/></svg></div>
     <img src="{{ $cms->image('homepage', 'hero_image') }}" alt="{{ $cms->text('homepage', 'hero_alt') }}" onerror="this.remove()">
     <div class="hero-in">
       <span class="pill">{{ $cms->text('homepage', 'hero_pill') }}</span>
@@ -51,7 +51,7 @@
   </div>
 
   <div class="photoblock">
-    <div class="ph"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wheat"/></svg></div>
+    <div class="ph"><svg><use href="#i-wheat"/></svg></div>
     <img src="{{ $cms->image('homepage', 'why_image') }}" alt="" onerror="this.remove()">
     <span class="cap">{{ $cms->text('homepage', 'why_cap') }}</span>
   </div>
@@ -87,7 +87,7 @@
             $flagLabel = $flagRaw !== null && isset($homeFlags[$flagRaw]) ? $homeFlags[$flagRaw] : $flagRaw;
           @endphp
           @if (!empty($flagLabel))<span class="flag">{{ $flagLabel }}</span>@endif
-          <div class="ph"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-bread"/></svg></div>
+          <div class="ph"><svg><use href="#i-bread"/></svg></div>
           <a class="shot" href="{{ $href }}" aria-label="{{ $p['name'] }}">
             @if (!empty($p['image_url']))<img src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif
           </a>
