@@ -156,7 +156,12 @@ button{font-family:var(--font);cursor:pointer}
   .flag{top:10px;inset-inline-start:10px;background:rgba(255,255,255,.95);border-radius:999px;padding:5px 10px;font-size:10px;letter-spacing:0;text-transform:none;font-weight:800}
   .meta{padding:12px 12px 0;gap:0;flex:1;min-height:0}
   .meta h3{font-size:14px;font-weight:900;color:var(--ink);order:1;margin:0}
-  .meta .blurb{order:2;margin:4px 0 0}
+  .meta .blurb{
+    order:2;margin:4px 0 0;
+    display:-webkit-box;-webkit-box-orient:vertical;
+    -webkit-line-clamp:2;line-clamp:2;
+    overflow:hidden;white-space:normal;text-overflow:ellipsis;
+  }
   .meta .cat{order:3;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;font-family:var(--font);color:var(--body);margin:4px 0 0}
   .meta .pline{order:4;border:0;padding:0;margin:0;margin-top:auto}
   .meta .pr{font-family:var(--font);font-size:18px;font-weight:900}

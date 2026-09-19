@@ -81,6 +81,20 @@
   flex:1;
   padding:13px;
 }
+#nmHomeRail .p-sub{
+  display:-webkit-box !important;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  overflow:hidden !important;
+  white-space:normal !important;
+  text-overflow:ellipsis;
+  max-height:3.2em;
+  margin:4px 0 0;
+  font-size:11.5px;
+  font-weight:700;
+  color:#7C8799;
+}
 </style>
 
 <div class="home-mobile nm-ip" id="nmMobileHome">
@@ -184,8 +198,14 @@
         </div>
         <div class="bd">
           <h3><a href="{{ $href }}">{{ $p['name'] }}</a></h3>
-          @if (!empty($p['sub']))
-            <p class="p-sub">{{ $p['sub'] }}</p>
+          @php
+            $cardSub = trim((string) ($p['serving'] ?? ''));
+            if ($cardSub === '') {
+              $cardSub = trim((string) ($p['sub'] ?? ''));
+            }
+          @endphp
+          @if ($cardSub !== '')
+            <p class="p-sub">{{ $cardSub }}</p>
           @endif
           <p class="pr">{{ $p['price'] }} <x-ui.sar /></p>
         </div>
