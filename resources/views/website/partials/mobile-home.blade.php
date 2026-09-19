@@ -10,6 +10,57 @@
   .home-desktop{display:none!important}
   .home-mobile{display:block}
 }
+#nmHomeRail{
+  display:grid;
+  grid-auto-flow:row;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  padding:14px 18px 0;
+}
+#nmHomeRail > .card{
+  min-width:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  background:#fff;
+  border:1px solid #E8E4DC;
+  border-radius:18px;
+}
+#nmHomeRail .media{
+  position:relative;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  background:#EFEBE3;
+}
+#nmHomeRail .media .ph{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+#nmHomeRail .media .ph svg{
+  width:40px;
+  height:40px;
+  max-width:40px;
+  max-height:40px;
+  color:#D5D0C6;
+  fill:currentColor;
+}
+#nmHomeRail .nutov{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  opacity:0;
+  pointer-events:none;
+}
+#nmHomeRail .card.showN .nutov{opacity:1}
+#nmHomeRail .p-sub{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+}
 </style>
 
 <div class="home-mobile nm-ip" id="nmMobileHome">
@@ -87,7 +138,7 @@
             $flagLabel = $flagRaw !== null && isset($homeFlags[$flagRaw]) ? $homeFlags[$flagRaw] : $flagRaw;
           @endphp
           @if (!empty($flagLabel))<span class="flag">{{ $flagLabel }}</span>@endif
-          <div class="ph"><svg><use href="#i-bread"/></svg></div>
+          <div class="ph"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bread"/></svg></div>
           <a class="shot" href="{{ $href }}" aria-label="{{ $p['name'] }}">
             @if (!empty($p['image_url']))<img src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif
           </a>
@@ -113,8 +164,14 @@
         </div>
         <div class="bd">
           <h3><a href="{{ $href }}">{{ $p['name'] }}</a></h3>
-          @if (!empty($p['sub']))
-            <p class="p-sub">{{ $p['sub'] }}</p>
+          @php
+            $cardSub = trim((string) ($p['serving'] ?? ''));
+            if ($cardSub === '') {
+              $cardSub = trim((string) ($p['sub'] ?? ''));
+            }
+          @endphp
+          @if ($cardSub !== '')
+            <p class="p-sub">{{ $cardSub }}</p>
           @endif
           <p class="pr">{{ $p['price'] }} <x-ui.sar /></p>
         </div>
