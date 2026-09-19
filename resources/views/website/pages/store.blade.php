@@ -205,7 +205,7 @@ body.menu-open{overflow:hidden}
 
 {{-- Desktop redesign --}}
 <div class="v30-desk">
-  @include('website.partials.v30-shop-rail', ['products' => $products, 'preview' => false, 'activeCat' => $activeCat ?? 'all', 'storeLine' => $storeLine ?? null])
+  @include('website.partials.v30-shop-rail', ['products' => $products, 'preview' => false, 'activeCat' => $activeCat ?? 'all', 'storeLine' => $storeLine ?? null, 'tabs' => $tabs ?? []])
   @include('website.partials.v30-closing')
 </div>
 

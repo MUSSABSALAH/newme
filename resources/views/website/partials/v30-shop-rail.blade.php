@@ -22,6 +22,27 @@
       }
       $catMeta[$cat]['count']++;
     }
+
+    $catalogTabs = $tabs ?? [];
+    if ($catalogTabs !== []) {
+      $ordered = [];
+      foreach ($catalogTabs as $tab) {
+        $slug = $tab['slug'] ?? '';
+        if ($slug === '' || $slug === 'all' || ! isset($catMeta[$slug])) {
+          continue;
+        }
+        $ordered[$slug] = [
+          'label' => $tab['label'] ?? $catMeta[$slug]['label'],
+          'count' => $catMeta[$slug]['count'],
+        ];
+      }
+      foreach ($catMeta as $slug => $meta) {
+        if (! isset($ordered[$slug])) {
+          $ordered[$slug] = $meta;
+        }
+      }
+      $catMeta = $ordered;
+    }
   }
   $total = count($products);
 @endphp
