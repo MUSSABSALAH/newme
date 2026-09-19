@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Checkout\Services;
 
 use App\Modules\Checkout\Enums\FulfillmentMethod;
+use App\Modules\Cms\Services\PageContentService;
 use App\Modules\Settings\Services\SettingsService;
 use App\Support\Money\Money;
 
@@ -16,7 +17,10 @@ use App\Support\Money\Money;
  */
 final class StoreDeliveryFee
 {
-    public function __construct(private readonly SettingsService $settings) {}
+    public function __construct(
+        private readonly SettingsService $settings,
+        private readonly PageContentService $cms,
+    ) {}
 
     public function quote(FulfillmentMethod $method, int $goodsMinor): int
     {
@@ -40,6 +44,12 @@ final class StoreDeliveryFee
 
     public function branchAddress(): string
     {
+        $fromFooter = $this->cms->text('footer', 'address');
+
+        if ($fromFooter !== '') {
+            return $fromFooter;
+        }
+
         $locale = app()->getLocale() === 'en' ? 'en' : 'ar';
         $preferred = $this->settings->get('company.address_'.$locale);
 

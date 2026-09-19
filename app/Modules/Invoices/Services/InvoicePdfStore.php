@@ -65,7 +65,7 @@ final class InvoicePdfStore
     private function pathFor(Invoice $invoice): string
     {
         return sprintf(
-            '%s/%s-%d.pdf',
+            '%s/%s-v29-%d.pdf',
             $this->directoryFor($invoice),
             App::getLocale(),
             $invoice->updated_at?->getTimestamp() ?? 0,

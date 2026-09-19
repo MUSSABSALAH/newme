@@ -8,6 +8,8 @@ use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Invoices\Support\ZatcaQr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use Mpdf\QrCode\Output\Png;
@@ -26,12 +28,24 @@ final class InvoicePdfRenderer
 
     private const LETTERHEAD = 'images/invoices/letterhead.jpg';
 
+    private const RENEW_STRIP = 'images/invoices/renew-strip.png';
+
+    private const PAGE_WIDTH_MM = 210.0;
+
+    private const PAGE_HEIGHT_MM = 297.0;
+
+    /**
+     * Slim official gradient, flush to the right edge and full page height.
+     * Text is drawn on top (Cairo), not baked into the image.
+     */
+    private const STRIP_WIDTH_MM = 13.63;
+
+    private const LETTERHEAD_STRIP_X_MM = 184.0;
+
     /**
      * Footer geometry, in millimetres from the page origin.
      *
-     * The rule between the VAT line and the contact list is the alignment
-     * guide: the ZATCA QR is centred on that same Y so the line cuts
-     * through the middle of the code.
+     * The ZATCA QR sits on the same top edge as the brand block.
      */
     private const FOOTER_BRAND_Y_MM = 247.8;
 
@@ -43,13 +57,13 @@ final class InvoicePdfRenderer
 
     private const FOOTER_RULE_X2_MM = 136.0;
 
-    private const QR_X_MM = 147.8;
+    private const QR_X_MM = 160.5;
 
     private const QR_SIZE_MM = 23.5;
 
-    private const QR_Y_MM = self::FOOTER_RULE_Y_MM - (self::QR_SIZE_MM / 2);
+    private const QR_Y_MM = self::FOOTER_BRAND_Y_MM;
 
-    private const ORIGIN_X_MM = 141.5;
+    private const ORIGIN_X_MM = 154.3;
 
     private const ORIGIN_Y_MM = self::QR_Y_MM + self::QR_SIZE_MM + 0.5;
 
@@ -61,20 +75,7 @@ final class InvoicePdfRenderer
             'invoice' => $invoice,
         ])->render();
 
-        $pdf = new Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4',
-            'tempDir' => $this->tempDir(),
-            'default_font' => 'dejavusans',
-            'default_font_size' => 9,
-            'margin_top' => 36,
-            'margin_bottom' => 52,
-            'margin_left' => 16,
-            'margin_right' => 26,
-            'directionality' => 'ltr',
-            'autoScriptToLang' => true,
-            'autoLangToFont' => true,
-        ]);
+        $pdf = $this->createPdf();
 
         $letterhead = resource_path(self::LETTERHEAD);
 
@@ -87,6 +88,7 @@ final class InvoicePdfRenderer
         $pdf->SetTitle($invoice->number);
         $pdf->SetAuthor($invoice->sellerParty()->name);
         $pdf->SetCreator((string) config('app.name'));
+        $pdf->SetDisplayMode('fullpage');
         $pdf->WriteHTML($html);
 
         $qrPath = $this->writeQrPng($invoice);
@@ -128,9 +130,10 @@ final class InvoicePdfRenderer
         for ($page = 1; $page <= $pages; $page++) {
             $pdf->page = $page;
 
-            // Hide the printed footer (and its dummy QR) without covering the sidebar.
+            // Hide the printed footer and the letterhead's wide baked-in bar.
             $pdf->SetFillColor(255, 255, 255);
-            $pdf->Rect(0, 246.5, 184.6, 50.5, 'F');
+            $pdf->Rect(0, 246.5, self::PAGE_WIDTH_MM - self::STRIP_WIDTH_MM, 50.5, 'F');
+            $pdf->Rect(self::LETTERHEAD_STRIP_X_MM, 0, self::PAGE_WIDTH_MM - self::LETTERHEAD_STRIP_X_MM, self::PAGE_HEIGHT_MM, 'F');
 
             $pdf->WriteFixedPosHTML($footer, 16, self::FOOTER_BRAND_Y_MM, 128, 18, 'hidden');
 
@@ -145,11 +148,51 @@ final class InvoicePdfRenderer
             }
 
             $pdf->WriteFixedPosHTML($origin, self::ORIGIN_X_MM, self::ORIGIN_Y_MM, 36, 12, 'hidden');
+
+            $this->paintRenewStrip($pdf);
         }
 
         if ($pdf->page > $pages) {
             $pdf->DeletePages($pages + 1);
         }
+    }
+
+    private function paintRenewStrip(Mpdf $pdf): void
+    {
+        $stripX = self::PAGE_WIDTH_MM - self::STRIP_WIDTH_MM;
+        $strip = resource_path(self::RENEW_STRIP);
+
+        if (is_file($strip)) {
+            $pdf->Image(
+                $strip,
+                $stripX,
+                0,
+                self::STRIP_WIDTH_MM,
+                self::PAGE_HEIGHT_MM,
+                'png',
+                '',
+                true,
+                false,
+            );
+        }
+
+        $cx = $stripX + (self::STRIP_WIDTH_MM / 2);
+        $cy = self::PAGE_HEIGHT_MM / 2;
+        $boxW = 70.0;
+        $lineH = 4.3;
+
+        $pdf->SetTextColor(255, 255, 255);
+        $pdf->SetFont('cairo', '', 8);
+        $pdf->Rotate(90, $cx, $cy);
+        $pdf->SetXY($cx - ($boxW / 2), $cy - $lineH);
+        $pdf->SetDirectionality('rtl');
+        $pdf->WriteCell($boxW, $lineH, 'جدد حياتك', 0, 2, 'C');
+        $pdf->SetDirectionality('ltr');
+        $pdf->SetFont('cairo', '', 6.2);
+        $pdf->SetX($cx - ($boxW / 2));
+        $pdf->WriteCell($boxW, $lineH, 'PREP - BAKE - RENEW', 0, 0, 'C');
+        $pdf->Rotate(0);
+        $pdf->SetTextColor(26, 26, 26);
     }
 
     /**
@@ -177,6 +220,36 @@ final class InvoicePdfRenderer
         File::put($path, $png);
 
         return $path;
+    }
+
+    private function createPdf(): Mpdf
+    {
+        $fontDirs = (new ConfigVariables)->getDefaults()['fontDir'];
+        $fontData = (new FontVariables)->getDefaults()['fontdata'];
+
+        return new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'tempDir' => $this->tempDir(),
+            'fontDir' => array_merge($fontDirs, [resource_path('fonts/cairo')]),
+            'fontdata' => $fontData + [
+                'cairo' => [
+                    'R' => 'Cairo-Regular.ttf',
+                    'B' => 'Cairo-Bold.ttf',
+                    'useOTL' => 0xFF,
+                    'useKashida' => 75,
+                ],
+            ],
+            'default_font' => 'cairo',
+            'default_font_size' => 9,
+            'margin_top' => 36,
+            'margin_bottom' => 52,
+            'margin_left' => 16,
+            'margin_right' => 26,
+            'directionality' => 'ltr',
+            'autoScriptToLang' => true,
+            'autoLangToFont' => false,
+        ]);
     }
 
     private function tempDir(): string

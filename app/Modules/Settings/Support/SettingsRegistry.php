@@ -75,8 +75,8 @@ final class SettingsRegistry
             new SettingDefinition('company.tax_number', SettingGroup::Company, SettingType::String, null, ['nullable', 'string', 'max:50']),
             new SettingDefinition('company.email', SettingGroup::Company, SettingType::String, null, ['nullable', 'email', 'max:255']),
             new SettingDefinition('company.phone', SettingGroup::Company, SettingType::String, null, ['nullable', 'string', 'max:50']),
-            new SettingDefinition('company.address_ar', SettingGroup::Company, SettingType::Text, null, ['nullable', 'string', 'max:1000']),
-            new SettingDefinition('company.address_en', SettingGroup::Company, SettingType::Text, null, ['nullable', 'string', 'max:1000']),
+            new SettingDefinition('company.address_ar', SettingGroup::Company, SettingType::Text, 'المعذر سكوير، شارع التخصصي، الرياض، المملكة العربية السعودية.', ['nullable', 'string', 'max:1000']),
+            new SettingDefinition('company.address_en', SettingGroup::Company, SettingType::Text, 'Ma’ather Square, Takhassusi Street, Riyadh, Saudi Arabia', ['nullable', 'string', 'max:1000']),
 
             // Social — empty URL hides that icon in the site footer.
             new SettingDefinition('social.whatsapp', SettingGroup::Social, SettingType::String, 'https://wa.me/966533360317', ['nullable', 'string', 'max:500', 'url:http,https']),
