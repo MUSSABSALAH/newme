@@ -479,11 +479,14 @@
     -webkit-backdrop-filter: saturate(1.4) blur(20px);
     border-top: .5px solid var(--ip-gray-2);
     display: grid; grid-template-columns: repeat(5, 1fr);
+    font-family: 'Cairo', Tahoma, Arial, sans-serif;
   }
   .nm-tabbar .tab {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
     color: var(--ip-muted); font-size: 10px; font-weight: 800; position: relative; text-decoration: none;
     border: 0; background: none; min-height: 0; padding: 0; box-shadow: none; border-radius: 0;
+    font-family: inherit;
+    letter-spacing: 0;
   }
   .nm-tabbar .tab svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
   .nm-tabbar .tab.on { color: var(--ip-orange-deep); }

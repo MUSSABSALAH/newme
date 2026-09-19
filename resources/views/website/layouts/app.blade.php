@@ -32,15 +32,13 @@
     --mono: 'Cairo', Tahoma, Arial, sans-serif;
     --w-mono: 'Cairo', Tahoma, Arial, sans-serif;
   }
-  html[lang="ar"],
-  html[lang="ar"] body,
-  html[lang="ar"] button,
-  html[lang="ar"] input,
-  html[lang="ar"] textarea,
-  html[lang="ar"] select,
-  html[lang="ar"] .nm-ip,
-  html[lang="ar"] .nm-chrome,
-  html[lang="ar"] .v30-mob-only {
+  html,
+  body,
+  .nm-ip,
+  .nm-chrome,
+  .nm-tabbar,
+  .nm-tabbar .tab,
+  .v30-mob-only {
     font-family: 'Cairo', Tahoma, Arial, sans-serif;
   }
 }
