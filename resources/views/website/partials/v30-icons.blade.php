@@ -1,4 +1,4 @@
-<svg style="display:none" aria-hidden="true"><defs>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
 <symbol id="i-wheat" viewBox="0 0 24 24"><path d="M12 2c1.6 1.6 1.6 4.2 0 5.8C10.4 6.2 10.4 3.6 12 2zm0 6.6c1.6 1.6 1.6 4.2 0 5.8-1.6-1.6-1.6-4.2 0-5.8zM6.8 5.4c2.2.4 3.7 2.5 3.3 4.7-2.2-.4-3.7-2.5-3.3-4.7zm10.4 0c.4 2.2-1.1 4.3-3.3 4.7-.4-2.2 1.1-4.3 3.3-4.7zM6.8 11.4c2.2.4 3.7 2.5 3.3 4.7-2.2-.4-3.7-2.5-3.3-4.7zm10.4 0c.4 2.2-1.1 4.3-3.3 4.7-.4-2.2 1.1-4.3 3.3-4.7zM11 17h2v5h-2z"/></symbol>
 <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 3h6v4H9z" fill="currentColor" stroke="none"/><path d="M9 12h6M9 16h4" stroke-linecap="round"/></symbol>
 <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6.2c0 4.8-3.3 8.3-8 10.8-4.7-2.5-8-6-8-10.8V5l8-3zm-1.2 13.4 5.4-5.4-1.4-1.4-4 4-1.8-1.8-1.4 1.4 3.2 3.2z"/></symbol>

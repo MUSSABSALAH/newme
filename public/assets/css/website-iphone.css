@@ -121,7 +121,9 @@
 
   .nm-ip .rail { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 18px 0; }
   .nm-ip .rail .card { background: #fff; border: 1px solid var(--ip-gray-2); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; color: inherit; }
-  .nm-ip .rail .card .media { aspect-ratio: 1/1; position: relative; background: var(--ip-tile); overflow: hidden; }
+  .nm-ip .rail .card .media { aspect-ratio: 1 / 1; position: relative; background: var(--ip-tile); overflow: hidden; }
+  .nm-ip .ph { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; background: var(--ip-tile); }
+  .nm-ip .ph svg { width: 40px; height: 40px; color: var(--ip-gray-3); fill: currentColor; }
   .nm-ip .rail .card .media img {
     position: absolute; inset: 0; z-index: 2;
     width: 100%; height: 100%; object-fit: cover;
@@ -146,15 +148,16 @@
     position: absolute; inset: 0; z-index: 2; display: block;
   }
   .nm-ip .rail .card .nutov {
-    position: absolute; inset: 0; z-index: 4;
-    background: rgba(247,245,241,.88);
-    backdrop-filter: blur(10px) saturate(1.1);
-    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 4;
     display: flex; flex-direction: column; justify-content: center;
-    padding: 12px 10px; opacity: 0; transition: opacity .3s ease; pointer-events: none;
+    padding: 12px 10px; opacity: 0; pointer-events: none;
+    font-family: 'Cairo', Tahoma, Arial, sans-serif;
   }
   .nm-ip .rail .card.showN .nutov { opacity: 1; }
-  .nm-ip .rail .card .nutov { font-family: 'Cairo', Tahoma, Arial, sans-serif; }
+  .nm-ip .rail .card .nutov {
+    background: rgba(247,245,241,.88);
+    transition: opacity .3s ease;
+  }
   .nm-ip .rail .card .nutov .nv-h {
     font-size: 11px; font-weight: 800; color: var(--ip-muted); letter-spacing: 0;
     text-transform: none; font-family: inherit; margin-bottom: 6px; text-align: center;
@@ -321,10 +324,6 @@
   .nm-ip .foot .links a { font-size: 12.5px; color: #8296B2; padding: 5px 0; font-weight: 700; }
   .nm-ip .foot .cr { font-size: 11px; margin-top: 16px; color: #6C7F9B; line-height: 1.8; }
 
-  .nm-ip .hero .ph,
-  .nm-ip .photoblock .ph,
-  .nm-ip .rail .card .media .ph,
-  .nm-ip .ac .media .ph,
   .v30-page .wide-hero .ph,
   .v30-page .fs-banner .ph,
   .v30-page .media-card .ph,
@@ -338,10 +337,6 @@
     overflow: hidden;
     background: var(--ip-tile);
   }
-  .nm-ip .hero .ph svg,
-  .nm-ip .photoblock .ph svg,
-  .nm-ip .rail .card .media .ph svg,
-  .nm-ip .ac .media .ph svg,
   .v30-page .wide-hero .ph svg,
   .v30-page .fs-banner .ph svg,
   .v30-page .media-card .ph svg,
