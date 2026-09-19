@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
     'brand' => 'نيو مي',
     'nav' => [
-        'home' => 'الرئيسة',
+        'home' => 'الرئيسية',
         'about' => 'من نحن',
         'make' => 'صناعتنا',
         'kitchen' => 'مطبخنا',
