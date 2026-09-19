@@ -7,8 +7,8 @@
   <div class="inner">
     <div class="sec-head rv">
       <span class="kick">{{ __('website.subscribe.kick') }}</span>
-      <h2>{!! __('website.subscribe.heading') !!}</h2>
-      <p>{{ __('website.subscribe.lead') }}</p>
+      <h2>{!! $cms->html('subscribe', 'heading') !!}</h2>
+      <p>{{ $cms->text('subscribe', 'lead') }}</p>
     </div>
 
     @if (count($plans) > 0)
