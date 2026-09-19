@@ -24,7 +24,6 @@ return [
         'goal' => 'Goal: :goal',
         'call_ahead' => 'We will call you 15 minutes before the appointment.',
         'action' => 'View my consultations',
-        'outro' => 'Need to change the time? Reply to this email or contact us.',
     ],
 
     'errors' => [

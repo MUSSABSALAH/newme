@@ -4,16 +4,23 @@
   $year = now()->year;
   $phones = preg_split('/\s*[·•|]\s*/u', (string) __('website.site.contact.phone')) ?: [];
   $phones = array_values(array_filter(array_map('trim', $phones)));
-  $socialHandle = __('website.site.contact.social_handle');
-  $linkedinUrl = trim((string) __('website.site.contact.social_linkedin_url'));
-  $socials = [
-    ['url' => 'https://wa.me/966533360317', 'aria' => __('website.site.contact.social_whatsapp_aria'), 'icon' => 'whatsapp'],
-    ['url' => 'https://www.instagram.com/'.$socialHandle, 'aria' => __('website.site.contact.social_instagram_aria', ['handle' => $socialHandle]), 'icon' => 'instagram'],
-    ['url' => 'https://www.tiktok.com/@'.$socialHandle, 'aria' => __('website.site.contact.social_tiktok_aria', ['handle' => $socialHandle]), 'icon' => 'tiktok'],
-    ['url' => 'https://www.snapchat.com/add/'.$socialHandle, 'aria' => __('website.site.contact.social_snapchat_aria', ['handle' => $socialHandle]), 'icon' => 'snapchat'],
-    ['url' => 'https://x.com/'.$socialHandle, 'aria' => __('website.site.contact.social_x_aria', ['handle' => $socialHandle]), 'icon' => 'x'],
-    ['url' => $linkedinUrl !== '' ? $linkedinUrl : route('website.main'), 'aria' => __('website.site.contact.social_linkedin_aria'), 'icon' => 'linkedin'],
-  ];
+  $settings = app(\App\Modules\Settings\Services\SettingsService::class);
+  $whatsappUrl = trim((string) ($settings->get('social.whatsapp') ?? ''));
+  $socials = [];
+  foreach ([
+    ['key' => 'social.whatsapp', 'aria' => __('website.site.contact.social_whatsapp_aria'), 'icon' => 'whatsapp'],
+    ['key' => 'social.instagram', 'aria' => __('website.site.contact.social_instagram_aria'), 'icon' => 'instagram'],
+    ['key' => 'social.tiktok', 'aria' => __('website.site.contact.social_tiktok_aria'), 'icon' => 'tiktok'],
+    ['key' => 'social.snapchat', 'aria' => __('website.site.contact.social_snapchat_aria'), 'icon' => 'snapchat'],
+    ['key' => 'social.x', 'aria' => __('website.site.contact.social_x_aria'), 'icon' => 'x'],
+    ['key' => 'social.linkedin', 'aria' => __('website.site.contact.social_linkedin_aria'), 'icon' => 'linkedin'],
+  ] as $network) {
+    $url = trim((string) ($settings->get($network['key']) ?? ''));
+    if ($url === '') {
+      continue;
+    }
+    $socials[] = ['url' => $url, 'aria' => $network['aria'], 'icon' => $network['icon']];
+  }
 @endphp
 @once
 <style>
@@ -153,7 +160,9 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
 
     <div class="f-col">
       <h4>{{ __('website.footer.contact_title') }}</h4>
-      <a href="https://wa.me/966533360317">{{ __('website.site.contact.phone_label') }}</a>
+      @if ($whatsappUrl !== '')
+      <a href="{{ $whatsappUrl }}">{{ __('website.site.contact.phone_label') }}</a>
+      @endif
       <span class="f-muted f-phones">
         @foreach ($phones as $phone)
           <bdi class="f-num" dir="ltr">{{ $phone }}</bdi>
@@ -161,6 +170,7 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
       </span>
       <a href="{{ route('website.consult') }}">{{ __('website.footer.link_consult') }}</a>
       <span class="f-muted">{{ __('website.site.contact.address') }}</span>
+      @if ($socials !== [])
       <div class="f-social">
         <span class="f-muted f-social-label">{{ __('website.site.contact.social_label') }}</span>
         <div class="f-social-icons">
@@ -183,6 +193,7 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
           @endforeach
         </div>
       </div>
+      @endif
       <span class="f-muted">{{ __('website.site.contact.vat_label') }} <bdi class="f-vat-num" dir="ltr">{{ __('website.site.contact.vat') }}</bdi></span>
     </div>
   </div>
@@ -217,7 +228,9 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
     <a href="{{ route('website.store') }}">{{ __('website.nav.store') }}</a>
     <a href="{{ route('website.subscribe') }}">{{ __('website.nav.subscribe') }}</a>
     <a href="{{ route('website.consult') }}">{{ __('website.nav.consult') }}</a>
-    <a href="https://wa.me/966533360317">{{ __('website.footer.whatsapp') }}</a>
+    @if ($whatsappUrl !== '')
+    <a href="{{ $whatsappUrl }}">{{ __('website.footer.whatsapp') }}</a>
+    @endif
   </div>
   <div class="legal">{!! __('website.footer.legal') !!}</div>
 </footer>

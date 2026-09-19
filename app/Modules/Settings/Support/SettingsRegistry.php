@@ -78,6 +78,14 @@ final class SettingsRegistry
             new SettingDefinition('company.address_ar', SettingGroup::Company, SettingType::Text, null, ['nullable', 'string', 'max:1000']),
             new SettingDefinition('company.address_en', SettingGroup::Company, SettingType::Text, null, ['nullable', 'string', 'max:1000']),
 
+            // Social — empty URL hides that icon in the site footer.
+            new SettingDefinition('social.whatsapp', SettingGroup::Social, SettingType::String, 'https://wa.me/966533360317', ['nullable', 'string', 'max:500', 'url:http,https']),
+            new SettingDefinition('social.instagram', SettingGroup::Social, SettingType::String, 'https://www.instagram.com/NewMeKSA', ['nullable', 'string', 'max:500', 'url:http,https']),
+            new SettingDefinition('social.tiktok', SettingGroup::Social, SettingType::String, 'https://www.tiktok.com/@NewMeKSA', ['nullable', 'string', 'max:500', 'url:http,https']),
+            new SettingDefinition('social.snapchat', SettingGroup::Social, SettingType::String, 'https://www.snapchat.com/add/NewMeKSA', ['nullable', 'string', 'max:500', 'url:http,https']),
+            new SettingDefinition('social.x', SettingGroup::Social, SettingType::String, 'https://x.com/NewMeKSA', ['nullable', 'string', 'max:500', 'url:http,https']),
+            new SettingDefinition('social.linkedin', SettingGroup::Social, SettingType::String, null, ['nullable', 'string', 'max:500', 'url:http,https']),
+
             // Localization
             new SettingDefinition('localization.default_locale', SettingGroup::Localization, SettingType::Select, 'ar', ['required', 'in:ar,en'], ['ar', 'en']),
             new SettingDefinition('localization.timezone', SettingGroup::Localization, SettingType::Select, 'Asia/Riyadh', ['required', 'timezone'], ['Asia/Riyadh', 'Asia/Dubai', 'UTC']),

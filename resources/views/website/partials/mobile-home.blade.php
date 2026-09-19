@@ -60,7 +60,9 @@
   <div class="sec wrap" style="padding-bottom:0">
     <span class="kick">{{ $cms->text('homepage', 'shop_kick') }}</span>
     <h2>{!! $cms->html('homepage', 'shop_title') !!}</h2>
-    <p class="lead">{{ $cms->text('homepage', 'shop_sub') }}</p>
+    @if (($shopSub = $cms->storedText('homepage', 'shop_sub')) !== '')
+      <p class="lead">{{ $shopSub }}</p>
+    @endif
   </div>
   <div class="rail" id="nmHomeRail">
     @foreach ($shopProducts as $p)

@@ -16,17 +16,13 @@ final readonly class StoreFulfillmentQuote
         public int $deliveryFeeMinor,
         public int $thresholdMinor,
         public string $branchAddress,
+        public string $deliverySubtotalDisplay,
+        public string $pickupSubtotalDisplay,
+        public string $deliveryTaxDisplay,
+        public string $pickupTaxDisplay,
+        public int $deliveryTotalMinor,
+        public int $pickupTotalMinor,
     ) {}
-
-    public function deliveryTotalMinor(): int
-    {
-        return $this->goodsMinor + $this->deliveryFeeMinor;
-    }
-
-    public function pickupTotalMinor(): int
-    {
-        return $this->goodsMinor;
-    }
 
     public function feeDisplay(): string
     {
@@ -37,11 +33,11 @@ final readonly class StoreFulfillmentQuote
 
     public function deliveryTotalDisplay(): string
     {
-        return Money::fromMinor($this->deliveryTotalMinor())->format();
+        return Money::fromMinor($this->deliveryTotalMinor)->format();
     }
 
     public function pickupTotalDisplay(): string
     {
-        return Money::fromMinor($this->pickupTotalMinor())->format();
+        return Money::fromMinor($this->pickupTotalMinor)->format();
     }
 }

@@ -180,8 +180,12 @@
     opacity: 1 !important; visibility: visible !important;
   }
   .v30-page .dpanel.photo::after {
-    content: ""; position: absolute; inset: 0; z-index: 2;
-    background: linear-gradient(to top, rgba(10,22,40,.92), rgba(10,22,40,.25) 60%, transparent);
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(10,22,40,.9), rgba(10,22,40,.72) 45%, rgba(10,22,40,.86));
   }
   .v30-page .dpanel.navy { background: linear-gradient(150deg,#1B3A61,#122B4A); min-height: 0; }
   .v30-page .dp-in { position: relative; z-index: 3; padding: 18px 16px; width: 100%; }

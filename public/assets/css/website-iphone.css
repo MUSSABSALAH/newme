@@ -49,7 +49,17 @@
   .nm-ip h1, .nm-ip h2, .nm-ip h3, .nm-ip h4 { color: var(--ip-navy); font-weight: 900; line-height: 1.22; letter-spacing: -.02em; }
   .nm-ip .i { width: 1.05em; height: 1.05em; fill: currentColor; vertical-align: -.14em; display: inline-block; }
   .nm-ip .wrap { padding: 0 18px; }
-  .nm-ip .kick { font-size: 11px; font-weight: 800; letter-spacing: .14em; color: var(--ip-orange-deep); display: block; margin-bottom: 5px; }
+  .nm-ip .kick { font-size: 11px; font-weight: 800; letter-spacing: .14em; color: var(--ip-orange-deep); display: block; margin-bottom: 5px; font-family: 'Cairo', Tahoma, Arial, sans-serif; }
+  html[lang="ar"] .nm-ip .kick,
+  html[lang="ar"] .nm-ip .closing .tag,
+  html[lang="ar"] .nm-ip .step .n,
+  html[lang="ar"] .kick,
+  html[lang="ar"] .mkick,
+  html[lang="ar"] .mmenu .mkick {
+    font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
   .nm-ip .sec { padding: 26px 0; }
   .nm-ip .sec.tile { background: var(--ip-tile); }
   .nm-ip .sec h2 { font-size: 23px; margin-bottom: 8px; }

@@ -117,7 +117,7 @@
               @error('name')<div class="err">{{ $message }}</div>@enderror
             </div>
 
-            <div class="frow">
+            <div class="frow frow--contact">
               <div class="f">
                 <label for="email">
                   {{ __('account.fields.email') }}

@@ -9,6 +9,7 @@ use App\Modules\Addresses\Models\Address;
 use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Audit\Services\AuditService;
+use App\Modules\Checkout\Support\VatBreakdown;
 use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Orders\Exceptions\EmptyCartException;
 use App\Modules\Orders\Models\Order;
@@ -17,6 +18,7 @@ use App\Modules\Payments\Enums\PaymentStatus;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Promotions\Enums\CouponScope;
 use App\Modules\Promotions\Services\CouponRedemptionService;
+use App\Modules\Settings\Services\SettingsService;
 use App\Modules\Store\Services\CartService;
 use App\Support\Money\Money;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +40,7 @@ final class OrderService
     public function __construct(
         private readonly AuditService $audit,
         private readonly CouponRedemptionService $coupons,
+        private readonly SettingsService $settings,
     ) {}
 
     /**
@@ -72,6 +75,7 @@ final class OrderService
             $discount = $applied?->discount->toMinor() ?? 0;
             $goods = max(0, $subtotal - $discount);
             $fee = max(0, $deliveryFeeMinor);
+            $vat = VatBreakdown::forCharge($goods, $fee, $this->settings);
 
             $order = new Order;
             $order->user_id = $user->getKey();
@@ -85,7 +89,7 @@ final class OrderService
             $order->subtotal_minor = $subtotal;
             $order->discount_minor = $discount;
             $order->delivery_fee_minor = $fee;
-            $order->total_minor = $goods + $fee;
+            $order->total_minor = $vat->grossMinor;
             $order->payment_method = $method;
             $order->payment_status = PaymentStatus::Pending;
             $order->note = $note;

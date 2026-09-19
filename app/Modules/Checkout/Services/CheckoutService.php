@@ -14,6 +14,7 @@ use App\Modules\Checkout\DTOs\SubscriptionDraft;
 use App\Modules\Checkout\Enums\CheckoutSource;
 use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Checkout\Exceptions\NothingToCheckoutException;
+use App\Modules\Checkout\Support\VatBreakdown;
 use App\Modules\Identity\Services\CustomerProfileService;
 use App\Modules\Invoices\Services\InvoiceService;
 use App\Modules\Notifications\Services\AdminNotifier;
@@ -31,6 +32,7 @@ use App\Modules\Plans\DTOs\PlanQuote;
 use App\Modules\Plans\DTOs\PlanQuoteRequestData;
 use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Services\PlanPricingService;
+use App\Modules\Settings\Services\SettingsService;
 use App\Modules\Store\Services\CartService;
 use App\Modules\Subscriptions\Models\Subscription;
 use App\Modules\Subscriptions\Services\SubscriptionService;
@@ -42,9 +44,11 @@ use Illuminate\Support\Facades\DB;
  * Drives the shared checkout: confirm an address, pay, then place.
  *
  * The customer either has a store cart or a parked subscription draft; both are
- * priced here from server-side sources only. Placing and charging happen in one
- * transaction, so a declined card leaves no half-finished order behind — the
- * refused attempt is recorded in the audit trail afterwards instead.
+ * priced here from server-side sources only. An unfinished subscription is
+ * dropped the moment they use the store cart, so shopping never reopens the
+ * wizard. Placing and charging happen in one transaction, so a declined card
+ * leaves no half-finished order behind — the refused attempt is recorded in
+ * the audit trail afterwards instead.
  */
 final class CheckoutService
 {
@@ -63,6 +67,7 @@ final class CheckoutService
         private readonly InvoiceService $invoices,
         private readonly CustomerProfileService $profiles,
         private readonly StoreDeliveryFee $storeDelivery,
+        private readonly SettingsService $settings,
     ) {}
 
     public function source(): CheckoutSource
@@ -354,49 +359,83 @@ final class CheckoutService
         $discount = $this->cart->discountMinor();
         $goods = max(0, $subtotal - $discount);
         $fee = $this->storeDelivery->quote($fulfillment, $goods);
+        $vat = VatBreakdown::forCharge($goods, $fee, $this->settings);
 
-        return [$subtotal, $discount, $goods, $fee, $goods + $fee];
+        return [$subtotal, $discount, $goods, $fee, $vat->grossMinor];
     }
 
     private function cartSummary(): CheckoutSummary
     {
         $items = $this->cart->items();
-        [$subtotal, $discount, $goods, $fee, $total] = $this->storeCharge(FulfillmentMethod::Delivery);
+        $subtotal = $this->cart->subtotalMinor();
+        $discount = $this->cart->discountMinor();
+        $goods = max(0, $subtotal - $discount);
+        $fee = $this->storeDelivery->quote(FulfillmentMethod::Delivery, $goods);
+        $deliveryVat = VatBreakdown::forCharge($goods, $fee, $this->settings);
+        $pickupVat = VatBreakdown::forCharge($goods, 0, $this->settings);
 
-        $lines = [
-            ['label' => __('checkout.summary.subtotal'), 'value' => Money::fromMinor($subtotal)->format()],
-        ];
+        $weights = $items->map(static fn (array $item): int => (int) $item['line_total'])->values()->all();
+        $exclusiveLines = $deliveryVat->allocateGoods($weights);
 
         $code = $this->cart->appliedCoupon()?->code();
 
-        if ($discount > 0) {
+        $lines = [];
+
+        $lines[] = [
+            'key' => 'delivery',
+            'label' => __('checkout.summary.delivery'),
+            'value' => $deliveryVat->exclusiveFeeMinor === 0
+                ? (string) __('checkout.summary.free')
+                : Money::fromMinor($deliveryVat->exclusiveFeeMinor)->format(),
+        ];
+
+        $lines[] = [
+            'key' => 'subtotal',
+            'label' => __('checkout.summary.subtotal'),
+            'value' => Money::fromMinor($deliveryVat->exclusiveMinor)->format(),
+        ];
+
+        $lines[] = [
+            'key' => 'taxable',
+            'label' => __('checkout.summary.taxable'),
+            'value' => Money::fromMinor($deliveryVat->exclusiveMinor)->format(),
+        ];
+
+        if ($deliveryVat->taxRateBps > 0) {
             $lines[] = [
-                'label' => __('checkout.summary.discount'),
-                'value' => '−'.Money::fromMinor($discount)->format(),
+                'key' => 'tax',
+                'label' => __('checkout.summary.tax', ['rate' => $deliveryVat->rateLabel]),
+                'value' => Money::fromMinor($deliveryVat->taxMinor)->format(),
             ];
         }
 
         $quote = new StoreFulfillmentQuote(
             goodsMinor: $goods,
-            deliveryFeeMinor: $fee,
+            deliveryFeeMinor: $deliveryVat->exclusiveFeeMinor,
             thresholdMinor: $this->storeDelivery->thresholdMinor(),
             branchAddress: $this->storeDelivery->branchAddress(),
+            deliverySubtotalDisplay: Money::fromMinor($deliveryVat->exclusiveMinor)->format(),
+            pickupSubtotalDisplay: Money::fromMinor($pickupVat->exclusiveMinor)->format(),
+            deliveryTaxDisplay: Money::fromMinor($deliveryVat->taxMinor)->format(),
+            pickupTaxDisplay: Money::fromMinor($pickupVat->taxMinor)->format(),
+            deliveryTotalMinor: $deliveryVat->grossMinor,
+            pickupTotalMinor: $pickupVat->grossMinor,
         );
-
-        $lines[] = [
-            'label' => __('checkout.summary.delivery'),
-            'value' => $quote->feeDisplay(),
-        ];
 
         return new CheckoutSummary(
             source: CheckoutSource::Cart,
             title: (string) __('checkout.summary.cart_title', ['count' => $items->count()]),
-            items: $items->map(static fn (array $item): array => [
-                'label' => (string) $item['name'].' × '.$item['qty'],
-                'value' => (string) $item['line_total_display'],
-            ])->values()->all(),
+            items: $items->values()->map(static function (array $item, int $index) use ($exclusiveLines): array {
+                $qty = (int) $item['qty'];
+                $line = $exclusiveLines[$index] ?? (int) $item['line_total'];
+
+                return [
+                    'label' => (string) $item['name'].' × '.$qty,
+                    'value' => Money::fromMinor($line)->format(),
+                ];
+            })->all(),
             lines: $lines,
-            total: Money::fromMinor($total),
+            total: Money::fromMinor($deliveryVat->grossMinor),
             couponCode: $code,
             storeQuote: $quote,
         );

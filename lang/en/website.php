@@ -810,7 +810,6 @@ return [
         'per_day' => '≈ <b id="perDay">—</b> <span class="icon-saudi-riyal" aria-hidden="true"></span> / day · Free delivery · Quality guarantee',
         'pay_aria' => 'Payment methods',
         'mada' => 'mada',
-        'tabby' => 'Tabby',
         'trust_secure' => '100% secure encrypted payment',
         'trust_refund' => 'Money-back guarantee',
         'trust_cancel' => 'Free cancellation anytime',

@@ -63,12 +63,6 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 .tick{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;font-weight:800;color:var(--ink)}
 .tick .c{width:24px;height:24px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;flex-shrink:0;font-size:12px;font-weight:900}
 .tick small{display:block;font-size:11.5px;color:var(--muted);font-weight:700}
-.expert{margin-top:26px;background:#fff;border:1.5px solid var(--gray-2);border-radius:18px;padding:16px;display:flex;gap:14px;align-items:center;max-width:420px}
-.expert .av{width:58px;height:58px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid var(--orange-soft)}
-.expert b{display:block;font-size:14px;color:var(--navy);font-weight:900}
-.expert span{font-size:11px;color:var(--muted);font-weight:800}
-.expert .stars{color:var(--orange);font-size:11px;letter-spacing:1px}
-
 /* ===== booking card ===== */
 .book{background:#fff;border:1.5px solid var(--gray-2);border-radius:24px;box-shadow:0 26px 64px rgba(18,43,74,.12);overflow:hidden;position:relative}
 .book .head{background:var(--navy);color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
@@ -161,10 +155,6 @@ body.mlock{overflow:hidden}
       <div class="tick"><span class="c">✓</span><div>{{ $cms->text('consult', 'tick2') }}<small>{{ $cms->text('consult', 'tick2_sub') }}</small></div></div>
       <div class="tick"><span class="c">✓</span><div>{{ $cms->text('consult', 'tick3') }}<small>{{ $cms->text('consult', 'tick3_sub') }}</small></div></div>
     </div>
-    <div class="expert">
-      <span class="av"><img class="aiimg" src="{{ $cms->image('consult', 'expert_image') }}" alt="{{ $cms->text('consult', 'expert_alt') }}" onerror="this.remove()"></span>
-      <div><b>{{ $cms->text('consult', 'expert_name') }}</b><span>{{ $cms->text('consult', 'expert_sub') }}</span><div class="stars">★★★★★</div></div>
-    </div>
   </div>
 
   <div class="book rv" id="book">
@@ -188,8 +178,8 @@ body.mlock{overflow:hidden}
         <label>{{ __('website.consult.label_goal') }}</label>
         <select id="inGoal">
           <option value="">{{ __('website.consult.goal_placeholder') }}</option>
-          @foreach (__('website.consult.goals') as $goal)
-          <option>{{ $goal }}</option>
+          @foreach ($plans as $plan)
+          <option value="{{ $plan['name'] }}">{{ $plan['name'] }}</option>
           @endforeach
         </select>
       </div>

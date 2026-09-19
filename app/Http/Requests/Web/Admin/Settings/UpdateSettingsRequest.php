@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Web\Admin\Settings;
 
+use App\Modules\Settings\Enums\SettingGroup;
 use App\Modules\Settings\Enums\SettingType;
 use App\Modules\Settings\Support\SettingsRegistry;
 use Illuminate\Foundation\Http\FormRequest;
@@ -41,6 +42,18 @@ final class UpdateSettingsRequest extends FormRequest
                 $raw = $settings[$name] ?? null;
                 if (is_string($raw) && preg_match('/^(\d{1,2}):(\d{2})(?::\d{2})?$/', $raw, $m) === 1) {
                     $settings[$name] = sprintf('%02d:%02d', (int) $m[1], (int) $m[2]);
+                }
+
+                continue;
+            }
+
+            if ($definition->group === SettingGroup::Social) {
+                $name = $definition->fieldName();
+                $raw = $settings[$name] ?? null;
+                if (! is_string($raw) || trim($raw) === '') {
+                    $settings[$name] = null;
+                } else {
+                    $settings[$name] = trim($raw);
                 }
             }
         }

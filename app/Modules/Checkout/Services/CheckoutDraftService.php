@@ -45,7 +45,17 @@ final class CheckoutDraftService
     }
 
     /**
-     * A parked subscription always wins: the customer left the wizard for it.
+     * The customer left an unfinished subscription to shop. Drop the parked
+     * draft so checkout follows the store cart from here.
+     */
+    public function releaseForStoreCart(): void
+    {
+        $this->forgetSubscription();
+    }
+
+    /**
+     * A parked subscription wins until the customer starts using the store
+     * cart — then {@see releaseForStoreCart()} hands checkout back to the cart.
      */
     public function source(): CheckoutSource
     {

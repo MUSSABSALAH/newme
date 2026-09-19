@@ -135,8 +135,15 @@ class AppServiceProvider extends ServiceProvider
             $view->with('mailFont', \App\Modules\Notifications\Support\BrandMail::font());
         });
 
-        // Expose the live cart count to the shared website navigation.
-        View::composer('website.partials.nav', function ($view): void {
+        // Expose the live cart count to every header that draws the badge.
+        View::composer([
+            'website.layouts.app',
+            'website.partials.nav',
+            'website.partials.v30-nav',
+            'website.partials.v30-header',
+            'website.partials.site-header',
+            'website.partials.mobile-chrome',
+        ], function ($view): void {
             $view->with('cartCount', app(CartService::class)->count());
         });
 

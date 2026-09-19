@@ -222,6 +222,7 @@ class WebsiteController extends Controller
         return view('website.pages.consult', [
             'consultationSchedule' => $schedule,
             'customer' => $user,
+            'plans' => $this->websitePlans(),
         ]);
     }
 
@@ -478,7 +479,8 @@ class WebsiteController extends Controller
     }
 
     /**
-     * Featured (or latest) products for the home-page shop preview strip.
+     * Featured products for the home-page shop strip, lowest sort_order first.
+     * When none are featured, the same strip uses the catalog display order.
      *
      * @return list<array<string, mixed>>
      */
@@ -490,15 +492,22 @@ class WebsiteController extends Controller
             'occasions' => '#i-hat',
         ];
 
-        $query = Product::query()
+        $base = Product::query()
             ->where('is_active', true)
-            ->with('category.parent')
-            ->orderByDesc('is_featured')
+            ->with('category.parent');
+
+        $featured = (clone $base)
+            ->where('is_featured', true)
             ->orderBy('sort_order')
             ->orderBy('id')
-            ->limit($limit);
+            ->limit($limit)
+            ->get();
 
-        return $query->get()->map(function (Product $product) use ($flagIcons): array {
+        $products = $featured->isNotEmpty()
+            ? $featured
+            : $base->orderBy('sort_order')->orderBy('id')->limit($limit)->get();
+
+        return $products->map(function (Product $product) use ($flagIcons): array {
             $protein = $this->trimDecimal($product->protein_g);
             $kcal = (int) $product->calories;
             $flag = $product->flag?->value;

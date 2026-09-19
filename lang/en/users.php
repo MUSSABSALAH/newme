@@ -52,8 +52,8 @@ return [
     ],
     'errors' => [
         'self_deactivate' => 'You cannot deactivate your own account.',
-        'self' => 'You cannot delete your own account.',
-        'last_super_admin' => 'The last active Super Admin cannot be removed or deactivated.',
+        'self' => 'You cannot delete the account you are signed in with.',
+        'last_super_admin' => 'At least one Super Admin must remain.',
         'active_subscription' => '“:name” cannot be deleted because they have an active subscription.',
         'incomplete_order' => '“:name” cannot be deleted because they have an incomplete order.',
         'roles_required' => 'Please assign at least one role to the user.',

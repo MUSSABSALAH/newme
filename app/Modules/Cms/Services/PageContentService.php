@@ -38,6 +38,23 @@ final class PageContentService
     }
 
     /**
+     * Stored CMS copy only — no language-file fallback.
+     */
+    public function storedText(string $page, string $key, ?string $locale = null): string
+    {
+        $locale ??= app()->getLocale();
+        $stored = $this->stored($page)[$key] ?? null;
+
+        if (! is_array($stored)) {
+            return '';
+        }
+
+        $value = $stored[$locale] ?? '';
+
+        return is_string($value) ? trim(strip_tags($value)) : '';
+    }
+
+    /**
      * @return list<string>
      */
     public function items(string $page, string $key, ?string $locale = null): array

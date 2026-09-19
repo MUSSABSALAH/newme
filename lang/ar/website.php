@@ -810,7 +810,6 @@ return [
         'per_day' => '≈ <b id="perDay">—</b> <span class="icon-saudi-riyal" aria-hidden="true"></span> / يوم · توصيل مجاني · ضمان الجودة',
         'pay_aria' => 'طرق الدفع',
         'mada' => 'مدى',
-        'tabby' => 'تابي',
         'trust_secure' => 'دفع آمن ومشفّر 100%',
         'trust_refund' => 'ضمان استرجاع المبلغ',
         'trust_cancel' => 'إلغاء مجاني في أي وقت',

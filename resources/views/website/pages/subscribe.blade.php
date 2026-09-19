@@ -3,7 +3,6 @@
 @section('title', $cms->text('subscribe', 'title'))
 @section('theme', '#122B4A')
 @section('body_class', 'is-subscribe sub-on-1')
-@section('hide_site_footer', '1')
 
 @push('styles')
 <style>
@@ -90,6 +89,14 @@ body.sub-on-1 .wbar,
 body.sub-on-1 .phead,
 body.sub-on-1 #stepper{display:none!important}
 body.sub-on-1 .rv{opacity:1!important;transform:none!important}
+body.is-subscribe footer.w-foot-full{
+  margin-top:auto;
+  flex-shrink:0;
+  position:relative;
+  z-index:2;
+  border-top:40px solid #fff;
+}
+body.is-subscribe:not(.sub-on-1) .totop{bottom:calc(88px + var(--sab))}
 
 @media(max-width:819.98px){
   #ipDurPick{display:none!important}
@@ -281,7 +288,6 @@ body.sub-on-1 .rv{opacity:1!important;transform:none!important}
 .pb.apay{font-size:12.5px}.pb.apay b{font-weight:900}
 .pb.mada{color:#259BD6;font-size:12.5px}
 .pb.stc{color:#4F008C}
-.pb.tabby{color:#22C69B}
 .buy-trust{display:grid;gap:6px;margin-top:14px;font-size:11.5px;font-weight:800;color:var(--muted)}
 .buy-trust span{display:flex;align-items:center;gap:7px}
 .buy-trust .i{width:15px;height:15px;color:var(--green)}
@@ -343,7 +349,8 @@ body.menu-open{overflow:hidden}
 .dpick{display:grid;gap:9px}
 .dpick .prow{display:flex;align-items:center;gap:10px}
 .dpick .prow .lbl{font-size:12px;font-weight:900;color:var(--orange-deep);min-width:54px}
-.dpick select{flex:1;font-family:var(--font);font-weight:800;font-size:13px;color:var(--ink);padding:10px 12px;border:2px solid var(--gray-2);border-radius:12px;background:#fff;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2312233B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center}
+.dpick select{flex:1;font-family:var(--font);font-weight:800;font-size:13px;color:var(--ink);padding:10px 12px;padding-inline-end:32px;border:2px solid var(--gray-2);border-radius:12px;background:#fff;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2312233B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+html[dir="rtl"] .dpick select{background-position:left 12px center}
 .ddays-note{text-align:center;font-size:12px;font-weight:800;color:var(--muted);margin-top:6px}
 
 /* ===== start date ===== */
@@ -569,7 +576,6 @@ body.menu-open{overflow:hidden}
             <span class="pb mc"><span><i></i><i></i></span></span>
             <span class="pb apay"> <b>Pay</b></span>
             <span class="pb stc">stc pay</span>
-            <span class="pb tabby">{{ __('website.subscribe.tabby') }}</span>
           </div>
           <div class="buy-trust">
             <span><svg class="i"><use href="#i-lock"/></svg> {{ __('website.subscribe.trust_secure') }}</span>

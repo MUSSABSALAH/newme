@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Checkout\Services\CheckoutDraftService;
 use App\Modules\Promotions\Exceptions\CouponRejectedException;
 use App\Modules\Store\Models\Product;
 use App\Modules\Store\Services\CartService;
@@ -15,10 +16,15 @@ use Illuminate\Http\Request;
 
 final class CartController extends Controller
 {
-    public function __construct(private readonly CartService $cart) {}
+    public function __construct(
+        private readonly CartService $cart,
+        private readonly CheckoutDraftService $drafts,
+    ) {}
 
     public function index(): View
     {
+        $this->drafts->releaseForStoreCart();
+
         return view('website.pages.cart', [
             'items' => $this->cart->items(),
             'subtotal' => $this->cart->subtotalDisplay(),
@@ -43,6 +49,7 @@ final class CartController extends Controller
             ->firstOrFail();
 
         $this->cart->add($product->id, (int) ($data['quantity'] ?? 1));
+        $this->drafts->releaseForStoreCart();
 
         return $this->respond($request, __('website.cart.added'));
     }
@@ -54,6 +61,7 @@ final class CartController extends Controller
         ]);
 
         $this->cart->set($product->id, (int) $data['quantity']);
+        $this->drafts->releaseForStoreCart();
 
         return $this->respond($request, __('website.cart.updated'));
     }
@@ -61,6 +69,7 @@ final class CartController extends Controller
     public function destroy(Request $request, Product $product): JsonResponse|RedirectResponse
     {
         $this->cart->remove($product->id);
+        $this->drafts->releaseForStoreCart();
 
         return $this->respond($request, __('website.cart.removed'));
     }

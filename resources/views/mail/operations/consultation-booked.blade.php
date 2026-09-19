@@ -16,5 +16,4 @@
     </table>
     <p style="margin:0 0 16px;color:#555555;">{{ $callAhead }}</p>
     @include('mail.partials.button', ['label' => $actionLabel, 'url' => $actionUrl])
-    <p style="margin:16px 0 0;color:#777777;font-size:13px;">{{ $outro }}</p>
 @endsection

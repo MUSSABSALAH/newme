@@ -66,8 +66,16 @@
   <div class="sec-head rv">
     <span class="kick">{{ $cms->text('homepage', 'shop_kick') }}</span>
     <h2>{!! $cms->html('homepage', 'shop_title') !!}</h2>
-    <p>{{ $cms->text('homepage', 'shop_sub') }}</p>
-    <p>{{ $cms->text('homepage', 'shop_know') }}</p>
+    @php
+      $shopSub = $cms->storedText('homepage', 'shop_sub');
+      $shopKnow = $cms->storedText('homepage', 'shop_know');
+    @endphp
+    @if ($shopSub !== '')
+      <p>{{ $shopSub }}</p>
+    @endif
+    @if ($shopKnow !== '' && $shopKnow !== $shopSub)
+      <p>{{ $shopKnow }}</p>
+    @endif
   </div>
 
   @if (count($products) > 0)
@@ -83,8 +91,8 @@
     @endif
     @if ($preview)
     <div class="rail-ctrl">
-      <button class="rail-btn" id="v30Prev" aria-label="{{ __('website.site.shop.prev') }}"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
-      <button class="rail-btn" id="v30Next" aria-label="{{ __('website.site.shop.next') }}"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="rail-btn" id="v30Prev" aria-label="{{ __('website.site.shop.prev') }}"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="rail-btn" id="v30Next" aria-label="{{ __('website.site.shop.next') }}"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     @endif
   </div>
@@ -169,7 +177,7 @@
               @endif
             </div>
           @endif
-          <div class="p-price">{{ $p['price'] !== '' && $p['price'] !== null ? $p['price'] : '0' }} <x-ui.sar /> <small>/ {{ $p['unit'] ?? 'عبوة' }}</small></div>
+          <div class="p-price">{{ $p['price'] !== '' && $p['price'] !== null ? $p['price'] : '0' }} <x-ui.sar /></div>
           <a href="{{ $href }}" class="p-view">{{ __('website.store.view_product') }}</a>
         </article>
       @endforeach
@@ -195,7 +203,6 @@
     <div class="media-card rv">
       <div class="ph"><svg><use href="#i-bread"/></svg></div>
       <img class="aiimg" loading="lazy" decoding="async" src="{{ $cms->image('homepage', 'nutrition_image') }}" alt="{{ $cms->text('homepage', 'nutrition_alt') }}" onerror="this.remove()">
-      <span class="cap">{{ $cms->text('homepage', 'nutrition_cap') }}</span>
     </div>
     @php
       $n = 'website.main.nutrition';

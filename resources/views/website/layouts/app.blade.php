@@ -61,6 +61,26 @@ html[lang="ar"] textarea,
 html[lang="ar"] select{
   font-family:'Cairo',Tahoma,Arial,sans-serif;
 }
+html[lang="ar"] .kick,
+html[lang="ar"] .mkick,
+html[lang="ar"] .eh-kick,
+html[lang="ar"] .dp-kick,
+html[lang="ar"] .wh-kick,
+html[lang="ar"] .mmenu .mkick,
+html[lang="ar"] .closing .tag,
+html[lang="ar"] .chapter,
+html[lang="ar"] .meta .cat,
+html[lang="ar"] .flag,
+html[lang="ar"] .kchip,
+html[lang="ar"] .kit-rbox h2,
+html[lang="ar"] .step .n,
+html[lang="ar"] .cohead .kick,
+html[lang="ar"] .copy .kick,
+html[lang="ar"] .mono{
+  font-family:'Cairo',Tahoma,Arial,sans-serif !important;
+  letter-spacing:0 !important;
+  text-transform:none !important;
+}
 </style>
 @endif
 </head>

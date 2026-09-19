@@ -51,7 +51,7 @@ h1,h2,h3,h4{color:var(--navy);font-weight:900;line-height:1.18;letter-spacing:-.
 .js .aiimg.loaded{opacity:1}
 
 /* type helpers */
-.kick{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--orange-deep)}
+.kick{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--orange-deep);font-family:var(--font)}
 .mono{font-family:var(--mono);letter-spacing:.12em}
 .sec-head{max-width:820px;margin:0 auto 44px;text-align:center;padding:0 20px}
 .sec-head h2{font-size:clamp(28px,5.4vw,46px);margin:10px 0 12px}
@@ -154,9 +154,9 @@ nav.main .bar{max-width:var(--max);margin:0 auto;display:flex;align-items:center
 .nav-right .acct{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;flex-shrink:0;color:var(--navy)}
 .nav-right .acct:hover{border-color:var(--orange);color:var(--orange-deep)}
 .nav-right .acct .i{width:16px;height:16px}
-.nav-right .cart{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;position:relative;flex-shrink:0}
+.nav-right .cart{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;display:grid;place-items:center;position:relative;flex-shrink:0;overflow:visible}
 .nav-right .cart .i{width:16px;height:16px;color:var(--navy)}
-.nav-right .cart i{position:absolute;top:-3px;inset-inline-start:-3px;background:var(--orange);color:#fff;font-style:normal;font-size:9px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.nav-right .cart i{position:absolute;top:-4px;inset-inline-end:-4px;background:var(--orange);color:#fff;font-style:normal;font-size:9px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;display:grid;place-items:center;font-weight:800;line-height:16px;z-index:2}
 .nav-right .cart i.is-empty{display:none}
 .burger{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-3);background:#fff;
   display:grid;place-items:center}
@@ -300,6 +300,7 @@ nav.main .bar{max-width:var(--max);margin:0 auto;display:flex;align-items:center
 .rail-btn:disabled{opacity:.28;transform:none;background:#fff;color:var(--navy);cursor:default}
 .rail-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;
   stroke-linecap:round;stroke-linejoin:round}
+html[dir="rtl"] .rail-ctrl .rail-btn svg{transform:scaleX(-1)}
 .dots{display:flex;justify-content:center;gap:7px;margin-top:20px}
 .dots i{width:22px;height:3px;border-radius:3px;background:var(--gray-3);transition:.25s}
 .dots i.on{background:var(--orange);width:34px}

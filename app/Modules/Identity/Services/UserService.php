@@ -151,7 +151,7 @@ final class UserService
             return 'self';
         }
 
-        if ($this->isLastActiveSuperAdmin($user)) {
+        if ($this->isLastSuperAdmin($user)) {
             return 'last_super_admin';
         }
 
@@ -190,6 +190,15 @@ final class UserService
         if ($isLosingSuperAdmin && $this->superAdminCount() <= 1) {
             throw new LastSuperAdminException;
         }
+    }
+
+    private function isLastSuperAdmin(User $user): bool
+    {
+        if (! $user->hasRole(RoleName::SuperAdmin->value)) {
+            return false;
+        }
+
+        return $this->superAdminCount() <= 1;
     }
 
     private function isLastActiveSuperAdmin(User $user): bool

@@ -99,10 +99,92 @@ html[dir="rtl"] .card > .hint,html[dir="rtl"] .card-head .hint{margin:0 35px 18p
 .sub-schedule__head p{font-size:13.5px;font-weight:700;color:var(--muted);max-width:560px}
 .sub-schedule__card{margin-bottom:0}
 
-.frow{display:grid;grid-template-columns:1fr;gap:0 14px}
+.frow{display:grid;grid-template-columns:1fr;gap:0 14px;align-items:start}
 @media(min-width:640px){.frow{grid-template-columns:1fr 1fr}}
+@media(min-width:820px){
+  .acc-dash .frow--contact{
+    align-items:stretch;
+    column-gap:14px;
+    row-gap:14px;
+    grid-template-rows:minmax(1.4em,auto) 48px auto;
+  }
+  .acc-dash .frow--contact > .f,
+  .acc-dash .frow--contact > .phone-field{
+    display:grid;
+    grid-template-rows:minmax(1.4em,auto) 48px auto;
+    align-content:start;
+    gap:14px;
+    min-width:0;
+    margin-bottom:13px;
+  }
+  @supports (grid-template-rows:subgrid){
+    .acc-dash .frow--contact > .f,
+    .acc-dash .frow--contact > .phone-field{
+      grid-template-rows:subgrid;
+      grid-row:1 / span 3;
+      gap:0;
+      margin-bottom:0;
+    }
+  }
+  .acc-dash .frow--contact > .f > label,
+  .acc-dash .frow--contact .phone-field__title{
+    grid-row:1;
+    min-height:1.4em;
+    display:flex;
+    align-items:flex-end;
+    line-height:1.35;
+    margin:0;
+    padding-bottom:10px;
+  }
+  .acc-dash .frow--contact > .f > input{
+    grid-row:2;
+    flex:none;
+    width:100%;
+    min-width:0;
+    height:48px;
+    min-height:48px;
+    max-height:48px;
+    padding-block:0;
+    box-sizing:border-box;
+    margin:0;
+  }
+  .acc-dash .frow--contact .phone-split{
+    grid-row:2;
+    position:relative;
+    align-items:stretch;
+    height:48px;
+    margin:0;
+  }
+  .acc-dash .frow--contact .phone-split__dial,
+  .acc-dash .frow--contact .phone-split__num{
+    gap:0;
+    justify-content:stretch;
+  }
+  .acc-dash .frow--contact .phone-split label{
+    position:absolute;
+    width:1px;height:1px;
+    padding:0;margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+  .acc-dash .frow--contact .phone-split select,
+  .acc-dash .frow--contact .phone-split input{
+    height:48px;
+    min-height:48px;
+    max-height:48px;
+    padding-block:0;
+    box-sizing:border-box;
+    margin:0;
+  }
+  .acc-dash .frow--contact .phone-field__combined,
+  .acc-dash .frow--contact > .f > .err{
+    grid-row:3;
+  }
+}
 
-.f,.field{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+.f,.field{display:flex;flex-direction:column;gap:10px;margin-bottom:13px}
 .addr-grid{display:grid;grid-template-columns:1fr;column-gap:16px}
 @media(min-width:640px){.addr-grid{grid-template-columns:1fr 1fr}}
 .f label,.field label{font-size:12.5px;font-weight:800;color:var(--ink)}
@@ -118,7 +200,7 @@ html[dir="rtl"] .card > .hint,html[dir="rtl"] .card-head .hint{margin:0 35px 18p
   border-color:#C0392B;background:#FDECEA;
   box-shadow:0 0 0 3px rgba(192,57,43,.16)
 }
-.phone-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+.phone-field{display:flex;flex-direction:column;gap:10px;margin-bottom:13px}
 .phone-field__title{font-size:12.5px;font-weight:800;color:var(--ink)}
 .phone-split{display:grid;grid-template-columns:6.6rem minmax(0,1fr);gap:8px;align-items:end}
 .phone-split__dial,.phone-split__num{display:flex;flex-direction:column;gap:5px;min-width:0}

@@ -7,6 +7,7 @@ namespace App\Modules\Settings\Enums;
 enum SettingGroup: string
 {
     case Company = 'company';
+    case Social = 'social';
     case Localization = 'localization';
     case Authentication = 'authentication';
     case Finance = 'finance';

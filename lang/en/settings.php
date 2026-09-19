@@ -12,6 +12,7 @@ return [
 
     'groups' => [
         'company' => 'Company',
+        'social' => 'Social media',
         'localization' => 'Localization',
         'authentication' => 'Authentication',
         'finance' => 'Finance & Tax',
@@ -29,6 +30,14 @@ return [
             'phone' => 'Contact phone',
             'address_ar' => 'Address (Arabic)',
             'address_en' => 'Address (English)',
+        ],
+        'social' => [
+            'whatsapp' => 'WhatsApp',
+            'instagram' => 'Instagram',
+            'tiktok' => 'TikTok',
+            'snapchat' => 'Snapchat',
+            'x' => 'X (Twitter)',
+            'linkedin' => 'LinkedIn',
         ],
         'localization' => [
             'default_locale' => 'Default language',
@@ -72,6 +81,14 @@ return [
     ],
 
     'hints' => [
+        'social' => [
+            'whatsapp' => 'Full link such as https://wa.me/9665xxxxxxxx. Leave empty to hide the icon.',
+            'instagram' => 'Full profile URL. Leave empty to hide the icon.',
+            'tiktok' => 'Full profile URL. Leave empty to hide the icon.',
+            'snapchat' => 'Full profile URL. Leave empty to hide the icon.',
+            'x' => 'Full profile URL. Leave empty to hide the icon.',
+            'linkedin' => 'Full page URL. Leave empty to hide the icon.',
+        ],
         'authentication' => [
             'sms_otp' => 'When enabled, a one-time code is sent by SMS to verify the customer’s phone.',
             'email_otp' => 'When enabled, a one-time code is sent by email to verify the customer’s address.',

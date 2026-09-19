@@ -448,13 +448,15 @@ body.menu-open{overflow:hidden}
         @endif
 
         @foreach ($summary->lines as $line)
-          @php $isDeliveryLine = ! $isSubscription && $line['label'] === __('checkout.summary.delivery'); @endphp
+          @php $lineKey = $line['key'] ?? ''; @endphp
           <div class="r">
             <span>{{ $line['label'] }}</span>
             <span class="v">
-              @if ($isDeliveryLine)
+              @if ($lineKey === 'delivery')
                 <span data-delivery-fee>{{ $line['value'] }}</span>
                 <span data-fee-currency @if (($storeQuote?->deliveryFeeMinor ?? 0) === 0) hidden @endif> <x-ui.sar /></span>
+              @elseif (in_array($lineKey, ['subtotal', 'taxable', 'tax'], true))
+                <span data-summary-{{ $lineKey }}>{{ $line['value'] }}</span> <x-ui.sar />
               @else
                 {{ $line['value'] }} <x-ui.sar />
               @endif
@@ -488,6 +490,10 @@ body.menu-open{overflow:hidden}
          data-fee-delivery="{{ $storeQuote?->feeDisplay() }}"
          data-fee-pickup="{{ __('checkout.summary.free') }}"
          data-fee-charged="{{ ($storeQuote?->deliveryFeeMinor ?? 0) > 0 ? '1' : '0' }}"
+         data-subtotal-delivery="{{ $storeQuote?->deliverySubtotalDisplay }}"
+         data-subtotal-pickup="{{ $storeQuote?->pickupSubtotalDisplay }}"
+         data-tax-delivery="{{ $storeQuote?->deliveryTaxDisplay }}"
+         data-tax-pickup="{{ $storeQuote?->pickupTaxDisplay }}"
          data-total-delivery="{{ $storeQuote?->deliveryTotalDisplay() }}"
          data-total-pickup="{{ $storeQuote?->pickupTotalDisplay() }}"></div>
   @endunless
@@ -554,6 +560,24 @@ try{
       }
       if(feeCurrency){
         feeCurrency.hidden=pickup||quotes.getAttribute('data-fee-charged')!=='1';
+      }
+      var subtotal=document.querySelector('[data-summary-subtotal]');
+      var taxable=document.querySelector('[data-summary-taxable]');
+      var tax=document.querySelector('[data-summary-tax]');
+      if(subtotal){
+        subtotal.textContent=pickup
+          ?quotes.getAttribute('data-subtotal-pickup')
+          :quotes.getAttribute('data-subtotal-delivery');
+      }
+      if(taxable){
+        taxable.textContent=pickup
+          ?quotes.getAttribute('data-subtotal-pickup')
+          :quotes.getAttribute('data-subtotal-delivery');
+      }
+      if(tax){
+        tax.textContent=pickup
+          ?quotes.getAttribute('data-tax-pickup')
+          :quotes.getAttribute('data-tax-delivery');
       }
       if(orderTotal){
         orderTotal.textContent=pickup

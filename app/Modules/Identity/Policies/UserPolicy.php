@@ -6,6 +6,7 @@ namespace App\Modules\Identity\Policies;
 
 use App\Models\User;
 use App\Modules\Identity\Enums\PermissionName;
+use App\Modules\Identity\Enums\RoleName;
 
 final class UserPolicy
 {
@@ -36,6 +37,14 @@ final class UserPolicy
 
     public function delete(User $user, User $target): bool
     {
+        if ((int) $user->getKey() === (int) $target->getKey()) {
+            return false;
+        }
+
+        if ($target->isStaff() && $this->isLastSuperAdmin($target)) {
+            return false;
+        }
+
         if ($target->isStaff()) {
             return $user->can(PermissionName::UsersDelete->value);
         }
@@ -60,5 +69,14 @@ final class UserPolicy
     public function invite(User $user): bool
     {
         return $user->can(PermissionName::UsersInvite->value);
+    }
+
+    private function isLastSuperAdmin(User $target): bool
+    {
+        if (! $target->hasRole(RoleName::SuperAdmin->value)) {
+            return false;
+        }
+
+        return User::query()->role(RoleName::SuperAdmin->value)->count() <= 1;
     }
 }

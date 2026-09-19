@@ -25,8 +25,8 @@ return [
     'err_name' => 'Please enter your name',
     'label_email' => 'Email',
     'err_email' => 'Enter a valid email address',
-    'label_goal' => 'Your goal (optional)',
-    'goal_placeholder' => '— Choose your goal —',
+    'label_goal' => 'Plan or package (optional)',
+    'goal_placeholder' => '— Choose a plan —',
     'goals' => [
         'Weight loss',
         'Muscle building',

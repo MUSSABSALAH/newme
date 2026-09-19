@@ -7,6 +7,7 @@ namespace App\Modules\Invoices\Services;
 use App\Models\User;
 use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Audit\Services\AuditService;
+use App\Modules\Checkout\Support\VatBreakdown;
 use App\Modules\Invoices\DTOs\InvoiceDraft;
 use App\Modules\Invoices\DTOs\InvoiceLine;
 use App\Modules\Invoices\DTOs\InvoiceParty;
@@ -30,8 +31,7 @@ use Throwable;
  *
  * The charged total is the one figure taken as given: VAT and the taxable
  * amount are derived from it so the invoice can always be reconciled against
- * the payment. Store prices are treated as VAT-inclusive (the customer paid the
- * shelf price), while a subscription already carries its own tax line.
+ * the payment. A subscription already carries its own tax line.
  *
  * Issuing is idempotent — a payable has at most one invoice, enforced by a
  * unique index — so retries and double confirmations are harmless.
@@ -158,28 +158,25 @@ final class InvoiceService
     }
 
     /**
-     * Store prices are quoted VAT-inclusive, so the tax is extracted from what
-     * was charged rather than added on top.
+     * Split the paid total the same way checkout does: exclusive lines,
+     * exclusive delivery, taxable, VAT, grand total.
      */
     private function draftFromOrder(Order $order): InvoiceDraft
     {
-        $bps = $this->taxRateBps();
-        $total = $order->total_minor;
+        $fee = max(0, (int) $order->delivery_fee_minor);
+        $vat = VatBreakdown::fromPaidTotal((int) $order->total_minor, $fee, $this->settings);
 
-        $tax = Rounding::divide($total * $bps, 10000 + $bps);
-        $net = $total - $tax;
+        $discount = $order->discount_minor;
+        if ($discount > 0 && $vat->taxRateBps > 0) {
+            $discount = Rounding::divide($discount * 10000, 10000 + $vat->taxRateBps);
+        }
 
-        $discount = $order->discount_minor === 0
-            ? 0
-            : Rounding::divide($order->discount_minor * 10000, 10000 + $bps);
-
+        $net = $vat->exclusiveMinor;
+        $tax = $vat->taxMinor;
+        $total = $vat->grossMinor;
         $linesTotal = $net + $discount;
-
-        $feeInclusive = max(0, (int) $order->delivery_fee_minor);
-        $feeNet = $feeInclusive === 0
-            ? 0
-            : Rounding::divide($feeInclusive * 10000, 10000 + $bps);
-        $productLinesTotal = max(0, $linesTotal - $feeNet);
+        $feeNet = $vat->exclusiveFeeMinor;
+        $productLinesTotal = max(0, $vat->exclusiveGoodsMinor);
 
         $items = $order->items()->orderBy('id')->get();
         $weights = $items->map(static fn ($item): int => (int) $item->line_total_minor)->all();
@@ -215,7 +212,7 @@ final class InvoiceService
             netMinor: $net,
             taxMinor: $tax,
             totalMinor: $total,
-            taxRateBps: $bps,
+            taxRateBps: $vat->taxRateBps > 0 ? $vat->taxRateBps : $this->taxRateBps(),
         );
     }
 

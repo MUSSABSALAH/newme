@@ -67,7 +67,6 @@ final class ConsultationConfirmationNotification extends Notification implements
         $callAhead = (string) __('consultations.mail.call_ahead');
         $action = (string) __('consultations.mail.action');
         $url = route('website.account', ['tab' => 'consultations']);
-        $outro = (string) __('consultations.mail.outro');
 
         $lines = [$intro, $whenLine, $referenceLine];
 
@@ -76,7 +75,6 @@ final class ConsultationConfirmationNotification extends Notification implements
         }
 
         $lines[] = $callAhead;
-        $lines[] = $outro;
 
         return BrandMail::make(
             'mail.operations.consultation-booked',
@@ -92,7 +90,6 @@ final class ConsultationConfirmationNotification extends Notification implements
                 'callAhead' => $callAhead,
                 'actionLabel' => $action,
                 'actionUrl' => $url,
-                'outro' => $outro,
             ],
             $subject,
             $greeting,

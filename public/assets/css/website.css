@@ -71,9 +71,9 @@ nav.main .bar{max-width:1260px;margin:0 auto;display:flex;align-items:center;jus
 .mmenu .lang-toggle:hover{border-color:#FFA05C;color:#FFA05C}
 .lang-toggle.on-dark{height:34px;min-width:34px;background:transparent;border-color:rgba(255,255,255,.16);color:#EAF1FA}
 .lang-toggle.on-dark:hover{border-color:#F07F2D;color:#FFA05C}
-.cart{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--w-gray-3);background:#fff;display:grid;place-items:center;position:relative;flex-shrink:0}
+.cart{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--w-gray-3);background:#fff;display:grid;place-items:center;position:relative;flex-shrink:0;overflow:visible}
 .cart .i{width:16px;height:16px;color:var(--w-navy)}
-.cart i{position:absolute;top:-3px;inset-inline-start:-3px;background:var(--w-orange);color:#fff;font-style:normal;font-size:9px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.cart i{position:absolute;top:-4px;inset-inline-end:-4px;background:var(--w-orange);color:#fff;font-style:normal;font-size:9px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;display:grid;place-items:center;font-weight:800;line-height:16px;z-index:2}
 .cart i.is-empty{display:none}
 .acct{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--w-gray-3);background:#fff;display:grid;place-items:center;flex-shrink:0;color:var(--w-navy)}
 .acct:hover{border-color:var(--w-orange);color:var(--w-orange-deep)}
