@@ -323,16 +323,18 @@ class WebsiteController extends Controller
     {
         $copy = trans('website.subscribe.plans.'.$slug);
         $locale = app()->getLocale();
+        $name = $plan->label($locale);
+        $desc = trim((string) $plan->getTranslation('description', $locale, false));
 
-        $name = is_array($copy) && filled($copy['name'] ?? null)
-            ? (string) $copy['name']
-            : $plan->label();
+        if ($name === '' && is_array($copy) && filled($copy['name'] ?? null)) {
+            $name = (string) $copy['name'];
+        }
 
         $hook = is_array($copy) ? (string) ($copy['hook'] ?? '') : '';
 
-        $desc = is_array($copy) && filled($copy['desc'] ?? null)
-            ? (string) $copy['desc']
-            : (string) $plan->getTranslation('description', $locale, false);
+        if ($desc === '' && is_array($copy) && filled($copy['desc'] ?? null)) {
+            $desc = (string) $copy['desc'];
+        }
 
         return [
             'name' => $name,
