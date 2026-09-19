@@ -496,15 +496,16 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 .f-col h4{font-size:13.5px;color:#fff;font-weight:900;margin-bottom:13px}
 .f-col a,.f-col .f-muted{display:block;font-size:13px;color:#8296B2;padding:5px 0;font-weight:600}
 .f-col a:hover{color:#fff}
-.f-social{margin-top:4px}
+.f-col{overflow:visible}
+.f-social{margin-top:4px;overflow:visible}
 .f-social-label{display:block;margin-bottom:8px}
-.f-social-icons{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.f-social-icons a{display:inline-grid;place-items:center;width:38px;height:38px;padding:0!important;
+.f-social-icons{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;width:max-content;overflow:visible}
+.f-social-icons a{display:inline-grid;place-items:center;flex:0 0 auto;width:26px;height:26px;padding:0!important;
   border-radius:999px;border:1px solid rgba(255,255,255,.16);color:#C7D6EC;background:rgba(255,255,255,.04);
   transition:color .2s,border-color .2s,background .2s,transform .2s}
 .f-social-icons a:hover{color:#fff;border-color:#F07F2D;background:rgba(240,127,45,.14);transform:translateY(-1px)}
-.f-social-icons svg{width:18px;height:18px;display:block}
-.f-social-icons a[data-net="snapchat"] svg{width:20px;height:20px}
+.f-social-icons svg{width:13px;height:13px;display:block}
+.f-social-icons a[data-net="snapchat"] svg{width:14px;height:14px}
 .f-bottom{max-width:var(--max);margin:36px auto 0;padding:22px 20px 0;
   border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;
   gap:14px;flex-wrap:wrap;font-size:12.5px;color:#7A8DA8;font-weight:700}

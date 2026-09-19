@@ -334,7 +334,7 @@ return [
         'social_snapchat_aria' => 'Snapchat',
         'social_x_aria' => 'X',
         'social_linkedin_aria' => 'LinkedIn',
-        'social_linkedin_url' => '',
+        'social_linkedin_url' => 'https://www.linkedin.com/company/newmeksa',
         'vat_label' => 'VAT number',
         'vat' => '312782087600003',
         'copyright' => '© :year New Me. All rights reserved.',

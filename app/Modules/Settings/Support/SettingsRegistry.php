@@ -84,7 +84,7 @@ final class SettingsRegistry
             new SettingDefinition('social.tiktok', SettingGroup::Social, SettingType::String, 'https://www.tiktok.com/@NewMeKSA', ['nullable', 'string', 'max:500', 'url:http,https']),
             new SettingDefinition('social.snapchat', SettingGroup::Social, SettingType::String, 'https://www.snapchat.com/add/NewMeKSA', ['nullable', 'string', 'max:500', 'url:http,https']),
             new SettingDefinition('social.x', SettingGroup::Social, SettingType::String, 'https://x.com/NewMeKSA', ['nullable', 'string', 'max:500', 'url:http,https']),
-            new SettingDefinition('social.linkedin', SettingGroup::Social, SettingType::String, null, ['nullable', 'string', 'max:500', 'url:http,https']),
+            new SettingDefinition('social.linkedin', SettingGroup::Social, SettingType::String, 'https://www.linkedin.com/company/newmeksa', ['nullable', 'string', 'max:500', 'url:http,https']),
 
             // Localization
             new SettingDefinition('localization.default_locale', SettingGroup::Localization, SettingType::Select, 'ar', ['required', 'in:ar,en'], ['ar', 'en']),

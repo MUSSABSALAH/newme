@@ -16,6 +16,9 @@
     ['key' => 'social.linkedin', 'aria' => __('website.site.contact.social_linkedin_aria'), 'icon' => 'linkedin'],
   ] as $network) {
     $url = trim((string) ($settings->get($network['key']) ?? ''));
+    if ($url === '' && $network['key'] === 'social.linkedin') {
+      $url = trim((string) (__('website.site.contact.social_linkedin_url')));
+    }
     if ($url === '') {
       continue;
     }
@@ -90,17 +93,26 @@ footer.w-foot-full.site-footer .f-social-label {
   display: block;
   margin-bottom: 8px;
 }
+footer.w-foot-full.site-footer .f-col {
+  overflow: visible;
+}
+footer.w-foot-full.site-footer .f-social,
+footer.w-foot-full.site-footer .f-social-icons {
+  overflow: visible;
+}
 footer.w-foot-full.site-footer .f-social-icons {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+  width: max-content;
 }
 footer.w-foot-full.site-footer .f-social-icons a {
   display: inline-grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
   padding: 0 !important;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.16);
@@ -115,13 +127,13 @@ footer.w-foot-full.site-footer .f-social-icons a:hover {
   transform: translateY(-1px);
 }
 footer.w-foot-full.site-footer .f-social-icons svg {
-  width: 18px;
-  height: 18px;
+  width: 13px;
+  height: 13px;
   display: block;
 }
 footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
 }
 </style>
 @endonce
@@ -185,7 +197,7 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
             @elseif ($social['icon'] === 'snapchat')
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3.7 0 6.4 3.2 6.4 7.3c0 1.5-.2 2.6.9 3.2c.9.5 1.5 1.1 1.5 2c0 1.3-1.8 2-4 2.4c-.5 1.5-2.3 3.1-4.8 3.1s-4.3-1.6-4.8-3.1c-2.2-.4-4-1.1-4-2.4c0-.9.6-1.5 1.5-2c1.1-.6.9-1.7.9-3.2C5.6 6.2 8.3 3 12 3z"/></svg>
             @elseif ($social['icon'] === 'linkedin')
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S.02 4.88.02 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8.48h4.56V24H.22V8.48zM8.44 8.48h4.37v2.12h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.63c0-1.82-.03-4.16-2.53-4.16-2.54 0-2.93 1.98-2.93 4.03V24H8.44V8.48z"/></svg>
             @else
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
             @endif

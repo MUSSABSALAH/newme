@@ -53,7 +53,7 @@ final class UpdateSettingsRequest extends FormRequest
                 if (! is_string($raw) || trim($raw) === '') {
                     $settings[$name] = null;
                 } else {
-                    $settings[$name] = trim($raw);
+                    $settings[$name] = $this->normalizeSocialUrl(trim($raw));
                 }
             }
         }
@@ -136,6 +136,18 @@ final class UpdateSettingsRequest extends FormRequest
                 );
             }
         });
+    }
+
+    /**
+     * Accept pasted profile links that omit the scheme so they pass url:http,https.
+     */
+    private function normalizeSocialUrl(string $url): string
+    {
+        if (preg_match('#^[a-z][a-z0-9+.-]*://#i', $url) === 1) {
+            return $url;
+        }
+
+        return 'https://'.$url;
     }
 
     private function timeToMinutes(string $time): ?int

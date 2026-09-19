@@ -87,7 +87,7 @@ return [
             'tiktok' => 'Full profile URL. Leave empty to hide the icon.',
             'snapchat' => 'Full profile URL. Leave empty to hide the icon.',
             'x' => 'Full profile URL. Leave empty to hide the icon.',
-            'linkedin' => 'Full page URL. Leave empty to hide the icon.',
+            'linkedin' => 'Full page URL. The NewMeKSA company page is used when this is empty.',
         ],
         'authentication' => [
             'sms_otp' => 'When enabled, a one-time code is sent by SMS to verify the customer’s phone.',

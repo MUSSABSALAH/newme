@@ -334,7 +334,7 @@ return [
         'social_snapchat_aria' => 'سناب شات',
         'social_x_aria' => 'إكس',
         'social_linkedin_aria' => 'لينكدإن',
-        'social_linkedin_url' => '',
+        'social_linkedin_url' => 'https://www.linkedin.com/company/newmeksa',
         'vat_label' => 'الرقم الضريبي',
         'vat' => '312782087600003',
         'copyright' => '© :year نيو مي. جميع الحقوق محفوظة',
