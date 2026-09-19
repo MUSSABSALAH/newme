@@ -63,7 +63,8 @@ nav.main .bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;jus
 @media(min-width:960px){.tl{grid-template-columns:280px 1fr;align-items:start}}
 .toc{display:block}
 @media(min-width:960px){.toc{position:sticky;top:calc(84px + var(--sat));max-height:calc(100vh - 120px);overflow-y:auto;padding-inline-end:8px}}
-.toc h3{font-size:11px;font-family:var(--mono);letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
+.toc h3{font-size:11px;font-family:var(--mono);letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;font-weight:800}
+html[lang="ar"] .toc h3{font-family:'Cairo',Tahoma,Arial,sans-serif;letter-spacing:0;text-transform:none}
 .toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:10px;font-size:12px;font-weight:800;color:var(--body);transition:.15s;border-inline-start:2.5px solid transparent}
 .toc a small{font-family:var(--mono);font-size:9.5px;color:var(--muted);min-width:20px}
 .toc a:hover{background:#fff}

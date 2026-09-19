@@ -69,6 +69,9 @@ html[lang="ar"] .wh-kick,
 html[lang="ar"] .mmenu .mkick,
 html[lang="ar"] .closing .tag,
 html[lang="ar"] .chapter,
+html[lang="ar"] .toc h3,
+html[lang="ar"] .thero .kick,
+html[lang="ar"] .tnote,
 html[lang="ar"] .meta .cat,
 html[lang="ar"] .flag,
 html[lang="ar"] .kchip,
@@ -101,6 +104,7 @@ html[lang="ar"] .mono{
 @endphp
 <script>
 window.NM_I18N = @json($nmI18n);
+window.nmStoreLineGroups = @json(\App\Modules\Store\Support\StoreCatalogLines::groups());
 </script>
 <script src="{{ $siteJs }}" defer></script>
 @stack('scripts')

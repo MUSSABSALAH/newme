@@ -50,7 +50,7 @@ return [
     ],
     'hints' => [
         'html' => 'To highlight a phrase in orange, wrap it in asterisks, like: *first order*. A new line in the box becomes a new line on the site.',
-        'rich' => 'This is legal copy. Change the wording only, and leave the markup as it is unless you are sure.',
+        'rich' => 'Write plain text only — no HTML. Put a clause title on its own line, e.g. 1. Title. Start bullets with a dash: - text. Leave a blank line between paragraphs.',
         'list' => 'Separate items with a comma.',
         'announce' => 'These lines rotate in the top bar (web and mobile).',
         'image' => 'The preview is the image currently on the site. Upload a file only to replace it.',

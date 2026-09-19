@@ -20,6 +20,7 @@ use App\Modules\Settings\Services\SettingsService;
 use App\Modules\Settings\Support\ConsultationSchedule;
 use App\Modules\Store\Models\Category;
 use App\Modules\Store\Models\Product;
+use App\Modules\Store\Support\StoreCatalogLines;
 use App\Modules\Subscriptions\Support\SubscriptionStartRules;
 use App\Support\Money\Money;
 use Illuminate\Contracts\View\View;
@@ -83,6 +84,26 @@ class WebsiteController extends Controller
     public function store(Request $request): View
     {
         $data = $this->websiteStore();
+        $allowed = StoreCatalogLines::allowed((string) $request->query('line', ''));
+
+        if ($allowed !== null) {
+            $allowedFlip = array_flip($allowed);
+            $data['products'] = array_values(array_filter(
+                $data['products'],
+                fn (array $product): bool => isset($allowedFlip[$product['cat']]),
+            ));
+            $data['total'] = count($data['products']);
+            $data['tabs'] = array_values(array_filter(
+                $data['tabs'],
+                fn (array $tab): bool => $tab['slug'] === 'all' || isset($allowedFlip[$tab['slug']]),
+            ));
+            foreach ($data['tabs'] as $i => $tab) {
+                if ($tab['slug'] === 'all') {
+                    $data['tabs'][$i]['count'] = $data['total'];
+                }
+            }
+        }
+
         $cat = (string) $request->query('cat', 'all');
         $slugs = array_column($data['tabs'], 'slug');
         $data['activeCat'] = in_array($cat, $slugs, true) ? $cat : 'all';

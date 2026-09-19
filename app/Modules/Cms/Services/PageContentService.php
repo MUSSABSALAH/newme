@@ -9,6 +9,7 @@ use App\Modules\Audit\Services\AuditService;
 use App\Modules\Cms\Models\PageContent;
 use App\Modules\Cms\Support\HighlightMarkup;
 use App\Modules\Cms\Support\PageContentRegistry;
+use App\Modules\Cms\Support\RichMarkup;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -119,6 +120,11 @@ final class PageContentService
                 $en = HighlightMarkup::toEditor($en);
             }
 
+            if ($type === 'rich') {
+                $ar = RichMarkup::toEditor($ar);
+                $en = RichMarkup::toEditor($en);
+            }
+
             $values[$key] = [
                 'ar' => $ar,
                 'en' => $en,
@@ -168,6 +174,11 @@ final class PageContentService
             if ($field['type'] === 'html') {
                 $ar = HighlightMarkup::fromEditor($ar);
                 $en = HighlightMarkup::fromEditor($en);
+            }
+
+            if ($field['type'] === 'rich') {
+                $ar = RichMarkup::fromEditor($ar);
+                $en = RichMarkup::fromEditor($en);
             }
 
             $value = [

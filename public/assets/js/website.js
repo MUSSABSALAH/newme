@@ -156,13 +156,26 @@
     };
 
     window.nmStoreLine = {
-        groups: {
-            bakery: ["bakery"],
-            support: ["fermented", "pantry", "samosa", "hot_dishes", "salads", "sandwiches"]
+        groupsFromDom: function () {
+            var support = [];
+            document.querySelectorAll("#tabs .tab[data-cat], #v30Tabs .tab[data-cat]").forEach(function (tab) {
+                var slug = tab.getAttribute("data-cat");
+                if (!slug || slug === "all" || slug === "bakery") {
+                    return;
+                }
+                if (support.indexOf(slug) === -1) {
+                    support.push(slug);
+                }
+            });
+            return { bakery: ["bakery"], support: support };
         },
         allowed: function () {
             var line = new URLSearchParams(window.location.search).get("line");
-            return this.groups[line] || null;
+            if (!line) {
+                return null;
+            }
+            var groups = window.nmStoreLineGroups || this.groupsFromDom();
+            return groups[line] || null;
         },
         requestedCat: function () {
             var cat = new URLSearchParams(window.location.search).get("cat");

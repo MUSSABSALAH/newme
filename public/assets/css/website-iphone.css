@@ -53,9 +53,11 @@
   html[lang="ar"] .nm-ip .kick,
   html[lang="ar"] .nm-ip .closing .tag,
   html[lang="ar"] .nm-ip .step .n,
+  html[lang="ar"] .nm-ip .toc h3,
   html[lang="ar"] .kick,
   html[lang="ar"] .mkick,
-  html[lang="ar"] .mmenu .mkick {
+  html[lang="ar"] .mmenu .mkick,
+  html[lang="ar"] .toc h3 {
     font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
     letter-spacing: 0 !important;
     text-transform: none !important;

@@ -62,7 +62,7 @@
                         </div>
                     @else
                         @php
-                            $rows = $type === 'rich' ? 10 : (($type === 'textarea' || $type === 'html' || $type === 'list') ? 3 : 2);
+                            $rows = $type === 'rich' ? 22 : (($type === 'textarea' || $type === 'html' || $type === 'list') ? 3 : 2);
                             $hint = match ($type) {
                                 'html' => __('cms.hints.html'),
                                 'rich' => __('cms.hints.rich'),
@@ -74,8 +74,8 @@
                             <p class="field__hint" style="margin:0 0 12px;font-weight:800;color:var(--ink, #122B4A)">{{ $label }}</p>
                             <div class="form-grid-2">
                                 <x-form.field :label="$label.' — '.__('cms.locale_ar')" :name="$key.'.ar'" :hint="$hint" class="field--full">
-                                    <textarea name="{{ $key }}[ar]" class="input" rows="{{ $rows }}" required @if ($type === 'html') data-cms-highlight @endif>{{ old($key.'.ar', $value['ar'] ?? '') }}</textarea>
-                                    @if ($type === 'html')
+                                    <textarea name="{{ $key }}[ar]" class="input" rows="{{ $rows }}" required @if (in_array($type, ['html', 'rich'], true)) data-cms-highlight @endif>{{ old($key.'.ar', $value['ar'] ?? '') }}</textarea>
+                                    @if (in_array($type, ['html', 'rich'], true))
                                         <p class="cms-preview" data-cms-preview hidden>
                                             <span class="cms-preview__label">{{ __('cms.preview') }}</span>
                                             <span class="cms-preview__out"></span>
@@ -83,8 +83,8 @@
                                     @endif
                                 </x-form.field>
                                 <x-form.field :label="$label.' — '.__('cms.locale_en')" :name="$key.'.en'" :hint="$hint" class="field--full">
-                                    <textarea name="{{ $key }}[en]" class="input" rows="{{ $rows }}" required dir="ltr" @if ($type === 'html') data-cms-highlight @endif>{{ old($key.'.en', $value['en'] ?? '') }}</textarea>
-                                    @if ($type === 'html')
+                                    <textarea name="{{ $key }}[en]" class="input" rows="{{ $rows }}" required dir="ltr" @if (in_array($type, ['html', 'rich'], true)) data-cms-highlight @endif>{{ old($key.'.en', $value['en'] ?? '') }}</textarea>
+                                    @if (in_array($type, ['html', 'rich'], true))
                                         <p class="cms-preview" data-cms-preview hidden>
                                             <span class="cms-preview__label">{{ __('cms.preview') }}</span>
                                             <span class="cms-preview__out"></span>
