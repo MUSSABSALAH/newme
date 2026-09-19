@@ -23,8 +23,8 @@ return [
 
     'nav' => [
         'home' => 'Home',
-        'about' => 'About',
-        'make' => 'How We Make It',
+        'about' => 'About Us',
+        'make' => 'Our Process',
         'kitchen' => 'Our Kitchen',
         'store' => 'Shop',
         'subscribe' => 'Subscriptions',

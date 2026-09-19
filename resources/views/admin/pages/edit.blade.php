@@ -1,7 +1,12 @@
 @php
     $pageLabel = __($meta['label']);
-    $fieldLabel = static function (array $field): string {
+    $pageSlug = $page;
+    $fieldLabel = static function (array $field) use ($pageSlug): string {
         $key = $field['key'];
+        $namespaced = __('cms.fields.'.$pageSlug.'.'.$key);
+        if ($namespaced !== 'cms.fields.'.$pageSlug.'.'.$key) {
+            return $namespaced;
+        }
         $direct = __('cms.fields.'.$key);
         if ($direct !== 'cms.fields.'.$key) {
             return $direct;
@@ -69,6 +74,9 @@
                                 'list' => __('cms.hints.list'),
                                 default => null,
                             };
+                            if (Lang::has('cms.hints.'.$key)) {
+                                $hint = __('cms.hints.'.$key);
+                            }
                         @endphp
                         <div class="stack" style="{{ $wrapStyle }}">
                             <p class="field__hint" style="margin:0 0 12px;font-weight:800;color:var(--ink, #122B4A)">{{ $label }}</p>

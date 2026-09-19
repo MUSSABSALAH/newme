@@ -49,7 +49,10 @@ final class UpdatePageContentRequest extends FormRequest
         $attributes = [];
 
         foreach (PageContentRegistry::fields($page) as $field) {
-            $label = (string) __('cms.fields.'.$field['key']);
+            $label = (string) __('cms.fields.'.$page.'.'.$field['key']);
+            if ($label === 'cms.fields.'.$page.'.'.$field['key']) {
+                $label = (string) __('cms.fields.'.$field['key']);
+            }
             if ($label === 'cms.fields.'.$field['key']) {
                 $label = $field['key'];
             }

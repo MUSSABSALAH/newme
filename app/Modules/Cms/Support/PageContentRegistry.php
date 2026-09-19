@@ -41,6 +41,7 @@ final class PageContentRegistry
             'blog' => ['label' => 'cms.pages.blog', 'preview' => 'website.blog'],
             'menu' => ['label' => 'cms.pages.menu', 'preview' => 'website.menu'],
             'terms' => ['label' => 'cms.pages.terms', 'preview' => 'website.terms'],
+            'footer' => ['label' => 'cms.pages.footer', 'preview' => 'website.main'],
         ];
     }
 
@@ -93,6 +94,7 @@ final class PageContentRegistry
             'blog' => self::blogFields(),
             'menu' => self::menuFields(),
             'terms' => self::termsFields(),
+            'footer' => self::footerFields(),
             default => [],
         };
     }
@@ -449,6 +451,50 @@ final class PageContentRegistry
             self::text('section_3_id', 'legal', ['website.terms.sections', 2, 'id'], 40),
             self::text('section_3_title', 'legal', ['website.terms.sections', 2, 'title'], 240),
             self::rich('section_3_html', 'legal', ['website.terms.sections', 2, 'html']),
+        ];
+    }
+
+    /**
+     * @return list<Field>
+     */
+    private static function footerFields(): array
+    {
+        return [
+            self::text('tagline', 'brand', 'website.site.contact.tagline', 180),
+            self::textarea('about', 'brand', 'website.site.contact.about', 600),
+
+            self::text('company_title', 'company', 'website.footer.company_title', 80),
+            self::text('link_about', 'company', 'website.footer.link_about', 80),
+            self::text('link_story', 'company', 'website.footer.link_story', 80),
+            self::text('link_terms', 'company', 'website.footer.link_terms', 80),
+            self::text('link_returns', 'company', 'website.footer.link_returns', 80),
+            self::text('link_privacy', 'company', 'website.footer.link_privacy', 80),
+
+            self::text('products_title', 'products', 'website.footer.products_title', 80),
+            self::text('link_bakery', 'products', 'website.footer.link_bakery', 80),
+            self::text('link_support', 'products', 'website.footer.link_support', 80),
+            self::text('link_subs', 'products', 'website.footer.link_subs', 80),
+
+            self::text('content_title', 'content', 'website.footer.content_title', 80),
+            self::text('link_articles', 'content', 'website.footer.link_articles', 80),
+            self::text('recipes', 'content', 'website.footer.recipes', 80),
+            self::text('link_craft', 'content', 'website.footer.link_craft', 80),
+            self::text('link_faq', 'content', 'website.footer.link_faq', 80),
+
+            self::text('contact_title', 'contact', 'website.footer.contact_title', 80),
+            self::text('phone_label', 'contact', 'website.site.contact.phone_label', 120),
+            self::text('phone', 'contact', 'website.site.contact.phone', 180),
+            self::text('link_consult', 'contact', 'website.footer.link_consult', 80),
+            self::textarea('address', 'contact', 'website.site.contact.address', 400),
+            self::text('social_label', 'contact', 'website.site.contact.social_label', 80),
+            self::text('vat_label', 'contact', 'website.site.contact.vat_label', 80),
+            self::text('vat', 'contact', 'website.site.contact.vat', 40),
+
+            self::text('copyright', 'bottom', 'website.site.contact.copyright', 240),
+
+            self::text('home', 'simple', 'website.footer.home', 40),
+            self::text('whatsapp', 'simple', 'website.footer.whatsapp', 40),
+            self::html('legal', 'simple', 'website.footer.legal', 800),
         ];
     }
 

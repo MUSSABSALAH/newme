@@ -2,8 +2,10 @@
   $variant = $variant ?? 'full';
   $isAr = app()->getLocale() === 'ar';
   $year = now()->year;
-  $phones = preg_split('/\s*[·•|]\s*/u', (string) __('website.site.contact.phone')) ?: [];
+  $cms = $cms ?? app(\App\Modules\Cms\Services\PageContentService::class);
+  $phones = preg_split('/\s*[·•|]\s*/u', $cms->text('footer', 'phone')) ?: [];
   $phones = array_values(array_filter(array_map('trim', $phones)));
+  $copyright = str_replace(':year', (string) $year, $cms->text('footer', 'copyright'));
   $settings = app(\App\Modules\Settings\Services\SettingsService::class);
   $whatsappUrl = trim((string) ($settings->get('social.whatsapp') ?? ''));
   $socials = [];
@@ -142,49 +144,49 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
   <div class="f-grid">
     <div class="f-brand">
       @include('website.partials.logo', ['tone' => 'light'])
-      <b>{{ __('website.site.contact.tagline') }}</b>
-      <p>{{ __('website.site.contact.about') }}</p>
+      <b>{{ $cms->text('footer', 'tagline') }}</b>
+      <p>{{ $cms->text('footer', 'about') }}</p>
     </div>
 
     <div class="f-col">
-      <h4>{{ __('website.footer.company_title') }}</h4>
-      <a href="{{ route('website.about') }}">{{ __('website.footer.link_about') }}</a>
-      <a href="{{ route('website.about') }}#about">{{ __('website.footer.link_story') }}</a>
-      <a href="{{ route('website.terms') }}">{{ __('website.footer.link_terms') }}</a>
-      <a href="{{ route('website.terms') }}#returns">{{ __('website.footer.link_returns') }}</a>
-      <a href="{{ route('website.terms') }}#privacy">{{ __('website.footer.link_privacy') }}</a>
+      <h4>{{ $cms->text('footer', 'company_title') }}</h4>
+      <a href="{{ route('website.about') }}">{{ $cms->text('footer', 'link_about') }}</a>
+      <a href="{{ route('website.about') }}#about">{{ $cms->text('footer', 'link_story') }}</a>
+      <a href="{{ route('website.terms') }}">{{ $cms->text('footer', 'link_terms') }}</a>
+      <a href="{{ route('website.terms') }}#returns">{{ $cms->text('footer', 'link_returns') }}</a>
+      <a href="{{ route('website.terms') }}#privacy">{{ $cms->text('footer', 'link_privacy') }}</a>
     </div>
 
     <div class="f-col">
-      <h4>{{ __('website.footer.products_title') }}</h4>
-      <a href="{{ route('website.store', ['line' => 'bakery']) }}#shop">{{ __('website.footer.link_bakery') }}</a>
-      <a href="{{ route('website.store', ['line' => 'support']) }}#shop">{{ __('website.footer.link_support') }}</a>
-      <a href="{{ route('website.subscribe') }}">{{ __('website.footer.link_subs') }}</a>
+      <h4>{{ $cms->text('footer', 'products_title') }}</h4>
+      <a href="{{ route('website.store', ['line' => 'bakery']) }}#shop">{{ $cms->text('footer', 'link_bakery') }}</a>
+      <a href="{{ route('website.store', ['line' => 'support']) }}#shop">{{ $cms->text('footer', 'link_support') }}</a>
+      <a href="{{ route('website.subscribe') }}">{{ $cms->text('footer', 'link_subs') }}</a>
     </div>
 
     <div class="f-col">
-      <h4>{{ __('website.footer.content_title') }}</h4>
-      <a href="{{ route('website.blog') }}">{{ __('website.footer.link_articles') }}</a>
-      <a href="{{ route('website.blog') }}#recipes">{{ __('website.footer.recipes') }}</a>
-      <a href="{{ route('website.make') }}">{{ __('website.footer.link_craft') }}</a>
-      <a href="{{ route('website.help') }}">{{ __('website.footer.link_faq') }}</a>
+      <h4>{{ $cms->text('footer', 'content_title') }}</h4>
+      <a href="{{ route('website.blog') }}">{{ $cms->text('footer', 'link_articles') }}</a>
+      <a href="{{ route('website.blog') }}#recipes">{{ $cms->text('footer', 'recipes') }}</a>
+      <a href="{{ route('website.make') }}">{{ $cms->text('footer', 'link_craft') }}</a>
+      <a href="{{ route('website.help') }}">{{ $cms->text('footer', 'link_faq') }}</a>
     </div>
 
     <div class="f-col">
-      <h4>{{ __('website.footer.contact_title') }}</h4>
+      <h4>{{ $cms->text('footer', 'contact_title') }}</h4>
       @if ($whatsappUrl !== '')
-      <a href="{{ $whatsappUrl }}">{{ __('website.site.contact.phone_label') }}</a>
+      <a href="{{ $whatsappUrl }}">{{ $cms->text('footer', 'phone_label') }}</a>
       @endif
       <span class="f-muted f-phones">
         @foreach ($phones as $phone)
           <bdi class="f-num" dir="ltr">{{ $phone }}</bdi>
         @endforeach
       </span>
-      <a href="{{ route('website.consult') }}">{{ __('website.footer.link_consult') }}</a>
-      <span class="f-muted">{{ __('website.site.contact.address') }}</span>
+      <a href="{{ route('website.consult') }}">{{ $cms->text('footer', 'link_consult') }}</a>
+      <span class="f-muted">{{ $cms->text('footer', 'address') }}</span>
       @if ($socials !== [])
       <div class="f-social">
-        <span class="f-muted f-social-label">{{ __('website.site.contact.social_label') }}</span>
+        <span class="f-muted f-social-label">{{ $cms->text('footer', 'social_label') }}</span>
         <div class="f-social-icons">
           @foreach ($socials as $social)
           <a href="{{ $social['url'] }}" rel="noopener noreferrer" target="_blank" aria-label="{{ $social['aria'] }}"@if($social['icon'] === 'snapchat') data-net="snapchat"@endif>
@@ -206,13 +208,13 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
         </div>
       </div>
       @endif
-      <span class="f-muted">{{ __('website.site.contact.vat_label') }} <bdi class="f-vat-num" dir="ltr">{{ __('website.site.contact.vat') }}</bdi></span>
+      <span class="f-muted">{{ $cms->text('footer', 'vat_label') }} <bdi class="f-vat-num" dir="ltr">{{ $cms->text('footer', 'vat') }}</bdi></span>
     </div>
   </div>
 
   <div class="f-bottom">
-    <span>{{ __('website.site.contact.copyright', ['year' => $year]) }}</span>
-    <span>{{ __('website.site.contact.tagline') }}</span>
+    <span>{{ $copyright }}</span>
+    <span>{{ $cms->text('footer', 'tagline') }}</span>
   </div>
 </footer>
 
@@ -236,14 +238,14 @@ footer.w-foot-full.site-footer .f-social-icons a[data-net="snapchat"] svg {
 @else
 <footer class="w-foot-simple site-footer" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
   <div class="flinks">
-    <a href="{{ route('website.main') }}">{{ __('website.footer.home') }}</a>
+    <a href="{{ route('website.main') }}">{{ $cms->text('footer', 'home') }}</a>
     <a href="{{ route('website.store') }}">{{ __('website.nav.store') }}</a>
     <a href="{{ route('website.subscribe') }}">{{ __('website.nav.subscribe') }}</a>
     <a href="{{ route('website.consult') }}">{{ __('website.nav.consult') }}</a>
     @if ($whatsappUrl !== '')
-    <a href="{{ $whatsappUrl }}">{{ __('website.footer.whatsapp') }}</a>
+    <a href="{{ $whatsappUrl }}">{{ $cms->text('footer', 'whatsapp') }}</a>
     @endif
   </div>
-  <div class="legal">{!! __('website.footer.legal') !!}</div>
+  <div class="legal">{!! $cms->html('footer', 'legal') !!}</div>
 </footer>
 @endif
