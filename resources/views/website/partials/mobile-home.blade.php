@@ -77,7 +77,16 @@
       @endphp
       <article class="card" @if(!empty($p['cat'])) data-cat="{{ $p['cat'] }}" @endif>
         <div class="media">
-          @if (!empty($p['flag']))<span class="flag">{{ $p['flag'] }}</span>@endif
+          @php
+            $homeFlags = [
+              'sale' => __('website.store.flag_sale'),
+              'bestseller' => __('website.store.flag_bestseller'),
+              'occasions' => __('website.store.flag_occasions'),
+            ];
+            $flagRaw = is_string($p['flag'] ?? null) ? $p['flag'] : null;
+            $flagLabel = $flagRaw !== null && isset($homeFlags[$flagRaw]) ? $homeFlags[$flagRaw] : $flagRaw;
+          @endphp
+          @if (!empty($flagLabel))<span class="flag">{{ $flagLabel }}</span>@endif
           <div class="ph"><svg><use href="#i-bread"/></svg></div>
           <a class="shot" href="{{ $href }}" aria-label="{{ $p['name'] }}">
             @if (!empty($p['image_url']))<img src="{{ $p['image_url'] }}" alt="{{ $p['name'] }}" onerror="this.remove()">@endif

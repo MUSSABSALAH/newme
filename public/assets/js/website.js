@@ -202,36 +202,16 @@
             return slug;
         },
         match: function (slug, selected) {
-            var allowed = this.allowed();
             selected = selected || "all";
-            if (allowed) {
-                if (selected === "all") {
-                    return allowed.indexOf(slug) !== -1;
-                }
-                return selected === slug && allowed.indexOf(slug) !== -1;
+            var allowed = this.allowed();
+            if (selected === "all") {
+                return !allowed || allowed.indexOf(slug) !== -1;
             }
-            return selected === "all" || selected === slug;
+            return slug === selected;
         },
         hideExtraTabs: function () {
-            var allowed = this.allowed();
-            if (!allowed) {
-                return;
-            }
-            document.querySelectorAll("#tabs .tab, #v30Tabs .tab").forEach(function (tab) {
-                var slug = tab.getAttribute("data-cat");
-                if (slug && slug !== "all" && allowed.indexOf(slug) === -1) {
-                    tab.hidden = true;
-                }
-            });
         },
         selectSingleTab: function () {
-            var allowed = this.allowed();
-            if (!allowed || allowed.length !== 1) {
-                return;
-            }
-            document.querySelectorAll("#tabs .tab, #v30Tabs .tab").forEach(function (tab) {
-                tab.classList.toggle("on", tab.getAttribute("data-cat") === allowed[0]);
-            });
         },
         scrollCatalog: function () {
             var ids = ["shop", "store-catalog", "grid"];

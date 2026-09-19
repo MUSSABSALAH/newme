@@ -84,29 +84,10 @@ class WebsiteController extends Controller
     public function store(Request $request): View
     {
         $data = $this->websiteStore();
-        $allowed = StoreCatalogLines::allowed((string) $request->query('line', ''));
-
-        if ($allowed !== null) {
-            $allowedFlip = array_flip($allowed);
-            $data['products'] = array_values(array_filter(
-                $data['products'],
-                fn (array $product): bool => isset($allowedFlip[$product['cat']]),
-            ));
-            $data['total'] = count($data['products']);
-            $data['tabs'] = array_values(array_filter(
-                $data['tabs'],
-                fn (array $tab): bool => $tab['slug'] === 'all' || isset($allowedFlip[$tab['slug']]),
-            ));
-            foreach ($data['tabs'] as $i => $tab) {
-                if ($tab['slug'] === 'all') {
-                    $data['tabs'][$i]['count'] = $data['total'];
-                }
-            }
-        }
-
         $cat = (string) $request->query('cat', 'all');
         $slugs = array_column($data['tabs'], 'slug');
         $data['activeCat'] = in_array($cat, $slugs, true) ? $cat : 'all';
+        $data['storeLine'] = StoreCatalogLines::allowed((string) $request->query('line', ''));
 
         return view('website.pages.store', $data);
     }
@@ -546,7 +527,7 @@ class WebsiteController extends Controller
                 'image_url' => $product->imageUrl(),
                 'url' => $href,
                 'href' => $href,
-                'flag' => $product->flag?->label(),
+                'flag' => $product->flag?->value,
                 'flag_icon' => $flagIcons[$flag] ?? null,
                 'flag_style' => $flag === 'sale' ? 'color:var(--green)' : '',
                 'cat' => $catSlug,

@@ -103,8 +103,9 @@
         @php
           $href = $p['url'] ?? $p['href'] ?? '#';
           $cat = $p['cat'] ?? 'other';
-          $flagKey = is_string($p['flag'] ?? null) && isset($storeFlags[$p['flag']]) ? $p['flag'] : null;
-          $flagLabel = $p['flag'] ?? ($flagKey ? $storeFlags[$flagKey] : null);
+          $rawFlag = is_string($p['flag'] ?? null) ? $p['flag'] : null;
+          $flagKey = $rawFlag !== null && isset($storeFlags[$rawFlag]) ? $rawFlag : null;
+          $flagLabel = $flagKey !== null ? $storeFlags[$flagKey] : $rawFlag;
           $flagIcon = $p['flag_icon'] ?? ($flagKey ? ($flagIcons[$flagKey]['icon'] ?? null) : null);
           $flagStyle = $p['flag_style'] ?? ($flagKey ? ($flagIcons[$flagKey]['style'] ?? '') : '');
           $proteinRaw = $p['protein'] ?? null;
@@ -124,7 +125,13 @@
           $hasNut = $kcalN !== null || $proteinN !== null || $fatN !== null || $carbsN !== null;
           $serving = $p['serving'] ?? '';
         @endphp
-        <article class="prod rv{{ $activeCat !== 'all' && $cat !== $activeCat ? ' hide' : '' }}" data-cat="{{ $cat }}">
+        @php
+          $lineCats = $storeLine ?? null;
+          $hideProd = $activeCat !== 'all'
+            ? $cat !== $activeCat
+            : (is_array($lineCats) && ! in_array($cat, $lineCats, true));
+        @endphp
+        <article class="prod rv{{ $hideProd ? ' hide' : '' }}" data-cat="{{ $cat }}">
           <div class="prod-tile">
             @if ($flagLabel)
               <span class="p-flag">
