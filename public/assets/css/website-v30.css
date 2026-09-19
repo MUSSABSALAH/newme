@@ -443,11 +443,11 @@ a.acard{color:inherit}
 
 /* ========== 06 · STORY / VISION / CLOSING / FOOTER ========== */
 .quote{background:#fff;border:1.5px solid var(--gray-2);border-inline-end:4px solid var(--orange);
-  border-radius:20px;padding:28px}
-.quote p{font-size:15px;color:var(--ink);font-weight:600;line-height:2.15}
-.sig{margin-top:18px;font-size:16px;font-weight:900;color:var(--navy)}
-.sig span{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-top:4px;
-  direction:ltr;text-align:right;font-family:var(--mono);letter-spacing:.04em}
+  border-radius:20px;padding:28px;text-align:start}
+.quote p{font-size:15px;color:var(--ink);font-weight:600;line-height:2.15;text-align:start}
+.sig{margin-top:18px;font-size:16px;font-weight:900;color:var(--navy);text-align:start}
+.sig span{display:block;width:max-content;max-width:100%;font-size:12px;font-weight:700;color:var(--muted);margin-top:4px;
+  direction:ltr;unicode-bidi:isolate;text-align:start;letter-spacing:0}
 .stats{max-width:var(--max);margin:34px auto 0;padding:0 20px;display:grid;gap:16px;
   grid-template-columns:1fr}
 @media(min-width:700px){.stats{grid-template-columns:repeat(3,1fr)}}

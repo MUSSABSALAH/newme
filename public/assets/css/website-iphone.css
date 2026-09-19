@@ -231,10 +231,10 @@
   .nm-ip .ac h4 { font-size: 15px; margin: 5px 0; line-height: 1.5; }
   .nm-ip .ac p { font-size: 12px; color: var(--ip-muted); font-weight: 600; line-height: 1.75; }
 
-  .nm-ip .quote { background: #fff; border: 1px solid var(--ip-gray-2); border-inline-end: 3px solid var(--ip-orange); border-radius: 16px; padding: 18px; margin-top: 14px; }
-  .nm-ip .quote p { font-size: 13.5px; color: var(--ip-ink); font-weight: 600; line-height: 2; }
-  .nm-ip .quote .sig { margin-top: 12px; font-size: 14px; font-weight: 900; color: var(--ip-navy); }
-  .nm-ip .quote .sig span { display: block; font-size: 11px; font-weight: 700; color: var(--ip-muted); margin-top: 2px; }
+  .nm-ip .quote { background: #fff; border: 1px solid var(--ip-gray-2); border-inline-end: 3px solid var(--ip-orange); border-radius: 16px; padding: 18px; margin-top: 14px; text-align: start; }
+  .nm-ip .quote p { font-size: 13.5px; color: var(--ip-ink); font-weight: 600; line-height: 2; text-align: start; }
+  .nm-ip .quote .sig { margin-top: 12px; font-size: 14px; font-weight: 900; color: var(--ip-navy); text-align: start; }
+  .nm-ip .quote .sig span { display: block; width: max-content; max-width: 100%; font-size: 11px; font-weight: 700; color: var(--ip-muted); margin-top: 2px; direction: ltr; unicode-bidi: isolate; text-align: start; }
   .nm-ip .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
   .nm-ip .stat { background: #fff; border: 1px solid var(--ip-gray-2); border-radius: 14px; padding: 14px 8px; text-align: center; }
   .nm-ip .stat b { display: block; font-size: 17px; font-weight: 900; color: var(--ip-navy); }

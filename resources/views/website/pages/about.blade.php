@@ -32,9 +32,9 @@
     background: #fff; border: 1px solid #E8E4DC; border-inline-end: 3px solid #F07F2D;
     border-radius: 16px; padding: 18px; margin: 0;
   }
-  .v30-page .quote p { font-size: 14px; color: #12233B; font-weight: 600; line-height: 1.9; }
-  .v30-page .sig { margin-top: 12px; font-size: 14px; font-weight: 900; color: #122B4A; }
-  .v30-page .sig span { display: block; font-size: 11px; font-weight: 700; color: #7C8799; margin-top: 3px; }
+  .v30-page .quote p { font-size: 14px; color: #12233B; font-weight: 600; line-height: 1.9; text-align: start; }
+  .v30-page .sig { margin-top: 12px; font-size: 14px; font-weight: 900; color: #122B4A; text-align: start; }
+  .v30-page .sig span { display: block; width: max-content; max-width: 100%; font-size: 11px; font-weight: 700; color: #7C8799; margin-top: 3px; direction: ltr; unicode-bidi: isolate; text-align: start; }
   .v30-page .media-card {
     position: relative; height: 220px; border-radius: 18px; overflow: hidden; background: #EFEBE3;
   }
@@ -210,7 +210,7 @@
       <div class="copy rv">
         <div class="quote">
           <p>{{ $cms->text('about', 'quote') }}</p>
-          <p class="sig">{{ $cms->text('about', 'quote_by') }}<span>{{ $cms->text('about', 'quote_cred') }}</span></p>
+          <p class="sig">{{ $cms->text('about', 'quote_by') }}<span dir="ltr">{{ $cms->text('about', 'quote_cred') }}</span></p>
         </div>
       </div>
       <div class="media-card rv">
