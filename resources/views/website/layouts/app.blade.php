@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="{{ $siteCss['website-iphone.css'] }}">
 @stack('styles')
 <style>
-@media (max-width: 819.98px) {
+@media (max-width: 1179.98px) {
   :root {
     --font: 'Cairo', Tahoma, Arial, sans-serif;
     --w-font: 'Cairo', Tahoma, Arial, sans-serif;

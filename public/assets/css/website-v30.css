@@ -1,10 +1,12 @@
-/* New Me desktop redesign v30 — desktop only (>=820px) */
-@media (max-width: 819.98px) {
+/* New Me desktop redesign v30 — chrome + dual layouts switch with the center nav (1180px). */
+@media (max-width: 1179.98px) {
   .v30-desk { display: none !important; }
   .sub-grid{display:grid;grid-template-columns:1fr;gap:28px}
 }
-@media (min-width: 820px) {
+@media (min-width: 1180px) {
   .v30-mob-only { display: none !important; }
+}
+@media (min-width: 820px) {
 
 :root{
   --navy:#122B4A; --navy-2:#1B3A61; --navy-3:#24487A;
@@ -231,12 +233,12 @@ nav.main .bar{max-width:var(--max);margin:0 auto;display:flex;align-items:center
 .tab.on,.tab.on:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
 
 .rail-outer{position:relative;max-width:var(--max);margin:0 auto;padding:0 20px}
-.rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*18px)/4);gap:18px;
+.v30-desk .rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*18px)/4);gap:18px;
   overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;
   overscroll-behavior-x:contain;padding-bottom:8px}
-.rail::-webkit-scrollbar{display:none}
-@media(max-width:1039px){.rail{grid-auto-columns:calc((100% - 2*16px)/2.4);gap:16px}}
-@media(max-width:600px){.rail{grid-auto-columns:80%}}
+.v30-desk .rail::-webkit-scrollbar{display:none}
+@media(max-width:1039px){.v30-desk .rail{grid-auto-columns:calc((100% - 2*16px)/2.4);gap:16px}}
+@media(max-width:600px){.v30-desk .rail{grid-auto-columns:80%}}
 .prod{display:flex;flex-direction:column;scroll-snap-align:start;min-width:0;position:relative}
 .prod-tile{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--tile);
   border-radius:18px;margin-bottom:14px}
@@ -519,7 +521,7 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 .sticky-cta .info small{display:block;color:#9FB4D2;font-size:11px;font-weight:700}
 
 /* ===== added sections ===== */
-.grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;align-items:stretch}
+.v30-desk .grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;gap:18px;align-items:stretch}
 .g2{grid-template-columns:1fr}
 .g3{grid-template-columns:1fr}
 .g4{grid-template-columns:repeat(2,1fr)}
@@ -637,9 +639,9 @@ footer.w-foot-full{background:var(--navy);color:#8FA4C4;padding:58px 0 26px}
 .rail-ctrl{display:none;gap:8px}
 @media(min-width:760px){.rail-ctrl{display:flex}}
 .rail-ctrl .rail-btn{margin-top:0}
-.rail{cursor:grab;scroll-padding-inline:0}
-.rail.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
-.rail:focus-visible{outline:3px solid var(--orange);outline-offset:6px;border-radius:20px}
+.v30-desk .rail{cursor:grab;scroll-padding-inline:0}
+.v30-desk .rail.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
+.v30-desk .rail:focus-visible{outline:3px solid var(--orange);outline-offset:6px;border-radius:20px}
 .railbar{max-width:var(--max);margin:22px auto 0;height:4px;border-radius:99px;
   background:var(--gray-2);overflow:hidden;position:relative}
 .railbar i{position:absolute;inset-block:0;inset-inline-start:0;width:30%;border-radius:99px;

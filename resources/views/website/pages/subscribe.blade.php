@@ -98,7 +98,7 @@ body.is-subscribe footer.w-foot-full{
 }
 body.is-subscribe:not(.sub-on-1) .totop{bottom:calc(88px + var(--sab))}
 
-@media(max-width:819.98px){
+@media(max-width:1179.98px){
   #ipDurPick{display:none!important}
   body.is-subscribe{padding-bottom:calc(78px + var(--ip-tabbar,64px))}
   body.is-subscribe.sub-on-1{background:var(--navy);padding-bottom:var(--ip-tabbar,64px)}
@@ -147,7 +147,7 @@ body.is-subscribe:not(.sub-on-1) .totop{bottom:calc(88px + var(--sab))}
   .splan .btn.navy{background:#0C1F38;border-color:rgba(255,255,255,.22);box-shadow:none}
   .sub-trust{display:flex;color:#8FA4C4;font-size:12px;padding:0 18px}
 }
-@media(min-width:820px){
+@media(min-width:1180px){
   #ipDurPick{display:none!important}
 }
 
@@ -293,7 +293,7 @@ body.is-subscribe:not(.sub-on-1) .totop{bottom:calc(88px + var(--sab))}
 .buy-trust .i{width:15px;height:15px;color:var(--green)}
 /* ===== wizard bottom bar ===== */
 .wbar{position:fixed;bottom:0;inset-inline:0;z-index:95;background:rgba(247,245,241,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--gray-2);padding:11px 16px calc(11px + var(--sab))}
-@media(max-width:819.98px){
+@media(max-width:1179.98px){
   .wbar{
     bottom:var(--ip-tabbar,64px);
     z-index:220;

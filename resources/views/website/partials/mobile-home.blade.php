@@ -6,9 +6,28 @@
 
 <style>
 .home-mobile{display:none}
-@media(max-width:819.98px){
+@media(max-width:1179.98px){
   .home-desktop{display:none!important}
   .home-mobile{display:block}
+}
+#nmHomeRail{
+  display:grid !important;
+  grid-auto-flow:row !important;
+  grid-auto-columns:unset !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  grid-template-rows:none !important;
+  gap:12px !important;
+  width:100%;
+  max-width:100%;
+  overflow:visible !important;
+  scroll-snap-type:none !important;
+  padding:14px 18px 0;
+  box-sizing:border-box;
+}
+#nmHomeRail > .card{
+  min-width:0 !important;
+  width:100% !important;
+  max-width:100% !important;
 }
 </style>
 
@@ -64,7 +83,7 @@
       <p class="lead">{{ $shopSub }}</p>
     @endif
   </div>
-  <div class="rail" id="nmHomeRail">
+  <div class="home-rail" id="nmHomeRail">
     @foreach ($shopProducts as $p)
       @php
         $kcalN = isset($p['kcal']) && $p['kcal'] !== '' && is_numeric($p['kcal']) ? (int) $p['kcal'] : null;

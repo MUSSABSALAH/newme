@@ -15,7 +15,7 @@
   justify-content: center;
   padding: 0 20px 8px;
 }
-@media (max-width: 819.98px) {
+@media (max-width: 1179.98px) {
   .v30-page.nm-404 { padding: 16px 16px 56px; min-height: auto; }
   .nm-404 .rv { opacity: 1 !important; transform: none !important; }
   .nm-404 .sec-head { margin-bottom: 20px; }
