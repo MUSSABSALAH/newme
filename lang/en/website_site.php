@@ -71,7 +71,7 @@ return [
     ],
 
     'why' => [
-        'chapter' => 'Chapter <b>01</b> · About Us',
+        'chapter' => 'About Us',
         'kick' => 'About Us',
         'title' => 'The difference starts with the <em>ingredient</em>, not the recipe',
         'how' => 'How we build our products',
@@ -96,7 +96,7 @@ return [
     ],
 
     'lines' => [
-        'chapter' => 'Chapter <b>02</b> · What We Offer',
+        'chapter' => 'What We Offer',
         'kick' => 'What We Offer',
         'title' => 'Three business lines, <em>one nutritional standard</em>',
         'hint' => 'Swipe to see the rest of the lines',
@@ -146,7 +146,7 @@ return [
 
     'make' => [
         'title' => 'How We Make It — New Me',
-        'chapter' => 'Chapter <b>03</b> · How We Make It',
+        'chapter' => 'How We Make It',
         'kick' => 'How We Make It',
         'h2' => 'From ingredient — <em>to your door</em>',
         'sub' => 'Four stages every product passes through before it reaches you.',

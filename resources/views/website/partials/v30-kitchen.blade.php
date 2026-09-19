@@ -7,7 +7,6 @@
 
 <section class="section tile" id="articles">
   <div class="sec-head rv">
-    <span class="chapter">{{ $cms->text('blog', 'chapter') }}</span>
     <span class="kick">{{ $cms->text('blog', 'kick') }}</span>
     <h2>{!! $cms->html('blog', 'h2') !!}</h2>
     <p>{{ $cms->text('blog', 'sub') }}</p>

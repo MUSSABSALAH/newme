@@ -65,7 +65,7 @@ return [
         'tagline' => 'Stay healthy with New Me',
     ],
     'home' => [
-        'title' => 'New Me — Energy Orbit',
+        'title' => 'NewMe - Renew Your Life',
         'bigword' => 'NEWME',
         'skip' => 'Skip intro →',
         'core_alt' => 'New Me bread',

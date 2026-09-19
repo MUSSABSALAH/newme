@@ -142,7 +142,6 @@
 <div class="v30-page nm-ip">
   <section class="section tile" id="journey">
     <div class="sec-head rv">
-      <span class="chapter">{!! $cms->html('make', 'chapter') !!}</span>
       <span class="kick">{{ $cms->text('make', 'kick') }}</span>
       <h2>{!! $cms->html('make', 'h2') !!}</h2>
       <p>{{ $cms->text('make', 'sub') }}</p>

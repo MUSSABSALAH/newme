@@ -28,7 +28,6 @@
 
 <section class="section" id="why">
   <div class="sec-head rv">
-    <span class="chapter">{!! $cms->html('homepage', 'why_chapter') !!}</span>
     <span class="kick">{{ $cms->text('homepage', 'why_kick') }}</span>
     <h2>{!! $cms->html('homepage', 'why_title') !!}</h2>
   </div>

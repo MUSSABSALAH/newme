@@ -28,7 +28,6 @@
 
 <section class="section tile" id="lines">
   <div class="sec-head rv">
-    <span class="chapter">{!! $cms->html('homepage', 'lines_chapter') !!}</span>
     <span class="kick">{{ $cms->text('homepage', 'lines_kick') }}</span>
     <h2>{!! $cms->html('homepage', 'lines_title') !!}</h2>
   </div>
