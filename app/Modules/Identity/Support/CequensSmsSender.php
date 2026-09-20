@@ -66,8 +66,16 @@ final class CequensSmsSender implements SmsSender
     private function postMessage(string $phone, string $message, bool $retryOnUnauthorized): array
     {
         $url = rtrim((string) config('sms.cequens.base_url'), '/').'/sms/v1/messages';
-        $recipient = str_starts_with($phone, '+') ? $phone : '+'.(preg_replace('/\D/', '', $phone) ?? $phone);
+        $digits = $this->recipientMsisdn($phone);
         $sender = (string) config('sms.sender_id');
+
+        if ($digits === '') {
+            $this->fail('Cequens SMS skipped: no valid recipient digits in '.$phone);
+        }
+
+        // Cequens treats a JSON array as zero recipients. The live fix was a
+        // single MSISDN string; keep the leading + the account already accepts.
+        $recipient = '+'.$digits;
 
         $response = Http::timeout((int) config('sms.cequens.timeout', 8))
             ->connectTimeout(2)
@@ -76,9 +84,9 @@ final class CequensSmsSender implements SmsSender
             ->withToken($this->accessToken())
             ->post($url, [
                 'senderName' => $sender,
-                'messageType' => 'text',
+                'messageType' => $this->messageType($message),
                 'messageText' => $message,
-                'recipients' => [$recipient],
+                'recipients' => $recipient,
                 'shortURL' => false,
             ]);
 
@@ -191,6 +199,25 @@ final class CequensSmsSender implements SmsSender
         Log::stack(['single', 'stderr'])->error($detail);
 
         throw new RuntimeException($detail);
+    }
+
+    /**
+     * Cequens wants E.164 digits with no plus: 9665xxxxxxxx, not +9665xxxxxxxx.
+     */
+    private function recipientMsisdn(string $phone): string
+    {
+        $digits = preg_replace('/\D+/', '', $phone) ?? '';
+
+        if (str_starts_with($digits, '00')) {
+            $digits = substr($digits, 2);
+        }
+
+        return $digits;
+    }
+
+    private function messageType(string $message): string
+    {
+        return preg_match('/[^\x00-\x7F]/', $message) === 1 ? 'unicode' : 'text';
     }
 
     private function usingSignIn(): bool
