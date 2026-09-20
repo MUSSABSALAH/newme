@@ -32,6 +32,30 @@
   text-align:center;pointer-events:none;box-sizing:border-box;display:grid;place-items:center
 }
 .nm-chrome .tb-cart-badge.is-empty{display:none!important}
+@media (max-width:819.98px){
+  .nm-chrome .ship-announce{
+    overflow:visible!important;
+    height:auto!important;
+    min-height:calc(56px + env(safe-area-inset-top,0px));
+  }
+  .nm-chrome .ship-announce .ship-line{
+    display:block!important;
+    -webkit-box-orient:initial!important;
+    -webkit-line-clamp:unset!important;
+    line-clamp:unset!important;
+    overflow:visible!important;
+    white-space:normal!important;
+  }
+  .nm-tabbar{
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .nm-tabbar .tab{
+    overflow:hidden;
+  }
+  .nm-tabbar .tab.on::before{content:none!important}
+  .nm-tabbar .tab.on svg{transform:none!important;fill:none!important}
+}
 </style>
 
 <svg style="display:none" aria-hidden="true"><defs>

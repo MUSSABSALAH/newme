@@ -9,6 +9,7 @@
 @media(max-width:819.98px){
   .home-desktop{display:none!important}
   .home-mobile{display:block}
+  .home-mobile #nmHomeRail .card .bd{background:#f7f7f7!important}
 }
 </style>
 
