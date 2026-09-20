@@ -129,6 +129,7 @@
   }
   .nm-ip .rail .card .flag { position: absolute; top: 9px; inset-inline-start: 9px; z-index: 3; background: #fff; color: var(--ip-navy); font-size: 10px; font-weight: 900; border-radius: 999px; padding: 4px 10px; }
   .nm-ip .rail .card .bd { padding: 13px; display: flex; flex-direction: column; flex: 1; }
+  .home-mobile #nmHomeRail .card .bd { background: #f7f7f7; }
   .nm-ip .rail .card h3 { font-size: 13.5px; line-height: 1.4; }
   .nm-ip .rail .card .p-sub {
     font-size: 11.5px; font-weight: 700; color: var(--ip-muted);

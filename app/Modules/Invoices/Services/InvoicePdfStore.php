@@ -27,15 +27,17 @@ final class InvoicePdfStore
 
     public function __construct(private readonly InvoicePdfRenderer $renderer) {}
 
-    public function bytes(Invoice $invoice): string
+    public function bytes(Invoice $invoice, bool $rebuild = false): string
     {
         $disk = Storage::disk(self::DISK);
         $path = $this->pathFor($invoice);
 
-        $stored = $disk->exists($path) ? $disk->get($path) : null;
+        if (! $rebuild) {
+            $stored = $disk->exists($path) ? $disk->get($path) : null;
 
-        if (is_string($stored) && $stored !== '') {
-            return $stored;
+            if (is_string($stored) && $stored !== '') {
+                return $stored;
+            }
         }
 
         $pdf = $this->renderer->render($invoice);
@@ -65,7 +67,7 @@ final class InvoicePdfStore
     private function pathFor(Invoice $invoice): string
     {
         return sprintf(
-            '%s/%s-v29-%d.pdf',
+            '%s/%s-v30-%d.pdf',
             $this->directoryFor($invoice),
             App::getLocale(),
             $invoice->updated_at?->getTimestamp() ?? 0,

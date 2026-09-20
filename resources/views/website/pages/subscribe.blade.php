@@ -339,14 +339,14 @@ body.menu-open{overflow:hidden}
 .dur-empty{text-align:center;color:var(--muted);font-weight:800;font-size:13px;padding:20px 0}
 
 /* ===== per-day dishes ===== */
-.ddays{display:grid;gap:12px;max-width:640px;margin:0 auto}
-.dday{background:#fff;border:1.5px solid var(--gray-2);border-radius:16px;padding:14px 16px}
-.dday .dh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px;font-weight:900;color:var(--navy);font-size:14px}
-.dday .dh small{color:var(--muted);font-family:var(--mono);font-weight:700;font-size:11px}
-.dpick{display:grid;gap:9px}
-.dpick .prow{display:flex;align-items:center;gap:10px}
-.dpick .prow .lbl{font-size:12px;font-weight:900;color:var(--orange-deep);min-width:54px}
-.dpick select{flex:1;font-family:var(--font);font-weight:800;font-size:13px;color:var(--ink);padding:10px 12px;padding-inline-end:32px;border:2px solid var(--gray-2);border-radius:12px;background:#fff;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2312233B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.ddays{display:grid;gap:12px;max-width:640px;margin:0 auto;width:100%;min-width:0}
+.dday{background:#fff;border:1.5px solid var(--gray-2);border-radius:16px;padding:14px 16px;min-width:0;max-width:100%;overflow:hidden}
+.dday .dh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:11px;font-weight:900;color:var(--navy);font-size:14px}
+.dday .dh small{color:var(--muted);font-family:var(--mono);font-weight:700;font-size:11px;flex-shrink:0}
+.dpick{display:grid;gap:9px;min-width:0}
+.dpick .prow{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px;min-width:0}
+.dpick .prow .lbl{font-size:12px;font-weight:900;color:var(--orange-deep)}
+.dpick select{width:100%;min-width:0;max-width:100%;font-family:var(--font);font-weight:800;font-size:13px;color:var(--ink);padding:10px 12px;padding-inline-end:32px;border:2px solid var(--gray-2);border-radius:12px;background:#fff;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2312233B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 html[dir="rtl"] .dpick select{background-position:left 12px center}
 .ddays-note{text-align:center;font-size:12px;font-weight:800;color:var(--muted);margin-top:6px}
 

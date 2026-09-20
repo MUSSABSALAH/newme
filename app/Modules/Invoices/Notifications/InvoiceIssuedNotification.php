@@ -25,10 +25,23 @@ final class InvoiceIssuedNotification extends Notification implements ShouldQueu
 {
     use CapturesRequestLocale, Queueable, SerializesModels;
 
+    public int $tries = 3;
+
     public function __construct(public Invoice $invoice)
     {
         $this->onQueue(MessageQueue::Mail->value);
+        // Checkout also queues the confirmation mail in the same second; Mailtrap
+        // (and some SMTP hosts) reject the invoice as "too many emails per second".
+        $this->delay(now()->addSeconds(5));
         $this->captureRequestLocale();
+    }
+
+    /**
+     * @return list<int>
+     */
+    public function backoff(): array
+    {
+        return [30, 120];
     }
 
     /**
@@ -41,7 +54,7 @@ final class InvoiceIssuedNotification extends Notification implements ShouldQueu
 
     public function toMail(object $notifiable): MailMessage
     {
-        $pdf = app(InvoicePdfStore::class)->bytes($this->invoice);
+        $pdf = app(InvoicePdfStore::class)->bytes($this->invoice, rebuild: true);
         $subject = (string) __('invoices.mail.subject', ['number' => $this->invoice->number]);
         $greeting = (string) __('invoices.mail.greeting');
         $intro = (string) __('invoices.mail.intro', [

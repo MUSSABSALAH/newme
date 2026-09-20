@@ -13,6 +13,7 @@ use App\Modules\Identity\Exceptions\SystemRoleException;
 use App\Modules\Identity\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 
 final class RoleService
@@ -31,7 +32,7 @@ final class RoleService
             $role->setTranslations('display_name', $data->displayName);
             $role->save();
 
-            $role->syncPermissions($data->permissions);
+            $role->syncPermissions($this->ensurePermissions($data->permissions));
 
             $this->audit->log(AuditAction::RoleCreated, $role, [], [
                 'name' => $role->name,
@@ -64,7 +65,7 @@ final class RoleService
             }
 
             if (! $this->isSuperAdmin($role)) {
-                $role->syncPermissions($data->permissions);
+                $role->syncPermissions($this->ensurePermissions($data->permissions));
             }
 
             $this->audit->log(AuditAction::RoleUpdated, $role, $old, [
@@ -127,6 +128,22 @@ final class RoleService
         }
 
         return array_values($data->displayName)[0] ?? '';
+    }
+
+    /**
+     * The form lists the PHP catalog. A live database that never re-seeded can
+     * be missing newer rows (delivery.update, …); Spatie then throws on save.
+     *
+     * @param  list<string>  $names
+     * @return list<string>
+     */
+    private function ensurePermissions(array $names): array
+    {
+        foreach ($names as $name) {
+            Permission::findOrCreate($name, self::GUARD);
+        }
+
+        return $names;
     }
 
     private function uniqueSlug(string $value): string
