@@ -288,9 +288,6 @@ body.is-subscribe:not(.sub-on-1) .totop{bottom:calc(88px + var(--sab))}
 .pb.apay{font-size:12.5px}.pb.apay b{font-weight:900}
 .pb.mada{color:#259BD6;font-size:12.5px}
 .pb.stc{color:#4F008C}
-.buy-trust{display:grid;gap:6px;margin-top:14px;font-size:11.5px;font-weight:800;color:var(--muted)}
-.buy-trust span{display:flex;align-items:center;gap:7px}
-.buy-trust .i{width:15px;height:15px;color:var(--green)}
 /* ===== wizard bottom bar ===== */
 .wbar{position:fixed;bottom:0;inset-inline:0;z-index:95;background:rgba(247,245,241,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--gray-2);padding:11px 16px calc(11px + var(--sab))}
 @media(max-width:819.98px){
@@ -395,9 +392,7 @@ html[dir="rtl"] .dpick select{background-position:left 12px center}
 <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2c.8 3.8 5 6.2 5 11a5 5 0 0 1-10 0c0-1.8.8-3.1 1.8-4.6.2 1.6.9 2.6 2 3.1-.9-3.2-.2-6.6 1.2-9.5z"/></symbol>
 <symbol id="i-wheat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22V6"/><path d="M12 9C9.5 9 8 7.5 8 5c2.5 0 4 1.5 4 4zM12 9c2.5 0 4-1.5 4-4-2.5 0-4 1.5-4 4zM12 14c-2.5 0-4-1.5-4-4 2.5 0 4 1.5 4 4zM12 14c2.5 0 4-1.5 4-4-2.5 0-4 1.5-4 4z"/></symbol>
 <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18c0 4.4-3.2 8-9 8s-9-3.6-9-8zm5 9.5h8v1.5H8v-1.5z"/></symbol>
-<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6.2c0 4.8-3.3 8.3-8 10.8-4.7-2.5-8-6-8-10.8V5l8-3zm-1.2 13.4 5.4-5.4-1.4-1.4-4 4-1.8-1.8-1.4 1.4 3.2 3.2z"/></symbol>
 <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
-<symbol id="i-check" viewBox="0 0 24 24"><path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12L20.1 5.6z"/></symbol>
 <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4c.5 8-2.5 15-10 15-3 0-5-1.5-6-3.5C8 16 10 15 12 13c-2 .5-4 .5-6 2 .5-6 5-11 14-11z"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21c-5.5-3.6-9-6.9-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 4.1-3.5 7.4-9 11z"/></symbol>
 <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h6V8a3 3 0 0 0-6 0v2z"/></symbol>
@@ -576,11 +571,6 @@ html[dir="rtl"] .dpick select{background-position:left 12px center}
             <span class="pb mc"><span><i></i><i></i></span></span>
             <span class="pb apay"> <b>Pay</b></span>
             <span class="pb stc">stc pay</span>
-          </div>
-          <div class="buy-trust">
-            <span><svg class="i"><use href="#i-lock"/></svg> {{ __('website.subscribe.trust_secure') }}</span>
-            <span><svg class="i"><use href="#i-shield"/></svg> {{ __('website.subscribe.trust_refund') }}</span>
-            <span><svg class="i"><use href="#i-check"/></svg> {{ __('website.subscribe.trust_cancel') }}</span>
           </div>
         </div>
       </div>
