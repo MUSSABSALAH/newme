@@ -45,6 +45,7 @@ use App\Http\Controllers\Web\ConsultationBookingController;
 use App\Http\Controllers\Web\InvitationController;
 use App\Http\Controllers\Web\LocaleController;
 use App\Http\Controllers\Web\PayTabsReturnController;
+use App\Http\Controllers\Web\SubscribeQuoteController;
 use App\Http\Controllers\Web\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,7 @@ Route::name('website.')->group(function () {
     Route::get('/about', [WebsiteController::class, 'about'])->name('about');
     Route::get('/help', [WebsiteController::class, 'help'])->name('help');
     Route::get('/subscribe', [WebsiteController::class, 'subscribe'])->name('subscribe');
+    Route::post('/subscribe/quote/{plan:public_id}', [SubscribeQuoteController::class, 'store'])->name('subscribe.quote');
     Route::get('/menu', [WebsiteController::class, 'menu'])->name('menu');
     Route::get('/blog', [WebsiteController::class, 'blog'])->name('blog');
     Route::get('/blog/articles/{article:slug}', [WebsiteController::class, 'article'])->name('article');

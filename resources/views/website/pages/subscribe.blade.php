@@ -624,7 +624,7 @@ window.NM_BIRTH_RANGE = @json($birthDateRange);
 window.NM_AGE_LIMITS = @json($ageLimits);
 window.NM_HEALTH = @json($healthProfile);
 window.NM_CHECKOUT_URL = @json(route('website.checkout.subscription'));
-window.NM_QUOTE_URL = @json(url('api/v1/plans/__PLAN__/quote'));
+window.NM_QUOTE_URL = @json(route('website.subscribe.quote', ['plan' => '__PLAN__']));
 window.NM_CSRF = @json(csrf_token());
 </script>
 <script>
@@ -934,7 +934,12 @@ function requestQuote(code){
 
   return fetch(String(window.NM_QUOTE_URL).replace('__PLAN__',encodeURIComponent(planId)),{
     method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json','X-Requested-With':'XMLHttpRequest'},
+    headers:{
+      'Content-Type':'application/json',
+      'Accept':'application/json',
+      'X-Requested-With':'XMLHttpRequest',
+      'X-CSRF-TOKEN':String(window.NM_CSRF||'')
+    },
     body:JSON.stringify({
       meal_types:mealsKey().split(','),
       duration_unit:rule.unit,
@@ -942,11 +947,16 @@ function requestQuote(code){
       selected_days:state.days,
       coupon_code:code
     })
-  }).then(function(r){return r.ok?r.json():Promise.reject(r);})
-    .then(function(body){
+  }).then(function(r){
+    return r.json().then(function(body){
+      if(!r.ok){
+        var msg=(body&&body.error&&body.error.message)||(body&&body.message);
+        return Promise.reject(msg||null);
+      }
       var b=body&&body.data&&body.data.breakdown;
       return b?b:Promise.reject(null);
-    });
+    },function(){return Promise.reject(null);});
+  });
 }
 function applyCoupon(code){
   couponError('');
@@ -956,7 +966,7 @@ function applyCoupon(code){
     state.couponDiscount=(b.coupon_discount&&b.coupon_discount.minor)||0;
     renderCoupon();
     render();
-  }).catch(function(){dropCoupon(t('coupon_invalid'));});
+  }).catch(function(msg){dropCoupon(typeof msg==='string'&&msg?msg:t('coupon_invalid'));});
 }
 /* A coupon quoted for one selection may not hold for another, so re-ask. */
 var couponTimer=null;
