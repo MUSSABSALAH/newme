@@ -182,3 +182,13 @@
 </div>
 
 @endsection
+
+@if ($purchaseEvent !== null)
+@push('scripts')
+<script>
+{{-- Reached only with the payment confirmed server-side, once per session; the
+     transaction id lets GA4 drop a repeat if the session is gone. --}}
+window.nmEcommerce.push('purchase', @js($purchaseEvent), @js('purchase_'.$purchaseEvent['transaction_id']));
+</script>
+@endpush
+@endif

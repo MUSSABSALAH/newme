@@ -16,6 +16,7 @@ final readonly class CheckoutSummary
     /**
      * @param  list<array{label: string, value: string}>  $items  What is being bought.
      * @param  list<array{label: string, value: string}>  $lines  The price breakdown.
+     * @param  array<string, mixed>  $beginCheckout  GA4 payload for this basket.
      */
     public function __construct(
         public CheckoutSource $source,
@@ -25,6 +26,7 @@ final readonly class CheckoutSummary
         public Money $total,
         public ?string $couponCode,
         public ?StoreFulfillmentQuote $storeQuote = null,
+        public array $beginCheckout = [],
     ) {}
 
     public function totalDisplay(): string

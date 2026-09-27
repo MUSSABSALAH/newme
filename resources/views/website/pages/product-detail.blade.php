@@ -281,6 +281,8 @@ body.menu-open{overflow:hidden}
 @endphp
 <script>
 window.NM_PD = @json($nmPd);
+window.NM_PD_ITEM = @js($addToCartTemplate);
+window.nmEcommerce.push('view_item', @js($viewItemEvent));
 </script>
 <script>
 @verbatim
@@ -305,12 +307,23 @@ try{
   addBtn.addEventListener('click',function(){
     if(addBtn.disabled)return;
     addBtn.disabled=true;
+    // Pinned here: the stepper stays live while the request is in flight, and
+    // the event must report the quantity this request actually added.
+    var sending=qty;
     fetch(meta('cart-url'),{
       method:'POST',
       headers:{'Content-Type':'application/json','X-CSRF-TOKEN':meta('csrf-token'),'Accept':'application/json','X-Requested-With':'XMLHttpRequest'},
-      body:JSON.stringify({product_id:parseInt(addBtn.getAttribute('data-product-id'),10),quantity:qty})
+      body:JSON.stringify({product_id:parseInt(addBtn.getAttribute('data-product-id'),10),quantity:sending})
     }).then(function(r){return r.ok?r.json():Promise.reject(r);}).then(function(res){
       if(res&&typeof res.count!=='undefined')updateBadge(res.count);
+      var tpl=window.NM_PD_ITEM;
+      if(window.nmEcommerce&&tpl&&tpl.item){
+        window.nmEcommerce.push('add_to_cart',{
+          currency:tpl.currency,
+          value:window.nmEcommerce.money(tpl.item.price*sending),
+          items:[{item_id:tpl.item.item_id,item_name:tpl.item.item_name,item_category:tpl.item.item_category,price:tpl.item.price,quantity:sending}]
+        });
+      }
       addTxt.textContent=(window.NM_PD&&window.NM_PD.added)||'✓';
       if(window.NMToast){
         var i18n=window.NM_I18N||{};

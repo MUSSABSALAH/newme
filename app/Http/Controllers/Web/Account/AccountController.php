@@ -11,6 +11,7 @@ use App\Http\Requests\Web\Account\UpdateMealScheduleRequest;
 use App\Http\Requests\Web\Account\UpdateProfileRequest;
 use App\Models\User;
 use App\Modules\Addresses\Services\AddressService;
+use App\Modules\Analytics\Support\EcommerceDataLayer;
 use App\Modules\Consultations\Models\Consultation;
 use App\Modules\Identity\DTOs\BodyMeasurementData;
 use App\Modules\Identity\DTOs\HealthProfile;
@@ -42,6 +43,7 @@ final class AccountController extends Controller
         private readonly MealScheduleService $mealSchedules,
         private readonly SubscriptionService $subscriptions,
         private readonly CustomerAuthChannels $channels,
+        private readonly EcommerceDataLayer $analytics,
     ) {}
 
     public function index(Request $request): View
@@ -138,6 +140,7 @@ final class AccountController extends Controller
         return view('website.account.order', [
             'order' => $order,
             'invoice' => $this->invoices->find($order),
+            'purchaseEvent' => $this->purchaseEvent($this->analytics->purchaseForOrder($order)),
         ]);
     }
 
@@ -150,6 +153,7 @@ final class AccountController extends Controller
         return view('website.account.subscription', [
             'subscription' => $subscription,
             'invoice' => $this->invoices->find($subscription),
+            'purchaseEvent' => $this->purchaseEvent($this->analytics->purchaseForSubscription($subscription)),
             'scheduleDays' => $scheduleDays = $this->scheduleForEdit($subscription),
             'calendarMonths' => MealCalendarPresenter::months($scheduleDays),
             'dishOptions' => $this->dishOptions($subscription),
@@ -193,6 +197,24 @@ final class AccountController extends Controller
         return redirect()
             ->route('website.account', ['tab' => 'subscriptions'])
             ->with('success', __('account.messages.subscription_resumed'));
+    }
+
+    /**
+     * The payload reaches the page only the first time in this session; it is
+     * already null unless the server holds the payment as confirmed.
+     *
+     * @param  array<string, mixed>|null  $payload
+     * @return array<string, mixed>|null
+     */
+    private function purchaseEvent(?array $payload): ?array
+    {
+        if ($payload === null) {
+            return null;
+        }
+
+        return EcommerceDataLayer::claimPurchase((string) $payload['transaction_id'])
+            ? $payload
+            : null;
     }
 
     /**

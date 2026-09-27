@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Analytics\Support\EcommerceDataLayer;
 use App\Modules\Checkout\Services\CheckoutDraftService;
 use App\Modules\Promotions\Exceptions\CouponRejectedException;
 use App\Modules\Store\Models\Product;
@@ -19,14 +20,18 @@ final class CartController extends Controller
     public function __construct(
         private readonly CartService $cart,
         private readonly CheckoutDraftService $drafts,
+        private readonly EcommerceDataLayer $analytics,
     ) {}
 
     public function index(): View
     {
         $this->drafts->releaseForStoreCart();
 
+        $items = $this->cart->items();
+
         return view('website.pages.cart', [
-            'items' => $this->cart->items(),
+            'items' => $items,
+            'addToCartTemplates' => $this->analytics->addToCartTemplatesForCart($items),
             'subtotal' => $this->cart->subtotalDisplay(),
             'discount' => $this->cart->discountDisplay(),
             'total' => $this->cart->totalDisplay(),

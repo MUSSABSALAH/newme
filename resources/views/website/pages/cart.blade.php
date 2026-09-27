@@ -220,6 +220,9 @@ body.menu-open{overflow:hidden}
 
 @push('scripts')
 <script>
+window.NM_CART_ITEMS = @js($addToCartTemplates);
+</script>
+<script>
 @verbatim
 try{
   'use strict';
@@ -238,6 +241,18 @@ try{
 
   function text(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
   function show(el,on){if(el)el.hidden=!on;}
+
+  function addedToCart(productId,delta){
+    var tpl=window.NM_CART_ITEMS;
+    if(!window.nmEcommerce||!tpl||!tpl.items||!(delta>0))return;
+    var item=tpl.items[String(productId)];
+    if(!item)return;
+    window.nmEcommerce.push('add_to_cart',{
+      currency:tpl.currency,
+      value:window.nmEcommerce.money(item.price*delta),
+      items:[{item_id:item.item_id,item_name:item.item_name,item_category:item.item_category,price:item.price,quantity:delta}]
+    });
+  }
 
   function refreshTotals(res){
     if(!res)return;
@@ -301,10 +316,14 @@ try{
 
     function setQty(q){
       if(q<1)q=1; if(q>20)q=20;
+      var was=parseInt(qEl.textContent,10)||0;
       send(url,'PATCH',{quantity:q}).then(function(res){
         qEl.textContent=q;
         lineEl.textContent=money(unit*q);
         refreshTotals(res);
+        // Raising the quantity here is a real add, so only the difference is
+        // reported — never the whole line.
+        addedToCart(id,q-was);
       }).catch(function(){});
     }
     row.querySelector('[data-dec]').addEventListener('click',function(){setQty((parseInt(qEl.textContent,10)||1)-1);});

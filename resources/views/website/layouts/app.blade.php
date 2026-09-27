@@ -20,6 +20,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-P7KK96BT');</script>
 <!-- End Google Tag Manager -->
 @endproduction
+@include('website.partials.analytics')
 <meta name="theme-color" content="@yield('theme', '#122B4A')">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="cart-url" content="{{ route('website.cart.store') }}">

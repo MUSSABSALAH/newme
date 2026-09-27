@@ -500,6 +500,12 @@ body.menu-open{overflow:hidden}
 @endsection
 
 @push('scripts')
+@if ($summary->beginCheckout !== [])
+<script>
+{{-- Rendered once with the server's own basket, so nothing can double-fire it. --}}
+window.nmEcommerce.push('begin_checkout', @js($summary->beginCheckout));
+</script>
+@endif
 <script>
 @verbatim
 try{

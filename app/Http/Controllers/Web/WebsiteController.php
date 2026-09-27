@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Modules\Analytics\Support\EcommerceDataLayer;
 use App\Modules\Cms\Models\Article;
 use App\Modules\Cms\Models\Recipe;
 use App\Modules\Consultations\Enums\ConsultationStatus;
@@ -55,6 +56,7 @@ class WebsiteController extends Controller
         private readonly PlanPricingService $pricing,
         private readonly SettingsService $settings,
         private readonly ConsultationSchedule $consultationSchedule,
+        private readonly EcommerceDataLayer $analytics,
     ) {}
 
     public function home(): View
@@ -208,6 +210,8 @@ class WebsiteController extends Controller
         return view('website.pages.product-detail', [
             'product' => $this->websiteProductDetail($product),
             'categories' => $topCategories,
+            'viewItemEvent' => $this->analytics->viewItemForProduct($product),
+            'addToCartTemplate' => $this->analytics->addToCartTemplate($product),
         ]);
     }
 

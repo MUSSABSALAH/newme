@@ -845,6 +845,29 @@ function renderDayDishes(){
   wrap.appendChild(note);
 }
 
+/* The plan the customer is looking at, reported once its real price is on
+   screen. The wizard re-renders on every click, so it is keyed by plan. */
+var planViewed={};
+function reportPlanView(c){
+  if(!window.nmEcommerce)return;
+  var publicId=(window.NM_PLAN_IDS&&window.NM_PLAN_IDS[state.plan])||'';
+  if(!publicId||planViewed[publicId])return;
+  planViewed[publicId]=1;
+  // Same figure the subscription invoice calls net: no VAT, no delivery.
+  var price=window.nmEcommerce.money(c.total-c.tax-c.delivery);
+  window.nmEcommerce.push('view_item',{
+    currency:window.nmEcommerce.currency,
+    value:price,
+    items:[{
+      item_id:window.nmEcommerce.planItemId(publicId),
+      item_name:planName(state.plan),
+      item_category:window.nmEcommerce.subscriptionCategory,
+      price:price,
+      quantity:1
+    }]
+  });
+}
+
 function render(){
   var c=calc();
   var rule=selectedRule();
@@ -867,6 +890,7 @@ function render(){
   updStartEnd();
 
   if(c){
+    reportPlanView(c);
     var mealWord=c.meals===1?t('meal'):t('meals');
     setTxt('mealsN',fmt(c.meals)+' '+mealWord);
     var perMeal=c.meals?fmt1(c.total/c.meals):'0';

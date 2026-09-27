@@ -6,6 +6,7 @@ namespace App\Modules\Checkout\Services;
 
 use App\Models\User;
 use App\Modules\Addresses\Models\Address;
+use App\Modules\Analytics\Support\EcommerceDataLayer;
 use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Audit\Services\AuditService;
 use App\Modules\Checkout\DTOs\CheckoutSummary;
@@ -68,6 +69,7 @@ final class CheckoutService
         private readonly CustomerProfileService $profiles,
         private readonly StoreDeliveryFee $storeDelivery,
         private readonly SettingsService $settings,
+        private readonly EcommerceDataLayer $analytics,
     ) {}
 
     public function source(): CheckoutSource
@@ -438,6 +440,7 @@ final class CheckoutService
             total: Money::fromMinor($deliveryVat->grossMinor),
             couponCode: $code,
             storeQuote: $quote,
+            beginCheckout: $this->analytics->beginCheckoutForCart($items, $deliveryVat, $code),
         );
     }
 
@@ -497,6 +500,7 @@ final class CheckoutService
             lines: $lines,
             total: $quote->total,
             couponCode: $quote->couponCode,
+            beginCheckout: $this->analytics->beginCheckoutForPlan($plan, $quote),
         );
     }
 
