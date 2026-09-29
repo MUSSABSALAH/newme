@@ -8,6 +8,8 @@
   'districtId' => 'district-'.$prefix,
   'streetId' => 'street-'.$prefix,
   'nationalId' => 'national_address-'.$prefix,
+  'pinLat' => $address?->lat,
+  'pinLng' => $address?->lng,
 ])
 
 <div class="addr-grid">

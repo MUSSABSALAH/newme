@@ -21,6 +21,8 @@ final readonly class AddressSnapshot
         public string $street,
         public ?string $nationalAddress,
         public ?string $details,
+        public ?float $lat = null,
+        public ?float $lng = null,
     ) {}
 
     /**
@@ -45,6 +47,8 @@ final readonly class AddressSnapshot
             street: (string) ($values['street'] ?? ''),
             nationalAddress: $national,
             details: isset($values['details']) && $values['details'] !== '' ? (string) $values['details'] : null,
+            lat: is_numeric($values['lat'] ?? null) ? (float) $values['lat'] : null,
+            lng: is_numeric($values['lng'] ?? null) ? (float) $values['lng'] : null,
         );
     }
 

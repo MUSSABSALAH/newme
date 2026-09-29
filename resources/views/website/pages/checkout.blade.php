@@ -10,11 +10,12 @@
   $chosen = old('address', $selectedAddress?->public_id);
   $chosenMethod = old('payment_method', $methods[0]->value ?? 'online');
   $chosenFulfillment = old('fulfillment', 'delivery');
-  $hasAddress = $addresses->contains(fn ($address) => $address->isDeliverable());
+  $storeQuote = $summary->storeQuote;
+  $pinRequired = ! $isSubscription && ($storeQuote?->requiresPin ?? false);
+  $hasAddress = $addresses->contains(fn ($address) => $address->isDeliverable() && ! ($pinRequired && ! $address->hasPin()));
   $needsAddress = $isSubscription || $chosenFulfillment !== 'pickup';
   $canPlace = ! $needsAddress || $hasAddress;
   $hostedCheckout = $hostedCheckout ?? false;
-  $storeQuote = $summary->storeQuote;
 @endphp
 
 @push('styles')
@@ -261,7 +262,11 @@ body.menu-open{overflow:hidden}
         @if ($addresses->isNotEmpty())
           <div class="addr">
             @foreach ($addresses as $address)
-              @php $deliverable = $address->isDeliverable(); @endphp
+              @php
+                $inArea = $address->isDeliverable();
+                $needsPin = $inArea && $pinRequired && ! $address->hasPin();
+                $deliverable = $inArea && ! $needsPin;
+              @endphp
               <label class="pick {{ $chosen === $address->public_id && $deliverable ? 'on' : '' }} {{ $deliverable ? '' : 'is-blocked' }}" @if ($deliverable) data-pick @endif>
                 <input type="radio" name="address" value="{{ $address->public_id }}" form="placeOrder"
                        @checked($chosen === $address->public_id && $deliverable)
@@ -272,7 +277,8 @@ body.menu-open{overflow:hidden}
                   <span class="tel" dir="ltr">{{ $address->phone }}</span>
                 </span>
                 @if ($deliverable && $address->is_default)<span class="flag">{{ __('addresses.default') }}</span>@endif
-                @unless ($deliverable)<span class="flag bad">{{ __('addresses.errors.outside_riyadh') }}</span>@endunless
+                @unless ($inArea)<span class="flag bad">{{ __('addresses.errors.outside_riyadh') }}</span>@endunless
+                @if ($needsPin)<a class="flag bad" href="{{ route('website.account', ['tab' => 'addresses']) }}">{{ __('checkout.address.pin_flag') }}</a>@endif
               </label>
             @endforeach
           </div>
@@ -495,7 +501,8 @@ body.menu-open{overflow:hidden}
          data-tax-delivery="{{ $storeQuote?->deliveryTaxDisplay }}"
          data-tax-pickup="{{ $storeQuote?->pickupTaxDisplay }}"
          data-total-delivery="{{ $storeQuote?->deliveryTotalDisplay() }}"
-         data-total-pickup="{{ $storeQuote?->pickupTotalDisplay() }}"></div>
+         data-total-pickup="{{ $storeQuote?->pickupTotalDisplay() }}"
+         data-address-quotes="{{ json_encode($storeQuote?->addressQuotes ?: new \stdClass, JSON_UNESCAPED_UNICODE) }}"></div>
   @endunless
 @endsection
 
@@ -550,9 +557,20 @@ try{
     var feeCurrency=document.querySelector('[data-fee-currency]');
     var orderTotal=document.querySelector('[data-order-total]');
     var hasAddress=quotes.getAttribute('data-has-address')==='1';
+    var byAddress={};
+    try{byAddress=JSON.parse(quotes.getAttribute('data-address-quotes')||'{}')||{};}catch(_){byAddress={};}
     function fulfillment(){
       var on=document.querySelector('input[name="fulfillment"]:checked');
       return on?on.value:'delivery';
+    }
+    // Distance pricing: the chosen address carries its own delivery figures.
+    function delivery(field,attr){
+      var on=document.querySelector('input[name="address"]:checked');
+      var quote=on?byAddress[on.value]:null;
+      if(quote&&Object.prototype.hasOwnProperty.call(quote,field))return quote[field];
+      return attr==='data-fee-charged'
+        ?quotes.getAttribute(attr)==='1'
+        :quotes.getAttribute(attr);
     }
     function syncFulfillment(){
       var pickup=fulfillment()==='pickup';
@@ -562,10 +580,10 @@ try{
       if(deliveryFee){
         deliveryFee.textContent=pickup
           ?quotes.getAttribute('data-fee-pickup')
-          :quotes.getAttribute('data-fee-delivery');
+          :delivery('fee','data-fee-delivery');
       }
       if(feeCurrency){
-        feeCurrency.hidden=pickup||quotes.getAttribute('data-fee-charged')!=='1';
+        feeCurrency.hidden=pickup||!delivery('charged','data-fee-charged');
       }
       var subtotal=document.querySelector('[data-summary-subtotal]');
       var taxable=document.querySelector('[data-summary-taxable]');
@@ -573,25 +591,25 @@ try{
       if(subtotal){
         subtotal.textContent=pickup
           ?quotes.getAttribute('data-subtotal-pickup')
-          :quotes.getAttribute('data-subtotal-delivery');
+          :delivery('subtotal','data-subtotal-delivery');
       }
       if(taxable){
         taxable.textContent=pickup
           ?quotes.getAttribute('data-subtotal-pickup')
-          :quotes.getAttribute('data-subtotal-delivery');
+          :delivery('subtotal','data-subtotal-delivery');
       }
       if(tax){
         tax.textContent=pickup
           ?quotes.getAttribute('data-tax-pickup')
-          :quotes.getAttribute('data-tax-delivery');
+          :delivery('tax','data-tax-delivery');
       }
       if(orderTotal){
         orderTotal.textContent=pickup
           ?quotes.getAttribute('data-total-pickup')
-          :quotes.getAttribute('data-total-delivery');
+          :delivery('total','data-total-delivery');
       }
     }
-    document.querySelectorAll('input[name="fulfillment"]').forEach(function(i){
+    document.querySelectorAll('input[name="fulfillment"], input[name="address"]').forEach(function(i){
       i.addEventListener('change',syncFulfillment);
     });
     syncFulfillment();

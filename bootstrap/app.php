@@ -83,6 +83,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->validateCsrfTokens(except: [
             'payments/paytabs/return',
+            'webhooks/walim',
         ]);
 
         // Guests are sent to the login screen for the area they requested:

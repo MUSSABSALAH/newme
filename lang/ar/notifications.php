@@ -44,5 +44,18 @@ return [
                 'body' => 'استشارة رقم :reference من :customer — :when.',
             ],
         ],
+        'shipment' => [
+            'alert' => [
+                'title' => 'تنبيه شحنة والم',
+                'body' => 'الشحنة :reference (:customer): :problem',
+            ],
+        ],
+    ],
+
+    'shipment_problems' => [
+        'failed' => 'تعذّر التسليم للعميل',
+        'pickup_failed' => 'تعذّر الاستلام من الفرع',
+        'cancelled' => 'أُلغيت المهمة من جهة والم',
+        'cancel_failed' => 'أُلغي الطلب هنا لكن تعذّر إلغاء المهمة في والم — ألغها يدوياً',
     ],
 ];

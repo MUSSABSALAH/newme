@@ -36,6 +36,8 @@ use Illuminate\Support\Str;
  * @property int $subtotal_minor
  * @property int $discount_minor
  * @property int $delivery_fee_minor
+ * @property string|null $delivery_distance_km
+ * @property string|null $delivery_distance_method
  * @property int $total_minor
  * @property PaymentMethod|null $payment_method
  * @property PaymentStatus $payment_status
@@ -100,6 +102,7 @@ class Order extends Model
             'subtotal_minor' => 'integer',
             'discount_minor' => 'integer',
             'delivery_fee_minor' => 'integer',
+            'delivery_distance_km' => 'decimal:3',
             'total_minor' => 'integer',
             'placed_at' => 'datetime',
             'delivered_at' => 'datetime',

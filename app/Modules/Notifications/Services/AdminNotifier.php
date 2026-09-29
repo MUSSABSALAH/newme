@@ -11,6 +11,7 @@ use App\Modules\Identity\Enums\UserStatus;
 use App\Modules\Notifications\Notifications\NewConsultationNotification;
 use App\Modules\Notifications\Notifications\NewOrderNotification;
 use App\Modules\Notifications\Notifications\NewSubscriptionNotification;
+use App\Modules\Notifications\Notifications\ShipmentAlertNotification;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
 use Illuminate\Database\Eloquent\Collection;
@@ -49,6 +50,18 @@ final class AdminNotifier
 
         if ($recipients->isNotEmpty()) {
             Notification::send($recipients, new NewConsultationNotification($consultation));
+        }
+    }
+
+    /**
+     * @param  array{reference: string, customer: string|null, problem: string, date: string|null}  $details
+     */
+    public function shipmentAlert(array $details): void
+    {
+        $recipients = $this->recipients(PermissionName::DeliveryView);
+
+        if ($recipients->isNotEmpty()) {
+            Notification::send($recipients, new ShipmentAlertNotification($details));
         }
     }
 

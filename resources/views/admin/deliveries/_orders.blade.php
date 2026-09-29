@@ -73,6 +73,13 @@
                         </p>
                     @endif
 
+                    @include('admin.deliveries._walim', [
+                        'shipment' => $orderShipments[$order->getKey()] ?? null,
+                        'sendUrl' => route('admin.deliveries.orders.walim', $order),
+                        'canSend' => $walimOrders && ! $order->status->isTerminal(),
+                        'boardDate' => $board->date->toDateString(),
+                    ])
+
                     @include('admin.orders._status_form', [
                         'order' => $order,
                         'canShipOrder' => $canRecord,

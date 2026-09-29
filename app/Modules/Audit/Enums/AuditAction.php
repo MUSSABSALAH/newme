@@ -59,6 +59,8 @@ enum AuditAction: string
     case PaymentConfirmed = 'payment.confirmed';
     case InvoiceIssued = 'invoice.issued';
     case DeliveryStatusUpdated = 'delivery.status_updated';
+    case ShipmentSent = 'shipment.sent';
+    case ShipmentCancelled = 'shipment.cancelled';
     case ConsultationCreated = 'consultation.created';
     case ConsultationStatusUpdated = 'consultation.status_updated';
 

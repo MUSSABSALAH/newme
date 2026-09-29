@@ -7,11 +7,16 @@ namespace App\Modules\Addresses\Services;
 use App\Models\User;
 use App\Modules\Addresses\DTOs\AddressData;
 use App\Modules\Addresses\Models\Address;
+use App\Modules\Checkout\Services\StoreDeliveryFee;
+use App\Modules\Delivery\Distance\GeoPoint;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 final class AddressService
 {
+    public function __construct(private readonly StoreDeliveryFee $deliveryFees) {}
+
     /**
      * @return Collection<int, Address>
      */
@@ -26,7 +31,7 @@ final class AddressService
 
     public function create(User $user, AddressData $data): Address
     {
-        return DB::transaction(function () use ($user, $data): Address {
+        $address = DB::transaction(function () use ($user, $data): Address {
             $first = ! Address::query()->where('user_id', $user->id)->exists();
 
             $address = new Address;
@@ -41,21 +46,32 @@ final class AddressService
 
             return $address;
         });
+
+        $this->warmDistance($address);
+
+        return $address;
     }
 
     public function update(Address $address, AddressData $data): Address
     {
-        return DB::transaction(function () use ($address, $data): Address {
+        $pinMoved = false;
+
+        DB::transaction(function () use ($address, $data, &$pinMoved): void {
             $this->fill($address, $data);
+            $pinMoved = $address->isDirty(['lat', 'lng']);
             $address->is_default = $data->isDefault || $address->is_default;
             $address->save();
 
             if ($address->is_default) {
                 $this->clearOtherDefaults($address->user, $address);
             }
-
-            return $address;
         });
+
+        if ($pinMoved) {
+            $this->warmDistance($address);
+        }
+
+        return $address;
     }
 
     public function makeDefault(Address $address): void
@@ -126,6 +142,23 @@ final class AddressService
         $address->street = $data->street;
         $address->national_address = $data->nationalAddress;
         $address->details = $data->details;
+
+        if ($data->point instanceof GeoPoint) {
+            $address->lat = number_format($data->point->lat, 7, '.', '');
+            $address->lng = number_format($data->point->lng, 7, '.', '');
+        }
+    }
+
+    /**
+     * Measure the new pin now so checkout does not wait on it.
+     */
+    private function warmDistance(Address $address): void
+    {
+        try {
+            $this->deliveryFees->warm($address);
+        } catch (Throwable $e) {
+            report($e);
+        }
     }
 
     private function clearOtherDefaults(User $user, Address $keep): void

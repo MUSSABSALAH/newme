@@ -80,9 +80,20 @@ final class CheckoutController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
+        $addresses = $this->addresses->forUser($user);
+        $selected = $this->addresses->defaultDeliverableFor($user);
+        $storeCheckout = $this->checkout->source() === CheckoutSource::Cart;
+
+        if ($storeCheckout && $this->checkout->addressNeedsPin($selected)) {
+            $selected = $addresses->first(
+                fn (Address $address): bool => $address->isDeliverable() && $address->hasPin(),
+            );
+        }
 
         try {
-            $summary = $this->checkout->summary();
+            $summary = $storeCheckout
+                ? $this->checkout->summary($addresses, $selected)
+                : $this->checkout->summary();
         } catch (NothingToCheckoutException $e) {
             return redirect()
                 ->route('website.cart')
@@ -92,8 +103,8 @@ final class CheckoutController extends Controller
         return view('website.pages.checkout', [
             'user' => $user,
             'summary' => $summary,
-            'addresses' => $this->addresses->forUser($user),
-            'selectedAddress' => $this->addresses->defaultDeliverableFor($user),
+            'addresses' => $addresses,
+            'selectedAddress' => $selected,
             'methods' => $this->methods(),
             'hostedCheckout' => $this->gateway->usesHostedCheckout(),
         ]);
@@ -127,6 +138,12 @@ final class CheckoutController extends Controller
                 ->where('user_id', $user->getKey())
                 ->where('public_id', $request->validated('address'))
                 ->firstOrFail();
+
+            if ($this->checkout->source() === CheckoutSource::Cart && $this->checkout->addressNeedsPin($address)) {
+                return back()
+                    ->withInput($request->except(['card_number', 'card_cvv']))
+                    ->withErrors(['address' => __('checkout.address.needs_pin')]);
+            }
         }
 
         $method = $request->paymentMethod();

@@ -26,6 +26,19 @@ final class UpdateSettingsRequest extends FormRequest
         }
 
         foreach (SettingsRegistry::all() as $definition) {
+            if ($definition->encrypted) {
+                // The form never echoes a secret back, so a blank field keeps the stored one.
+                $name = $definition->fieldName();
+                $raw = $settings[$name] ?? null;
+                if (! is_string($raw) || trim($raw) === '') {
+                    unset($settings[$name]);
+                } else {
+                    $settings[$name] = trim($raw);
+                }
+
+                continue;
+            }
+
             if ($definition->type === SettingType::MultiSelect) {
                 $name = $definition->fieldName();
                 if (! array_key_exists($name, $settings) || $settings[$name] === null || $settings[$name] === '') {

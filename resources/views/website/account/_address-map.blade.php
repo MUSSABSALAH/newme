@@ -3,6 +3,9 @@
   $districtId = $districtId ?? 'district';
   $streetId = $streetId ?? 'street';
   $nationalId = $nationalId ?? 'national_address';
+  $pinLat = old('lat', $pinLat ?? null);
+  $pinLng = old('lng', $pinLng ?? null);
+  $hasPin = is_numeric($pinLat) && is_numeric($pinLng);
 @endphp
 
 @once
@@ -29,7 +32,7 @@
 @endpush
 @push('scripts')
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
-<script src="{{ asset('js/address-map.js') }}" defer></script>
+<script src="{{ asset('js/address-map.js') }}?v={{ @filemtime(public_path('js/address-map.js')) ?: '1' }}" defer></script>
 @endpush
 @endonce
 
@@ -40,10 +43,13 @@
      data-district="#{{ $districtId }}"
      data-street="#{{ $streetId }}"
      data-national="#{{ $nationalId }}"
-     data-center-lat="24.7136"
-     data-center-lng="46.6753"
+     data-center-lat="{{ $hasPin ? $pinLat : '24.7136' }}"
+     data-center-lng="{{ $hasPin ? $pinLng : '46.6753' }}"
+     data-has-pin="{{ $hasPin ? '1' : '0' }}"
      data-msg-outside="{{ __('addresses.errors.outside_riyadh') }}"
      data-msg-locating="{{ __('addresses.map.locating') }}">
+  <input type="hidden" name="lat" value="{{ $hasPin ? $pinLat : '' }}" data-addr-lat>
+  <input type="hidden" name="lng" value="{{ $hasPin ? $pinLng : '' }}" data-addr-lng>
   <div class="addr-map__bar">
     <p class="addr-map__hint">{{ __('addresses.map.hint') }}</p>
     <button type="button" class="addr-map__btn" data-addr-locate>

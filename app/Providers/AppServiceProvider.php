@@ -17,6 +17,7 @@ use App\Modules\Cms\Services\HomepageContentService;
 use App\Modules\Cms\Services\PageContentService;
 use App\Modules\Consultations\Models\Consultation;
 use App\Modules\Consultations\Policies\ConsultationPolicy;
+use App\Modules\Delivery\Listeners\CancelWalimShipment;
 use App\Modules\Delivery\Models\SubscriptionDelivery;
 use App\Modules\Delivery\Policies\SubscriptionDeliveryPolicy;
 use App\Modules\Identity\Contracts\SmsSender;
@@ -27,6 +28,7 @@ use App\Modules\Identity\Support\RecordingSmsSender;
 use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Invoices\Policies\InvoicePolicy;
 use App\Modules\Notifications\Support\NotificationPresenter;
+use App\Modules\Orders\Events\OrderStatusChanged;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Policies\OrderPolicy;
 use App\Modules\Payments\Contracts\PaymentGateway;
@@ -50,6 +52,7 @@ use App\Modules\Subscriptions\Models\Subscription;
 use App\Modules\Subscriptions\Policies\SubscriptionPolicy;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -130,6 +133,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Subscription::class, SubscriptionPolicy::class);
         Gate::policy(Invoice::class, InvoicePolicy::class);
         Gate::policy(SubscriptionDelivery::class, SubscriptionDeliveryPolicy::class);
+
+        Event::listen(OrderStatusChanged::class, CancelWalimShipment::class);
 
         View::composer(['mail.*', 'mail.operations.*', 'mail.partials.*'], function ($view): void {
             $view->with('mailFont', \App\Modules\Notifications\Support\BrandMail::font());

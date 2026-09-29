@@ -44,5 +44,18 @@ return [
                 'body' => 'Consultation #:reference from :customer — :when.',
             ],
         ],
+        'shipment' => [
+            'alert' => [
+                'title' => 'Walim shipment alert',
+                'body' => 'Shipment #:reference (:customer): :problem',
+            ],
+        ],
+    ],
+
+    'shipment_problems' => [
+        'failed' => 'could not be delivered to the customer',
+        'pickup_failed' => 'could not be picked up from the branch',
+        'cancelled' => 'the task was cancelled on Walim’s side',
+        'cancel_failed' => 'the order was cancelled here but the Walim task could not be cancelled — cancel it by hand',
     ],
 ];

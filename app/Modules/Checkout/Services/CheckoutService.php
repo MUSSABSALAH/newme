@@ -10,6 +10,7 @@ use App\Modules\Analytics\Support\EcommerceDataLayer;
 use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Audit\Services\AuditService;
 use App\Modules\Checkout\DTOs\CheckoutSummary;
+use App\Modules\Checkout\DTOs\DeliveryQuote;
 use App\Modules\Checkout\DTOs\StoreFulfillmentQuote;
 use App\Modules\Checkout\DTOs\SubscriptionDraft;
 use App\Modules\Checkout\Enums\CheckoutSource;
@@ -80,9 +81,11 @@ final class CheckoutService
     /**
      * What the customer is about to pay for.
      *
+     * @param  iterable<Address>  $addresses  The customer's saved addresses, priced one by one in distance mode.
+     *
      * @throws NothingToCheckoutException
      */
-    public function summary(): CheckoutSummary
+    public function summary(iterable $addresses = [], ?Address $selected = null): CheckoutSummary
     {
         $draft = $this->drafts->subscription();
 
@@ -94,7 +97,7 @@ final class CheckoutService
             throw new NothingToCheckoutException;
         }
 
-        return $this->cartSummary();
+        return $this->cartSummary($addresses, $selected);
     }
 
     /**
@@ -208,7 +211,7 @@ final class CheckoutService
                 throw new NothingToCheckoutException;
             }
 
-            [$subtotal, $discount, , $fee, $total] = $this->storeCharge($fulfillment);
+            [$subtotal, $discount, , $fee, $total, $delivery] = $this->storeCharge($fulfillment, $address);
 
             $intent = [
                 'source' => CheckoutSource::Cart->value,
@@ -219,6 +222,8 @@ final class CheckoutService
                 'subtotal_minor' => $subtotal,
                 'discount_minor' => $discount,
                 'delivery_fee_minor' => $fee,
+                'delivery_distance_km' => $delivery->distance?->km,
+                'delivery_distance_method' => $delivery->distance?->method->value,
                 'total_minor' => $total,
                 'coupon_code' => $this->cart->couponCode(),
                 'items' => $this->cart->items()->map(static fn (array $item): array => [
@@ -281,7 +286,7 @@ final class CheckoutService
         FulfillmentMethod $fulfillment = FulfillmentMethod::Delivery,
     ): array {
         return DB::transaction(function () use ($user, $address, $method, $card, $note, $fulfillment): array {
-            [, , $goods, $fee] = $this->storeCharge($fulfillment);
+            [, , , $fee, , $delivery] = $this->storeCharge($fulfillment, $address);
 
             $order = $this->orders->placeFromCart(
                 $user,
@@ -291,6 +296,7 @@ final class CheckoutService
                 $note,
                 $fulfillment,
                 $fee,
+                $delivery->distance,
             );
 
             $attempt = $this->payments->charge(
@@ -353,26 +359,78 @@ final class CheckoutService
     }
 
     /**
-     * @return array{0: int, 1: int, 2: int, 3: int, 4: int}
+     * Whether distance pricing needs this store-delivery address pinned first.
      */
-    private function storeCharge(FulfillmentMethod $fulfillment): array
+    public function addressNeedsPin(?Address $address): bool
+    {
+        return $this->storeDelivery->needsPin($address);
+    }
+
+    /**
+     * @return array{0: int, 1: int, 2: int, 3: int, 4: int, 5: DeliveryQuote}
+     */
+    private function storeCharge(FulfillmentMethod $fulfillment, ?Address $address): array
     {
         $subtotal = $this->cart->subtotalMinor();
         $discount = $this->cart->discountMinor();
         $goods = max(0, $subtotal - $discount);
-        $fee = $this->storeDelivery->quote($fulfillment, $goods);
-        $vat = VatBreakdown::forCharge($goods, $fee, $this->settings);
+        $delivery = $this->storeDelivery->quoteFor($fulfillment, $goods, $address);
+        $vat = VatBreakdown::forCharge($goods, $delivery->feeMinor, $this->settings);
 
-        return [$subtotal, $discount, $goods, $fee, $vat->grossMinor];
+        return [$subtotal, $discount, $goods, $delivery->feeMinor, $vat->grossMinor, $delivery];
     }
 
-    private function cartSummary(): CheckoutSummary
+    /**
+     * Delivery figures per saved address, for switching addresses without a reload.
+     *
+     * Only filled in distance mode; a fixed fee is the same for every address.
+     *
+     * @param  iterable<Address>  $addresses
+     * @return array<string, array{fee: string, charged: bool, subtotal: string, tax: string, total: string}>
+     */
+    private function addressQuotes(iterable $addresses, int $goods, ?Address $selected, DeliveryQuote $selectedQuote): array
+    {
+        if (! $this->storeDelivery->profile()->usesDistance()) {
+            return [];
+        }
+
+        $quotes = [];
+
+        foreach ($addresses as $address) {
+            if (! $address->isDeliverable() || ! $address->hasPin()) {
+                continue;
+            }
+
+            $quote = $selected instanceof Address && $address->is($selected)
+                ? $selectedQuote
+                : $this->storeDelivery->quoteFor(FulfillmentMethod::Delivery, $goods, $address);
+            $vat = VatBreakdown::forCharge($goods, $quote->feeMinor, $this->settings);
+
+            $quotes[$address->public_id] = [
+                'fee' => $vat->exclusiveFeeMinor === 0
+                    ? (string) __('checkout.summary.free')
+                    : Money::fromMinor($vat->exclusiveFeeMinor)->format(),
+                'charged' => $vat->exclusiveFeeMinor > 0,
+                'subtotal' => Money::fromMinor($vat->exclusiveMinor)->format(),
+                'tax' => Money::fromMinor($vat->taxMinor)->format(),
+                'total' => Money::fromMinor($vat->grossMinor)->format(),
+            ];
+        }
+
+        return $quotes;
+    }
+
+    /**
+     * @param  iterable<Address>  $addresses
+     */
+    private function cartSummary(iterable $addresses = [], ?Address $selected = null): CheckoutSummary
     {
         $items = $this->cart->items();
         $subtotal = $this->cart->subtotalMinor();
         $discount = $this->cart->discountMinor();
         $goods = max(0, $subtotal - $discount);
-        $fee = $this->storeDelivery->quote(FulfillmentMethod::Delivery, $goods);
+        $delivery = $this->storeDelivery->quoteFor(FulfillmentMethod::Delivery, $goods, $selected);
+        $fee = $delivery->feeMinor;
         $deliveryVat = VatBreakdown::forCharge($goods, $fee, $this->settings);
         $pickupVat = VatBreakdown::forCharge($goods, 0, $this->settings);
 
@@ -422,6 +480,8 @@ final class CheckoutService
             pickupTaxDisplay: Money::fromMinor($pickupVat->taxMinor)->format(),
             deliveryTotalMinor: $deliveryVat->grossMinor,
             pickupTotalMinor: $pickupVat->grossMinor,
+            requiresPin: $this->storeDelivery->profile()->usesDistance(),
+            addressQuotes: $this->addressQuotes($addresses, $goods, $selected, $delivery),
         );
 
         return new CheckoutSummary(

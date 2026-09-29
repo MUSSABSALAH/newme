@@ -113,9 +113,18 @@
 
     var marker = window.L.marker([lat, lng], { draggable: true }).addTo(map);
 
+    var latInput = root.querySelector('[data-addr-lat]');
+    var lngInput = root.querySelector('[data-addr-lng]');
+
     function apply(ll) {
       marker.setLatLng(ll);
+      if (latInput) latInput.value = ll.lat.toFixed(7);
+      if (lngInput) lngInput.value = ll.lng.toFixed(7);
       lookup(root, ll.lat, ll.lng);
+    }
+
+    if (root.getAttribute('data-has-pin') === '1') {
+      map.setView([lat, lng], 15);
     }
 
     map.on('click', function (e) { apply(e.latlng); });

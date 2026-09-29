@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Addresses\DTOs;
 
+use App\Modules\Delivery\Distance\GeoPoint;
 use App\Support\Dto\Data;
 
 final class AddressData extends Data
@@ -18,6 +19,7 @@ final class AddressData extends Data
         public readonly string $nationalAddress,
         public readonly ?string $details,
         public readonly bool $isDefault,
+        public readonly ?GeoPoint $point = null,
     ) {}
 
     /**
@@ -35,6 +37,7 @@ final class AddressData extends Data
             nationalAddress: self::text($attributes['national_address'] ?? null),
             details: self::nullableText($attributes['details'] ?? null),
             isDefault: (bool) ($attributes['is_default'] ?? false),
+            point: GeoPoint::tryFrom($attributes['lat'] ?? null, $attributes['lng'] ?? null),
         );
     }
 

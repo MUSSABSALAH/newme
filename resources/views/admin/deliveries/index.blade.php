@@ -29,6 +29,12 @@
                     {{ __('deliveries.board.next_day') }}
                 </x-ui.button>
 
+                @if ($orderShipments !== [] || $stopShipments !== [])
+                    <x-ui.button :href="route('admin.deliveries.waybills', ['date' => $date->toDateString()])" variant="ghost" class="btn--sm" target="_blank">
+                        {{ __('deliveries.walim.waybills') }}
+                    </x-ui.button>
+                @endif
+
                 <form method="GET" action="{{ route('admin.deliveries.index') }}" class="ship-datebar__pick">
                     <x-form.input type="date" name="date" :value="$date->toDateString()" onchange="this.form.submit()" />
                     <x-ui.button type="submit" variant="ghost" class="btn--sm">{{ __('deliveries.board.go') }}</x-ui.button>

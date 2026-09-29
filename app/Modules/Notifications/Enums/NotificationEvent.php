@@ -17,6 +17,7 @@ enum NotificationEvent: string
     case OrderPlaced = 'order.placed';
     case SubscriptionStarted = 'subscription.started';
     case ConsultationBooked = 'consultation.booked';
+    case ShipmentAlert = 'shipment.alert';
 
     public function icon(): string
     {
@@ -24,6 +25,7 @@ enum NotificationEvent: string
             self::OrderPlaced => 'package',
             self::SubscriptionStarted => 'repeat',
             self::ConsultationBooked => 'calendar-check',
+            self::ShipmentAlert => 'triangle-alert',
         };
     }
 
@@ -44,6 +46,9 @@ enum NotificationEvent: string
             'customer' => (string) ($payload['customer'] ?? __('notifications.unknown_customer')),
             'total' => is_numeric($totalMinor) ? Money::fromMinor((int) $totalMinor)->format() : '—',
             'when' => (string) ($payload['when'] ?? '—'),
+            'problem' => is_string($payload['problem'] ?? null)
+                ? (string) __('notifications.shipment_problems.'.$payload['problem'])
+                : '—',
         ]);
     }
 
@@ -54,6 +59,12 @@ enum NotificationEvent: string
      */
     public function url(array $payload): ?string
     {
+        if ($this === self::ShipmentAlert) {
+            $date = $payload['date'] ?? null;
+
+            return route('admin.deliveries.index', is_string($date) && $date !== '' ? ['date' => $date] : []);
+        }
+
         $publicId = $payload['public_id'] ?? null;
 
         if (! is_string($publicId) || $publicId === '') {
@@ -64,6 +75,7 @@ enum NotificationEvent: string
             self::OrderPlaced => route('admin.orders.show', $publicId),
             self::SubscriptionStarted => route('admin.subscriptions.show', $publicId),
             self::ConsultationBooked => route('admin.consultations.show', $publicId),
+            self::ShipmentAlert => null,
         };
     }
 }

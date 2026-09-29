@@ -22,6 +22,9 @@ final readonly class StoreFulfillmentQuote
         public string $pickupTaxDisplay,
         public int $deliveryTotalMinor,
         public int $pickupTotalMinor,
+        public bool $requiresPin = false,
+        /** @var array<string, array{fee: string, charged: bool, subtotal: string, tax: string, total: string}> */
+        public array $addressQuotes = [],
     ) {}
 
     public function feeDisplay(): string

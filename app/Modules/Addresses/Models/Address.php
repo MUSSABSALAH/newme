@@ -6,6 +6,7 @@ namespace App\Modules\Addresses\Models;
 
 use App\Models\User;
 use App\Modules\Addresses\Support\RiyadhDelivery;
+use App\Modules\Delivery\Distance\GeoPoint;
 use Database\Factories\AddressFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,12 @@ use Illuminate\Support\Str;
  * @property string $street
  * @property string|null $national_address
  * @property string|null $details
+ * @property string|null $lat
+ * @property string|null $lng
+ * @property string|null $distance_km
+ * @property string|null $distance_method
+ * @property string|null $distance_fingerprint
+ * @property \Illuminate\Support\Carbon|null $distance_measured_at
  * @property bool $is_default
  */
 class Address extends Model
@@ -51,6 +58,8 @@ class Address extends Model
         'street',
         'national_address',
         'details',
+        'lat',
+        'lng',
         'is_default',
     ];
 
@@ -75,6 +84,10 @@ class Address extends Model
     {
         return [
             'is_default' => 'boolean',
+            'lat' => 'decimal:7',
+            'lng' => 'decimal:7',
+            'distance_km' => 'decimal:3',
+            'distance_measured_at' => 'datetime',
         ];
     }
 
@@ -108,13 +121,25 @@ class Address extends Model
         return RiyadhDelivery::isRiyadhCity($this->city);
     }
 
+    public function point(): ?GeoPoint
+    {
+        return GeoPoint::tryFrom($this->lat, $this->lng);
+    }
+
+    public function hasPin(): bool
+    {
+        return $this->point() instanceof GeoPoint;
+    }
+
     /**
      * The frozen copy stored on an order or subscription.
      *
-     * @return array<string, string|null>
+     * @return array<string, string|float|null>
      */
     public function snapshot(): array
     {
+        $point = $this->point();
+
         return [
             'label' => $this->label,
             'recipient_name' => $this->recipient_name,
@@ -124,6 +149,8 @@ class Address extends Model
             'street' => $this->street,
             'national_address' => $this->national_address,
             'details' => $this->details,
+            'lat' => $point?->lat,
+            'lng' => $point?->lng,
         ];
     }
 }

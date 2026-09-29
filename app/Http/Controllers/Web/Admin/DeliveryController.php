@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Modules\Delivery\Models\SubscriptionDelivery;
 use App\Modules\Delivery\Services\DeliveryBoardService;
 use App\Modules\Delivery\Services\DeliveryService;
+use App\Modules\Delivery\Walim\WalimShipmentService;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
 use Illuminate\Contracts\View\View;
@@ -28,16 +29,21 @@ final class DeliveryController extends Controller
         private readonly DeliveryService $deliveries,
     ) {}
 
-    public function index(Request $request): View
+    public function index(Request $request, WalimShipmentService $walim): View
     {
         $this->authorize('viewAny', SubscriptionDelivery::class);
 
         $date = $this->date($request->query('date'));
+        $board = $this->board->forDate($date);
 
         return view('admin.deliveries.index', [
-            'board' => $this->board->forDate($date),
+            'board' => $board,
             'date' => $date,
             'canRecord' => $request->user()?->can('record', SubscriptionDelivery::class) ?? false,
+            'walimOrders' => $walim->storeEnabled(),
+            'walimStops' => $walim->subscriptionsEnabled(),
+            'orderShipments' => $walim->forOrders($board->orders),
+            'stopShipments' => $walim->forStops($board->stops),
         ]);
     }
 

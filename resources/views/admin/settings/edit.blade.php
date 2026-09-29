@@ -19,9 +19,7 @@
                             $current = $values[$definition->key] ?? null;
                             $isWide = in_array($definition->type, [SettingType::Text, SettingType::MultiSelect], true);
                             $locked = $definition->locked;
-                            if ($definition->key === 'delivery.fee_mode') {
-                                $current = 'fixed';
-                            }
+                            $secret = $definition->encrypted;
                         @endphp
 
                         @if ($definition->type === SettingType::Boolean)
@@ -97,6 +95,17 @@
                                     </x-form.select>
                                 @elseif ($definition->type === SettingType::Text)
                                     <x-form.textarea :name="$name" :value="old($field, $current)" rows="3" :disabled="$locked" />
+                                @elseif ($secret)
+                                    <input
+                                        type="password"
+                                        name="{{ $name }}"
+                                        id="{{ $name }}"
+                                        value=""
+                                        class="input{{ $errors->has($field) ? ' is-invalid' : '' }}"
+                                        autocomplete="new-password"
+                                        dir="ltr"
+                                        placeholder="{{ filled($current) ? __('settings.secret.saved') : __('settings.secret.empty') }}"
+                                    >
                                 @else
                                     <x-form.input
                                         :name="$name"
@@ -112,6 +121,14 @@
                         @endif
                     @endforeach
                 </div>
+
+                @if ($group === \App\Modules\Settings\Enums\SettingGroup::Shipping->value)
+                    @include('admin.settings._distance-test')
+                @endif
+
+                @if ($group === \App\Modules\Settings\Enums\SettingGroup::Walim->value)
+                    @include('admin.settings._walim-secret')
+                @endif
             </x-ui.card>
         @endforeach
 

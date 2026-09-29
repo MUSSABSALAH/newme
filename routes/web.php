@@ -45,7 +45,9 @@ use App\Http\Controllers\Web\ConsultationBookingController;
 use App\Http\Controllers\Web\InvitationController;
 use App\Http\Controllers\Web\LocaleController;
 use App\Http\Controllers\Web\PayTabsReturnController;
+use App\Http\Controllers\Web\Admin\WalimShipmentController;
 use App\Http\Controllers\Web\SubscribeQuoteController;
+use App\Http\Controllers\Web\WalimWebhookController;
 use App\Http\Controllers\Web\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -91,6 +93,11 @@ Route::name('website.')->group(function () {
     // optional: the IPN still settles the payment if the session is gone.
     Route::match(['GET', 'POST'], 'payments/paytabs/return', PayTabsReturnController::class)
         ->name('payments.paytabs.return');
+
+    // Walim task status updates; trusted by the shared secret, not a session.
+    Route::post('webhooks/walim', WalimWebhookController::class)
+        ->middleware('throttle:240,1')
+        ->name('webhooks.walim');
 
     // Legacy paths kept as redirects.
     Route::redirect('/plans', '/subscribe');
@@ -240,6 +247,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('deliveries/orders/{order}', [DeliveryController::class, 'updateOrder'])
             ->name('deliveries.orders.update');
 
+        // Walim: hand shipments to the courier and print their waybills.
+        Route::post('deliveries/orders/{order}/walim', [WalimShipmentController::class, 'sendOrder'])
+            ->name('deliveries.orders.walim');
+        Route::post('deliveries/subscriptions/{subscription}/walim', [WalimShipmentController::class, 'sendStop'])
+            ->name('deliveries.stops.walim');
+        Route::post('deliveries/walim/stops', [WalimShipmentController::class, 'sendStops'])
+            ->name('deliveries.stops.walim-all');
+        Route::post('deliveries/shipments/{shipment}/cancel', [WalimShipmentController::class, 'cancel'])
+            ->name('deliveries.shipments.cancel');
+        Route::get('deliveries/shipments/{shipment}/waybill.pdf', [WalimShipmentController::class, 'waybill'])
+            ->name('deliveries.shipments.waybill');
+        Route::get('deliveries/waybills.pdf', [WalimShipmentController::class, 'waybills'])
+            ->name('deliveries.waybills');
+
         Route::resource('consultations', ConsultationController::class)->only(['index', 'show']);
         Route::patch('consultations/{consultation}/status', [ConsultationController::class, 'updateStatus'])
             ->name('consultations.status');
@@ -258,5 +279,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::post('settings/distance-test', [SettingController::class, 'testDistance'])
+            ->middleware('throttle:10,1')
+            ->name('settings.distance-test');
+        Route::post('settings/walim-secret', [SettingController::class, 'registerWalimSecret'])
+            ->middleware('throttle:10,1')
+            ->name('settings.walim-secret');
     });
 });

@@ -126,6 +126,10 @@ return [
         'delivery' => [
             'status_updated' => 'تحديث حالة تسليم',
         ],
+        'shipment' => [
+            'sent' => 'إرسال شحنة إلى والم',
+            'cancelled' => 'إلغاء شحنة في والم',
+        ],
         'consultation' => [
             'created' => 'حجز استشارة',
             'status_updated' => 'تحديث حالة استشارة',

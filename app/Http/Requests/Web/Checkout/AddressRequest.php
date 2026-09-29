@@ -28,6 +28,8 @@ final class AddressRequest extends FormRequest
             'street' => ['required', 'string', 'max:180'],
             'national_address' => ['required', 'string', 'max:32'],
             'details' => ['nullable', 'string', 'max:180'],
+            'lat' => ['nullable', 'required_with:lng', 'numeric', 'between:-90,90'],
+            'lng' => ['nullable', 'required_with:lat', 'numeric', 'between:-180,180'],
             'is_default' => ['nullable', 'boolean'],
         ];
     }

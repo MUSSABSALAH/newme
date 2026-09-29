@@ -126,6 +126,10 @@ return [
         'delivery' => [
             'status_updated' => 'Delivery status updated',
         ],
+        'shipment' => [
+            'sent' => 'Shipment sent to Walim',
+            'cancelled' => 'Shipment cancelled at Walim',
+        ],
         'consultation' => [
             'created' => 'Consultation booked',
             'status_updated' => 'Consultation status updated',

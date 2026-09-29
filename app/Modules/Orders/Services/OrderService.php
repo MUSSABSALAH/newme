@@ -10,7 +10,10 @@ use App\Modules\Audit\Enums\AuditAction;
 use App\Modules\Checkout\Enums\FulfillmentMethod;
 use App\Modules\Audit\Services\AuditService;
 use App\Modules\Checkout\Support\VatBreakdown;
+use App\Modules\Delivery\Distance\DistanceMethod;
+use App\Modules\Delivery\Distance\DistanceResult;
 use App\Modules\Orders\Enums\OrderStatus;
+use App\Modules\Orders\Events\OrderStatusChanged;
 use App\Modules\Orders\Exceptions\EmptyCartException;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Payments\Enums\PaymentMethod;
@@ -54,6 +57,7 @@ final class OrderService
         ?string $note = null,
         FulfillmentMethod $fulfillment = FulfillmentMethod::Delivery,
         int $deliveryFeeMinor = 0,
+        ?DistanceResult $distance = null,
     ): Order {
         $items = $cart->items();
 
@@ -61,7 +65,7 @@ final class OrderService
             throw new EmptyCartException;
         }
 
-        return DB::transaction(function () use ($user, $cart, $items, $address, $method, $note, $fulfillment, $deliveryFeeMinor): Order {
+        return DB::transaction(function () use ($user, $cart, $items, $address, $method, $note, $fulfillment, $deliveryFeeMinor, $distance): Order {
             $subtotal = $cart->subtotalMinor();
             $code = $cart->couponCode();
 
@@ -89,6 +93,8 @@ final class OrderService
             $order->subtotal_minor = $subtotal;
             $order->discount_minor = $discount;
             $order->delivery_fee_minor = $fee;
+            $order->delivery_distance_km = $distance?->km;
+            $order->delivery_distance_method = $distance?->method->value;
             $order->total_minor = $vat->grossMinor;
             $order->payment_method = $method;
             $order->payment_status = PaymentStatus::Pending;
@@ -156,8 +162,12 @@ final class OrderService
             ?? FulfillmentMethod::Delivery;
         $code = $intent['coupon_code'] ?? null;
         $code = is_string($code) && $code !== '' ? $code : null;
+        $distanceMethod = DistanceMethod::tryFrom((string) ($intent['delivery_distance_method'] ?? ''));
+        $distance = $distanceMethod instanceof DistanceMethod && is_numeric($intent['delivery_distance_km'] ?? null)
+            ? new DistanceResult((float) $intent['delivery_distance_km'], $distanceMethod)
+            : null;
 
-        return DB::transaction(function () use ($user, $address, $method, $note, $items, $subtotal, $discount, $fee, $total, $fulfillment, $code): Order {
+        return DB::transaction(function () use ($user, $address, $method, $note, $items, $subtotal, $discount, $fee, $total, $fulfillment, $code, $distance): Order {
             $applied = $code === null ? null : $this->coupons->resolveQuietly(
                 $code,
                 CouponScope::Store,
@@ -177,6 +187,8 @@ final class OrderService
             $order->subtotal_minor = $subtotal;
             $order->discount_minor = $discount;
             $order->delivery_fee_minor = $fee;
+            $order->delivery_distance_km = $distance?->km;
+            $order->delivery_distance_method = $distance?->method->value;
             $order->total_minor = $total;
             $order->payment_method = $method;
             $order->payment_status = PaymentStatus::Pending;
@@ -245,9 +257,11 @@ final class OrderService
     /**
      * Move the order along the in-house delivery path.
      *
+     * A null actor means the courier reported the change, not a member of staff.
+     *
      * @throws \InvalidArgumentException
      */
-    public function updateStatus(Order $order, OrderStatus $status, User $actor): Order
+    public function updateStatus(Order $order, OrderStatus $status, ?User $actor): Order
     {
         $previous = $order->status;
 
@@ -277,9 +291,11 @@ final class OrderService
             ['status' => $previous->value],
             [
                 'status' => $status->value,
-                'actor_id' => $actor->getKey(),
+                'actor_id' => $actor?->getKey(),
             ],
         );
+
+        event(new OrderStatusChanged($order, $previous, $actor));
 
         return $order;
     }

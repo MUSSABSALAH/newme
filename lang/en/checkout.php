@@ -47,6 +47,8 @@ return [
         'empty' => 'You have no saved addresses yet — add the first one to continue.',
         'save' => 'Save address',
         'cancel' => 'Cancel',
+        'pin_flag' => 'Pin it on the map',
+        'needs_pin' => 'Pin this address on the map first so the delivery fee can be calculated.',
     ],
 
     'payment' => [

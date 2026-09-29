@@ -45,6 +45,31 @@ final class DeliveryBoardService
     }
 
     /**
+     * One subscription's stop on a date, or null when nothing is scheduled.
+     */
+    public function stop(Subscription $subscription, Carbon $date): ?SubscriptionStop
+    {
+        $day = $date->copy()->startOfDay();
+        $meals = ScheduledDay::mealsFor($subscription, $day->toDateString());
+
+        if ($meals === null) {
+            return null;
+        }
+
+        $subscription->loadMissing('user');
+
+        return new SubscriptionStop(
+            subscription: $subscription,
+            date: $day,
+            meals: $meals,
+            record: SubscriptionDelivery::query()
+                ->where('subscription_id', $subscription->getKey())
+                ->where('delivery_date', $day->toDateString())
+                ->first(),
+        );
+    }
+
+    /**
      * Subscription days scheduled on this date, paused days left out.
      *
      * The schedule lives as JSON on the subscription, so the day is matched in

@@ -7,6 +7,16 @@
 <x-ui.card :title="__('deliveries.sections.subscriptions')">
     <x-slot:actions>
         <span class="text-muted">{{ trans_choice('deliveries.sections.stop_count', count($board->stops)) }}</span>
+        @if ($walimStops && $canRecord && $board->stopsRemaining() > 0)
+            <form method="POST" action="{{ route('admin.deliveries.stops.walim-all') }}" class="ship-item__inline"
+                  onsubmit="return confirm(@js(__('deliveries.walim.send_all_confirm')))">
+                @csrf
+                <input type="hidden" name="date" value="{{ $board->date->toDateString() }}">
+                <x-ui.button type="submit" variant="ghost" class="btn--sm">
+                    <x-ui.icon name="truck" size="sm" /> {{ __('deliveries.walim.send_all') }}
+                </x-ui.button>
+            </form>
+        @endif
     </x-slot:actions>
 
     @if ($board->stops === [])
@@ -69,6 +79,13 @@
                             {{ $stop->record->failure_reason }}
                         </p>
                     @endif
+
+                    @include('admin.deliveries._walim', [
+                        'shipment' => $stopShipments[\App\Modules\Delivery\Walim\WalimShipmentService::stopReference($stop->subscription, $stop->date)] ?? null,
+                        'sendUrl' => route('admin.deliveries.stops.walim', $stop->subscription),
+                        'canSend' => $walimStops && ! $stop->isSettled(),
+                        'boardDate' => $stop->date->toDateString(),
+                    ])
 
                     @if ($canRecord && $status->nextStatuses() !== [])
                         <form method="POST" action="{{ route('admin.deliveries.stops.update', $stop->subscription) }}" class="ship-item__actions">

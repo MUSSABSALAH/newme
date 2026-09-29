@@ -30,13 +30,15 @@ final class DeliveryService
     ) {}
 
     /**
+     * A null actor means the courier reported the change, not a member of staff.
+     *
      * @throws \InvalidArgumentException
      */
     public function markStop(
         Subscription $subscription,
         Carbon $date,
         DeliveryStatus $status,
-        User $actor,
+        ?User $actor,
         ?string $reason = null,
     ): SubscriptionDelivery {
         $record = SubscriptionDelivery::query()->firstOrNew([
@@ -53,7 +55,7 @@ final class DeliveryService
         }
 
         $record->status = $status;
-        $record->handled_by = $actor->getKey();
+        $record->handled_by = $actor?->getKey() ?? $record->handled_by;
 
         // Keep the first dispatch time: a re-attempt is still the same run.
         if ($status === DeliveryStatus::Dispatched && $record->dispatched_at === null) {
@@ -72,7 +74,7 @@ final class DeliveryService
                 'status' => $status->value,
                 'delivery_date' => $record->delivery_date->toDateString(),
                 'subscription_id' => $subscription->getKey(),
-                'actor_id' => $actor->getKey(),
+                'actor_id' => $actor?->getKey(),
             ],
         );
 
@@ -84,7 +86,7 @@ final class DeliveryService
      *
      * @throws \InvalidArgumentException
      */
-    public function advanceOrder(Order $order, OrderStatus $status, User $actor): Order
+    public function advanceOrder(Order $order, OrderStatus $status, ?User $actor): Order
     {
         return $this->orders->updateStatus($order, $status, $actor);
     }
