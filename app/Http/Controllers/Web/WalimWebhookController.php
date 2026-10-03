@@ -25,7 +25,8 @@ final class WalimWebhookController extends Controller
         WalimShipmentService $shipments,
     ): JsonResponse {
         $secret = $settings->get('walim.shared_secret');
-        $given = $request->input('Walim_shared_secret');
+        // Sent under its Tookan name; the documented Walim name is kept as a fallback.
+        $given = $request->input('tookan_shared_secret', $request->input('Walim_shared_secret'));
 
         if (! is_string($secret) || $secret === '' || ! is_string($given) || ! hash_equals($secret, $given)) {
             Log::warning('Rejected Walim webhook with a missing or wrong shared secret.', [
@@ -35,7 +36,7 @@ final class WalimWebhookController extends Controller
             return response()->json(['ok' => false], 403);
         }
 
-        $shipments->handleWebhook($request->except('Walim_shared_secret'));
+        $shipments->handleWebhook($request->except(['tookan_shared_secret', 'Walim_shared_secret']));
 
         return response()->json(['ok' => true]);
     }

@@ -92,11 +92,14 @@ final class WalimClient
     }
 
     /**
+     * Walim runs on Tookan: the documented set_Walim_shared_secret_key route
+     * returns 404, the live one keeps the Tookan names.
+     *
      * @throws WalimException
      */
     public function setSharedSecret(string $secret, ?string $apiKey = null): void
     {
-        $this->call('set_Walim_shared_secret_key', ['Walim_shared_secret' => $secret], apiKey: $apiKey);
+        $this->call('set_tookan_shared_secret_key', ['tookan_shared_secret' => $secret], apiKey: $apiKey);
     }
 
     /**
