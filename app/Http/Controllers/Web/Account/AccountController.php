@@ -22,6 +22,7 @@ use App\Modules\Invoices\Services\InvoiceService;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Plans\Enums\MealType;
 use App\Modules\Plans\Models\Meal;
+use App\Modules\Plans\Support\MealNameTranslator;
 use App\Modules\Subscriptions\Models\Subscription;
 use App\Modules\Subscriptions\Services\MealScheduleService;
 use App\Modules\Subscriptions\Services\SubscriptionService;
@@ -256,14 +257,17 @@ final class AccountController extends Controller
             }
         }
 
+        $names = app(MealNameTranslator::class);
         $meals = [];
 
         foreach ($day['meals'] as $meal) {
+            $dishRaw = array_key_exists($meal['type'], $raw)
+                ? (is_string($raw[$meal['type']]) ? $raw[$meal['type']] : null)
+                : ($meal['is_chef'] ? null : $meal['dish']);
+
             $meals[] = [
                 ...$meal,
-                'dish_raw' => array_key_exists($meal['type'], $raw)
-                    ? (is_string($raw[$meal['type']]) ? $raw[$meal['type']] : null)
-                    : ($meal['is_chef'] ? null : $meal['dish']),
+                'dish_raw' => $dishRaw === null ? null : $names->translate($dishRaw),
             ];
         }
 

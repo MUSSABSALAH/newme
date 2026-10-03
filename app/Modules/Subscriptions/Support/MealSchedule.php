@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Subscriptions\Support;
 
 use App\Modules\Plans\Enums\MealType;
+use App\Modules\Plans\Support\MealNameTranslator;
 use Illuminate\Support\Carbon;
 
 /**
@@ -199,6 +200,7 @@ final class MealSchedule
     public static function present(array $schedule): array
     {
         $weekdays = array_values(__('website.subscribe.days'));
+        $names = app(MealNameTranslator::class);
         $presented = [];
 
         foreach ($schedule as $day) {
@@ -215,7 +217,7 @@ final class MealSchedule
                 $meals[] = [
                     'type' => $type,
                     'label' => $mealType->label(),
-                    'dish' => $dish ?? (string) __('subscriptions.schedule.chef_choice'),
+                    'dish' => $dish === null ? (string) __('subscriptions.schedule.chef_choice') : $names->translate($dish),
                     'is_chef' => $dish === null,
                 ];
             }

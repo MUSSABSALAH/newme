@@ -51,7 +51,7 @@
                 <tr class="{{ $subscription->needsHandling() ? 'row--attention' : '' }}">
                     <td><strong dir="ltr">#{{ $subscription->reference() }}</strong></td>
                     <td>{{ $subscription->user?->name ?? '—' }}</td>
-                    <td>{{ $subscription->plan_name }}</td>
+                    <td>{{ $subscription->planLabel() }}</td>
                     <td>{{ $subscription->duration_length }} {{ __('plans.units.'.$subscription->duration_unit) }}</td>
                     <td>{{ $subscription->totalDisplay() }} <x-ui.sar /></td>
                     <td>

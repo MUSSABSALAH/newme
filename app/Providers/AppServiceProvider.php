@@ -38,6 +38,7 @@ use App\Modules\Plans\Models\Meal;
 use App\Modules\Plans\Models\Plan;
 use App\Modules\Plans\Policies\MealPolicy;
 use App\Modules\Plans\Policies\PlanPolicy;
+use App\Modules\Plans\Support\MealNameTranslator;
 use App\Modules\Promotions\Models\Coupon;
 use App\Modules\Promotions\Policies\CouponPolicy;
 use App\Modules\Settings\Models\Setting;
@@ -72,6 +73,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->scoped(PageContentService::class);
         $this->app->scoped(HomepageContentService::class);
         $this->app->scoped(SettingsService::class);
+        $this->app->scoped(MealNameTranslator::class);
 
         // Resolved from config the same way the payment gateway is, so pointing
         // OTP at a real provider is a config change rather than a code change.

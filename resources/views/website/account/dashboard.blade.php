@@ -272,7 +272,7 @@
           <div class="pick-row pick-row--actions">
             <a class="pick-row__main" href="{{ route('website.account.subscription', ['subscription' => $subscription->public_id]) }}">
               <div class="body">
-                <b>{{ $subscription->plan_name }}</b>
+                <b>{{ $subscription->planLabel() }}</b>
                 <small>
                   {{ $subscription->duration_length }} {{ __('plans.units.'.$subscription->duration_unit) }}
                   · {{ $subscription->created_at?->translatedFormat('d M Y') }}
@@ -296,7 +296,7 @@
                         class="w-btn sm ghost"
                         data-open-pause
                         data-pause-action="{{ route('website.account.subscriptions.pause', $subscription) }}"
-                        data-pause-name="{{ $subscription->plan_name }}">
+                        data-pause-name="{{ $subscription->planLabel() }}">
                   {{ __('account.subscription.pause_action') }}
                 </button>
               @elseif ($subscription->isPaused())
@@ -304,7 +304,7 @@
                         class="w-btn sm"
                         data-open-resume
                         data-resume-action="{{ route('website.account.subscriptions.resume', $subscription) }}"
-                        data-resume-name="{{ $subscription->plan_name }}">
+                        data-resume-name="{{ $subscription->planLabel() }}">
                   {{ __('account.subscription.resume_action') }}
                 </button>
               @endif

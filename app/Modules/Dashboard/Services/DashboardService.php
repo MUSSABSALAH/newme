@@ -159,7 +159,7 @@ final class DashboardService
             newMonth: $tally['new_month'],
             byStatus: $byStatus,
             recent: Subscription::query()
-                ->with(['user', 'handler'])
+                ->with(['user', 'handler', 'plan'])
                 ->latest('id')
                 ->limit(5)
                 ->get(),

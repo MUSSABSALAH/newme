@@ -20,7 +20,7 @@
         ->values();
 @endphp
 
-<x-layouts.admin :title="$reference" :heading="$reference" :subtitle="$subscription->plan_name">
+<x-layouts.admin :title="$reference" :heading="$reference" :subtitle="$subscription->planLabel()">
     <x-slot:actions>
         <x-ui.button :href="route('admin.subscriptions.index')" variant="ghost">
             <x-ui.icon name="arrow-left" size="sm" /> {{ __('messages.actions.back') }}
@@ -131,7 +131,7 @@
                 <div class="detail-list">
                     <div class="detail-row">
                         <span class="detail-row__label">{{ __('subscriptions.fields.plan') }}</span>
-                        <span class="detail-row__value">{{ $subscription->plan_name }}</span>
+                        <span class="detail-row__value">{{ $subscription->planLabel() }}</span>
                     </div>
 
                     <div class="detail-row">

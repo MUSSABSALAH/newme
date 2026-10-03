@@ -107,7 +107,7 @@
             ]">
                 @foreach ($customer->subscriptions as $subscription)
                     <tr>
-                        <td><strong>{{ $subscription->plan_name }}</strong></td>
+                        <td><strong>{{ $subscription->planLabel() }}</strong></td>
                         <td>{{ $subscription->duration_length }} {{ __('plans.units.' . $subscription->duration_unit) }}</td>
                         <td>{{ $subscription->totalDisplay() }}</td>
                         <td><x-ui.badge variant="neutral">{{ $subscription->status->label() }}</x-ui.badge></td>

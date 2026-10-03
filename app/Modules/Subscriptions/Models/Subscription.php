@@ -192,6 +192,17 @@ class Subscription extends Model
     }
 
     /**
+     * Plan name in the page language; falls back to the name saved at checkout
+     * when the plan is gone.
+     */
+    public function planLabel(): string
+    {
+        $label = $this->plan?->label();
+
+        return is_string($label) && trim($label) !== '' ? $label : (string) $this->plan_name;
+    }
+
+    /**
      * @return BelongsTo<Address, $this>
      */
     public function address(): BelongsTo

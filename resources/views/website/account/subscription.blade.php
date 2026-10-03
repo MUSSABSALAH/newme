@@ -18,7 +18,7 @@
   <div class="cohead">
     <a href="{{ route('website.account', ['tab' => 'subscriptions']) }}" class="co-back">← {{ __('account.back') }}</a>
     <div class="kick">{{ __('account.tabs.subscriptions') }}</div>
-    <h1>{{ $subscription->plan_name }}</h1>
+    <h1>{{ $subscription->planLabel() }}</h1>
     <p>
       <span class="pill {{ $subscription->status->value }}">{{ $subscription->status->label() }}</span>
       @php $shipmentStatus = $subscription->visibleShipmentStatus(); @endphp

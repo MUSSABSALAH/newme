@@ -65,7 +65,7 @@
                     <a href="{{ route('admin.subscriptions.show', $subscription) }}" class="dash-feed__item">
                         <span class="dash-feed__main">
                             <strong dir="ltr">#{{ $subscription->reference() }}</strong>
-                            <span class="text-muted">{{ $subscription->user?->name ?? '—' }} · {{ $subscription->plan_name }}</span>
+                            <span class="text-muted">{{ $subscription->user?->name ?? '—' }} · {{ $subscription->planLabel() }}</span>
                         </span>
                         <span class="dash-feed__meta">
                             <x-ui.badge :variant="$subscription->handling_status->badge()">

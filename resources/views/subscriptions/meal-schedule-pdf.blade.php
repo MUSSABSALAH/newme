@@ -157,7 +157,7 @@
             </td>
             <td>
                 <span class="lbl">{{ __('subscriptions.fields.plan') }}</span>
-                <span class="val">{{ $subscription->plan_name }}</span>
+                <span class="val">{{ $subscription->planLabel() }}</span>
                 <span class="val val-muted">
                     {{ __('subscriptions.fields.status') }}: {{ $subscription->status->label() }}
                     · {{ __('subscriptions.handling.column') }}: {{ $subscription->handling_status->label() }}

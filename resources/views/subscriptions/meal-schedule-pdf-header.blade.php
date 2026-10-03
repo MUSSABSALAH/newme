@@ -8,7 +8,7 @@
                 <div style="font-size:9pt;color:#43536A;">
                     {{ __('subscriptions.fields.reference') }}:
                     <strong style="color:#122B4A;">#{{ $subscription->reference() }}</strong>
-                    · {{ $subscription->plan_name }}
+                    · {{ $subscription->planLabel() }}
                 </div>
             </td>
             <td style="vertical-align:top;text-align:{{ $rtl ? 'left' : 'right' }};width:38%;">

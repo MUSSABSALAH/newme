@@ -34,7 +34,7 @@ final class SubscriptionController extends Controller
         $handling = HandlingStatus::tryFrom((string) $request->query('handling', ''));
 
         $subscriptions = Subscription::query()
-            ->with(['user', 'handler'])
+            ->with(['user', 'handler', 'plan'])
             ->when($status !== null, fn ($query) => $query->where('status', $status->value))
             ->when($handling !== null, fn ($query) => $query->where('handling_status', $handling->value))
             ->latest('id')
