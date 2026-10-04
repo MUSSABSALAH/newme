@@ -11,7 +11,9 @@ use App\Modules\Identity\Enums\UserStatus;
 use App\Modules\Notifications\Notifications\NewConsultationNotification;
 use App\Modules\Notifications\Notifications\NewOrderNotification;
 use App\Modules\Notifications\Notifications\NewSubscriptionNotification;
+use App\Modules\Notifications\Enums\NotificationEvent;
 use App\Modules\Notifications\Notifications\ShipmentAlertNotification;
+use App\Modules\Notifications\Notifications\SubscriptionChangeNotification;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
 use Illuminate\Database\Eloquent\Collection;
@@ -44,6 +46,35 @@ final class AdminNotifier
         }
     }
 
+    public function subscriptionPaused(Subscription $subscription, string $pauseFrom): void
+    {
+        $this->subscriptionChanged(NotificationEvent::SubscriptionPaused, $subscription, [
+            'date' => $pauseFrom,
+        ]);
+    }
+
+    public function subscriptionResumed(Subscription $subscription, ?string $restartsOn): void
+    {
+        $this->subscriptionChanged(NotificationEvent::SubscriptionResumed, $subscription, [
+            'date' => $restartsOn,
+        ]);
+    }
+
+    /**
+     * @param  list<string>  $dates  Delivery days whose dishes changed, earliest first.
+     */
+    public function subscriptionMealsChanged(Subscription $subscription, array $dates): void
+    {
+        if ($dates === []) {
+            return;
+        }
+
+        $this->subscriptionChanged(NotificationEvent::SubscriptionMealsChanged, $subscription, [
+            'date' => $dates[0],
+            'count' => count($dates),
+        ]);
+    }
+
     public function consultationBooked(Consultation $consultation): void
     {
         $recipients = $this->recipients(PermissionName::ConsultationsView);
@@ -63,6 +94,25 @@ final class AdminNotifier
         if ($recipients->isNotEmpty()) {
             Notification::send($recipients, new ShipmentAlertNotification($details));
         }
+    }
+
+    /**
+     * @param  array<string, mixed>  $details
+     */
+    private function subscriptionChanged(NotificationEvent $event, Subscription $subscription, array $details): void
+    {
+        $recipients = $this->recipients(PermissionName::SubscriptionsView);
+
+        if ($recipients->isEmpty()) {
+            return;
+        }
+
+        Notification::send($recipients, new SubscriptionChangeNotification($event->value, [
+            'public_id' => $subscription->public_id,
+            'reference' => $subscription->reference(),
+            'customer' => $subscription->user?->name,
+            ...$details,
+        ]));
     }
 
     /**

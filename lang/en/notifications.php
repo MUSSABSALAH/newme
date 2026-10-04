@@ -37,6 +37,18 @@ return [
                 'title' => 'New subscription',
                 'body' => 'Subscription #:reference from :customer — :total SAR.',
             ],
+            'paused' => [
+                'title' => 'Subscription paused',
+                'body' => ':customer paused subscription #:reference from :date.',
+            ],
+            'resumed' => [
+                'title' => 'Subscription resumed',
+                'body' => ':customer resumed subscription #:reference — deliveries restart :date.',
+            ],
+            'meals_changed' => [
+                'title' => 'Subscription meals changed',
+                'body' => ':customer changed the dishes of subscription #:reference — days changed: :count, starting :date.',
+            ],
         ],
         'consultation' => [
             'booked' => [

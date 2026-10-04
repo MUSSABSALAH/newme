@@ -16,6 +16,9 @@ enum NotificationEvent: string
 {
     case OrderPlaced = 'order.placed';
     case SubscriptionStarted = 'subscription.started';
+    case SubscriptionPaused = 'subscription.paused';
+    case SubscriptionResumed = 'subscription.resumed';
+    case SubscriptionMealsChanged = 'subscription.meals_changed';
     case ConsultationBooked = 'consultation.booked';
     case ShipmentAlert = 'shipment.alert';
 
@@ -24,6 +27,9 @@ enum NotificationEvent: string
         return match ($this) {
             self::OrderPlaced => 'package',
             self::SubscriptionStarted => 'repeat',
+            self::SubscriptionPaused => 'circle-pause',
+            self::SubscriptionResumed => 'circle-play',
+            self::SubscriptionMealsChanged => 'utensils',
             self::ConsultationBooked => 'calendar-check',
             self::ShipmentAlert => 'triangle-alert',
         };
@@ -46,6 +52,8 @@ enum NotificationEvent: string
             'customer' => (string) ($payload['customer'] ?? __('notifications.unknown_customer')),
             'total' => is_numeric($totalMinor) ? Money::fromMinor((int) $totalMinor)->format() : '—',
             'when' => (string) ($payload['when'] ?? '—'),
+            'date' => (string) ($payload['date'] ?? '—'),
+            'count' => (string) ($payload['count'] ?? '—'),
             'problem' => is_string($payload['problem'] ?? null)
                 ? (string) __('notifications.shipment_problems.'.$payload['problem'])
                 : '—',
@@ -73,7 +81,10 @@ enum NotificationEvent: string
 
         return match ($this) {
             self::OrderPlaced => route('admin.orders.show', $publicId),
-            self::SubscriptionStarted => route('admin.subscriptions.show', $publicId),
+            self::SubscriptionStarted,
+            self::SubscriptionPaused,
+            self::SubscriptionResumed,
+            self::SubscriptionMealsChanged => route('admin.subscriptions.show', $publicId),
             self::ConsultationBooked => route('admin.consultations.show', $publicId),
             self::ShipmentAlert => null,
         };

@@ -19,6 +19,7 @@ use App\Modules\Identity\Services\BodyMeasurementService;
 use App\Modules\Identity\Support\CustomerAuthChannels;
 use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Invoices\Services\InvoiceService;
+use App\Modules\Notifications\Services\AdminNotifier;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Plans\Enums\MealType;
 use App\Modules\Plans\Models\Meal;
@@ -28,6 +29,7 @@ use App\Modules\Subscriptions\Services\MealScheduleService;
 use App\Modules\Subscriptions\Services\SubscriptionService;
 use App\Modules\Subscriptions\Support\MealCalendarPresenter;
 use App\Modules\Subscriptions\Support\MealChangeRules;
+use App\Modules\Subscriptions\Support\MealSchedule;
 use App\Modules\Subscriptions\Support\SubscriptionPauseRules;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +47,7 @@ final class AccountController extends Controller
         private readonly SubscriptionService $subscriptions,
         private readonly CustomerAuthChannels $channels,
         private readonly EcommerceDataLayer $analytics,
+        private readonly AdminNotifier $notifier,
     ) {}
 
     public function index(Request $request): View
@@ -171,7 +174,17 @@ final class AccountController extends Controller
     {
         abort_unless($subscription->user_id === Auth::id(), 404);
 
-        $this->mealSchedules->update($subscription, $request->schedule());
+        $before = $this->dishesByDate($subscription);
+        $after = $this->dishesByDate($this->mealSchedules->update($subscription, $request->schedule()));
+
+        $changed = array_keys(array_filter(
+            $after,
+            static fn (array $meals, string $date): bool => ($before[$date] ?? []) !== $meals,
+            ARRAY_FILTER_USE_BOTH,
+        ));
+        sort($changed);
+
+        $this->notifier->subscriptionMealsChanged($subscription, $changed);
 
         return redirect()
             ->route('website.account.subscription', $subscription)
@@ -183,6 +196,7 @@ final class AccountController extends Controller
         abort_unless($subscription->user_id === Auth::id(), 404);
 
         $this->subscriptions->pause($subscription, $request->pauseFrom());
+        $this->notifier->subscriptionPaused($subscription, $request->pauseFrom());
 
         return redirect()
             ->route('website.account', ['tab' => 'subscriptions'])
@@ -193,7 +207,14 @@ final class AccountController extends Controller
     {
         abort_unless($subscription->user_id === Auth::id(), 404);
 
-        $this->subscriptions->resume($subscription);
+        $kept = array_column(MealSchedule::normalize($subscription->meal_schedule ?? []), 'date');
+        $resumed = $this->subscriptions->resume($subscription);
+
+        $restartsOn = collect(MealSchedule::normalize($resumed->meal_schedule ?? []))
+            ->pluck('date')
+            ->first(static fn (string $date): bool => ! in_array($date, $kept, true));
+
+        $this->notifier->subscriptionResumed($resumed, $restartsOn);
 
         return redirect()
             ->route('website.account', ['tab' => 'subscriptions'])
@@ -216,6 +237,37 @@ final class AccountController extends Controller
         return EcommerceDataLayer::claimPurchase((string) $payload['transaction_id'])
             ? $payload
             : null;
+    }
+
+    /**
+     * @return array<string, array<string, string|null>>
+     */
+    private function dishesByDate(Subscription $subscription): array
+    {
+        $days = MealSchedule::resolve(
+            $subscription->meal_schedule,
+            $subscription->start_date?->toDateString(),
+            is_array($subscription->selected_days) ? $subscription->selected_days : [],
+            (int) $subscription->total_days,
+            is_array($subscription->meal_types) ? $subscription->meal_types : [],
+        );
+
+        // Dishes are saved in whichever language the customer browsed in, so compare
+        // them in one language or an untouched day would read as changed.
+        $names = app(MealNameTranslator::class);
+        $locale = (string) config('app.fallback_locale');
+        $byDate = [];
+
+        foreach ($days as $day) {
+            $meals = array_map(
+                static fn (?string $dish): ?string => $dish === null ? null : $names->translate($dish, $locale),
+                $day['meals'],
+            );
+            ksort($meals);
+            $byDate[$day['date']] = $meals;
+        }
+
+        return $byDate;
     }
 
     /**

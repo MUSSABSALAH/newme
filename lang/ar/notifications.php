@@ -37,6 +37,18 @@ return [
                 'title' => 'اشتراك جديد',
                 'body' => 'الاشتراك رقم :reference من :customer — :total ريال.',
             ],
+            'paused' => [
+                'title' => 'إيقاف اشتراك',
+                'body' => 'أوقف :customer الاشتراك رقم :reference ابتداءً من :date.',
+            ],
+            'resumed' => [
+                'title' => 'استئناف اشتراك',
+                'body' => 'استأنف :customer الاشتراك رقم :reference — يرجع التوصيل من :date.',
+            ],
+            'meals_changed' => [
+                'title' => 'تغيير وجبات اشتراك',
+                'body' => 'غيّر :customer وجبات الاشتراك رقم :reference — عدد الأيام المتغيرة: :count، ابتداءً من :date.',
+            ],
         ],
         'consultation' => [
             'booked' => [
