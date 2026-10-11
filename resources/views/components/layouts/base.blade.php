@@ -18,11 +18,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @php($assetVersion = static fn (string $path): string => asset($path).'?v='.(@filemtime(public_path($path)) ?: '1'))
+    <link rel="stylesheet" href="{{ $assetVersion('css/app.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/validation.js') }}" defer></script>
-    <script src="{{ asset('js/confirm.js') }}" defer></script>
+    <script src="{{ $assetVersion('js/app.js') }}" defer></script>
+    <script src="{{ $assetVersion('js/validation.js') }}" defer></script>
+    <script src="{{ $assetVersion('js/confirm.js') }}" defer></script>
     @stack('styles')
 </head>
 <body>
