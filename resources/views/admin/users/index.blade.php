@@ -51,6 +51,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th style="width: 1%;">#</th>
                         @can('deleteAny', \App\Models\User::class)
                             <th class="table-check-col">
                                 <label class="table-check">
@@ -68,6 +69,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
+                            <td class="text-muted">{{ $loop->iteration }}</td>
                             @can('delete', $user)
                                 <td class="table-check-col">
                                     <label class="table-check">

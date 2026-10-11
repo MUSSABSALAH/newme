@@ -33,6 +33,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th style="width: 1%;">#</th>
                         @can('deleteAnyCustomer', \App\Models\User::class)
                             <th class="table-check-col">
                                 <label class="table-check">
@@ -52,6 +53,7 @@
                 <tbody>
                     @foreach ($customers as $customer)
                         <tr>
+                            <td class="text-muted">{{ $customers->firstItem() + $loop->index }}</td>
                             @can('delete', $customer)
                                 <td class="table-check-col">
                                     <label class="table-check">
