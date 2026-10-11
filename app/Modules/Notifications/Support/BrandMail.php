@@ -134,8 +134,8 @@ HEAD;
                                         {$distributed}<br>
                                         NEWME © Maysa Malik Yousuf Kurdy Trading Establishment<br>
                                         <span dir="ltr" style="font-family:{$font};">+966 53 336 0317</span>
-                                        · info@newmeforever.com
-                                        · www.newmeforever.com
+                                        · info@newme.com.sa
+                                        · www.newme.com.sa
                                     </div>
                                 </td>
                             </tr>
