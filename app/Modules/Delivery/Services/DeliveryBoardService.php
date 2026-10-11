@@ -13,6 +13,7 @@ use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Enums\SubscriptionStatus;
 use App\Modules\Subscriptions\Models\Subscription;
+use App\Support\Time\DisplayTime;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -42,6 +43,16 @@ final class DeliveryBoardService
             stops: $this->stops($day),
             orders: $this->orders($day),
         );
+    }
+
+    /**
+     * Subscription days due on a date, without the store orders.
+     *
+     * @return list<SubscriptionStop>
+     */
+    public function stopsOn(Carbon $date): array
+    {
+        return $this->stops($date->copy()->startOfDay());
     }
 
     /**
@@ -142,14 +153,19 @@ final class DeliveryBoardService
             self::OPEN_ORDER_STATUSES,
         );
 
+        $from = Carbon::parse($date->toDateString(), DisplayTime::timezone())->startOfDay()->utc();
+        $until = $from->copy()->addDay();
+
         return Order::query()
             ->with('user')
             ->withCount('items')
             ->where('fulfillment_method', '!=', FulfillmentMethod::Pickup->value)
-            ->where(function ($query) use ($date, $open): void {
-                $query->whereDate('delivered_at', $date);
+            ->where(function ($query) use ($date, $open, $from, $until): void {
+                $query->where(function ($query) use ($from, $until): void {
+                    $query->where('delivered_at', '>=', $from)->where('delivered_at', '<', $until);
+                });
 
-                if ($date->isToday()) {
+                if (DisplayTime::isToday($date)) {
                     $query->orWhereIn('status', $open);
                 }
             })

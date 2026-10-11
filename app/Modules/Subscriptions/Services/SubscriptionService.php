@@ -186,9 +186,7 @@ final class SubscriptionService
 
         if (! SubscriptionPauseRules::isPausable($pauseFrom)) {
             throw ValidationException::withMessages([
-                'pause_from' => __('account.subscription.pause_too_soon', [
-                    'days' => SubscriptionPauseRules::leadDays(),
-                ]),
+                'pause_from' => SubscriptionPauseRules::tooSoonMessage(),
             ]);
         }
 

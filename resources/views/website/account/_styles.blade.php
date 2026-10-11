@@ -244,6 +244,8 @@ html[dir="rtl"] .card > .hint,html[dir="rtl"] .card-head .hint{margin:0 35px 18p
 .alert{border-radius:14px;padding:13px 16px;font-weight:700;font-size:13.5px;margin-bottom:18px}
 .alert.ok{background:var(--green-soft);color:var(--green-ink);border:1px solid rgba(57,180,120,.35)}
 .alert.bad{background:#FDECEA;color:#C0392B;border:1px solid rgba(192,57,43,.25)}
+.alert.ended{background:#F3F4F6;color:var(--ink);border:1px solid #E1E4E8;line-height:1.7}
+.alert.ended a{color:var(--orange-deep);font-weight:900;margin-inline-start:6px}
 
 .divider-label{margin:6px 0 16px;padding-top:16px;border-top:1.5px dashed var(--gray-2);color:var(--muted);font-weight:800;font-size:12.5px}
 .muted-note{color:var(--muted);font-weight:700;font-size:13px;margin:0}
@@ -265,7 +267,7 @@ a.pick-row:hover{border-color:var(--orange);background:var(--orange-soft);transf
 .pill.pending,.pill.out_for_delivery,.pill.dispatched{background:var(--orange-soft);color:var(--orange-deep)}
 .pill.confirmed,.pill.preparing{background:#E8F0FE;color:#1B4F9C}
 .pill.active,.pill.completed,.pill.delivered{background:var(--green-soft);color:var(--green-ink)}
-.pill.cancelled,.pill.paused,.pill.no_show,.pill.failed{background:#EFF1F4;color:var(--muted)}
+.pill.cancelled,.pill.paused,.pill.expired,.pill.no_show,.pill.failed{background:#EFF1F4;color:var(--muted)}
 .pick-row .side .ship-status{display:block;font-size:10px;font-weight:800;color:var(--muted);margin-top:4px}
 
 body.acc-modal-open{overflow:hidden}
@@ -446,6 +448,7 @@ body.meal-cal-open{overflow:hidden}
 .meal-cal-cell__num{font-size:12px;font-weight:900;color:var(--navy);margin-bottom:3px}
 .meal-cal-cell__badge{display:inline-block;align-self:flex-start;font-size:9px;font-weight:900;padding:2px 7px;border-radius:999px;background:#EFF1F4;color:var(--muted);margin-bottom:3px}
 .meal-cal-cell.is-paused .meal-cal-cell__badge{background:#F5EBD6;color:#8A6B2A}
+.meal-cal-cell__badge--prep{background:#E6F0EA;color:#2F6B4A}
 .meal-cal-cell__meals{flex:1;display:flex;flex-direction:column;gap:2px;overflow:hidden}
 .meal-cal-cell__meal{font-size:9.5px;font-weight:700;color:var(--ink);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .meal-cal-cell__meal em{font-style:normal;font-weight:900;color:var(--orange-deep);margin-inline-end:2px}
@@ -467,6 +470,11 @@ body.meal-cal-open{overflow:hidden}
 .meal-cal-editor__row label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:5px}
 .meal-cal-editor__row select{width:100%;font-family:var(--font);font-size:14px;font-weight:700;padding:11px 13px;border-radius:12px;border:1.5px solid var(--gray-2);background:var(--tile)}
 .meal-cal-editor__locked-note{font-size:12.5px;font-weight:800;color:var(--orange-deep);margin-bottom:10px}
+.meal-cal-editor__prep{display:flex;flex-direction:column;gap:4px;padding:12px 14px;margin-bottom:12px;border-radius:12px;background:#EEF5F0;border:1px solid #D3E6DA;color:#2F6B4A}
+.meal-cal-editor__prep strong{font-size:13.5px;font-weight:900}
+.meal-cal-editor__prep span{font-size:12.5px;font-weight:600;line-height:1.6}
+.meal-cal-editor__cutoff{font-size:12px;font-weight:700;color:var(--muted);background:#F6F7F9;border-radius:10px;padding:8px 12px;margin-bottom:10px}
+.sub-schedule__cutoff{margin-top:4px;font-size:12.5px;font-weight:700;color:#2F6B4A}
 .meal-cal-editor__readonly{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--gray-2);font-size:13.5px}
 .meal-cal-editor__readonly span{color:var(--muted);font-weight:700}
 .meal-cal-editor__readonly b{font-weight:800;color:var(--ink)}

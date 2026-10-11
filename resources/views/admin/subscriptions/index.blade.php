@@ -1,4 +1,12 @@
 <x-layouts.admin :title="__('subscriptions.title')" :heading="__('subscriptions.title')" :subtitle="__('subscriptions.subtitle')">
+    @unless ($subscriptions->isEmpty())
+        <x-slot:actions>
+            <x-ui.button :href="route('admin.subscriptions.pdf', request()->only(['status', 'handling']))" variant="primary">
+                <x-ui.icon name="file-down" size="sm" /> {{ __('subscriptions.pdf.button') }}
+            </x-ui.button>
+        </x-slot:actions>
+    @endunless
+
     <x-ui.card>
         <form method="GET" action="{{ route('admin.subscriptions.index') }}" class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
             <x-form.field :label="__('subscriptions.handling.filter')" name="handling" style="margin:0;min-width:220px;">

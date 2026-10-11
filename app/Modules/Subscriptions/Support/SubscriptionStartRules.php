@@ -22,7 +22,9 @@ final class SubscriptionStartRules
 
     public static function earliestDate(): Carbon
     {
-        return Carbon::now(DisplayTime::timezone())->startOfDay()->addDays(self::minStartDays());
+        return MealPrepCutoff::atLeastFirstOpen(
+            Carbon::now(DisplayTime::timezone())->startOfDay()->addDays(self::minStartDays()),
+        );
     }
 
     public static function earliestDateString(): string

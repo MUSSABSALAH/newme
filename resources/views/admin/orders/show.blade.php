@@ -108,7 +108,7 @@
                 ]">
                     @foreach ($order->items as $item)
                         <tr>
-                            <td><strong>{{ $item->name }}</strong></td>
+                            <td><strong>{{ $item->label() }}</strong></td>
                             <td>{{ $item->quantity }}</td>
                             <td>{{ $item->unitPriceDisplay() }} <x-ui.sar /></td>
                             <td>{{ $item->lineTotalDisplay() }} <x-ui.sar /></td>

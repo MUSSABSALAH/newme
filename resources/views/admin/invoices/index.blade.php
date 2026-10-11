@@ -3,6 +3,14 @@
 @endphp
 
 <x-layouts.admin :title="__('invoices.title')" :heading="__('invoices.title')" :subtitle="__('invoices.subtitle')">
+    @unless ($invoices->isEmpty())
+        <x-slot:actions>
+            <x-ui.button :href="route('admin.invoices.report', request()->only(['q', 'source', 'from', 'to']))" variant="primary">
+                <x-ui.icon name="file-down" size="sm" /> {{ __('invoices.report.button') }}
+            </x-ui.button>
+        </x-slot:actions>
+    @endunless
+
     <x-ui.card>
         <form method="GET" action="{{ route('admin.invoices.index') }}" class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
             <x-form.field :label="__('invoices.search')" name="q" style="margin:0;min-width:220px;">
@@ -15,6 +23,14 @@
                     <option value="order" @selected($activeSource === 'order')>{{ __('invoices.sources.order') }}</option>
                     <option value="subscription" @selected($activeSource === 'subscription')>{{ __('invoices.sources.subscription') }}</option>
                 </x-form.select>
+            </x-form.field>
+
+            <x-form.field :label="__('invoices.from')" name="from" style="margin:0;">
+                <x-form.input type="date" name="from" :value="$from" />
+            </x-form.field>
+
+            <x-form.field :label="__('invoices.to')" name="to" style="margin:0;">
+                <x-form.input type="date" name="to" :value="$to" />
             </x-form.field>
 
             <x-ui.button type="submit" variant="ghost">

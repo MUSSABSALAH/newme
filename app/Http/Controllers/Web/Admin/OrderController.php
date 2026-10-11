@@ -48,7 +48,11 @@ final class OrderController extends Controller
     {
         $this->authorize('view', $order);
 
-        $order->load(['user', 'items', 'payments' => fn ($query) => $query->latest()]);
+        $order->load([
+            'user',
+            'items.product' => fn ($query) => $query->withTrashed(),
+            'payments' => fn ($query) => $query->latest(),
+        ]);
 
         return view('admin.orders.show', [
             'order' => $order,

@@ -63,6 +63,13 @@
     </div>
   </div>
 
+  @if ($subscription->status === \App\Modules\Subscriptions\Enums\SubscriptionStatus::Expired)
+    <div class="alert ended pause-banner" role="status">
+      {{ __('account.subscription.expired_banner', ['date' => $subscription->endDate()?->translatedFormat('d M Y') ?? '—']) }}
+      <a href="{{ route('website.subscribe') }}">{{ __('account.subscription.renew') }}</a>
+    </div>
+  @endif
+
   @if ($subscription->isPaused())
     <div class="alert warn pause-banner">
       {{ __('account.subscription.pause_active_banner', [
@@ -172,7 +179,14 @@
       <div>
         <div class="kick">{{ __('account.subscription.schedule') }}</div>
         <h2>{{ __('account.subscription.schedule') }}</h2>
-        <p>{{ __('account.subscription.schedule_hint', ['days' => $leadDays]) }}</p>
+        @if ($subscription->isClosed())
+          <p>{{ __('account.subscription.closed_hint_'.$subscription->status->value) }}</p>
+        @else
+          <p>{{ __('account.subscription.schedule_hint', ['days' => $leadDays]) }}</p>
+        @endif
+        @if ($cutoffHours > 0 && ! $subscription->isClosed())
+          <p class="sub-schedule__cutoff">{{ __('account.subscription.prep_cutoff_hint', ['hours' => $cutoffHours]) }}</p>
+        @endif
       </div>
     </div>
     <div class="card sub-schedule__card">

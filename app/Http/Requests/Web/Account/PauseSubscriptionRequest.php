@@ -40,9 +40,7 @@ final class PauseSubscriptionRequest extends FormRequest
     {
         return [
             'pause_from.required' => (string) __('account.subscription.pause_date_required'),
-            'pause_from.after_or_equal' => (string) __('account.subscription.pause_too_soon', [
-                'days' => SubscriptionPauseRules::leadDays(),
-            ]),
+            'pause_from.after_or_equal' => SubscriptionPauseRules::tooSoonMessage(),
         ];
     }
 

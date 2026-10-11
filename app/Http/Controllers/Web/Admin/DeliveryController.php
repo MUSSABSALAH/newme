@@ -14,6 +14,7 @@ use App\Modules\Delivery\Services\DeliveryService;
 use App\Modules\Delivery\Walim\WalimShipmentService;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
+use App\Support\Time\DisplayTime;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -74,10 +75,10 @@ final class DeliveryController extends Controller
 
     private function backToBoard(?Carbon $date, string $message): RedirectResponse
     {
-        $day = $date ?? Carbon::today();
+        $day = $date ?? DisplayTime::today();
 
         return redirect()
-            ->route('admin.deliveries.index', $day->isToday() ? [] : ['date' => $day->toDateString()])
+            ->route('admin.deliveries.index', DisplayTime::isToday($day) ? [] : ['date' => $day->toDateString()])
             ->with('success', $message);
     }
 
@@ -95,6 +96,6 @@ final class DeliveryController extends Controller
             }
         }
 
-        return Carbon::today();
+        return DisplayTime::today();
     }
 }

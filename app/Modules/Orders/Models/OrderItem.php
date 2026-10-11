@@ -70,6 +70,21 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class);
     }
 
+    /**
+     * Product name in the page language; the name saved at checkout when the
+     * product no longer exists.
+     */
+    public function label(): string
+    {
+        $product = $this->relationLoaded('product')
+            ? $this->product
+            : $this->product()->withTrashed()->first();
+
+        $label = $product?->label();
+
+        return is_string($label) && trim($label) !== '' ? $label : $this->name;
+    }
+
     public function unitPriceDisplay(): string
     {
         return Money::fromMinor($this->unit_price_minor)->format();

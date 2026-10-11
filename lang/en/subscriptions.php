@@ -53,7 +53,19 @@ return [
         'pending' => 'Pending',
         'active' => 'Active',
         'paused' => 'Paused',
+        'expired' => 'Ended',
         'cancelled' => 'Cancelled',
+    ],
+
+    'pdf' => [
+        'button' => 'Export PDF',
+        'title' => 'Subscriptions list',
+        'all' => 'All subscriptions',
+        'count' => 'Subscriptions',
+        'total' => 'Total value',
+        'currency' => 'SAR',
+        'phone' => 'Phone',
+        'truncated' => 'The file shows the first :count subscriptions only — use the filters to narrow the list.',
     ],
 
     'fields' => [

@@ -26,9 +26,11 @@ use App\Modules\Plans\Models\Meal;
 use App\Modules\Plans\Support\MealNameTranslator;
 use App\Modules\Subscriptions\Models\Subscription;
 use App\Modules\Subscriptions\Services\MealScheduleService;
+use App\Modules\Subscriptions\Services\SubscriptionExpiry;
 use App\Modules\Subscriptions\Services\SubscriptionService;
 use App\Modules\Subscriptions\Support\MealCalendarPresenter;
 use App\Modules\Subscriptions\Support\MealChangeRules;
+use App\Modules\Subscriptions\Support\MealPrepCutoff;
 use App\Modules\Subscriptions\Support\MealSchedule;
 use App\Modules\Subscriptions\Support\SubscriptionPauseRules;
 use Illuminate\Contracts\View\View;
@@ -48,12 +50,15 @@ final class AccountController extends Controller
         private readonly CustomerAuthChannels $channels,
         private readonly EcommerceDataLayer $analytics,
         private readonly AdminNotifier $notifier,
+        private readonly SubscriptionExpiry $expiry,
     ) {}
 
     public function index(Request $request): View
     {
         /** @var User $user */
         $user = Auth::user();
+
+        $this->expiry->sweepIfDue();
 
         $orders = $user->orders()
             ->withCount('items')
@@ -139,7 +144,7 @@ final class AccountController extends Controller
     {
         abort_unless($order->user_id === Auth::id(), 404);
 
-        $order->load('items');
+        $order->load(['items.product' => fn ($query) => $query->withTrashed()]);
 
         return view('website.account.order', [
             'order' => $order,
@@ -152,6 +157,8 @@ final class AccountController extends Controller
     {
         abort_unless($subscription->user_id === Auth::id(), 404);
 
+        $this->expiry->expireIfEnded($subscription);
+
         $subscription->load(['plan.meals', 'deliveries']);
 
         return view('website.account.subscription', [
@@ -162,6 +169,7 @@ final class AccountController extends Controller
             'calendarMonths' => MealCalendarPresenter::months($scheduleDays),
             'dishOptions' => $this->dishOptions($subscription),
             'leadDays' => MealChangeRules::leadDays(),
+            'cutoffHours' => MealPrepCutoff::hours(),
             'pauseLeadDays' => SubscriptionPauseRules::leadDays(),
             'resumeLeadDays' => SubscriptionPauseRules::resumeLeadDays(),
             'earliestPauseDate' => SubscriptionPauseRules::earliestPausableDateString(),
@@ -195,6 +203,7 @@ final class AccountController extends Controller
     {
         abort_unless($subscription->user_id === Auth::id(), 404);
 
+        $this->expiry->expireIfEnded($subscription);
         $this->subscriptions->pause($subscription, $request->pauseFrom());
         $this->notifier->subscriptionPaused($subscription, $request->pauseFrom());
 
@@ -323,13 +332,31 @@ final class AccountController extends Controller
             ];
         }
 
+        $active = ! $paused && ! $subscription->isPaused() && ! $subscription->isClosed();
+        $editable = $active && MealChangeRules::isEditable($day['date']);
+
         return [
             'date' => $day['date'],
             'weekday' => $day['weekday'],
             'label' => $day['label'],
-            'editable' => ! $paused && ! $subscription->isPaused() && MealChangeRules::isEditable($day['date']),
+            'editable' => $editable,
             'paused' => $paused,
+            'prep_locked' => $active && MealChangeRules::isLockedForPrep($day['date']),
+            'closes_at' => $editable && MealPrepCutoff::enabled() ? $this->cutoffLabel($day['date']) : null,
             'meals' => $meals,
+        ];
+    }
+
+    /**
+     * @return array{time: string, day: string}
+     */
+    private function cutoffLabel(string $date): array
+    {
+        $closes = MealPrepCutoff::closesAt($date)->locale(app()->getLocale());
+
+        return [
+            'time' => $closes->translatedFormat('g:i A'),
+            'day' => $closes->translatedFormat('l j F'),
         ];
     }
 

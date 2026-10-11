@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\Admin\DashboardController;
 use App\Http\Controllers\Web\Admin\DeliveryController;
 use App\Http\Controllers\Web\Admin\InvitationController as AdminInvitationController;
 use App\Http\Controllers\Web\Admin\InvoiceController;
+use App\Http\Controllers\Web\Admin\KitchenController;
 use App\Http\Controllers\Web\Admin\MealController;
 use App\Http\Controllers\Web\Admin\NotificationController;
 use App\Http\Controllers\Web\Admin\OrderController;
@@ -226,11 +227,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('recipes', RecipeController::class)->except('show');
 
         // Customer subscriptions: read-only, apart from the staff handling state.
+        Route::get('subscriptions/export.pdf', [SubscriptionController::class, 'listPdf'])->name('subscriptions.pdf');
         Route::resource('subscriptions', SubscriptionController::class)->only(['index', 'show']);
         Route::patch('subscriptions/{subscription}/handling', [SubscriptionController::class, 'updateHandling'])
             ->name('subscriptions.handling');
         Route::get('subscriptions/{subscription}/meals.pdf', [SubscriptionController::class, 'mealsPdf'])
             ->name('subscriptions.meals-pdf');
+
+        // Kitchen: the day's subscription dishes, grouped for batch cooking.
+        Route::get('kitchen', [KitchenController::class, 'index'])->name('kitchen.index');
+        Route::get('kitchen/prep.pdf', [KitchenController::class, 'pdf'])->name('kitchen.pdf');
 
         // Store: product categories, products, discount codes and orders.
         Route::resource('categories', CategoryController::class)->except('show');
@@ -267,6 +273,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Billing: invoices are issued by the system, never by hand.
         Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+        Route::get('invoices/report.pdf', [InvoiceController::class, 'report'])->name('invoices.report');
         Route::get('invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
         Route::post('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
 

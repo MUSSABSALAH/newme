@@ -18,6 +18,7 @@ use App\Modules\Subscriptions\Enums\HandlingStatus;
 use App\Modules\Subscriptions\Enums\SubscriptionStatus;
 use App\Modules\Subscriptions\Support\MealSchedule;
 use App\Support\Money\Money;
+use App\Support\Time\DisplayTime;
 use Database\Factories\SubscriptionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -236,7 +237,7 @@ class Subscription extends Model
             return $latest->status;
         }
 
-        if (ScheduledDay::exists($this, now()->toDateString())) {
+        if (ScheduledDay::exists($this, DisplayTime::now()->toDateString())) {
             return DeliveryStatus::Pending;
         }
 
@@ -292,6 +293,24 @@ class Subscription extends Model
     public function isPaused(): bool
     {
         return $this->status === SubscriptionStatus::Paused;
+    }
+
+    /**
+     * Ended or cancelled: meals, pause and resume are view only for the customer.
+     */
+    public function isClosed(): bool
+    {
+        return $this->status->isClosed();
+    }
+
+    /**
+     * The last delivery day is behind us on the business calendar.
+     */
+    public function hasEnded(): bool
+    {
+        $end = $this->endDate();
+
+        return $end !== null && $end->toDateString() < DisplayTime::today()->toDateString();
     }
 
     /**

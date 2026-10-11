@@ -10,7 +10,7 @@
 @section('content')
 @php
   $waLines = [];
-  foreach ($order->items as $it) { $waLines[] = $it->quantity.'× '.$it->name; }
+  foreach ($order->items as $it) { $waLines[] = $it->quantity.'× '.$it->label(); }
   $waRef = __('account.order.ref').' #'.$order->reference();
   $waText = rawurlencode($waRef."\n".implode("\n", $waLines));
 @endphp
@@ -35,7 +35,7 @@
     <h2><span class="n">1</span>{{ __('account.order.title') }}</h2>
     @foreach ($order->items as $item)
       <div class="oitem">
-        <div><span class="q">{{ $item->quantity }}×</span> {{ $item->name }}</div>
+        <div><span class="q">{{ $item->quantity }}×</span> {{ $item->label() }}</div>
         <div class="amt">{{ $item->lineTotalDisplay() }} <x-ui.sar /></div>
       </div>
     @endforeach

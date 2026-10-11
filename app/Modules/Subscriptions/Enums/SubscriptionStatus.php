@@ -9,6 +9,7 @@ enum SubscriptionStatus: string
     case Pending = 'pending';
     case Active = 'active';
     case Paused = 'paused';
+    case Expired = 'expired';
     case Cancelled = 'cancelled';
 
     /**
@@ -33,7 +34,16 @@ enum SubscriptionStatus: string
             self::Pending => 'warning',
             self::Active => 'success',
             self::Paused => 'info',
+            self::Expired => 'neutral',
             self::Cancelled => 'danger',
         };
+    }
+
+    /**
+     * Finished or cancelled: the customer can only look at it.
+     */
+    public function isClosed(): bool
+    {
+        return $this === self::Expired || $this === self::Cancelled;
     }
 }

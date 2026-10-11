@@ -26,7 +26,20 @@ final class MealChangeRules
 
     public static function earliestEditableDate(): Carbon
     {
-        return self::today()->addDay();
+        return MealPrepCutoff::atLeastFirstOpen(self::today()->addDay());
+    }
+
+    /**
+     * Inside the change window by days, but the kitchen has already started it.
+     */
+    public static function isLockedForPrep(string $date): bool
+    {
+        if (self::leadDays() < 1 || MealPrepCutoff::isOpen($date)) {
+            return false;
+        }
+
+        return $date >= self::today()->addDay()->toDateString()
+            && $date <= self::latestEditableDateString();
     }
 
     public static function latestEditableDate(): Carbon

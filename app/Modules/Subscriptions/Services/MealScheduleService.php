@@ -18,7 +18,7 @@ final class MealScheduleService
      */
     public function update(Subscription $subscription, array $submitted): Subscription
     {
-        if ($subscription->isPaused()) {
+        if ($subscription->isPaused() || $subscription->isClosed()) {
             return $subscription;
         }
 

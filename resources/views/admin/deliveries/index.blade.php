@@ -9,7 +9,7 @@
             <div class="ship-datebar__day">
                 <strong>{{ $date->translatedFormat('l') }}</strong>
                 <span class="text-muted">{{ $date->translatedFormat('d M Y') }}</span>
-                @if ($date->isToday())
+                @if (\App\Support\Time\DisplayTime::isToday($date))
                     <x-ui.badge variant="success">{{ __('deliveries.board.today') }}</x-ui.badge>
                 @endif
             </div>
@@ -19,7 +19,7 @@
                     {{ __('deliveries.board.previous_day') }}
                 </x-ui.button>
 
-                @unless ($date->isToday())
+                @unless (\App\Support\Time\DisplayTime::isToday($date))
                     <x-ui.button :href="route('admin.deliveries.index')" variant="ghost" class="btn--sm">
                         {{ __('deliveries.board.today') }}
                     </x-ui.button>

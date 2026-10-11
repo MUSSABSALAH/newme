@@ -351,6 +351,7 @@ final class SettingsRegistry
             // Operations
             new SettingDefinition('operations.stock_reservation_minutes', SettingGroup::Operations, SettingType::Integer, 30, ['required', 'integer', 'min:1', 'max:1440']),
             new SettingDefinition('operations.payment_timeout_minutes', SettingGroup::Operations, SettingType::Integer, 30, ['required', 'integer', 'min:1', 'max:1440']),
+            new SettingDefinition('operations.meal_change_cutoff_hours', SettingGroup::Operations, SettingType::Integer, 0, ['required', 'integer', 'min:0', 'max:72']),
             new SettingDefinition('operations.subscription_min_start_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
             new SettingDefinition('operations.meal_change_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
             new SettingDefinition('operations.subscription_pause_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),

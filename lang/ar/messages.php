@@ -56,6 +56,7 @@ return [
         'coupons' => 'أكواد الخصم',
         'orders' => 'الطلبات',
         'subscriptions' => 'الاشتراكات',
+        'kitchen' => 'تحضير الوجبات',
         'deliveries' => 'الشحنات',
         'invoices' => 'الفواتير',
         'audit' => 'سجل التدقيق',

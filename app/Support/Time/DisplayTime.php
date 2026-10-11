@@ -40,6 +40,31 @@ final class DisplayTime
     }
 
     /**
+     * The current moment on the business clock.
+     */
+    public static function now(): Carbon
+    {
+        return Carbon::now(self::timezone());
+    }
+
+    /**
+     * Today's business date, as midnight in the app timezone (UTC).
+     *
+     * The app clock stays on UTC, so between midnight and 03:00 in Riyadh a
+     * plain Carbon::today() is still yesterday. Midnight in the app timezone
+     * keeps it comparable with dates parsed from "Y-m-d" strings.
+     */
+    public static function today(): Carbon
+    {
+        return Carbon::parse(self::now()->toDateString());
+    }
+
+    public static function isToday(Carbon $date): bool
+    {
+        return $date->toDateString() === self::now()->toDateString();
+    }
+
+    /**
      * Read operator-entered wall time as a UTC instant.
      */
     public static function parse(string $value): Carbon

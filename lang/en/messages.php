@@ -56,6 +56,7 @@ return [
         'coupons' => 'Discount codes',
         'orders' => 'Orders',
         'subscriptions' => 'Subscriptions',
+        'kitchen' => 'Meal prep',
         'deliveries' => 'Shipments',
         'invoices' => 'Invoices',
         'audit' => 'Audit',

@@ -30,12 +30,25 @@ final class SubscriptionPauseRules
 
     public static function earliestPausableDate(): Carbon
     {
-        return Carbon::now(DisplayTime::timezone())->startOfDay()->addDays(self::leadDays());
+        return MealPrepCutoff::atLeastFirstOpen(
+            Carbon::now(DisplayTime::timezone())->startOfDay()->addDays(self::leadDays()),
+        );
     }
 
     public static function earliestPausableDateString(): string
     {
         return self::earliestPausableDate()->toDateString();
+    }
+
+    public static function tooSoonMessage(): string
+    {
+        if (MealPrepCutoff::enabled()) {
+            return (string) __('account.subscription.pause_too_soon_date', [
+                'date' => self::earliestPausableDateString(),
+            ]);
+        }
+
+        return (string) __('account.subscription.pause_too_soon', ['days' => self::leadDays()]);
     }
 
     public static function isPausable(string $date): bool
@@ -49,7 +62,9 @@ final class SubscriptionPauseRules
 
     public static function earliestResumableDate(): Carbon
     {
-        return Carbon::now(DisplayTime::timezone())->startOfDay()->addDays(self::resumeLeadDays());
+        return MealPrepCutoff::atLeastFirstOpen(
+            Carbon::now(DisplayTime::timezone())->startOfDay()->addDays(self::resumeLeadDays()),
+        );
     }
 
     public static function earliestResumableDateString(): string

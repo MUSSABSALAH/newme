@@ -35,6 +35,7 @@
             'icon' => 'calendar-check',
             'items' => [
                 ['label' => __('messages.nav.subscriptions'), 'route' => 'admin.subscriptions.index', 'icon' => 'repeat', 'permission' => PermissionName::SubscriptionsView],
+                ['label' => __('messages.nav.kitchen'), 'route' => 'admin.kitchen.index', 'icon' => 'chef-hat', 'permission' => PermissionName::SubscriptionsView],
                 ['label' => __('messages.nav.plans'), 'route' => 'admin.plans.index', 'icon' => 'clipboard-list', 'permission' => PermissionName::PlansView],
                 ['label' => __('messages.nav.meals'), 'route' => 'admin.meals.index', 'icon' => 'utensils', 'permission' => PermissionName::PlansView],
             ],

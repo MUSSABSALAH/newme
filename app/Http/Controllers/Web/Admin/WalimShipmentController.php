@@ -14,6 +14,7 @@ use App\Modules\Delivery\Walim\WalimShipmentService;
 use App\Modules\Delivery\Walim\WaybillPdfRenderer;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
+use App\Support\Time\DisplayTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -145,13 +146,13 @@ final class WalimShipmentController extends Controller
             }
         }
 
-        return Carbon::today();
+        return DisplayTime::today();
     }
 
     private function back(Request $request, ?string $success, ?string $error = null): RedirectResponse
     {
         $day = $this->date($request);
-        $redirect = redirect()->route('admin.deliveries.index', $day->isToday() ? [] : ['date' => $day->toDateString()]);
+        $redirect = redirect()->route('admin.deliveries.index', DisplayTime::isToday($day) ? [] : ['date' => $day->toDateString()]);
 
         return $error !== null ? $redirect->with('error', $error) : $redirect->with('success', $success);
     }

@@ -36,6 +36,8 @@
                   <span class="meal-cal-cell__num">{{ $cell['day'] }}</span>
                   @if ($delivery['paused'] ?? false)
                     <span class="meal-cal-cell__badge">{{ __('account.subscription.paused_badge') }}</span>
+                  @elseif ($delivery['prep_locked'] ?? false)
+                    <span class="meal-cal-cell__badge meal-cal-cell__badge--prep">{{ __('account.subscription.prep_badge') }}</span>
                   @endif
                   <div class="meal-cal-cell__meals">
                     @foreach ($delivery['meals'] as $meal)
@@ -70,6 +72,9 @@
           <input type="hidden" name="meal_schedule[{{ $index }}][date]" value="{{ $day['date'] }}" @disabled($day['paused'] ?? false)>
 
           @if ($day['editable'])
+            @if ($day['closes_at'] ?? null)
+              <p class="meal-cal-editor__cutoff">{{ __('account.subscription.prep_closes_at', $day['closes_at']) }}</p>
+            @endif
             @foreach ($day['meals'] as $meal)
               <div class="meal-cal-editor__row">
                 <label for="meal-{{ $index }}-{{ $meal['type'] }}">{{ $meal['label'] }}</label>
@@ -85,10 +90,23 @@
               </div>
             @endforeach
             <button type="submit" class="w-btn meal-cal-drawer__save">{{ __('account.subscription.save_day') }}</button>
+          @elseif ($day['prep_locked'] ?? false)
+            <div class="meal-cal-editor__prep">
+              <strong>{{ __('account.subscription.prep_locked_title') }}</strong>
+              <span>{{ __('account.subscription.prep_locked_body') }}</span>
+            </div>
           @else
             <p class="meal-cal-editor__locked-note">
-              {{ ($day['paused'] ?? false) ? __('account.subscription.schedule_paused_note') : __('account.subscription.schedule_locked') }}
+              @if ($day['paused'] ?? false)
+                {{ __('account.subscription.schedule_paused_note') }}
+              @elseif ($subscription->isClosed())
+                {{ __('account.subscription.closed_hint_'.$subscription->status->value) }}
+              @else
+                {{ __('account.subscription.schedule_locked') }}
+              @endif
             </p>
+          @endif
+          @unless ($day['editable'])
             @foreach ($day['meals'] as $meal)
               @unless ($day['paused'] ?? false)
                 <input type="hidden" name="meal_schedule[{{ $index }}][meals][{{ $meal['type'] }}]" value="{{ $meal['dish_raw'] ?? '' }}">
@@ -98,7 +116,7 @@
                 <b class="{{ $meal['is_chef'] ? 'chef' : '' }}">{{ $meal['dish'] }}</b>
               </div>
             @endforeach
-          @endif
+          @endunless
         </div>
       @endforeach
     </div>
