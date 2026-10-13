@@ -184,9 +184,6 @@
         @else
           <p>{{ __('account.subscription.schedule_hint', ['days' => $leadDays]) }}</p>
         @endif
-        @if ($cutoffHours > 0 && ! $subscription->isClosed())
-          <p class="sub-schedule__cutoff">{{ __('account.subscription.prep_cutoff_hint', ['hours' => $cutoffHours]) }}</p>
-        @endif
       </div>
     </div>
     <div class="card sub-schedule__card">
