@@ -214,6 +214,7 @@ return [
         'pause_too_soon_date' => 'The earliest date you can pause from is :date.',
         'pause_not_active' => 'Only an active subscription can be paused.',
         'pause_not_allowed' => 'This subscription’s plan does not allow temporary pause.',
+        'pause_limit_reached' => 'You have used all the pauses allowed for this subscription.',
         'pause_already' => 'This subscription is already paused.',
         'pause_no_days' => 'There are no remaining delivery days to freeze from that date.',
         'resume_not_paused' => 'This subscription is not paused.',

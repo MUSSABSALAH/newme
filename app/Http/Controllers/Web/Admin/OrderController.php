@@ -11,6 +11,7 @@ use App\Modules\Invoices\Services\InvoiceService;
 use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Services\OrderService;
+use App\Support\Search\SearchTerm;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,11 +28,13 @@ final class OrderController extends Controller
         $this->authorize('viewAny', Order::class);
 
         $status = OrderStatus::tryFrom((string) $request->query('status', ''));
+        $term = SearchTerm::fromRequest($request);
 
         $orders = Order::query()
             ->with('user')
             ->withCount('items')
             ->when($status !== null, fn ($query) => $query->where('status', $status->value))
+            ->when(! $term->isEmpty(), fn ($query) => $query->search($term))
             ->latest('placed_at')
             ->latest('id')
             ->paginate(20)
@@ -41,6 +44,7 @@ final class OrderController extends Controller
             'orders' => $orders,
             'statuses' => OrderStatus::cases(),
             'activeStatus' => $status,
+            'search' => $term->value,
         ]);
     }
 

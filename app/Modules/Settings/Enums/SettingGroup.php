@@ -16,6 +16,7 @@ enum SettingGroup: string
     case DeliveryWalim = 'delivery_walim';
     case Walim = 'walim';
     case Operations = 'operations';
+    case Notifications = 'notifications';
     case Policies = 'policies';
 
     /**
@@ -24,6 +25,15 @@ enum SettingGroup: string
     public static function values(): array
     {
         return array_map(static fn (self $group): string => $group->value, self::cases());
+    }
+
+    /**
+     * Staff email alerts are run from their own super-admin page, so the
+     * general settings form neither shows nor validates them.
+     */
+    public function onSettingsPage(): bool
+    {
+        return $this !== self::Notifications;
     }
 
     public function label(): string

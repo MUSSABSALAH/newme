@@ -21,6 +21,7 @@ use App\Modules\Subscriptions\Enums\SubscriptionStatus;
 use App\Modules\Subscriptions\Models\Subscription;
 use App\Modules\Subscriptions\Support\MealSchedule;
 use App\Modules\Subscriptions\Support\SubscriptionPauseRules;
+use App\Support\Time\DisplayTime;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -160,7 +161,7 @@ final class SubscriptionService
      * Days before the pause date stay scheduled; days on/after it are stored
      * in {@see Subscription::$paused_schedule} and re-dated on resume.
      */
-    public function pause(Subscription $subscription, string $pauseFrom): Subscription
+    public function pause(Subscription $subscription, string $pauseFrom, ?User $staff = null): Subscription
     {
         if ($subscription->status !== SubscriptionStatus::Active) {
             throw ValidationException::withMessages([
@@ -170,9 +171,17 @@ final class SubscriptionService
 
         $subscription->loadMissing('plan');
 
-        if (! $subscription->allowsPause()) {
+        // Staff are not held to the plan's pause flag or the customer lead time,
+        // only to "not today or earlier": today's meals are already in prep.
+        if ($staff === null && ! $subscription->allowsPause()) {
             throw ValidationException::withMessages([
                 'pause_from' => __('account.subscription.pause_not_allowed'),
+            ]);
+        }
+
+        if ($staff === null && $subscription->pauseLimitReached()) {
+            throw ValidationException::withMessages([
+                'pause_from' => __('account.subscription.pause_limit_reached'),
             ]);
         }
 
@@ -184,9 +193,15 @@ final class SubscriptionService
 
         $pauseFrom = Carbon::parse($pauseFrom)->toDateString();
 
-        if (! SubscriptionPauseRules::isPausable($pauseFrom)) {
+        if ($staff === null && ! SubscriptionPauseRules::isPausable($pauseFrom)) {
             throw ValidationException::withMessages([
                 'pause_from' => SubscriptionPauseRules::tooSoonMessage(),
+            ]);
+        }
+
+        if ($staff !== null && $pauseFrom <= DisplayTime::today()->toDateString()) {
+            throw ValidationException::withMessages([
+                'pause_from' => __('subscriptions.manage.errors.date_from_tomorrow'),
             ]);
         }
 
@@ -206,12 +221,18 @@ final class SubscriptionService
             ]);
         }
 
-        return DB::transaction(function () use ($subscription, $pauseFrom, $split): Subscription {
+        return DB::transaction(function () use ($subscription, $pauseFrom, $split, $staff): Subscription {
             $subscription->meal_schedule = $split['kept'];
             $subscription->paused_schedule = $split['frozen'];
             $subscription->pause_started_on = $pauseFrom;
             $subscription->paused_at = Carbon::now();
             $subscription->status = SubscriptionStatus::Paused;
+
+            // Only the customer's own pauses use up their allowance.
+            if ($staff === null) {
+                $subscription->pause_count = (int) $subscription->pause_count + 1;
+            }
+
             $subscription->save();
 
             $this->audit->log(AuditAction::SubscriptionPaused, $subscription, [
@@ -220,6 +241,70 @@ final class SubscriptionService
                 'status' => SubscriptionStatus::Paused->value,
                 'pause_started_on' => $pauseFrom,
                 'frozen_days' => count($split['frozen']),
+                'pause_count' => $subscription->pause_count,
+                ...($staff === null ? [] : ['by_staff' => $staff->getKey()]),
+            ]);
+
+            return $subscription->refresh();
+        });
+    }
+
+    /**
+     * Staff move the first delivery day of a subscription that has not begun.
+     *
+     * Every delivery day is rebuilt from the new date on the customer's chosen
+     * weekdays, so dishes the customer had picked go back to chef's pick and
+     * the end date moves with it.
+     */
+    public function changeStartDate(Subscription $subscription, string $startDate, User $staff): Subscription
+    {
+        if (! $subscription->startIsMovable()) {
+            throw ValidationException::withMessages([
+                'start_date' => __('subscriptions.manage.errors.start_locked'),
+            ]);
+        }
+
+        $startDate = Carbon::parse($startDate)->toDateString();
+
+        if ($startDate <= DisplayTime::today()->toDateString()) {
+            throw ValidationException::withMessages([
+                'start_date' => __('subscriptions.manage.errors.date_from_tomorrow'),
+            ]);
+        }
+
+        if ($startDate === $subscription->start_date?->toDateString()) {
+            throw ValidationException::withMessages([
+                'start_date' => __('subscriptions.manage.errors.start_unchanged'),
+            ]);
+        }
+
+        $schedule = MealSchedule::skeleton(
+            $startDate,
+            is_array($subscription->selected_days) ? $subscription->selected_days : [],
+            (int) $subscription->total_days,
+            is_array($subscription->meal_types) ? $subscription->meal_types : [],
+        );
+
+        if ($schedule === []) {
+            throw ValidationException::withMessages([
+                'start_date' => __('subscriptions.manage.errors.no_days'),
+            ]);
+        }
+
+        $before = [
+            'start_date' => $subscription->start_date?->toDateString(),
+            'end_date' => $subscription->endDate()?->toDateString(),
+        ];
+
+        return DB::transaction(function () use ($subscription, $startDate, $schedule, $staff, $before): Subscription {
+            $subscription->start_date = Carbon::parse($startDate);
+            $subscription->meal_schedule = $schedule;
+            $subscription->save();
+
+            $this->audit->log(AuditAction::SubscriptionStartChanged, $subscription, $before, [
+                'start_date' => $startDate,
+                'end_date' => $schedule[array_key_last($schedule)]['date'],
+                'by_staff' => $staff->getKey(),
             ]);
 
             return $subscription->refresh();
@@ -228,8 +313,9 @@ final class SubscriptionService
 
     /**
      * Put frozen days back on the calendar from the earliest allowed resume date.
+     * Staff skip the resume lead time; they only need a date from tomorrow.
      */
-    public function resume(Subscription $subscription, ?string $resumeFrom = null): Subscription
+    public function resume(Subscription $subscription, ?string $resumeFrom = null, ?User $staff = null): Subscription
     {
         if ($subscription->status !== SubscriptionStatus::Paused) {
             throw ValidationException::withMessages([
@@ -245,16 +331,32 @@ final class SubscriptionService
             ]);
         }
 
-        $resumeFrom = $resumeFrom === null || trim($resumeFrom) === ''
-            ? SubscriptionPauseRules::earliestResumableDateString()
-            : Carbon::parse($resumeFrom)->toDateString();
+        $tomorrow = DisplayTime::today()->addDay()->toDateString();
 
-        if (! SubscriptionPauseRules::isResumableFrom($resumeFrom)) {
+        $resumeFrom = match (true) {
+            $resumeFrom !== null && trim($resumeFrom) !== '' => Carbon::parse($resumeFrom)->toDateString(),
+            $staff !== null => $tomorrow,
+            default => SubscriptionPauseRules::earliestResumableDateString(),
+        };
+
+        if ($staff !== null && $resumeFrom < $tomorrow) {
+            throw ValidationException::withMessages([
+                'resume_from' => __('subscriptions.manage.errors.date_from_tomorrow'),
+            ]);
+        }
+
+        if ($staff === null && ! SubscriptionPauseRules::isResumableFrom($resumeFrom)) {
             throw ValidationException::withMessages([
                 'resume' => __('account.subscription.resume_too_soon', [
                     'days' => SubscriptionPauseRules::resumeLeadDays(),
                 ]),
             ]);
+        }
+
+        // Frozen days never move earlier than they were booked, e.g. a plan
+        // paused before it began resumes on its real start date.
+        if ($resumeFrom < $frozen[0]['date']) {
+            $resumeFrom = $frozen[0]['date'];
         }
 
         $kept = MealSchedule::normalize($subscription->meal_schedule ?? []);
@@ -270,7 +372,7 @@ final class SubscriptionService
             is_array($subscription->selected_days) ? $subscription->selected_days : [],
         );
 
-        return DB::transaction(function () use ($subscription, $kept, $rescheduled, $resumeFrom, $frozen): Subscription {
+        return DB::transaction(function () use ($subscription, $kept, $rescheduled, $resumeFrom, $frozen, $staff): Subscription {
             $subscription->meal_schedule = array_values([...$kept, ...$rescheduled]);
             $subscription->paused_schedule = null;
             $subscription->pause_started_on = null;
@@ -285,6 +387,7 @@ final class SubscriptionService
                 'status' => SubscriptionStatus::Active->value,
                 'resume_from' => $resumeFrom,
                 'new_end_date' => $subscription->endDate()?->toDateString(),
+                ...($staff === null ? [] : ['by_staff' => $staff->getKey()]),
             ]);
 
             return $subscription->refresh();

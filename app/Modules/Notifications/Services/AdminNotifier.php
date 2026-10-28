@@ -13,10 +13,12 @@ use App\Modules\Notifications\Notifications\NewOrderNotification;
 use App\Modules\Notifications\Notifications\NewSubscriptionNotification;
 use App\Modules\Notifications\Enums\NotificationEvent;
 use App\Modules\Notifications\Notifications\ShipmentAlertNotification;
+use App\Modules\Notifications\Notifications\StaffEmailAlertNotification;
 use App\Modules\Notifications\Notifications\SubscriptionChangeNotification;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 
@@ -28,6 +30,10 @@ use Spatie\Permission\Exceptions\PermissionDoesNotExist;
  */
 final class AdminNotifier
 {
+    private const EMAIL_SPACING_SECONDS = 20;
+
+    public function __construct(private readonly StaffMailGate $mailGate) {}
+
     public function orderPlaced(Order $order): void
     {
         $recipients = $this->recipients(PermissionName::OrdersView);
@@ -35,6 +41,13 @@ final class AdminNotifier
         if ($recipients->isNotEmpty()) {
             Notification::send($recipients, new NewOrderNotification($order));
         }
+
+        $this->email(NotificationEvent::OrderPlaced, [
+            'public_id' => $order->public_id,
+            'reference' => $order->reference(),
+            'customer' => $order->user?->name,
+            'total_minor' => $order->total_minor,
+        ]);
     }
 
     public function subscriptionStarted(Subscription $subscription): void
@@ -44,6 +57,13 @@ final class AdminNotifier
         if ($recipients->isNotEmpty()) {
             Notification::send($recipients, new NewSubscriptionNotification($subscription));
         }
+
+        $this->email(NotificationEvent::SubscriptionStarted, [
+            'public_id' => $subscription->public_id,
+            'reference' => $subscription->reference(),
+            'customer' => $subscription->user?->name,
+            'total_minor' => $subscription->total_minor,
+        ]);
     }
 
     public function subscriptionPaused(Subscription $subscription, string $pauseFrom): void
@@ -102,17 +122,48 @@ final class AdminNotifier
     private function subscriptionChanged(NotificationEvent $event, Subscription $subscription, array $details): void
     {
         $recipients = $this->recipients(PermissionName::SubscriptionsView);
-
-        if ($recipients->isEmpty()) {
-            return;
-        }
-
-        Notification::send($recipients, new SubscriptionChangeNotification($event->value, [
+        $payload = [
             'public_id' => $subscription->public_id,
             'reference' => $subscription->reference(),
             'customer' => $subscription->user?->name,
             ...$details,
-        ]));
+        ];
+
+        if ($recipients->isNotEmpty()) {
+            Notification::send($recipients, new SubscriptionChangeNotification($event->value, $payload));
+        }
+
+        $this->email($event, $payload);
+    }
+
+    /**
+     * Staff-alert email for the people picked on the notifications page; a
+     * separate channel from the inbox rows above.
+     *
+     * @param  array<string, mixed>  $payload
+     */
+    private function email(NotificationEvent $event, array $payload): void
+    {
+        if (! $event->emailsStaff()) {
+            return;
+        }
+
+        try {
+            $recipients = $this->mailGate->recipientsFor($event);
+        } catch (QueryException $e) {
+            report($e);
+
+            return;
+        }
+
+        // Mail providers cap emails per second, and the customer's receipt and
+        // invoice leave at the same moment, so staff copies go out staggered.
+        foreach ($recipients->values() as $index => $staff) {
+            $staff->notify(
+                (new StaffEmailAlertNotification($event, ['event' => $event->value] + $payload))
+                    ->delay(now()->addSeconds(($index + 1) * self::EMAIL_SPACING_SECONDS)),
+            );
+        }
     }
 
     /**

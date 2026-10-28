@@ -89,4 +89,42 @@ enum NotificationEvent: string
             self::ShipmentAlert => null,
         };
     }
+
+    /**
+     * Events the store can email to picked staff (pause, new order, new
+     * subscription, meal changes). Resume and the rest stay in-app only.
+     */
+    public function emailsStaff(): bool
+    {
+        return $this->emailSettingKey() !== null;
+    }
+
+    /**
+     * @return list<self>
+     */
+    public static function staffEmailEvents(): array
+    {
+        return array_values(array_filter(self::cases(), static fn (self $event): bool => $event->emailsStaff()));
+    }
+
+    /**
+     * Dot-free form field for this event, e.g. "email_order_placed".
+     */
+    public function emailField(): ?string
+    {
+        $key = $this->emailSettingKey();
+
+        return $key === null ? null : substr($key, strlen('notifications.'));
+    }
+
+    public function emailSettingKey(): ?string
+    {
+        return match ($this) {
+            self::OrderPlaced => 'notifications.email_order_placed',
+            self::SubscriptionStarted => 'notifications.email_subscription_started',
+            self::SubscriptionPaused => 'notifications.email_subscription_paused',
+            self::SubscriptionMealsChanged => 'notifications.email_subscription_meals_changed',
+            default => null,
+        };
+    }
 }

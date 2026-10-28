@@ -61,6 +61,8 @@ final class WalimTaskFactory
             $description .= ' · '.trim($order->note);
         }
 
+        $description .= self::backupPhoneNote($address);
+
         return new WalimParcel(
             reference: $reference,
             description: $description,
@@ -92,6 +94,8 @@ final class WalimTaskFactory
             $description .= ' · '.implode('، ', $stop->mealLines());
         }
 
+        $description .= self::backupPhoneNote($address);
+
         return new WalimParcel(
             reference: $reference,
             description: $description,
@@ -104,6 +108,16 @@ final class WalimTaskFactory
             pickupAt: $pickupAt,
             deliverBy: $pickupAt->copy()->addMinutes($this->deliveryWindow()),
         );
+    }
+
+    /**
+     * Walim takes one customer phone, so the backup rides in the description.
+     */
+    private static function backupPhoneNote(AddressSnapshot $address): string
+    {
+        $backup = $address->extraPhone();
+
+        return $backup === null ? '' : ' · '.__('addresses.fields.backup_phone', [], 'ar').': '.$backup;
     }
 
     /**

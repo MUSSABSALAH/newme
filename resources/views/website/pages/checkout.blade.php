@@ -12,7 +12,19 @@
   $chosenFulfillment = old('fulfillment', 'delivery');
   $storeQuote = $summary->storeQuote;
   $pinRequired = ! $isSubscription && ($storeQuote?->requiresPin ?? false);
-  $hasAddress = $addresses->contains(fn ($address) => $address->isDeliverable() && ! ($pinRequired && ! $address->hasPin()));
+  $hasAddress = $addresses->contains(fn ($address) => $address->isDeliverable()
+      && ! ($pinRequired && ! $address->hasPin())
+      && ! $address->needsBackupPhone());
+  $backupPending = $addresses->contains(fn ($address) => $address->isDeliverable() && $address->needsBackupPhone());
+  // Prompt for one backup number: on the default address, or on the first
+  // address missing one when nothing else can be delivered to.
+  $missingBackup = $addresses
+      ->filter(fn ($address) => $address->isDeliverable() && $address->needsBackupPhone())
+      ->sortByDesc('is_default')
+      ->first();
+  $backupFocus = ! old('_address_form') && $missingBackup && ($missingBackup->is_default || ! $hasAddress)
+      ? $missingBackup->public_id
+      : null;
   $needsAddress = $isSubscription || $chosenFulfillment !== 'pickup';
   $canPlace = ! $needsAddress || $hasAddress;
   $hostedCheckout = $hostedCheckout ?? false;
@@ -93,6 +105,18 @@ html[dir="rtl"] .card > .hint{margin:0 33px 16px 0}
 .pick .flag{font-size:10.5px;font-weight:800;color:var(--green-ink);background:var(--green-soft);border-radius:999px;padding:2px 9px;flex-shrink:0}
 .pick.is-blocked{opacity:.72;cursor:not-allowed;background:var(--tile)}
 .pick.is-blocked .flag.bad{background:#FDECEA;color:#C0392B}
+.pick-wrap{position:relative}
+.pick-wrap .pick{padding-bottom:38px}
+.pick-edit{position:absolute;bottom:10px;inset-inline-end:14px;border:none;background:none;color:var(--orange-deep);font-size:12.5px;font-weight:800;text-decoration:underline;padding:2px 4px;cursor:pointer}
+.pick-edit:hover{color:var(--navy)}
+.aform__title{font-size:14px;font-weight:900;color:var(--navy);margin:0 0 12px}
+.aform__actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.aform__cancel{border:none;background:none;color:var(--muted);font-size:13px;font-weight:800;text-decoration:underline;cursor:pointer}
+.backup-note{display:flex;flex-direction:column;gap:4px;background:var(--orange-soft);border:1.5px solid rgba(240,127,45,.35);border-radius:14px;padding:12px 14px;margin-bottom:14px;color:var(--ink);font-size:13px;line-height:1.7}
+.backup-note b{color:var(--orange-deep);font-size:14px}
+.f__hint{display:block;margin-top:4px;font-size:12px;color:var(--muted);line-height:1.6}
+.f--attention input{border-color:var(--orange)!important;box-shadow:0 0 0 3px rgba(240,127,45,.15)}
+.f input.is-invalid,.f--attention input.is-invalid{border-color:#C0392B!important;background-color:#FDECEA;box-shadow:0 0 0 3px rgba(192,57,43,.12)!important}
 
 .addnew{border:1.5px dashed var(--gray-3);border-radius:14px;background:transparent;color:var(--navy);font-weight:800;font-size:13.5px;padding:12px;width:100%}
 .addnew:hover{border-color:var(--orange);color:var(--orange-deep)}
@@ -254,7 +278,7 @@ body.menu-open{overflow:hidden}
 
         <div data-delivery-address @if (! $isSubscription && $chosenFulfillment === 'pickup') hidden @endif>
         @unless ($hasAddress)
-          <div class="alert bad" style="margin-bottom:14px">{{ __('checkout.address.empty') }}</div>
+          <div class="alert bad" style="margin-bottom:14px">{{ $backupPending ? __('checkout.address.backup_blocked') : __('checkout.address.empty') }}</div>
         @endunless
 
         @error('address')<div class="alert bad" style="margin-bottom:14px">{{ $message }}</div>@enderror
@@ -265,21 +289,32 @@ body.menu-open{overflow:hidden}
               @php
                 $inArea = $address->isDeliverable();
                 $needsPin = $inArea && $pinRequired && ! $address->hasPin();
-                $deliverable = $inArea && ! $needsPin;
+                $needsBackup = $address->needsBackupPhone();
+                $deliverable = $inArea && ! $needsPin && ! $needsBackup;
               @endphp
-              <label class="pick {{ $chosen === $address->public_id && $deliverable ? 'on' : '' }} {{ $deliverable ? '' : 'is-blocked' }}" @if ($deliverable) data-pick @endif>
-                <input type="radio" name="address" value="{{ $address->public_id }}" form="placeOrder"
-                       @checked($chosen === $address->public_id && $deliverable)
-                       @disabled(! $deliverable)>
-                <span class="body">
-                  <b>{{ $address->label }}</b>
-                  <p>{{ $address->recipient_name }} — {{ $address->summary() }}@if ($address->national_address) · {{ __('addresses.fields.national_address') }}: <span dir="ltr">{{ $address->national_address }}</span>@endif @if ($address->details) · {{ $address->details }}@endif</p>
-                  <span class="tel" dir="ltr">{{ $address->phone }}</span>
-                </span>
-                @if ($deliverable && $address->is_default)<span class="flag">{{ __('addresses.default') }}</span>@endif
-                @unless ($inArea)<span class="flag bad">{{ __('addresses.errors.outside_riyadh') }}</span>@endunless
-                @if ($needsPin)<a class="flag bad" href="{{ route('website.account', ['tab' => 'addresses']) }}">{{ __('checkout.address.pin_flag') }}</a>@endif
-              </label>
+              <div class="pick-wrap">
+                <label class="pick {{ $chosen === $address->public_id && $deliverable ? 'on' : '' }} {{ $deliverable ? '' : 'is-blocked' }}" @if ($deliverable) data-pick @endif>
+                  <input type="radio" name="address" value="{{ $address->public_id }}" form="placeOrder"
+                         @checked($chosen === $address->public_id && $deliverable)
+                         @disabled(! $deliverable)>
+                  <span class="body">
+                    <b>{{ $address->label }}</b>
+                    <p>{{ $address->recipient_name }} — {{ $address->summary() }}@if ($address->national_address) · {{ __('addresses.fields.national_address') }}: <span dir="ltr">{{ $address->national_address }}</span>@endif @if ($address->details) · {{ $address->details }}@endif</p>
+                    <span class="tel" dir="ltr">{{ $address->phone }}@if ($address->backupPhone() !== $address->phone) · {{ $address->backupPhone() }}@endif</span>
+                  </span>
+                  @if ($deliverable && $address->is_default)<span class="flag">{{ __('addresses.default') }}</span>@endif
+                  @unless ($inArea)<span class="flag bad">{{ __('addresses.errors.outside_riyadh') }}</span>@endunless
+                  @if ($needsPin)<a class="flag bad" href="{{ route('website.account', ['tab' => 'addresses']) }}">{{ __('checkout.address.pin_flag') }}</a>@endif
+                  @if ($inArea && $needsBackup)<span class="flag bad">{{ __('checkout.address.backup_flag') }}</span>@endif
+                </label>
+                <button type="button" class="pick-edit" data-open-address="{{ $address->public_id }}">
+                  {{ $needsBackup ? __('checkout.address.add_backup') : __('checkout.address.edit') }}
+                </button>
+              </div>
+              @include('website.pages._checkout-address-form', [
+                'address' => $address,
+                'open' => old('_address_form') === $address->public_id || ($inArea && $needsBackup && $address->public_id === $backupFocus),
+              ])
             @endforeach
           </div>
         @endif
@@ -288,63 +323,10 @@ body.menu-open{overflow:hidden}
           + {{ __('checkout.address.add') }}
         </button>
 
-        <form class="aform" method="POST" action="{{ route('website.checkout.address.store') }}"
-              data-address-form @if ($hasAddress && ! $errors->has('street')) hidden @endif>
-          @csrf
-          @include('website.account._address-map', [
-            'cityId' => 'city',
-            'districtId' => 'district',
-            'streetId' => 'street',
-            'nationalId' => 'national_address',
-          ])
-          <div class="grid2">
-            <div class="f">
-              <label for="label">{{ __('addresses.fields.label') }}</label>
-              <input type="text" id="label" name="label" value="{{ old('label') }}" placeholder="{{ __('addresses.placeholders.label') }}" required>
-              @error('label')<span class="err">{{ $message }}</span>@enderror
-            </div>
-            <div class="f">
-              <label for="recipient_name">{{ __('addresses.fields.recipient_name') }}</label>
-              <input type="text" id="recipient_name" name="recipient_name" value="{{ old('recipient_name', $user->name) }}" required>
-              @error('recipient_name')<span class="err">{{ $message }}</span>@enderror
-            </div>
-            <div class="f">
-              <label for="phone">{{ __('addresses.fields.phone') }}</label>
-              <input type="tel" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" dir="ltr" required>
-              @error('phone')<span class="err">{{ $message }}</span>@enderror
-            </div>
-            <div class="f">
-              <label for="city">{{ __('addresses.fields.city') }}</label>
-              <input type="text" id="city" name="city" value="{{ old('city') }}" required>
-              @error('city')<span class="err">{{ $message }}</span>@enderror
-            </div>
-            <div class="f">
-              <label for="district">{{ __('addresses.fields.district') }}</label>
-              <input type="text" id="district" name="district" value="{{ old('district') }}" required>
-              @error('district')<span class="err">{{ $message }}</span>@enderror
-            </div>
-            <div class="f">
-              <label for="street">{{ __('addresses.fields.street') }}</label>
-              <input type="text" id="street" name="street" value="{{ old('street') }}" required>
-              @error('street')<span class="err">{{ $message }}</span>@enderror
-            </div>
-            <div class="f">
-              <label for="national_address">{{ __('addresses.fields.national_address') }}</label>
-              <input type="text" id="national_address" name="national_address" value="{{ old('national_address') }}" placeholder="{{ __('addresses.placeholders.national_address') }}" required dir="ltr" autocomplete="off">
-              @error('national_address')<span class="err">{{ $message }}</span>@enderror
-            </div>
-          </div>
-          <div class="f">
-            <label for="details">{{ __('addresses.fields.details') }}</label>
-            <input type="text" id="details" name="details" value="{{ old('details') }}" placeholder="{{ __('addresses.placeholders.details') }}">
-            @error('details')<span class="err">{{ $message }}</span>@enderror
-          </div>
-          <label class="check" style="margin-bottom:14px">
-            <input type="checkbox" name="is_default" value="1" @checked(old('is_default', ! $hasAddress))>
-            <span>{{ __('addresses.fields.is_default') }}</span>
-          </label>
-          <button type="submit" class="btn ghost" style="width:auto">{{ __('checkout.address.save') }}</button>
-        </form>
+        @include('website.pages._checkout-address-form', [
+          'address' => null,
+          'open' => old('_address_form') === 'new' || (! $hasAddress && ! $backupPending),
+        ])
         </div>
       </div>
 
@@ -615,18 +597,45 @@ try{
     syncFulfillment();
   }
 
-  // Reveal the new-address form on demand.
-  var toggle=document.querySelector('[data-toggle-address]');
-  var aform=document.querySelector('[data-address-form]');
-  if(toggle&&aform){
-    toggle.addEventListener('click',function(){
-      aform.hidden=!aform.hidden;
-      if(!aform.hidden){
-        var first=aform.querySelector('input');
-        if(first)first.focus();
-        if(window.nmAddrMaps) window.nmAddrMaps.resize(aform);
-      }
+  // Address forms: one open at a time, new or editing an existing one.
+  function addressForm(key){return document.querySelector('[data-address-form="'+key+'"]');}
+  function openAddress(key,focusField){
+    document.querySelectorAll('[data-address-form]').forEach(function(f){
+      f.hidden=f.getAttribute('data-address-form')!==key;
     });
+    var form=addressForm(key);
+    if(!form)return;
+    var target=(focusField&&form.querySelector('[name="'+focusField+'"]'))||form.querySelector('input:not([type=hidden])');
+    if(target)target.focus();
+    if(window.nmAddrMaps) window.nmAddrMaps.resize(form);
+    form.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  var toggle=document.querySelector('[data-toggle-address]');
+  if(toggle){
+    toggle.addEventListener('click',function(){
+      var form=addressForm('new');
+      if(form&&!form.hidden){form.hidden=true;return;}
+      openAddress('new');
+    });
+  }
+  document.querySelectorAll('[data-open-address]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var key=btn.getAttribute('data-open-address');
+      var form=addressForm(key);
+      if(form&&!form.hidden){form.hidden=true;return;}
+      openAddress(key,form&&form.querySelector('.f--attention')?'backup_phone':null);
+    });
+  });
+  document.querySelectorAll('[data-close-address]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var form=addressForm(btn.getAttribute('data-close-address'));
+      if(form)form.hidden=true;
+    });
+  });
+  var promptForm=document.querySelector('[data-address-form]:not([hidden]) .f--attention input');
+  if(promptForm){
+    var promptWrap=promptForm.closest('[data-address-form]');
+    if(window.nmAddrMaps) window.nmAddrMaps.resize(promptWrap);
   }
 
   // Group the card number as the customer types.

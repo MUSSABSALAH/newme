@@ -32,6 +32,19 @@ return [
         'deactivate' => 'Deactivate',
         'search' => 'Search',
     ],
+    'search' => [
+        'label' => 'Search',
+        'placeholder' => 'Search anything on this page…',
+        'clear' => 'Clear',
+        'no_results' => 'No results for “:term”.',
+        'placeholders' => [
+            'orders' => 'Order number, customer, phone, product, status, amount…',
+            'subscriptions' => 'Subscription number, customer, phone, plan, status, staff…',
+            'products' => 'Product name, category, slug, price…',
+            'meals' => 'Meal name, type, calories…',
+            'customers' => 'Name, email, phone number…',
+        ],
+    ],
     'nav' => [
         'groups' => [
             'catalog' => 'Store',
@@ -59,6 +72,7 @@ return [
         'kitchen' => 'Meal prep',
         'deliveries' => 'Shipments',
         'invoices' => 'Invoices',
+        'notifications' => 'Notifications',
         'audit' => 'Audit',
         'settings' => 'Settings',
     ],

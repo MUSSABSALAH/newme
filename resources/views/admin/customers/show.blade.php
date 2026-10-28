@@ -68,6 +68,94 @@
         @endif
     </x-ui.card>
 
+    @if ($canEdit)
+        <x-ui.card :title="__('customers.edit.title')">
+            <form method="POST" action="{{ route('admin.customers.update', $customer) }}" class="stack" style="gap: 14px;">
+                @csrf
+                @method('PUT')
+
+                <p class="field__hint" style="margin: 0;">
+                    <x-ui.icon name="lock" size="sm" /> {{ __('customers.edit.locked_hint') }}
+                </p>
+
+                <div class="form-grid-2">
+                    <x-form.field :label="__('customers.fields.name')" name="name">
+                        <x-form.input name="name" :value="$customer->name" required maxlength="255" />
+                    </x-form.field>
+
+                    <x-form.field :label="__('customers.fields.birth_date')" name="birth_date">
+                        <x-form.input type="date" name="birth_date" :value="$customer->birth_date?->toDateString()" />
+                    </x-form.field>
+
+                    <x-form.field :label="__('customers.fields.email')">
+                        <input type="text" class="input" value="{{ $customer->email ?? '—' }}" dir="ltr" disabled>
+                    </x-form.field>
+
+                    <x-form.field :label="__('customers.fields.phone')">
+                        <input type="text" class="input" value="{{ $customer->phone ?? '—' }}" dir="ltr" disabled>
+                    </x-form.field>
+
+                    <x-form.field :label="__('customers.fields.allergies')" name="allergies">
+                        <x-form.textarea name="allergies" :value="$customer->allergies" rows="2" />
+                    </x-form.field>
+
+                    <x-form.field :label="__('customers.fields.medications')" name="medications">
+                        <x-form.textarea name="medications" :value="$customer->medications" rows="2" />
+                    </x-form.field>
+                </div>
+
+                <div>
+                    <x-ui.button type="submit" variant="primary">
+                        <x-ui.icon name="save" size="sm" /> {{ __('customers.edit.save') }}
+                    </x-ui.button>
+                </div>
+            </form>
+        </x-ui.card>
+    @endif
+
+    <x-ui.card :title="__('customers.addresses.title')">
+        @if ($customer->addresses->isEmpty())
+            <div class="dropdown__empty">{{ __('customers.addresses.empty') }}</div>
+        @else
+            <div class="stack" style="gap: 14px;">
+                @foreach ($customer->addresses as $address)
+                    <div class="address-row">
+                        <div class="row" style="justify-content: space-between; align-items: flex-start; gap: 12px;">
+                            <div class="stack" style="gap: 4px;">
+                                <strong>
+                                    {{ $address->label }}
+                                    @if ($address->is_default)
+                                        <x-ui.badge variant="success">{{ __('customers.addresses.default') }}</x-ui.badge>
+                                    @endif
+                                    @if ($address->needsBackupPhone())
+                                        <x-ui.badge variant="warning">{{ __('customers.addresses.missing_backup') }}</x-ui.badge>
+                                    @endif
+                                </strong>
+                                <span>{{ $address->recipient_name }} — {{ $address->summary() }}</span>
+                                @if ($address->national_address)
+                                    <span class="text-muted">{{ __('addresses.fields.national_address') }}: <span dir="ltr">{{ $address->national_address }}</span></span>
+                                @endif
+                                @if ($address->details)
+                                    <span class="text-muted">{{ $address->details }}</span>
+                                @endif
+                                <span class="text-muted">
+                                    {{ __('addresses.fields.phone') }}: <span dir="ltr">{{ $address->phone }}</span>
+                                    @unless ($address->needsBackupPhone())
+                                        · {{ __('addresses.fields.backup_phone') }}: <span dir="ltr">{{ $address->backup_phone }}</span>
+                                    @endunless
+                                </span>
+                            </div>
+                        </div>
+
+                        @if ($canEdit)
+                            @include('admin.customers._address-form', ['customer' => $customer, 'address' => $address])
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </x-ui.card>
+
     @include('admin.customers._measurements')
 
     <x-ui.card :title="__('customers.show.orders')">

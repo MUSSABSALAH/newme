@@ -122,6 +122,7 @@ window.NM_I18N = @json($nmI18n);
 window.nmStoreLineGroups = @json(\App\Modules\Store\Support\StoreCatalogLines::groups());
 </script>
 <script src="{{ $siteJs }}" defer></script>
+<script src="{{ \App\Support\VersionedAsset::url('js/validation.js') }}" defer></script>
 @stack('scripts')
 </body>
 </html>

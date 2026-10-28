@@ -1,5 +1,6 @@
 @php
     use App\Modules\Identity\Enums\PermissionName;
+    use App\Modules\Identity\Enums\RoleName;
 
     /**
      * The rail is icon-only, so anything nested lives in a flyout panel that
@@ -69,6 +70,7 @@
             'icon' => 'sliders-horizontal',
             'items' => [
                 ['label' => __('messages.nav.invoices'), 'route' => 'admin.invoices.index', 'icon' => 'file-text', 'permission' => PermissionName::InvoicesView],
+                ['label' => __('messages.nav.notifications'), 'route' => 'admin.staff-emails.index', 'icon' => 'bell', 'role' => RoleName::SuperAdmin],
                 ['label' => __('messages.nav.settings'), 'route' => 'admin.settings.edit', 'icon' => 'settings', 'permission' => PermissionName::SettingsManage],
                 ['label' => __('messages.nav.audit'), 'route' => 'admin.audit.index', 'icon' => 'history', 'permission' => PermissionName::AuditView],
             ],
@@ -78,6 +80,12 @@
     $viewer = auth()->user();
 
     $isAllowed = function (array $entry) use ($viewer): bool {
+        $role = $entry['role'] ?? null;
+
+        if ($role instanceof RoleName && ($viewer === null || ! $viewer->hasRole($role->value))) {
+            return false;
+        }
+
         $permission = $entry['permission'] ?? null;
 
         if (! $permission instanceof PermissionName) {

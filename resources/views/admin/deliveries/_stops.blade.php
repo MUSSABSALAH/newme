@@ -61,6 +61,9 @@
                         <div class="ship-item__field">
                             <span class="ship-item__label">{{ __('deliveries.fields.phone') }}</span>
                             <span dir="ltr">{{ $stop->phone() ?? '—' }}</span>
+                            @if ($stop->backupPhone())
+                                <span class="text-muted">{{ __('addresses.fields.backup_phone') }}: <span dir="ltr">{{ $stop->backupPhone() }}</span></span>
+                            @endif
                         </div>
 
                         <div class="ship-item__field">

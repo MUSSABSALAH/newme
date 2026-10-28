@@ -59,6 +59,9 @@
                 @if ($label['phone'] !== '')
                     <div class="value ltr">{{ $label['phone'] }}</div>
                 @endif
+                @if (! empty($label['backup_phone']))
+                    <div>{{ __('addresses.fields.backup_phone') }}: <span class="ltr">{{ $label['backup_phone'] }}</span></div>
+                @endif
             </td>
         </tr>
         <tr>

@@ -12,8 +12,11 @@ use App\Modules\Orders\Enums\OrderStatus;
 use App\Modules\Payments\Enums\PaymentMethod;
 use App\Modules\Payments\Enums\PaymentStatus;
 use App\Modules\Payments\Models\Payment;
+use App\Modules\Store\Models\Product;
 use App\Support\Money\Money;
+use App\Support\Search\SearchTerm;
 use Database\Factories\OrderFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -149,6 +152,46 @@ class Order extends Model
     /**
      * Short human-facing code, e.g. "A1B2C3".
      */
+    /**
+     * Anything the admin order list shows: number, customer, items, status,
+     * coupon or total.
+     *
+     * @param  Builder<Order>  $query
+     */
+    public function scopeSearch(Builder $query, SearchTerm $term): void
+    {
+        $query->where(function (Builder $match) use ($term): void {
+            $reference = $term->reference();
+
+            if ($reference !== null) {
+                $match->orWhere('public_id', 'like', '%'.$reference);
+            }
+
+            $match->orWhereIn('user_id', User::query()->withTrashed()->select('id')->search($term));
+
+            $match->orWhereIn('id', OrderItem::query()->select('order_id')->where(function (Builder $item) use ($term): void {
+                $term->orLike($item, ['name']);
+                $item->orWhereIn('product_id', Product::query()->withTrashed()->select('id')->where(
+                    fn (Builder $product) => $term->orLike($product, ['name->ar', 'name->en']),
+                ));
+            }));
+
+            $term->orLike($match, ['coupon_code']);
+
+            $statuses = $term->enumValues(OrderStatus::cases());
+
+            if ($statuses !== []) {
+                $match->orWhereIn('status', $statuses);
+            }
+
+            $amount = $term->amountMinor();
+
+            if ($amount !== null) {
+                $match->orWhere('total_minor', $amount);
+            }
+        });
+    }
+
     public function reference(): string
     {
         return strtoupper(substr($this->public_id, -6));

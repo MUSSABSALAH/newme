@@ -10,6 +10,7 @@ use App\Modules\Consultations\Notifications\ConsultationConfirmationNotification
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Notifications\OrderConfirmationNotification;
 use App\Modules\Subscriptions\Models\Subscription;
+use App\Modules\Subscriptions\Notifications\SubscriptionChangedByStaffNotification;
 use App\Modules\Subscriptions\Notifications\SubscriptionConfirmationNotification;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\App;
@@ -32,6 +33,21 @@ final class CustomerNotifier
     public function subscriptionStarted(Subscription $subscription): void
     {
         $this->notify($subscription->user, new SubscriptionConfirmationNotification($subscription));
+    }
+
+    /**
+     * Staff changed the start date or paused the plan. Customers without an
+     * email address are skipped.
+     */
+    public function subscriptionChangedByStaff(Subscription $subscription, string $change): void
+    {
+        $customer = $subscription->user;
+
+        if (! $customer instanceof User || ! is_string($customer->email) || trim($customer->email) === '') {
+            return;
+        }
+
+        $this->notify($customer, new SubscriptionChangedByStaffNotification($subscription, $change));
     }
 
     public function consultationBooked(Consultation $consultation): void

@@ -18,6 +18,9 @@
         ->unique()
         ->sort()
         ->values();
+
+    $endDate = $subscription->endDate();
+    $tomorrow = \App\Support\Time\DisplayTime::today()->addDay()->toDateString();
 @endphp
 
 <x-layouts.admin :title="$reference" :heading="$reference" :subtitle="$subscription->planLabel()">
@@ -152,8 +155,19 @@
                             <span class="detail-row__value">{{ $subscription->start_date->translatedFormat('d M Y') }}</span>
                         </div>
                     @endif
+
+                    @if ($endDate)
+                        <div class="detail-row">
+                            <span class="detail-row__label">{{ __('subscriptions.manage.end_date') }}</span>
+                            <span class="detail-row__value">{{ $endDate->translatedFormat('d M Y') }}</span>
+                        </div>
+                    @endif
                 </div>
             </x-ui.card>
+
+            @can('update', $subscription)
+                @include('admin.subscriptions._manage', ['subscription' => $subscription, 'endDate' => $endDate, 'tomorrow' => $tomorrow])
+            @endcan
 
             <x-ui.card :title="__('subscriptions.show.health')">
                 @if ($subscription->health_birth_date === null && $subscription->health_allergies === null && $subscription->health_medications === null)

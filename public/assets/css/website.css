@@ -149,3 +149,8 @@ footer.w-foot-full .f-bottom{max-width:1160px;margin:36px auto 0;padding:22px 20
 .nm-toast-link:hover{color:var(--w-orange-deep)}
 @keyframes nm-badge-pop{0%,100%{transform:scale(1)}40%{transform:scale(1.28)}}
 [data-cart-count].is-pop{animation:nm-badge-pop .45s ease}
+
+/* Inline form validation (public/js/validation.js) */
+input.is-invalid,textarea.is-invalid,select.is-invalid{border-color:#C0392B!important;background-color:#FDECEA;box-shadow:0 0 0 3px rgba(192,57,43,.12)!important}
+input.is-invalid:focus,textarea.is-invalid:focus,select.is-invalid:focus{border-color:#C0392B!important;background-color:#fff}
+.field__error[data-client-error]{display:block;margin-top:4px;color:#C0392B;font-size:12px;font-weight:700;line-height:1.6}

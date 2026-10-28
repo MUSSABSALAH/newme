@@ -49,6 +49,16 @@ return [
         'cancel' => 'Cancel',
         'pin_flag' => 'Pin it on the map',
         'needs_pin' => 'Pin this address on the map first so the delivery fee can be calculated.',
+        'edit' => 'Edit',
+        'edit_title' => 'Edit address: :label',
+        'update' => 'Save changes',
+        'add_backup' => 'Add backup number',
+        'backup_flag' => 'Backup number missing',
+        'backup_needed_title' => 'Add a backup mobile number for this address',
+        'backup_needed_body' => 'Every delivery address now needs a backup number, so we can still reach you if the first number does not answer and your order arrives on time. No second number? Enter your own mobile number.',
+        'backup_blocked' => 'Your addresses need a backup mobile number before you continue — add it in the form below.',
+        'needs_backup' => 'Add a backup mobile number to this address before placing the order.',
+        'updated' => 'Address updated.',
     ],
 
     'payment' => [

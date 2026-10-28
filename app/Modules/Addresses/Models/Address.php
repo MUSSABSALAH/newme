@@ -26,6 +26,7 @@ use Illuminate\Support\Str;
  * @property string $label
  * @property string $recipient_name
  * @property string $phone
+ * @property string|null $backup_phone
  * @property string $city
  * @property string $district
  * @property string $street
@@ -53,6 +54,7 @@ class Address extends Model
         'label',
         'recipient_name',
         'phone',
+        'backup_phone',
         'city',
         'district',
         'street',
@@ -116,6 +118,24 @@ class Address extends Model
         ]));
     }
 
+    /**
+     * The number to try when the main one does not answer.
+     */
+    public function backupPhone(): string
+    {
+        $backup = trim((string) $this->backup_phone);
+
+        return $backup !== '' ? $backup : $this->phone;
+    }
+
+    /**
+     * Addresses saved before backup numbers existed must add one before use.
+     */
+    public function needsBackupPhone(): bool
+    {
+        return trim((string) $this->backup_phone) === '';
+    }
+
     public function isDeliverable(): bool
     {
         return RiyadhDelivery::isRiyadhCity($this->city);
@@ -144,6 +164,7 @@ class Address extends Model
             'label' => $this->label,
             'recipient_name' => $this->recipient_name,
             'phone' => $this->phone,
+            'backup_phone' => $this->backupPhone(),
             'city' => $this->city,
             'district' => $this->district,
             'street' => $this->street,

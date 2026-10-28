@@ -903,6 +903,134 @@ html[dir="rtl"] .table tbody tr.row--attention > td:first-child {
     font-weight: 600;
 }
 
+/* ---------- Customer addresses (admin) ---------- */
+.address-row {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+.address-edit { margin-top: var(--space-3); }
+.address-edit > summary { list-style: none; display: inline-flex; width: auto; }
+.address-edit > summary::-webkit-details-marker { display: none; }
+.address-edit[open] > summary { background-color: var(--color-surface-muted); }
+
+/* ---------- Staff subscription edit panels ---------- */
+.edit-panel {
+    --edit-tone: var(--color-primary);
+    --edit-tone-soft: var(--color-info-soft);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--edit-tone);
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+}
+
+.edit-panel--danger {
+    --edit-tone: var(--color-danger);
+    --edit-tone-soft: var(--color-danger-soft);
+}
+
+.edit-panel--success {
+    --edit-tone: var(--color-success);
+    --edit-tone-soft: var(--color-success-soft);
+}
+
+.edit-panel__head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.edit-panel__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background-color: var(--edit-tone-soft);
+    color: var(--edit-tone);
+}
+
+.edit-panel__title {
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 700;
+}
+
+.edit-panel__subtitle {
+    margin: 2px 0 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+.edit-panel__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+}
+
+.edit-panel__fact {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface-muted);
+}
+
+.edit-panel__fact span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.edit-panel__fact strong {
+    font-size: 0.9rem;
+}
+
+.edit-panel__effects {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    padding-inline-start: calc(var(--space-4) + 14px);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-warning-soft);
+    color: #7a5600;
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.edit-panel__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: auto;
+}
+
+.edit-panel__form .field { margin-bottom: 0; }
+
+.edit-panel__notify {
+    padding: var(--space-3);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-sm);
+}
+
+.edit-panel__form .btn { width: 100%; justify-content: center; }
+
+.edit-panel__locked {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-neutral-soft);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
 .check-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));

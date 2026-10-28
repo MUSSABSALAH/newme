@@ -130,4 +130,87 @@ return [
         'paused_badge' => 'Paused',
         'paused_banner' => 'Subscription paused since :date — :count delivery day(s) frozen until the customer resumes.',
     ],
+
+    // Editing a subscription from the admin (subscriptions.manage).
+    'manage' => [
+        'title' => 'Edit subscription',
+        'end_date' => 'End date',
+        'notify' => 'Email the customer',
+        'no_email' => 'The customer has no email address, so no notice will be sent.',
+        'current_start' => 'Current start',
+        'current_end' => 'Current end',
+        'status' => 'Status',
+        'pauses_used' => 'Customer pauses',
+        'pauses_of' => ':used of :max',
+        'pauses_unlimited' => ':used (no limit)',
+        'start' => [
+            'title' => 'Change start date',
+            'subtitle' => 'Only before the first delivery day.',
+            'field' => 'New start date',
+            'effects' => [
+                'Every delivery day is rescheduled on the same weekdays.',
+                'The end date moves automatically.',
+                'The customer’s dishes go back to chef’s pick.',
+            ],
+            'submit' => 'Change start',
+            'confirm' => 'All days will be rescheduled and the customer’s dish picks cleared. Continue?',
+            'locked_started' => 'The start cannot change because the subscription has already begun.',
+            'locked_status' => 'The start cannot change for a :status subscription.',
+        ],
+        'pause' => [
+            'title' => 'Pause subscription',
+            'subtitle' => 'Temporarily stop delivery and meal prep.',
+            'field' => 'Pause from',
+            'effects' => [
+                'Delivery and kitchen prep stop from this date.',
+                'Remaining days are frozen, not lost.',
+                'The customer resumes from their account.',
+            ],
+            'submit' => 'Pause subscription',
+            'confirm' => 'Delivery and meal prep will stop from the chosen date. Continue?',
+            'unavailable' => 'Only active subscriptions can be paused.',
+            'staff_not_counted' => 'Pausing from the admin does not use up the customer’s pause allowance.',
+        ],
+        'resume' => [
+            'title' => 'Resume subscription',
+            'subtitle' => 'Paused since :date.',
+            'field' => 'Resume from',
+            'effects' => [
+                'Frozen days return on the same weekdays from this date.',
+                'The end date follows the resume date.',
+                'Delivery and kitchen prep restart automatically.',
+            ],
+            'frozen_days' => 'Frozen days',
+            'submit' => 'Resume subscription',
+            'confirm' => 'The frozen days will go back on the calendar from the chosen date. Continue?',
+        ],
+        'messages' => [
+            'start_changed' => 'Start changed to :start; it now ends on :end.',
+            'paused' => 'Subscription paused from :date.',
+            'resumed' => 'Subscription resumed; it now ends on :end.',
+        ],
+        'errors' => [
+            'date_from_tomorrow' => 'Pick a date from tomorrow onwards.',
+            'start_locked' => 'This subscription’s start cannot change: it has begun, or it is paused or closed.',
+            'start_unchanged' => 'That is already the start date.',
+            'no_days' => 'Could not build delivery days for this subscription.',
+        ],
+        'mail' => [
+            'start_changed' => [
+                'subject' => 'Your subscription #:reference has a new start date',
+                'body' => 'The New Me team moved the start of your :plan subscription. It now starts on :start and ends on :end.',
+                'note' => 'Your delivery days were rescheduled and your meals are now chef’s pick. You can choose your meals again from your account.',
+            ],
+            'paused' => [
+                'subject' => 'Your subscription #:reference is paused',
+                'body' => 'The New Me team paused your :plan subscription from :date.',
+                'note' => 'No meals are prepared or delivered while it is paused, and your remaining days are kept. You can resume from your account.',
+            ],
+            'resumed' => [
+                'subject' => 'Your subscription #:reference is resumed',
+                'body' => 'The New Me team resumed your :plan subscription; it now ends on :end.',
+                'note' => 'Your delivery days are back on your calendar. You can choose your meals from your account.',
+            ],
+        ],
+    ],
 ];

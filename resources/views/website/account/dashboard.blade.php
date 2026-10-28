@@ -237,7 +237,7 @@
               </div>
             </div>
             <p class="address-card__body">
-              {{ $address->recipient_name }} · <span dir="ltr">{{ $address->phone }}</span><br>
+              {{ $address->recipient_name }} · <span dir="ltr">{{ $address->phone }}</span>@if ($address->backupPhone() !== $address->phone) · {{ __('addresses.fields.backup_phone') }}: <span dir="ltr">{{ $address->backupPhone() }}</span>@endif<br>
               {{ $address->summary() }}
               @if ($address->national_address)
                 <br><span dir="ltr">{{ __('addresses.fields.national_address') }}: {{ $address->national_address }}</span>
@@ -291,7 +291,7 @@
               </div>
             </a>
             <div class="pick-row__actions">
-              @if ($subscription->status === \App\Modules\Subscriptions\Enums\SubscriptionStatus::Active && $subscription->allowsPause())
+              @if ($subscription->customerCanPause())
                 <button type="button"
                         class="w-btn sm ghost"
                         data-open-pause
@@ -374,10 +374,7 @@
 
 
 @php
-  $canPauseAny = $subscriptions->contains(
-      fn ($subscription) => $subscription->status === \App\Modules\Subscriptions\Enums\SubscriptionStatus::Active
-          && $subscription->allowsPause()
-  );
+  $canPauseAny = $subscriptions->contains(fn ($subscription) => $subscription->customerCanPause());
   $canResumeAny = $subscriptions->contains(fn ($subscription) => $subscription->isPaused());
 @endphp
 

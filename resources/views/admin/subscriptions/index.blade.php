@@ -1,7 +1,7 @@
 <x-layouts.admin :title="__('subscriptions.title')" :heading="__('subscriptions.title')" :subtitle="__('subscriptions.subtitle')">
     @unless ($subscriptions->isEmpty())
         <x-slot:actions>
-            <x-ui.button :href="route('admin.subscriptions.pdf', request()->only(['status', 'handling']))" variant="primary">
+            <x-ui.button :href="route('admin.subscriptions.pdf', request()->only(['status', 'handling', 'q']))" variant="primary">
                 <x-ui.icon name="file-down" size="sm" /> {{ __('subscriptions.pdf.button') }}
             </x-ui.button>
         </x-slot:actions>
@@ -9,6 +9,8 @@
 
     <x-ui.card>
         <form method="GET" action="{{ route('admin.subscriptions.index') }}" class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+            <x-ui.search-box :value="$search" :placeholder="__('messages.search.placeholders.subscriptions')" />
+
             <x-form.field :label="__('subscriptions.handling.filter')" name="handling" style="margin:0;min-width:220px;">
                 <x-form.select name="handling" onchange="this.form.submit()">
                     <option value="">{{ __('subscriptions.handling.all') }}</option>
@@ -41,7 +43,7 @@
 
     @if ($subscriptions->isEmpty())
         <x-ui.card>
-            <div class="dropdown__empty">{{ __('subscriptions.no_subscriptions') }}</div>
+            <div class="dropdown__empty">{{ $search !== '' ? __('messages.search.no_results', ['term' => $search]) : __('subscriptions.no_subscriptions') }}</div>
         </x-ui.card>
     @else
         <x-ui.table :headers="[

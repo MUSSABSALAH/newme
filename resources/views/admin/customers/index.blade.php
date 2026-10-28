@@ -1,7 +1,13 @@
 <x-layouts.admin :title="__('customers.title')" :heading="__('customers.title')" :subtitle="__('customers.subtitle')">
+    <x-ui.card>
+        <form method="GET" action="{{ route('admin.customers.index') }}" class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+            <x-ui.search-box :value="$search" :placeholder="__('messages.search.placeholders.customers')" />
+        </form>
+    </x-ui.card>
+
     @if ($customers->isEmpty())
         <x-ui.card>
-            <div class="dropdown__empty">{{ __('customers.no_customers') }}</div>
+            <div class="dropdown__empty">{{ $search !== '' ? __('messages.search.no_results', ['term' => $search]) : __('customers.no_customers') }}</div>
         </x-ui.card>
     @else
         @can('deleteAnyCustomer', \App\Models\User::class)

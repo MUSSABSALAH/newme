@@ -78,6 +78,7 @@ final class WaybillPdfRenderer
                 'date' => ($shipment->sent_at ?? $shippable->placed_at)?->format('Y-m-d'),
                 'name' => $shippable->user?->name ?? $address?->recipientName ?? '—',
                 'phone' => $address?->phone ?: ($shippable->user?->phone ?? ''),
+                'backup_phone' => $address?->extraPhone(),
                 'address' => $address?->oneLine() ?? '',
                 'details' => $address?->details,
                 'contents' => trans_choice('deliveries.fields.item_count', $shippable->items_count),
@@ -100,6 +101,7 @@ final class WaybillPdfRenderer
                 'date' => $shippable->delivery_date->format('Y-m-d'),
                 'name' => $subscription->user?->name ?? $address?->recipientName ?? '—',
                 'phone' => $address?->phone ?: ($subscription->user?->phone ?? ''),
+                'backup_phone' => $address?->extraPhone(),
                 'address' => $address?->oneLine() ?? '',
                 'details' => $address?->details,
                 'contents' => implode('، ', array_map(

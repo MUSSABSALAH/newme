@@ -137,6 +137,7 @@ final class AddressService
         $address->label = $data->label;
         $address->recipient_name = $data->recipientName;
         $address->phone = $data->phone;
+        $address->backup_phone = $data->backupPhone !== '' ? $data->backupPhone : $data->phone;
         $address->city = $data->city;
         $address->district = $data->district;
         $address->street = $data->street;

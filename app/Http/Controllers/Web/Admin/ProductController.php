@@ -14,6 +14,7 @@ use App\Modules\Store\Enums\ServingSize;
 use App\Modules\Store\Models\Category;
 use App\Modules\Store\Models\Product;
 use App\Modules\Store\Services\ProductService;
+use App\Support\Search\SearchTerm;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,10 +28,12 @@ final class ProductController extends Controller
         $this->authorize('viewAny', Product::class);
 
         $categoryId = $request->integer('category') ?: null;
+        $term = SearchTerm::fromRequest($request);
 
         $products = Product::query()
             ->with('category')
             ->when($categoryId !== null, fn ($query) => $query->where('category_id', $categoryId))
+            ->when(! $term->isEmpty(), fn ($query) => $query->search($term))
             ->orderBy('category_id')
             ->orderBy('sort_order')
             ->orderBy('id')
@@ -41,6 +44,7 @@ final class ProductController extends Controller
             'products' => $products,
             'categories' => $this->categoryOptions(),
             'activeCategory' => $categoryId,
+            'search' => $term->value,
         ]);
     }
 

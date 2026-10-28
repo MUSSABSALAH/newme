@@ -23,7 +23,19 @@ final readonly class AddressSnapshot
         public ?string $details,
         public ?float $lat = null,
         public ?float $lng = null,
+        public ?string $backupPhone = null,
     ) {}
+
+    /**
+     * The second number, only when it differs from the main one. Snapshots
+     * taken before backup numbers existed have none.
+     */
+    public function extraPhone(): ?string
+    {
+        $backup = trim((string) $this->backupPhone);
+
+        return $backup !== '' && $backup !== trim($this->phone) ? $backup : null;
+    }
 
     /**
      * @param  array<string, mixed>|null  $values
@@ -49,6 +61,7 @@ final readonly class AddressSnapshot
             details: isset($values['details']) && $values['details'] !== '' ? (string) $values['details'] : null,
             lat: is_numeric($values['lat'] ?? null) ? (float) $values['lat'] : null,
             lng: is_numeric($values['lng'] ?? null) ? (float) $values['lng'] : null,
+            backupPhone: isset($values['backup_phone']) && $values['backup_phone'] !== '' ? (string) $values['backup_phone'] : null,
         );
     }
 
@@ -63,6 +76,7 @@ final readonly class AddressSnapshot
             $this->street,
             $this->details ?? '',
             $this->phone,
+            $this->extraPhone() === null ? '' : __('addresses.fields.backup_phone').': '.$this->extraPhone(),
         ], static fn (string $line): bool => $line !== ''));
     }
 

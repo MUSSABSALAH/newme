@@ -13,7 +13,9 @@
     </x-slot:actions>
 
     <x-ui.card>
-        <form method="GET" action="{{ route('admin.products.index') }}" class="row" style="gap: 12px; align-items: flex-end;">
+        <form method="GET" action="{{ route('admin.products.index') }}" class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+            <x-ui.search-box :value="$search" :placeholder="__('messages.search.placeholders.products')" />
+
             <x-form.field :label="__('products.filter_category')" name="category" style="margin:0;min-width:240px;">
                 <x-form.select name="category" :selected="$activeCategory" onchange="this.form.submit()">
                     <option value="">{{ __('products.all_categories') }}</option>
@@ -29,7 +31,7 @@
 
     @if ($products->isEmpty())
         <x-ui.card>
-            <div class="dropdown__empty">{{ __('products.no_products') }}</div>
+            <div class="dropdown__empty">{{ $search !== '' ? __('messages.search.no_results', ['term' => $search]) : __('products.no_products') }}</div>
         </x-ui.card>
     @else
         <x-ui.table :headers="[__('products.columns.product'), __('products.columns.category'), __('products.columns.price'), __('products.columns.flag'), __('products.columns.status'), '']">

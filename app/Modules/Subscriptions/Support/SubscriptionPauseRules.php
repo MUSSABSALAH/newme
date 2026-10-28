@@ -28,6 +28,16 @@ final class SubscriptionPauseRules
         return max(0, (int) ($days ?? 1));
     }
 
+    /**
+     * Pauses allowed per subscription; 0 means unlimited.
+     */
+    public static function maxPauses(): int
+    {
+        $max = app(SettingsService::class)->get('operations.subscription_max_pauses');
+
+        return max(0, (int) ($max ?? 0));
+    }
+
     public static function earliestPausableDate(): Carbon
     {
         return MealPrepCutoff::atLeastFirstOpen(

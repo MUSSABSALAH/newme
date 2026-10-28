@@ -25,7 +25,7 @@ final class UpdateSettingsRequest extends FormRequest
             $settings = [];
         }
 
-        foreach (SettingsRegistry::all() as $definition) {
+        foreach (SettingsRegistry::editable() as $definition) {
             if ($definition->encrypted) {
                 // The form never echoes a secret back, so a blank field keeps the stored one.
                 $name = $definition->fieldName();
@@ -84,7 +84,7 @@ final class UpdateSettingsRequest extends FormRequest
     {
         $rules = ['settings' => ['array']];
 
-        foreach (SettingsRegistry::all() as $definition) {
+        foreach (SettingsRegistry::editable() as $definition) {
             $field = 'settings.'.$definition->fieldName();
             $rules[$field] = $definition->rules;
 
@@ -103,7 +103,7 @@ final class UpdateSettingsRequest extends FormRequest
     {
         $attributes = [];
 
-        foreach (SettingsRegistry::all() as $definition) {
+        foreach (SettingsRegistry::editable() as $definition) {
             $attributes['settings.'.$definition->fieldName()] = (string) __($definition->labelKey());
         }
 
@@ -185,7 +185,7 @@ final class UpdateSettingsRequest extends FormRequest
 
         $result = [];
 
-        foreach (SettingsRegistry::all() as $key => $definition) {
+        foreach (SettingsRegistry::editable() as $key => $definition) {
             if (array_key_exists($definition->fieldName(), $input)) {
                 $result[$key] = $input[$definition->fieldName()];
             }

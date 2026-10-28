@@ -7,9 +7,15 @@
         @endcan
     </x-slot:actions>
 
+    <x-ui.card>
+        <form method="GET" action="{{ route('admin.meals.index') }}" class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+            <x-ui.search-box :value="$search" :placeholder="__('messages.search.placeholders.meals')" />
+        </form>
+    </x-ui.card>
+
     @if ($meals->isEmpty())
         <x-ui.card>
-            <div class="dropdown__empty">{{ __('meals.no_meals') }}</div>
+            <div class="dropdown__empty">{{ $search !== '' ? __('messages.search.no_results', ['term' => $search]) : __('meals.no_meals') }}</div>
         </x-ui.card>
     @else
         @can('deleteAny', \App\Modules\Plans\Models\Meal::class)

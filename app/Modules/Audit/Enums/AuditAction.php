@@ -43,12 +43,14 @@ enum AuditAction: string
     case ProductArchived = 'product.archived';
     case CustomerRegistered = 'customer.registered';
     case CustomerUpdated = 'customer.updated';
+    case CustomerAddressUpdated = 'customer.address_updated';
     case OrderPlaced = 'order.placed';
     case OrderStatusUpdated = 'order.status_updated';
     case SubscriptionCreated = 'subscription.created';
     case SubscriptionHandlingUpdated = 'subscription.handling_updated';
     case SubscriptionPaused = 'subscription.paused';
     case SubscriptionResumed = 'subscription.resumed';
+    case SubscriptionStartChanged = 'subscription.start_changed';
     case CouponCreated = 'coupon.created';
     case CouponUpdated = 'coupon.updated';
     case CouponArchived = 'coupon.archived';

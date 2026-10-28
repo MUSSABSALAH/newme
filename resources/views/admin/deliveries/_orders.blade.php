@@ -52,6 +52,9 @@
                         <div class="ship-item__field">
                             <span class="ship-item__label">{{ __('deliveries.fields.phone') }}</span>
                             <span dir="ltr">{{ $address?->phone ?: ($order->user?->phone ?? '—') }}</span>
+                            @if ($address?->extraPhone())
+                                <span class="text-muted">{{ __('addresses.fields.backup_phone') }}: <span dir="ltr">{{ $address->extraPhone() }}</span></span>
+                            @endif
                         </div>
 
                         <div class="ship-item__field">

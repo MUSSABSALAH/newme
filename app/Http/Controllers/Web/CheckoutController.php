@@ -84,10 +84,12 @@ final class CheckoutController extends Controller
         $selected = $this->addresses->defaultDeliverableFor($user);
         $storeCheckout = $this->checkout->source() === CheckoutSource::Cart;
 
-        if ($storeCheckout && $this->checkout->addressNeedsPin($selected)) {
-            $selected = $addresses->first(
-                fn (Address $address): bool => $address->isDeliverable() && $address->hasPin(),
-            );
+        $usable = fn (Address $address): bool => $address->isDeliverable()
+            && ! $address->needsBackupPhone()
+            && ! ($storeCheckout && $this->checkout->addressNeedsPin($address));
+
+        if ($selected instanceof Address && ! $usable($selected)) {
+            $selected = $addresses->first($usable);
         }
 
         try {
@@ -122,6 +124,17 @@ final class CheckoutController extends Controller
             ->with('success', __('checkout.messages.address_saved'));
     }
 
+    public function updateAddress(AddressRequest $request, Address $address): RedirectResponse
+    {
+        abort_unless($address->user_id === Auth::id(), 404);
+
+        $this->addresses->update($address, AddressData::fromArray($request->validated()));
+
+        return redirect()
+            ->route('website.checkout')
+            ->with('success', __('checkout.address.updated'));
+    }
+
     public function store(PlaceOrderRequest $request): RedirectResponse
     {
         /** @var User $user */
@@ -138,6 +151,12 @@ final class CheckoutController extends Controller
                 ->where('user_id', $user->getKey())
                 ->where('public_id', $request->validated('address'))
                 ->firstOrFail();
+
+            if ($address->needsBackupPhone()) {
+                return back()
+                    ->withInput($request->except(['card_number', 'card_cvv']))
+                    ->withErrors(['address' => __('checkout.address.needs_backup')]);
+            }
 
             if ($this->checkout->source() === CheckoutSource::Cart && $this->checkout->addressNeedsPin($address)) {
                 return back()

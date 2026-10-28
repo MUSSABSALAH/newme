@@ -5,16 +5,22 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\Admin\Subscriptions\ChangeSubscriptionStartRequest;
+use App\Http\Requests\Web\Admin\Subscriptions\PauseSubscriptionByStaffRequest;
+use App\Http\Requests\Web\Admin\Subscriptions\ResumeSubscriptionByStaffRequest;
 use App\Http\Requests\Web\Admin\Subscriptions\UpdateHandlingRequest;
 use App\Models\User;
 use App\Modules\Invoices\Services\InvoiceService;
+use App\Modules\Notifications\Services\CustomerNotifier;
 use App\Modules\Subscriptions\Enums\HandlingStatus;
 use App\Modules\Subscriptions\Enums\SubscriptionStatus;
 use App\Modules\Subscriptions\Models\Subscription;
+use App\Modules\Subscriptions\Notifications\SubscriptionChangedByStaffNotification;
 use App\Modules\Subscriptions\Services\MealSchedulePdfRenderer;
 use App\Modules\Subscriptions\Services\SubscriptionExpiry;
 use App\Modules\Subscriptions\Services\SubscriptionListPdfRenderer;
 use App\Modules\Subscriptions\Services\SubscriptionService;
+use App\Support\Search\SearchTerm;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -28,6 +34,7 @@ final class SubscriptionController extends Controller
         private readonly InvoiceService $invoices,
         private readonly MealSchedulePdfRenderer $mealSchedulePdf,
         private readonly SubscriptionExpiry $expiry,
+        private readonly CustomerNotifier $customers,
     ) {}
 
     public function index(Request $request): View
@@ -36,9 +43,9 @@ final class SubscriptionController extends Controller
 
         $this->expiry->sweepIfDue();
 
-        [$status, $handling] = $this->filters($request);
+        [$status, $handling, $term] = $this->filters($request);
 
-        $subscriptions = $this->filtered($status, $handling)
+        $subscriptions = $this->filtered($status, $handling, $term)
             ->paginate(20)
             ->withQueryString();
 
@@ -48,6 +55,7 @@ final class SubscriptionController extends Controller
             'activeStatus' => $status,
             'handlingStatuses' => HandlingStatus::cases(),
             'activeHandling' => $handling,
+            'search' => $term->value,
             'pendingCount' => Subscription::query()
                 ->where('handling_status', '!=', HandlingStatus::Handled->value)
                 ->count(),
@@ -63,15 +71,16 @@ final class SubscriptionController extends Controller
 
         $this->expiry->sweepIfDue();
 
-        [$status, $handling] = $this->filters($request);
+        [$status, $handling, $term] = $this->filters($request);
 
-        $subscriptions = $this->filtered($status, $handling)
+        $subscriptions = $this->filtered($status, $handling, $term)
             ->limit(SubscriptionListPdfRenderer::MAX_ROWS)
             ->get();
 
         $filters = array_values(array_filter([
             $status?->label(),
             $handling?->label(),
+            $term->isEmpty() ? null : '“'.$term->value.'”',
         ]));
 
         return response($renderer->render($subscriptions, $filters), 200, [
@@ -107,6 +116,62 @@ final class SubscriptionController extends Controller
         return back()->with('success', __('subscriptions.messages.handling_updated'));
     }
 
+    public function changeStart(ChangeSubscriptionStartRequest $request, Subscription $subscription): RedirectResponse
+    {
+        $this->authorize('update', $subscription);
+
+        /** @var User $actor */
+        $actor = $request->user();
+
+        $subscription = $this->subscriptions->changeStartDate($subscription, $request->startDate(), $actor);
+
+        if ($request->notifyCustomer()) {
+            $this->customers->subscriptionChangedByStaff($subscription, SubscriptionChangedByStaffNotification::START_CHANGED);
+        }
+
+        return back()->with('success', __('subscriptions.manage.messages.start_changed', [
+            'start' => $subscription->start_date?->translatedFormat('d M Y') ?? '—',
+            'end' => $subscription->endDate()?->translatedFormat('d M Y') ?? '—',
+        ]));
+    }
+
+    public function pause(PauseSubscriptionByStaffRequest $request, Subscription $subscription): RedirectResponse
+    {
+        $this->authorize('update', $subscription);
+
+        /** @var User $actor */
+        $actor = $request->user();
+
+        $this->expiry->expireIfEnded($subscription);
+        $subscription = $this->subscriptions->pause($subscription, $request->pauseFrom(), $actor);
+
+        if ($request->notifyCustomer()) {
+            $this->customers->subscriptionChangedByStaff($subscription, SubscriptionChangedByStaffNotification::PAUSED);
+        }
+
+        return back()->with('success', __('subscriptions.manage.messages.paused', [
+            'date' => $subscription->pause_started_on?->translatedFormat('d M Y') ?? '—',
+        ]));
+    }
+
+    public function resume(ResumeSubscriptionByStaffRequest $request, Subscription $subscription): RedirectResponse
+    {
+        $this->authorize('update', $subscription);
+
+        /** @var User $actor */
+        $actor = $request->user();
+
+        $subscription = $this->subscriptions->resume($subscription, $request->resumeFrom(), $actor);
+
+        if ($request->notifyCustomer()) {
+            $this->customers->subscriptionChangedByStaff($subscription, SubscriptionChangedByStaffNotification::RESUMED);
+        }
+
+        return back()->with('success', __('subscriptions.manage.messages.resumed', [
+            'end' => $subscription->endDate()?->translatedFormat('d M Y') ?? '—',
+        ]));
+    }
+
     public function mealsPdf(Subscription $subscription): Response
     {
         $this->authorize('view', $subscription);
@@ -120,25 +185,27 @@ final class SubscriptionController extends Controller
     }
 
     /**
-     * @return array{0: SubscriptionStatus|null, 1: HandlingStatus|null}
+     * @return array{0: SubscriptionStatus|null, 1: HandlingStatus|null, 2: SearchTerm}
      */
     private function filters(Request $request): array
     {
         return [
             SubscriptionStatus::tryFrom((string) $request->query('status', '')),
             HandlingStatus::tryFrom((string) $request->query('handling', '')),
+            SearchTerm::fromRequest($request),
         ];
     }
 
     /**
      * @return Builder<Subscription>
      */
-    private function filtered(?SubscriptionStatus $status, ?HandlingStatus $handling): Builder
+    private function filtered(?SubscriptionStatus $status, ?HandlingStatus $handling, SearchTerm $term): Builder
     {
         return Subscription::query()
             ->with(['user', 'handler', 'plan'])
             ->when($status !== null, fn ($query) => $query->where('status', $status->value))
             ->when($handling !== null, fn ($query) => $query->where('handling_status', $handling->value))
+            ->when(! $term->isEmpty(), fn ($query) => $query->search($term))
             ->latest('id');
     }
 }

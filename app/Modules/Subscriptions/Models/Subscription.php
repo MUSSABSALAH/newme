@@ -17,9 +17,12 @@ use App\Modules\Plans\Models\Plan;
 use App\Modules\Subscriptions\Enums\HandlingStatus;
 use App\Modules\Subscriptions\Enums\SubscriptionStatus;
 use App\Modules\Subscriptions\Support\MealSchedule;
+use App\Modules\Subscriptions\Support\SubscriptionPauseRules;
 use App\Support\Money\Money;
+use App\Support\Search\SearchTerm;
 use App\Support\Time\DisplayTime;
 use Database\Factories\SubscriptionFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,6 +58,7 @@ use Illuminate\Support\Str;
  * @property string|null $health_medications
  * @property Carbon|null $pause_started_on
  * @property Carbon|null $paused_at
+ * @property int $pause_count
  * @property string $currency
  * @property int|null $coupon_id
  * @property string|null $coupon_code
@@ -149,6 +153,7 @@ class Subscription extends Model
             'health_birth_date' => 'date',
             'pause_started_on' => 'date',
             'paused_at' => 'datetime',
+            'pause_count' => 'integer',
             'duration_length' => 'integer',
             'total_days' => 'integer',
             'subtotal_minor' => 'integer',
@@ -247,6 +252,51 @@ class Subscription extends Model
     /**
      * Short human-facing code, e.g. "A1B2C3".
      */
+    /**
+     * Anything the admin subscription list shows: number, customer, plan,
+     * status, handling state and who handled it, coupon or total.
+     *
+     * @param  Builder<Subscription>  $query
+     */
+    public function scopeSearch(Builder $query, SearchTerm $term): void
+    {
+        $query->where(function (Builder $match) use ($term): void {
+            $reference = $term->reference();
+
+            if ($reference !== null) {
+                $match->orWhere('public_id', 'like', '%'.$reference);
+            }
+
+            $match->orWhereIn('user_id', User::query()->withTrashed()->select('id')->search($term));
+            $match->orWhereIn('handled_by', User::query()->withTrashed()->staff()->select('id')->where(
+                fn (Builder $staff) => $term->orLike($staff, ['name']),
+            ));
+
+            $term->orLike($match, ['plan_name', 'coupon_code']);
+            $match->orWhereIn('plan_id', Plan::query()->select('id')->where(
+                fn (Builder $plan) => $term->orLike($plan, ['name->ar', 'name->en']),
+            ));
+
+            $statuses = $term->enumValues(SubscriptionStatus::cases());
+
+            if ($statuses !== []) {
+                $match->orWhereIn('status', $statuses);
+            }
+
+            $handling = $term->enumValues(HandlingStatus::cases());
+
+            if ($handling !== []) {
+                $match->orWhereIn('handling_status', $handling);
+            }
+
+            $amount = $term->amountMinor();
+
+            if ($amount !== null) {
+                $match->orWhere('total_minor', $amount);
+            }
+        });
+    }
+
     public function reference(): string
     {
         return strtoupper(substr($this->public_id, -6));
@@ -306,6 +356,34 @@ class Subscription extends Model
     /**
      * The last delivery day is behind us on the business calendar.
      */
+    /**
+     * True once the first delivery day is today or behind us.
+     */
+    public function hasStarted(): bool
+    {
+        $days = MealSchedule::resolve(
+            $this->meal_schedule,
+            $this->start_date?->toDateString(),
+            is_array($this->selected_days) ? $this->selected_days : [],
+            (int) $this->total_days,
+            is_array($this->meal_types) ? $this->meal_types : [],
+        );
+
+        $first = $days === [] ? $this->start_date?->toDateString() : $days[0]['date'];
+
+        return $first !== null && $first <= DisplayTime::today()->toDateString();
+    }
+
+    /**
+     * Staff may move the start only before the first delivery, and only while
+     * the subscription is not paused or closed.
+     */
+    public function startIsMovable(): bool
+    {
+        return in_array($this->status, [SubscriptionStatus::Pending, SubscriptionStatus::Active], true)
+            && ! $this->hasStarted();
+    }
+
     public function hasEnded(): bool
     {
         $end = $this->endDate();
@@ -327,6 +405,26 @@ class Subscription extends Model
         }
 
         return (bool) $plan->allows_pause;
+    }
+
+    /**
+     * Whether the store-wide pause allowance is used up; 0 means unlimited.
+     */
+    public function pauseLimitReached(): bool
+    {
+        $max = SubscriptionPauseRules::maxPauses();
+
+        return $max > 0 && (int) $this->pause_count >= $max;
+    }
+
+    /**
+     * Whether the customer may pause from their account right now.
+     */
+    public function customerCanPause(): bool
+    {
+        return $this->status === SubscriptionStatus::Active
+            && $this->allowsPause()
+            && ! $this->pauseLimitReached();
     }
 
     /**

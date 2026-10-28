@@ -44,6 +44,16 @@ final class SettingsRegistry
     }
 
     /**
+     * Definitions edited on the general settings page.
+     *
+     * @return array<string, SettingDefinition>
+     */
+    public static function editable(): array
+    {
+        return array_filter(self::all(), static fn (SettingDefinition $definition): bool => $definition->group->onSettingsPage());
+    }
+
+    /**
      * Definitions grouped by their {@see SettingGroup}, preserving order.
      *
      * @return array<string, list<SettingDefinition>>
@@ -53,10 +63,12 @@ final class SettingsRegistry
         $groups = [];
 
         foreach (SettingGroup::cases() as $group) {
-            $groups[$group->value] = [];
+            if ($group->onSettingsPage()) {
+                $groups[$group->value] = [];
+            }
         }
 
-        foreach (self::all() as $definition) {
+        foreach (self::editable() as $definition) {
             $groups[$definition->group->value][] = $definition;
         }
 
@@ -356,6 +368,7 @@ final class SettingsRegistry
             new SettingDefinition('operations.meal_change_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
             new SettingDefinition('operations.subscription_pause_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
             new SettingDefinition('operations.subscription_resume_lead_days', SettingGroup::Operations, SettingType::Integer, 1, ['required', 'integer', 'min:0', 'max:30']),
+            new SettingDefinition('operations.subscription_max_pauses', SettingGroup::Operations, SettingType::Integer, 0, ['required', 'integer', 'min:0', 'max:50']),
             new SettingDefinition(
                 'operations.consultation_working_days',
                 SettingGroup::Operations,
@@ -385,6 +398,14 @@ final class SettingsRegistry
                 60,
                 ['required', 'integer', 'min:5', 'max:240'],
             ),
+
+            // Staff email alerts. Managed from the super-admin notifications page.
+            new SettingDefinition('notifications.staff_emails_enabled', SettingGroup::Notifications, SettingType::Boolean, true, ['boolean']),
+            new SettingDefinition('notifications.daily_email_limit', SettingGroup::Notifications, SettingType::Integer, 0, ['required', 'integer', 'min:0', 'max:100000']),
+            new SettingDefinition('notifications.email_order_placed', SettingGroup::Notifications, SettingType::Boolean, true, ['boolean']),
+            new SettingDefinition('notifications.email_subscription_started', SettingGroup::Notifications, SettingType::Boolean, true, ['boolean']),
+            new SettingDefinition('notifications.email_subscription_paused', SettingGroup::Notifications, SettingType::Boolean, true, ['boolean']),
+            new SettingDefinition('notifications.email_subscription_meals_changed', SettingGroup::Notifications, SettingType::Boolean, true, ['boolean']),
 
             // Policies
             new SettingDefinition('policies.cancellation_ar', SettingGroup::Policies, SettingType::Text, null, ['nullable', 'string', 'max:5000']),

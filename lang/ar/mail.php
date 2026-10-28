@@ -23,5 +23,6 @@ return [
         'invitation_sub' => 'انضم إلى فريق نيو مي',
         'consultation' => 'تم حجز الاستشارة',
         'consultation_sub' => 'موعدك محجوز',
+        'staff_alert_sub' => 'نشاط يحتاج انتباه الفريق',
     ],
 ];

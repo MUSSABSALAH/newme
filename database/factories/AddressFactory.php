@@ -25,6 +25,7 @@ class AddressFactory extends Factory
             'label' => fake()->randomElement(['Home', 'Work']),
             'recipient_name' => fake()->name(),
             'phone' => fake()->numerify('05########'),
+            'backup_phone' => fake()->numerify('05########'),
             'city' => 'Riyadh',
             'district' => fake()->streetName(),
             'street' => fake()->streetAddress(),

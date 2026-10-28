@@ -27,6 +27,7 @@ use App\Modules\Identity\Policies\UserPolicy;
 use App\Modules\Identity\Support\RecordingSmsSender;
 use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Invoices\Policies\InvoicePolicy;
+use App\Modules\Notifications\Listeners\RecordMailSend;
 use App\Modules\Notifications\Support\NotificationPresenter;
 use App\Modules\Orders\Events\OrderStatusChanged;
 use App\Modules\Orders\Models\Order;
@@ -137,6 +138,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(SubscriptionDelivery::class, SubscriptionDeliveryPolicy::class);
 
         Event::listen(OrderStatusChanged::class, CancelWalimShipment::class);
+        Event::listen(\Illuminate\Mail\Events\MessageSent::class, RecordMailSend::class);
 
         View::composer(['mail.*', 'mail.operations.*', 'mail.partials.*'], function ($view): void {
             $view->with('mailFont', \App\Modules\Notifications\Support\BrandMail::font());

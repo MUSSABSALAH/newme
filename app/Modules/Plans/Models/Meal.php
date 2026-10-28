@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Modules\Plans\Models;
 
 use App\Modules\Plans\Enums\MealType;
+use App\Support\Search\SearchTerm;
 use Database\Factories\MealFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -88,6 +90,37 @@ class Meal extends Model
     public function plans(): BelongsToMany
     {
         return $this->belongsToMany(Plan::class);
+    }
+
+    /**
+     * Anything the admin meal list shows: name in either language, meal type,
+     * calories or status.
+     *
+     * @param  Builder<Meal>  $query
+     */
+    public function scopeSearch(Builder $query, SearchTerm $term): void
+    {
+        $query->where(function (Builder $match) use ($term): void {
+            $term->orLike($match, ['name->ar', 'name->en']);
+
+            $types = $term->enumValues(MealType::cases());
+
+            if ($types !== []) {
+                $match->orWhereIn('meal_type', $types);
+            }
+
+            foreach ([true => 'meals.status.active', false => 'meals.status.inactive'] as $active => $key) {
+                if (mb_stripos((string) __($key), $term->value) !== false) {
+                    $match->orWhere('is_active', (bool) $active);
+                }
+            }
+
+            $calories = $term->integer();
+
+            if ($calories !== null) {
+                $match->orWhere('calories', $calories);
+            }
+        });
     }
 
     public function label(?string $locale = null): string

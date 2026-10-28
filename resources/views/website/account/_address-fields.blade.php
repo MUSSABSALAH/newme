@@ -32,6 +32,13 @@
   </div>
 
   <div class="field">
+    <label for="backup_phone-{{ $prefix }}">{{ __('addresses.fields.backup_phone') }}</label>
+    <input type="tel" id="backup_phone-{{ $prefix }}" name="backup_phone" value="{{ old('backup_phone', $address?->backup_phone) }}" placeholder="{{ __('addresses.placeholders.backup_phone') }}" required dir="ltr" pattern="[0-9+() \-]{6,32}" class="{{ $errors->has('backup_phone') ? 'is-invalid' : '' }}">
+    <small style="display:block;margin-top:4px;font-size:12px;color:var(--muted)">{{ __('addresses.hints.backup_phone') }}</small>
+    @error('backup_phone')<div class="err">{{ $message }}</div>@enderror
+  </div>
+
+  <div class="field">
     <label for="city-{{ $prefix }}">{{ __('addresses.fields.city') }}</label>
     <input type="text" id="city-{{ $prefix }}" name="city" value="{{ old('city', $address?->city) }}" required class="{{ $errors->has('city') ? 'is-invalid' : '' }}">
     @error('city')<div class="err">{{ $message }}</div>@enderror

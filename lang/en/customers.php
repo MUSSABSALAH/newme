@@ -57,5 +57,23 @@ return [
         'bulk_deleted' => ':count customers deleted.',
         'bulk_blocked' => 'These could not be deleted: :people',
         'bulk_none' => 'No customers were deleted.',
+        'updated' => 'Customer details updated.',
+        'address_updated' => 'Customer address updated.',
+    ],
+
+    'edit' => [
+        'title' => 'Edit customer details',
+        'locked_hint' => 'Email and mobile cannot be changed here because they are used to sign in with a one-time code (OTP).',
+        'save' => 'Save details',
+        'edit_address' => 'Edit address',
+        'save_address' => 'Save address',
+    ],
+
+    'addresses' => [
+        'title' => 'Delivery addresses',
+        'empty' => 'This customer has no saved addresses.',
+        'default' => 'Default',
+        'missing_backup' => 'Backup number missing',
+        'pin_kept' => 'The saved map pin stays as it is.',
     ],
 ];

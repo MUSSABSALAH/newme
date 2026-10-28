@@ -23,5 +23,6 @@ return [
         'invitation_sub' => 'Join the New Me team',
         'consultation' => 'Consultation booked',
         'consultation_sub' => 'Your appointment is reserved',
+        'staff_alert_sub' => 'Activity that needs the team',
     ],
 ];

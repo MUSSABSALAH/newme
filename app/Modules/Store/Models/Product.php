@@ -7,7 +7,9 @@ namespace App\Modules\Store\Models;
 use App\Modules\Store\Enums\NutritionNote;
 use App\Modules\Store\Enums\ProductFlag;
 use App\Modules\Store\Enums\ServingSize;
+use App\Support\Search\SearchTerm;
 use Database\Factories\ProductFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -114,6 +116,41 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Anything the admin product list shows: name in either language, slug,
+     * category, badge, status or price.
+     *
+     * @param  Builder<Product>  $query
+     */
+    public function scopeSearch(Builder $query, SearchTerm $term): void
+    {
+        $query->where(function (Builder $match) use ($term): void {
+            $term->orLike($match, ['name->ar', 'name->en', 'slug']);
+
+            $match->orWhereIn('category_id', Category::query()->select('id')->where(
+                fn (Builder $category) => $term->orLike($category, ['name->ar', 'name->en']),
+            ));
+
+            $flags = $term->enumValues(ProductFlag::cases());
+
+            if ($flags !== []) {
+                $match->orWhereIn('flag', $flags);
+            }
+
+            foreach ([true => 'products.status.active', false => 'products.status.inactive'] as $active => $key) {
+                if (mb_stripos((string) __($key), $term->value) !== false) {
+                    $match->orWhere('is_active', (bool) $active);
+                }
+            }
+
+            $amount = $term->amountMinor();
+
+            if ($amount !== null) {
+                $match->orWhere('price', $amount);
+            }
+        });
     }
 
     public function label(?string $locale = null): string

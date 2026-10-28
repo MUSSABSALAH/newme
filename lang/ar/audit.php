@@ -97,6 +97,7 @@ return [
         'customer' => [
             'registered' => 'تسجيل عميل جديد',
             'updated' => 'تعديل عميل',
+            'address_updated' => 'تعديل عنوان عميل',
         ],
         'order' => [
             'placed' => 'إنشاء طلب',
@@ -107,6 +108,7 @@ return [
             'handling_updated' => 'تحديث حالة معالجة اشتراك',
             'paused' => 'إيقاف اشتراك مؤقتًا',
             'resumed' => 'استئناف اشتراك',
+            'start_changed' => 'تغيير بداية اشتراك',
         ],
         'coupon' => [
             'created' => 'إنشاء كود خصم',

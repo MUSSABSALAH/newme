@@ -140,7 +140,7 @@
     @endif
   </div>
 
-  @if ($subscription->status === \App\Modules\Subscriptions\Enums\SubscriptionStatus::Active && $subscription->allowsPause())
+  @if ($subscription->customerCanPause())
     <section class="sub-pause card">
       <h2>{{ __('account.subscription.pause_action') }}</h2>
       <div class="alert warn" role="alert">

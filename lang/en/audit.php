@@ -97,6 +97,7 @@ return [
         'customer' => [
             'registered' => 'Customer registered',
             'updated' => 'Customer updated',
+            'address_updated' => 'Customer address updated',
         ],
         'order' => [
             'placed' => 'Order placed',
@@ -107,6 +108,7 @@ return [
             'handling_updated' => 'Subscription handling updated',
             'paused' => 'Subscription paused',
             'resumed' => 'Subscription resumed',
+            'start_changed' => 'Subscription start changed',
         ],
         'coupon' => [
             'created' => 'Discount code created',

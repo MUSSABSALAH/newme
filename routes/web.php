@@ -38,6 +38,7 @@ use App\Http\Controllers\Web\Admin\ProductController;
 use App\Http\Controllers\Web\Admin\RecipeController;
 use App\Http\Controllers\Web\Admin\RoleController;
 use App\Http\Controllers\Web\Admin\SettingController;
+use App\Http\Controllers\Web\Admin\StaffEmailController;
 use App\Http\Controllers\Web\Admin\SubscriptionController;
 use App\Http\Controllers\Web\Admin\UserController;
 use App\Http\Controllers\Web\CartController;
@@ -155,6 +156,7 @@ Route::name('website.')->group(function () {
         Route::get('checkout', [CheckoutController::class, 'show'])->name('checkout');
         Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
         Route::post('checkout/address', [CheckoutController::class, 'storeAddress'])->name('checkout.address.store');
+        Route::put('checkout/address/{address}', [CheckoutController::class, 'updateAddress'])->name('checkout.address.update');
         Route::delete('checkout/subscription', [CheckoutController::class, 'destroySubscription'])->name('checkout.subscription.destroy');
     });
 });
@@ -203,7 +205,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Store customers (separate from staff; same users table).
         Route::post('customers/bulk-destroy', [CustomerController::class, 'bulkDestroy'])->name('customers.bulk-destroy');
-        Route::resource('customers', CustomerController::class)->only(['index', 'show', 'destroy']);
+        Route::resource('customers', CustomerController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::put('customers/{customer}/addresses/{address}', [CustomerController::class, 'updateAddress'])
+            ->name('customers.addresses.update');
 
         Route::resource('roles', RoleController::class)->except('show');
 
@@ -226,13 +230,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('articles', ArticleController::class)->except('show');
         Route::resource('recipes', RecipeController::class)->except('show');
 
-        // Customer subscriptions: read-only, apart from the staff handling state.
+        // Customer subscriptions: staff handling state, start date and pause.
         Route::get('subscriptions/export.pdf', [SubscriptionController::class, 'listPdf'])->name('subscriptions.pdf');
         Route::resource('subscriptions', SubscriptionController::class)->only(['index', 'show']);
         Route::patch('subscriptions/{subscription}/handling', [SubscriptionController::class, 'updateHandling'])
             ->name('subscriptions.handling');
         Route::get('subscriptions/{subscription}/meals.pdf', [SubscriptionController::class, 'mealsPdf'])
             ->name('subscriptions.meals-pdf');
+        Route::patch('subscriptions/{subscription}/start', [SubscriptionController::class, 'changeStart'])
+            ->name('subscriptions.start');
+        Route::post('subscriptions/{subscription}/pause', [SubscriptionController::class, 'pause'])
+            ->name('subscriptions.pause');
+        Route::post('subscriptions/{subscription}/resume', [SubscriptionController::class, 'resume'])
+            ->name('subscriptions.resume');
 
         // Kitchen: the day's subscription dishes, grouped for batch cooking.
         Route::get('kitchen', [KitchenController::class, 'index'])->name('kitchen.index');
@@ -281,6 +291,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
         Route::post('notifications/read-all', [NotificationController::class, 'readAll'])->name('notifications.read-all');
         Route::post('notifications/{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
+
+        // Super admin: which staff are emailed about orders and subscriptions.
+        Route::get('staff-emails', [StaffEmailController::class, 'index'])->name('staff-emails.index');
+        Route::put('staff-emails', [StaffEmailController::class, 'update'])->name('staff-emails.update');
 
         Route::get('audit', [AuditController::class, 'index'])->name('audit.index');
 

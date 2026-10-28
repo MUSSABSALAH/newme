@@ -1,6 +1,8 @@
 <x-layouts.admin :title="__('orders.title')" :heading="__('orders.title')" :subtitle="__('orders.subtitle')">
     <x-ui.card>
-        <form method="GET" action="{{ route('admin.orders.index') }}" class="row" style="gap: 12px; align-items: flex-end;">
+        <form method="GET" action="{{ route('admin.orders.index') }}" class="row" style="gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+            <x-ui.search-box :value="$search" :placeholder="__('messages.search.placeholders.orders')" />
+
             <x-form.field :label="__('orders.filter_status')" name="status" style="margin:0;min-width:240px;">
                 <x-form.select name="status" onchange="this.form.submit()">
                     <option value="">{{ __('orders.all_statuses') }}</option>
@@ -16,7 +18,7 @@
 
     @if ($orders->isEmpty())
         <x-ui.card>
-            <div class="dropdown__empty">{{ __('orders.no_orders') }}</div>
+            <div class="dropdown__empty">{{ $search !== '' ? __('messages.search.no_results', ['term' => $search]) : __('orders.no_orders') }}</div>
         </x-ui.card>
     @else
         <x-ui.table :headers="[

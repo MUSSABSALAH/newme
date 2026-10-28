@@ -13,6 +13,11 @@
 (function () {
     "use strict";
 
+    if (window.__nmValidation) {
+        return;
+    }
+    window.__nmValidation = true;
+
     var locale = document.documentElement.getAttribute("lang") || "en";
 
     var messages = {
@@ -58,6 +63,7 @@
             return;
         }
         var wrap = wrapperOf(input);
+        hideServerError(wrap);
         var el = wrap.querySelector(".field__error[data-client-error]");
         if (!el) {
             el = document.createElement("span");
@@ -68,10 +74,25 @@
         el.textContent = message;
     }
 
+    // A server message under the field is stale once the field is checked again.
+    function hideServerError(wrap) {
+        Array.prototype.forEach.call(wrap.querySelectorAll(":scope > .err"), function (el) {
+            el.hidden = true;
+        });
+    }
+
+    function hasServerError(wrap) {
+        return Array.prototype.some.call(wrap.querySelectorAll(":scope > .err"), function (el) {
+            return !el.hidden;
+        });
+    }
+
     function clearError(input) {
-        input.classList.remove("is-invalid");
-        input.removeAttribute("aria-invalid");
         var wrap = wrapperOf(input);
+        if (!hasServerError(wrap)) {
+            input.classList.remove("is-invalid");
+            input.removeAttribute("aria-invalid");
+        }
         var el = wrap.querySelector(".field__error[data-client-error]");
         if (el) {
             el.parentNode.removeChild(el);
@@ -219,12 +240,49 @@
         true
     );
 
+    // Forms without data-validate still use native constraints; replace the
+    // browser bubble with the same inline red message.
+    var pendingFocus = null;
+
+    document.addEventListener(
+        "invalid",
+        function (e) {
+            var input = e.target;
+            if (!input || !isValidatable(input)) {
+                return;
+            }
+            e.preventDefault();
+
+            if (validateInput(input)) {
+                var v = input.validity;
+                showError(input, v && v.valueMissing ? input.getAttribute("data-message-required") || t("required") : input.getAttribute("data-message-pattern") || t("pattern"));
+            }
+            input.setAttribute("data-native-invalid", "");
+
+            if (!pendingFocus) {
+                pendingFocus = input;
+                setTimeout(function () {
+                    pendingFocus.focus();
+                    if (pendingFocus.scrollIntoView) {
+                        pendingFocus.scrollIntoView({ block: "center", behavior: "smooth" });
+                    }
+                    pendingFocus = null;
+                }, 0);
+            }
+        },
+        true
+    );
+
+    function isWatched(input) {
+        return input.form && (input.form.hasAttribute("data-validate") || input.hasAttribute("data-native-invalid"));
+    }
+
     // Validate a field when the user leaves it.
     document.addEventListener(
         "blur",
         function (e) {
             var input = e.target;
-            if (input && input.form && input.form.hasAttribute("data-validate") && isValidatable(input)) {
+            if (input && isValidatable(input) && isWatched(input)) {
                 validateInput(input);
             }
         },
@@ -238,11 +296,11 @@
             var input = e.target;
             if (
                 input &&
-                input.form &&
-                input.form.hasAttribute("data-validate") &&
                 isValidatable(input) &&
+                isWatched(input) &&
                 input.classList.contains("is-invalid")
             ) {
+                hideServerError(wrapperOf(input));
                 validateInput(input);
             }
         },

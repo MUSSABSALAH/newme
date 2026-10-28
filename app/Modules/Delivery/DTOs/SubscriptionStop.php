@@ -54,6 +54,11 @@ final class SubscriptionStop
         return $phone === '' ? null : $phone;
     }
 
+    public function backupPhone(): ?string
+    {
+        return $this->address()?->extraPhone();
+    }
+
     public function address(): ?AddressSnapshot
     {
         return $this->subscription->deliveryAddress();

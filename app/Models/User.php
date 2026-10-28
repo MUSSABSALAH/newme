@@ -11,6 +11,7 @@ use App\Modules\Identity\Models\BodyMeasurement;
 use App\Modules\Identity\Models\UserInvitation;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Subscriptions\Models\Subscription;
+use App\Support\Search\SearchTerm;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -92,6 +93,24 @@ class User extends Authenticatable
     public function scopeCustomers(Builder $query): void
     {
         $query->where('type', UserType::Customer->value);
+    }
+
+    /**
+     * Name, email or phone as typed in an admin search box.
+     *
+     * @param  Builder<User>  $query
+     */
+    public function scopeSearch(Builder $query, SearchTerm $term): void
+    {
+        $query->where(function (Builder $match) use ($term): void {
+            $term->orLike($match, ['name', 'email', 'phone']);
+
+            $tail = $term->phoneTail();
+
+            if ($tail !== null) {
+                $match->orWhere('phone', 'like', '%'.$tail);
+            }
+        });
     }
 
     public function isActive(): bool

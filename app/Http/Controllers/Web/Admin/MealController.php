@@ -12,25 +12,32 @@ use App\Modules\Plans\DTOs\MealData;
 use App\Modules\Plans\Enums\MealType;
 use App\Modules\Plans\Models\Meal;
 use App\Modules\Plans\Services\MealService;
+use App\Support\Search\SearchTerm;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 final class MealController extends Controller
 {
     public function __construct(private readonly MealService $meals) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', Meal::class);
 
+        $term = SearchTerm::fromRequest($request);
+
         $meals = Meal::query()
+            ->when(! $term->isEmpty(), fn ($query) => $query->search($term))
             ->orderBy('meal_type')
             ->orderBy('sort_order')
             ->orderBy('id')
-            ->paginate(20);
+            ->paginate(20)
+            ->withQueryString();
 
         return view('admin.meals.index', [
             'meals' => $meals,
+            'search' => $term->value,
         ]);
     }
 
