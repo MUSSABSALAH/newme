@@ -168,6 +168,7 @@ final class AccountController extends Controller
             'scheduleDays' => $scheduleDays = $this->scheduleForEdit($subscription),
             'calendarMonths' => MealCalendarPresenter::months($scheduleDays),
             'dishOptions' => $this->dishOptions($subscription),
+            'dishCalories' => $this->dishCalories($subscription),
             'leadDays' => MealChangeRules::leadDays(),
             'cutoffHours' => MealPrepCutoff::hours(),
             'pauseLeadDays' => SubscriptionPauseRules::leadDays(),
@@ -395,5 +396,24 @@ final class AccountController extends Controller
         }
 
         return $options;
+    }
+
+    /**
+     * Calories keyed by the dish name the schedule stores.
+     *
+     * @return array<string, int>
+     */
+    private function dishCalories(Subscription $subscription): array
+    {
+        $calories = [];
+
+        /** @var Meal $meal */
+        foreach ($subscription->plan?->meals ?? collect() as $meal) {
+            if ((int) $meal->calories > 0) {
+                $calories[$meal->label()] ??= (int) $meal->calories;
+            }
+        }
+
+        return $calories;
     }
 }

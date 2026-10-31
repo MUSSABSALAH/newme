@@ -191,6 +191,7 @@ return [
         'tap_to_edit' => 'Tap to edit',
         'close_editor' => 'Close',
         'chef_choice' => 'Chef’s pick',
+        'kcal' => ':count kcal',
         'save_meals' => 'Save meal choices',
         'save_day' => 'Save this day',
         'no_schedule' => 'No meal calendar for this subscription.',

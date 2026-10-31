@@ -1,3 +1,9 @@
+@php
+  $dishCalories = $dishCalories ?? [];
+  $withKcal = fn (?string $dish): string => isset($dishCalories[$dish])
+      ? $dish.' · '.__('account.subscription.kcal', ['count' => $dishCalories[$dish]])
+      : (string) $dish;
+@endphp
 @if (count($calendarMonths) === 0)
   <div class="empty">{{ __('account.subscription.no_schedule') }}</div>
 @else
@@ -81,10 +87,10 @@
                 <select id="meal-{{ $index }}-{{ $meal['type'] }}" name="meal_schedule[{{ $index }}][meals][{{ $meal['type'] }}]">
                   <option value="">{{ __('account.subscription.chef_choice') }}</option>
                   @foreach (($dishOptions[$meal['type']] ?? []) as $dishName)
-                    <option value="{{ $dishName }}" @selected(($meal['dish_raw'] ?? null) === $dishName)>{{ $dishName }}</option>
+                    <option value="{{ $dishName }}" @selected(($meal['dish_raw'] ?? null) === $dishName)>{{ $withKcal($dishName) }}</option>
                   @endforeach
                   @if (($meal['dish_raw'] ?? null) && ! in_array($meal['dish_raw'], $dishOptions[$meal['type']] ?? [], true))
-                    <option value="{{ $meal['dish_raw'] }}" selected>{{ $meal['dish_raw'] }}</option>
+                    <option value="{{ $meal['dish_raw'] }}" selected>{{ $withKcal($meal['dish_raw']) }}</option>
                   @endif
                 </select>
               </div>
@@ -113,7 +119,7 @@
               @endunless
               <div class="meal-cal-editor__readonly">
                 <span>{{ $meal['label'] }}</span>
-                <b class="{{ $meal['is_chef'] ? 'chef' : '' }}">{{ $meal['dish'] }}</b>
+                <b class="{{ $meal['is_chef'] ? 'chef' : '' }}">{{ $meal['is_chef'] ? $meal['dish'] : $withKcal($meal['dish_raw'] ?? $meal['dish']) }}</b>
               </div>
             @endforeach
           @endunless

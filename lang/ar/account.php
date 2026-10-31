@@ -191,6 +191,7 @@ return [
         'tap_to_edit' => 'اضغط للتعديل',
         'close_editor' => 'إغلاق',
         'chef_choice' => 'اختيار الشيف',
+        'kcal' => ':count سعرة',
         'save_meals' => 'حفظ اختيار الوجبات',
         'save_day' => 'حفظ هذا اليوم',
         'no_schedule' => 'لا يوجد تقويم وجبات لهذا الاشتراك.',
